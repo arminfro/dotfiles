@@ -1,0 +1,7 @@
+" vi: ft=vim
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" folding
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()

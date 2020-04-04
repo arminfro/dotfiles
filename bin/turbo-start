@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd ~
+i3-workspace -w 1 -l browse &
+i3-workspace -w 2 -l admin &
+i3-workspace -w 5 -l project-ar &
+# i3-workspace -w 8 -l project &

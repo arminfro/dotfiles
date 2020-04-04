@@ -1,0 +1,18 @@
+" vi: ft=vim
+
+set number
+set relativenumber
+
+let mapleader=","
+
+vnoremap  <leader>y  "+y
+
+" Moving
+noremap H ^
+noremap L g_
+noremap J 8j
+noremap K 8k
+
+noremap <Leader>a :AnsiEsc <CR>
+
+autocmd VimEnter * AnsiEsc

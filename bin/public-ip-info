@@ -1,0 +1,7 @@
+#!/usr/bin/zsh
+
+IP_INFO=$(curl -s 'http://ip-api.com/json')
+IP_ADDR=$(echo $IP_INFO | jq '.query')
+IP_CITY=$(echo $IP_INFO | jq '.city')
+IP_ORG=$(echo $IP_INFO | jq '.org' | head -n1| cut -d " " -f1)
+echo ${IP_ADDR}@${IP_CITY}@${IP_ORG} | sed 's/"//g'

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+CAPA=$(expr $(cat /sys/class/power_supply/BAT1/energy_full) + $(cat /sys/class/power_supply/BAT0/energy_full))
+STATE=$(expr $(cat /sys/class/power_supply/BAT1/energy_now) + $(cat /sys/class/power_supply/BAT0/energy_now))
+
+echo $(expr 100 \* $STATE / $CAPA)

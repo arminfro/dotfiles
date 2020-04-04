@@ -1,0 +1,444 @@
+" vi: ft=vim
+
+" URL: http://vim.wikia.comLocalhost/wiki/Example_vimrc
+" Authors: http://vim.wikia.com/wiki/Vim_on_Freenode
+" Description: A minimal, but feature rich, example .vimrc.
+"------------------------------------------------------------
+
+" Attempt to determine the type of a file based on its name and possibly its
+" contents. Use this to allow intelligent auto-indenting for each filetype,
+" and for plugins that are filetype specific.
+filetype plugin indent on
+
+" syntax highlighting
+syntax on
+
+let g:rehash256 = 1
+
+" Folding
+set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
+
+" Tab completion for filenames like bash
+" https://stackoverflow.com/a/526940/6115544
+set wildmode=longest,list,full
+set wildmenu
+
+" Cursor crosshair
+" set cursorcolumn
+" set cursorline
+
+" Foldmethod, hideComments
+" :set fdm=expr
+
+" Indentation settings for using hard tabs for indent
+set tabstop=2 shiftwidth=2 expandtab
+
+set linebreak
+set whichwrap=b,s,<,>,[,]
+set wrap
+
+" Always draw the signcolumn.
+set signcolumn=yes
+
+" One such option is the 'hidden' option, which allows you to re-use the same
+" window and switch from an unsaved buffer without saving it first. Also allows
+" you to keep an undo history for multiple files when re-using the same window
+set hidden
+
+" Set 'nocompatible' to ward off unexpected things that your distro might
+" have made, as well as sanely reset options when re-sourcing .vimrc
+set nocompatible
+
+" Show partial commands in the last line of the screen
+set showcmd
+
+" Use case insensitive search, except when using capital letters
+set ignorecase
+set smartcase
+
+" Instead of failing a command because of unsaved changes, instead raise a
+" dialogue asking if you wish to save changed files.
+set confirm
+
+" Use visual bell instead of beeping when doing something wrong
+set visualbell
+
+" And reset the terminal code for the visual bell. If visualbell is set, and
+" this line is also included, vim will neither flash nor beep. If visualbell
+" is unset, this does nothing.
+set t_vb=
+
+" Enable use of the mouse for all modes
+set mouse=a
+
+" Set the command window height to 2 lines, to avoid many cases of having to press <Enter> to continue"
+set cmdheight=2
+
+" Display line numbers on the left
+set number
+set relativenumber
+
+" Quickly time out on keycodes, but never time out on mappings
+" set notimeout ttimeout ttimeoutlen=200
+
+" Use <F12> to toggle between 'paste' and 'nopaste'
+set pastetoggle=<F12>
+
+set wildignore+=/*/tmp/*,*.so,*.swp,*.zip
+
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+" Backups & Files
+" set backup                   " Enable creation of backup file.
+" set backupdir=~/.vim/backups " Where backups will go.
+" set directory=~/.vim/tmp     " Where temporary files will go.
+
+" Leader Key maped to ','
+let mapleader=","
+
+nnoremap <C-H> <Esc>:bp<CR>
+nnoremap <C-L> <Esc>:bn<CR>
+
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> [B :bfirst<CR>
+nnoremap <silent> ]B :blast<CR>
+
+" Change window with Ctrl + Alt
+nnoremap <C-A-J> <C-W>j
+nnoremap <C-A-K> <C-W>k
+nnoremap <C-A-H> <C-W>h
+nnoremap <C-A-L> <C-W>l
+
+" Copy to clipboard
+vnoremap  <leader>y  "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>y  "+y
+nnoremap  <leader>yy  "+yy
+
+" Paste from clipboard
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
+
+" hide and only window option on leader
+nnoremap <leader>wo :only<CR>
+nnoremap <leader>wh :hide<CR>
+
+" Moving
+noremap H ^
+noremap L g_
+noremap J 8j
+noremap K 8k
+
+" Buffer delete on ,x
+nnoremap <leader>x :bp<cr>:bd #<cr>
+
+" vnoremap <leader>l  :e ~/.config/nvim/init.vim<cr>
+
+" closes all buffers except focused one
+" nnoremap <leader>X '%bd|e#|bd#'<CR>
+
+" no need for ex mode
+" nnoremap Q <nop>
+" nmap <CR> <nop>
+
+" :termial
+" maps leader esc to command mode
+" :tnoremap <leader><Esc> <C-\><C-n>
+
+" scrollback size
+set scrollback=100000
+
+" opens folds with space
+" nnoremap <Space> za
+" vnoremap <Space> za
+
+" map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
+nnoremap Y y$
+
+" Some vim features on leader
+" noremap <Leader>e :e <C-R>=expand("%:p:h") . '/'<CR>
+" noremap <Leader>s :split <C-R>=expand("%:p:h") . '/'<CR>
+" noremap <Leader>v :vnew <C-R>=expand("%:p:h") . '/'<CR>
+
+" spell check
+nnoremap <leader>sc :setlocal spell spelllang=en_us,de_de<cr>
+
+" reload vimrc
+nnoremap <leader>r :source ~/.config/nvim/init.vim<cr>
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
+
+" ## Persistant Undo
+let vimDir = '$HOME/.config/nvim'
+" Keep undo history across sessions by storing it in a file
+if has('persistent_undo')
+  let myUndoDir = expand(vimDir . '/undodir')
+  " Create dirs
+  call system('mkdir ' . vimDir)
+  call system('mkdir ' . myUndoDir)
+  let &undodir = myUndoDir
+  set undofile
+endif
+
+" Do we have local vimrc?
+if filereadable('.vimrc.local')
+  " If so, go ahead and load it.
+  source .vimrc.local
+endif
+
+call plug#begin()
+  "// Interface - colors
+  Plug 'nekonako/xresources-nvim', " uses Xresources for colorscheme
+  Plug 'yamatsum/nvim-cursorline', { 'branch': 'main' } " highlights words under cursor
+  Plug 'edluffy/specs.nvim', { 'branch': 'main' } " cursor visualization
+  Plug 'gennaro-tedesco/nvim-peekup' " register interaction
+
+  "// Config
+  Plug 'tpope/vim-sensible' " sane config defaults
+  Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] } " mapping guide
+  " Plug 'tpope/vim-obsession' " vim session management
+
+  "// Common Tooling
+  Plug 'editorconfig/editorconfig-vim' " editorconfig support
+  Plug 'sheerun/vim-polyglot' " collection of language packs
+  Plug 'windwp/nvim-autopairs' " ([{}]) auto closing
+  Plug 'norcalli/nvim-colorizer.lua' " Show color in editor
+  Plug 'ludovicchabant/vim-gutentags' " Tags generation
+  Plug 'nelstrom/vim-visual-star-search' " Search for what's visualized
+  Plug 'axelf4/vim-strip-trailing-whitespace' " Remove trailing white space
+  Plug 'vim-scripts/matchit.zip' " better support for matching by %
+  Plug 'tpope/vim-surround' " mappings to change surrounding parentheses
+  Plug 'neovim/pynvim' " python neovim client
+	Plug 'tpope/vim-repeat' " better support for repeat last action
+	Plug 'honza/vim-snippets' " Snippet collection of many languages
+  Plug 'brooth/far.vim' " Find And Replace Vim plugin
+  Plug 'wellle/visual-split.vim' " split to new window by visualizing text
+  Plug 'tpope/vim-commentary/' " comments text on gc
+  Plug 'JoosepAlviste/nvim-ts-context-commentstring', { 'branch': 'main' } " comments based on the cursor location
+  " Plug 'AndrewRadev/splitjoin.vim' " splits or joins code lines
+	" Plug 'vim-scripts/loremipsum' " random text generator
+	" Plug 'vim-scripts/Align' " align text
+  " Plug 'sickill/vim-pasta' " indent after paste
+	" Plug 'kassio/neoterm' " neovim terminal helper, repl to code execution
+
+	Plug 'sjl/gundo.vim' " vim undo tree
+  nnoremap <F7> :GundoToggle<CR>
+
+  Plug 'justinmk/vim-sneak' " Jump to any word, invoked by s
+  let g:sneak#label = 1
+
+  "// Ruby & Co
+  " Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby']}
+  " Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'eruby']}
+  " Plug 'tpope/vim-endwise' " helper to end structure's like `if ... end`
+
+  "// Document Tools
+	Plug 'donRaphaco/neotex', { 'for': 'tex' } " Latex autocompile
+
+  " Plug 'conornewton/vim-pandoc-markdown-preview' " markdown instead preview
+  " Plug 'skywind3000/asyncrun.vim' " dependency
+  " let g:md_pdf_viewer="zathura"
+  " let g:md_args = "--lua-filter=diagram-generator/diagram-generator.lua"
+
+  " Plug 'vim-pandoc/vim-pandoc-syntax'
+  " Plug 'vim-latex/vim-latex'
+  " Plug 'vim-pandoc/vim-pandoc'
+  " let g:pandoc#spell#enabled = 0
+  " Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+  " let g:instant_markdown_autostart = 0
+  " " let g:instant_markdown_slow = 1
+  " let g:instant_markdown_browser = "firefox --new-window"
+
+  "// xml & html
+  Plug 'AndrewRadev/tagalong.vim' " change both tags
+
+  for f in split(glob('~/.config/nvim/plugins/*.vim'), '\n')
+    exe 'source' f
+  endfor
+
+  "// Rust
+  if executable('rustc')
+    " Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+    " Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+
+    " Racer
+    " " set hidden
+    " " let g:racer_cmd = '/home/seena/.cargo/bin/racer'
+    " let g:racer_experimental_completer = 1
+    " au FileType rust nmap <leader>rx <Plug>(rust-doc)
+    " au FileType rust nmap <leader>rd <Plug>(rust-def)
+    " au FileType rust nmap <leader>rs <Plug>(rust-def-split)
+  endif
+
+" Winresizer - window resize mode by `Ctrl+I`
+Plug 'simeji/winresizer'
+let g:winresizer_start_key = '<C-I>'
+
+" Startify
+Plug 'mhinz/vim-startify' " Startup screen
+let g:startify_change_to_dir = 0
+
+Plug 'Yggdroot/indentLine' " shows thin vertical lines for indentation
+let g:indentLine_color_term = 240
+
+" vim-autosave
+" :AutoSaveToggle
+Plug '907th/vim-auto-save'
+let g:auto_save_events = ["FocusLost"]
+let g:auto_save_write_all_buffers = 1 " write all open buffers as if you would use :wa
+let g:auto_save = 1                   " enable AutoSave on Vim startup
+let g:auto_save_silent = 1  " do not display the auto-save notification
+
+" Documentation generator
+" Plug 'kkoomen/vim-doge'
+" let g:doge_mapping_comment_jump_forward = 'C-j'
+
+" Neovim Terminal
+" Plug 'brettanomyces/nvim-terminus'
+" Plug 'glacambre/shelley' " better neovim support for zsh terminal
+
+" Opens fold automatically if cursor is placed on line, see https://stackoverflow.com/a/7035949/6115544
+  " nnoremap <silent> j :<c-u>call MoveUpDown('j', +1, 1)<cr>
+  " nnoremap <silent> k :<c-u>call MoveUpDown('k', -1, 1)<cr>
+  " nnoremap <silent> gj :<c-u>call MoveUpDown('gj', +1, 1)<cr>
+  " nnoremap <silent> gk :<c-u>call MoveUpDown('gk', -1, 1)<cr>
+  " nnoremap <silent> <c-d> :<c-u>call MoveUpDown("\<lt>c-d>", +1, '&l:scroll')<cr>
+  " nnoremap <silent> <c-u> :<c-u>call MoveUpDown("\<lt>c-u>", -1, '&l:scroll')<cr>
+  " nnoremap <silent> <c-f> :<c-u>call MoveUpDown("\<lt>c-f>", +1, 'winheight("%")')<cr>
+  " nnoremap <silent> <c-b> :<c-u>call MoveUpDown("\<lt>c-b>", -1, 'winheight("%")')<cr>
+  " function! MoveUpDown(cmd, dir, ndef)
+    " let n = v:count == 0 ? eval(a:ndef) : v:count
+    " let l = line('.') + a:dir * n
+    " silent! execute l . 'foldopen!'
+    " execute 'norm! ' . n . a:cmd
+  " endfunction
+
+" # Auto commands #
+" on events, command mode in neovim terminal
+" au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
+" tnoremap <Esc> <C-\><C-n>
+
+" Plug 'svermeulen/vim-subversive' " easier substitution with new operators
+" nmap s <plug>(SubversiveSubstitute)
+" nmap ss <plug>(SubversiveSubstituteLine)
+" nmap S <plug>(SubversiveSubstituteToEndOfLine)
+
+call plug#end()
+
+nnoremap <F1> :Helptags<CR>
+nnoremap <F3> :CocList snippets<CR>
+nnoremap <F4> :CocAction<CR>
+nnoremap <F5> :CocList<CR>
+nnoremap <F6> :CocCommand<CR>
+nnoremap <C-U> :History<CR>
+" nnoremap c<C-U> :History:<CR>
+" nnoremap s<C-U> :History/<CR>
+nnoremap <C-P> :GFiles<CR>
+nnoremap <C-S> <Esc>:Lines<CR>
+nnoremap <C-D> <Esc>:Commits<CR>
+nnoremap <C-X> <Esc>:Tags<CR>
+" nnoremap g<C-P> :Files<CR>
+" nnoremap b<C-S> <Esc>:BLines<CR>
+" nnoremap b<C-D> <Esc>:BCommits<CR>
+" nnoremap b<C-X> <Esc>:BTags<CR>
+nnoremap <C-N> <Esc>:Buffers<CR>
+" nnoremap <C-M> <Esc>:GFiles?<CR>
+nnoremap <C-O> :Commands<CR>
+nnoremap <C-A> <Esc>:Ag<CR>
+" nnoremap <leader>h <Esc>:Helptags<CR>
+
+" correct comment highlighting for json
+" autocmd FileType json syntax match Comment +\/\/.\+$+
+
+" Workaround <Paste> Issue, https://github.com/neovim/neovim/issues/7994#issuecomment-388296360
+au InsertLeave * set nopaste
+
+colorscheme xresources
+
+hi Directory guifg=#3971ed " fixes nerdtree
+hi Visual guibg=#373b41
+hi Comment guifg=#969896
+hi LineNr guifg=#373b41
+
+" fixes background color
+hi Normal guibg=030405 ctermbg=030405
+hi LineNr guibg=030405 ctermbg=030405
+hi SignColumn guibg=030405 ctermbg=030405
+hi EndOfBuffer guibg=030405 ctermbg=030405
+
+lua << EOF
+ -- highlighting
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true
+  },
+}
+
+ -- selection
+require'nvim-treesitter.configs'.setup {
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+}
+
+ -- indention
+require'nvim-treesitter.configs'.setup {
+  indent = {
+    enable = true
+  }
+}
+
+require'nvim-treesitter.configs'.setup {
+  context_commentstring = {
+    enable = true,
+    config = {
+      javascript = {
+        __default = '// %s',
+        jsx_element = '{/* %s */}',
+        jsx_fragment = '{/* %s */}',
+        jsx_attribute = '// %s',
+        comment = '// %s'
+      }
+    }
+  }
+}
+
+require'nvim-treesitter.configs'.setup {
+  autotag = {
+    enable = true,
+  }
+}
+
+require('specs').setup{
+    show_jumps  = true,
+    min_jump = 30,
+    popup = {
+        delay_ms = 0, -- delay before popup displays
+        inc_ms = 30, -- time increments used for fade/resize effects
+        blend = 10, -- starting blend, between 0-100 (fully transparent), see :h winblend
+        width = 10,
+        winhl = "PMenu",
+        fader = require('specs').linear_fader,
+        resizer = require('specs').shrink_resizer
+    },
+    ignore_filetypes = {},
+    ignore_buftypes = {
+        nofile = true,
+    },
+}
+
+require('nvim-autopairs').setup()
+require 'colorizer'.setup()
+EOF

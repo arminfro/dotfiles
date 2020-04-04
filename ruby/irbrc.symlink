@@ -2,6 +2,11 @@
 require 'irb/completion'
 require 'irb/ext/save-history'
 require 'rubygems'
+require 'time'
+require 'date'
+require 'pp'
+require 'json'
+require 'pry'
 
 IRB.conf[:SAVE_HISTORY] = 1000
 IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
@@ -31,18 +36,16 @@ class Object
   end
 end
 
-# Copies the result of the last operation you ran in IRB to the system
-# clipboard (if you're on macOS).
-def cop
+# Copies the result of the last operation you ran in IRB to the system clipboard
+def copy
   last_value = IRB.CurrentContext.last_value
-  %x[echo '#{last_value}' | pbcopy]
+  %x[xclip -selection clipboard '#{last_value}']
   "copied \`#{last_value}' to your clipboard"
-end
-
-def me
-  User.find_by_login(ENV['USER'].strip)
 end
 
 def r
   reload!
 end
+
+# Pry.start
+# exit(0)

@@ -1,0 +1,28 @@
+#!/bin/ruby
+# frozen_string_literal: true
+
+require 'json'
+
+DIVIDER = 3.0
+
+# Switch Workspace
+class SwitchWorkspace
+  def initialize(desired_workspace)
+    @workspace_area   = (find_focused_workspace / DIVIDER).ceil
+    @target_workspace = @workspace_area * DIVIDER - DIVIDER + desired_workspace
+    exec "i3-msg 'workspace #{Integer(@target_workspace)}'"
+  end
+
+  def find_focused_workspace
+    @workspaces = JSON.parse(`i3-msg -t get_workspaces`)
+    @workspaces.each do |ws|
+      return ws['num'] if ws['focused']
+    end
+  end
+end
+
+if ARGV.length == 1 && (arg = ARGV.first.to_i)
+  SwitchWorkspace.new arg
+else
+  puts 'wrong arguments'
+end

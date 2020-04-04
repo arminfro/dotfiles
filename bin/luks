@@ -1,0 +1,19 @@
+#!/bin/bash
+
+while getopts m:u: option; do
+  case "${option}" in
+  m) DEVICE=${OPTARG#*=} ;;
+  u) UMOUNT=true ;;
+  *) ;;
+  esac
+done
+
+if [ -v DEVICE ]; then
+  sudo cryptsetup luksOpen /dev/$DEVICE hdd &&
+    sudo mount /dev/mapper/hdd /mnt/hdd
+elif [ -v UMOUNT ]; then
+  sudo umount /mnt/hdd
+  sudo cryptsetup luksClose /dev/mapper/hdd
+else
+  echo 'params: name is needed'
+fi

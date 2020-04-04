@@ -1,0 +1,21 @@
+#!/bin/bash
+
+INTERFACE=enp40s0f3u3
+NETWORK=192.168.1.0/24
+PORT=41185
+
+# Default policies
+sudo ufw default deny incoming
+sudo ufw default deny outgoing
+
+# Openvpn interface (adjust interface accordingly to your configuration)
+sudo ufw allow in on tun0
+sudo ufw allow out on tun0
+
+# Local Network (adjust ip accordingly to your configuration)
+sudo ufw allow in on $INTERFACE from $NETWORK
+sudo ufw allow out on $INTERFACE to $NETWORK
+
+# Openvpn (adjust port accordingly to your configuration)
+sudo ufw allow in on $INTERFACE from any port $PORT
+sudo ufw allow out on $INTERFACE to any port $PORT
