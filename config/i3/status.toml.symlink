@@ -29,59 +29,6 @@ interval = 2
 format = "{running}/{total}"
 
 [[block]]
-block = "weather"
-format = "{weather} in {location}@{temp}°C"
-service = { name = "openweathermap", api_key="$OPENWEATHER_API_KEY", city_id = "$OPENWEATHER_CITY_ID", units = "metric" }
-
-# [[block]]
-# block = "pacman"
-# interval = 10
-# format = "{count} updates"
-# format_singular = "{count} update"
-
-# [[block]]
-# block = "xrandr"
-# icons = true
-# interval = 2
-
-# [[block]]
-# block = "sound"
-
-# [[block]]
-# block = "net"
-# device = "wlp40s0f3u4"
-# ssid = false
-# signal_strength = false
-# ip = false
-# speed_up = true
-# speed_down = true
-# graph_up = true
-# graph_down = true
-# bitrate = true
-# interval = 5
-
-# [[block]]
-# block = "disk_space"
-# path = "/"
-# alias = "/"
-# format = "{icon} {available}/{total} {unit}"
-# info_type = "available"
-# # show_percentage = true
-# unit = "GB"
-# interval = 20
-# warning = 10.0
-# alert = 2.0
-
-# [[block]]
-# block = "memory"
-# format_mem = "{Mug}/{MTg}GB({Mupi}%)"
-# display_type = "memory"
-# clickable = false
-# interval = 5
-# warning_mem = 80
-# critical_mem = 95
-
-[[block]]
 block = "cpu"
 interval = 1
 format = "{utilization}% {frequency}GHz"
