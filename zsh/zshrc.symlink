@@ -62,10 +62,10 @@ bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-if [[ -f /etc/profile.d/autojump.zh ]]; then
-  source /etc/profile.d/autojump.zh
-elif [[ -f /etc/profile.d/autojump.sh ]]; then
-  source /etc/profile.d/autojump.sh
+if [[ -f /etc/profile.d/autojump.zsh ]]; then
+  source /etc/profile.d/autojump.zsh
+elif [[ -f /etc/profile.d/autojump.bash ]]; then
+  source /etc/profile.d/autojump.bash
 fi
 
 # load every completion after autocomplete loads
