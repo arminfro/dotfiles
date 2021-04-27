@@ -19,7 +19,7 @@ bindsym $mod+Shift+q kill
 bindsym $alt+F4 kill
 
 # start dmenu (a program launcher)
-bindsym $mod+j exec i3-dmenu-desktop --dmenu="dmenu -i -nb '#191919' -nf '#35BF5C' -sb '#BEBEBE'"
+bindsym $mod+j exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -nb '#191919' -nf '#35BF5C' -sb '#BEBEBE'"
 
 # change focus
 bindsym $alt+h focus left
