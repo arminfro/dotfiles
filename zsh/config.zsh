@@ -109,7 +109,6 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"\
 _gen_fzf_default_opts
 
 # Colors for shell
-
 BASE16_SHELL="$HOME/.config/base16-shell/"
 [ -n "$PS1" ] && \
 		[ -s "$BASE16_SHELL/profile_helper.sh" ] && \

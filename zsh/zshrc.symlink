@@ -62,10 +62,8 @@ bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-if [[ -f /etc/profile.d/autojump.zsh ]]; then
-  source /etc/profile.d/autojump.zsh
-elif [[ -f /etc/profile.d/autojump.bash ]]; then
-  source /etc/profile.d/autojump.bash
+if [[ -f /etc/profile.d/autojump.sh ]]; then
+  source /etc/profile.d/autojump.sh
 fi
 
 # load every completion after autocomplete loads
@@ -83,7 +81,3 @@ if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
         print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
         print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
-
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
