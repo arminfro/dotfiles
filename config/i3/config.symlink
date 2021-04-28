@@ -19,7 +19,7 @@ bindsym $mod+Shift+q kill
 bindsym $alt+F4 kill
 
 # start dmenu (a program launcher)
-bindsym $mod+j exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -nb '#191919' -nf '#35BF5C' -sb '#BEBEBE'"
+bindsym $mod+j exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -nb '#1d1f21' -nf '#198844' -sb '#969896'"
 
 # change focus
 bindsym $alt+h focus left
@@ -151,6 +151,8 @@ focus_follows_mouse no
 default_border pixel 2
 hide_edge_borders none
 
+for_window [window_role="About"] floating enable
+
 # Keyboard Bindings
 bindsym $mod+q exec gpaste-client ui
 bindsym $mod+w exec firefox
@@ -167,18 +169,6 @@ bindsym $mod+n exec sqlitebrowser
 bindsym $mod+m exec VBoxManage startvm ArchLinuxTesting
 
 bindsym $con+$alt+$mod+s exec systemctl poweroff
-bindsym $con+$alt+$mod+l exec ~/.dotfiles/bin/lock
-bindsym $con+$alt+$mod+t exec ~/.dotfiles/bin/turbo-start
 
 bindsym $con+$alt+y exec ~/.dotfiles/bin/keyboard-layout --de=true
 bindsym $con+$alt+u exec ~/.dotfiles/bin/keyboard-layout --us=true
-
-bindsym --release $con+$alt+m exec xset dpms force off
-
-bindsym XF86AudioRaiseVolume exec amixer set Master 7%+ unmute
-bindsym XF86AudioLowerVolume exec amixer set Master 8%- unmute
-bindsym XF86AudioMute exec amixer set Master toggle
-bindsym XF86MonBrightnessDown exec xbacklight -dec 15
-bindsym XF86MonBrightnessUp exec xbacklight -inc 15
-
-for_window [window_role="About"] floating enable

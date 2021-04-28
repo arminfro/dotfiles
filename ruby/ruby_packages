@@ -1,2 +1,5 @@
 pry
 pry-doc
+awesome_print
+byebug
+pry-byebug
