@@ -1,4 +1,4 @@
-# Forked for personalization, config folder and pacakges installation
+# Forked for personalization, config folder and packages installation
 
 It adds support for a `config` folder.
 This is a 'magic' folder name (you can add more to `folder_corresponding_structure`) to preserve deeper file structures.
