@@ -10,9 +10,7 @@ Each corresponding installer will get called with a reduced list of packages.
 For now the call for system packages is hardcoded to `sudo dnf install -y ...` for usage on fedora systems.
 You'll likely want to replace all lines containing it, if you don't use `dnf`.
 
-Changed to better fit my use case, brings some impacts like `kitty` is expected terminal (for now in i3 config).
-
-It generally installs: i3, zsh, neovim nightly, kitty, python, ruby, git
+It generally installs: i3, zsh, neovim nightly, alacritty, python, ruby, git
 
 You can delete stuff you don't need, it's mostly independent from each other.
 
@@ -82,4 +80,4 @@ It will symlink the appropriate files in `.dotfiles` to your home directory.
 Everything is configured and tweaked within `~/.dotfiles`.
 
 The main file you'll want to change right off the bat is `zsh/zshrc.symlink`,
-which sets up a few paths that'll be different on your particular machine.
+which sets up a few paths and applications that'll be different on your particular machine.

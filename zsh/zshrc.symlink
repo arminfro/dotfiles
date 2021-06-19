@@ -42,8 +42,6 @@ fi
 autoload -U compinit
 compinit
 
-kitty + complete setup zsh | source /dev/stdin
-
 # history-substring-search
 zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-substring-search-up

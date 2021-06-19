@@ -1,10 +1,20 @@
 # vi: ft=zsh
 
-export TERMINAL=kitty
+export TERMINAL=alacritty
 export EDITOR=nvim
 export SUDO_EDITOR=nvim
 export VISUAL=nvim
-export PAGER=/usr/bin/nvimpager && alias less=$PAGER
+export PAGER=/usr/bin/nvimpager # && alias less=$PAGER
+
+export FILE_MANAGER=thunar
+export PASSWORD_MANAGER=keepassxc
+export ALTERNATIVE_BROWSER="chromium --args --profile-directory=Default"
+export EMAIL_CLIENT=thunderbird
+export BROWSER=firefox
+export CLIPBOARD_MANAGER="gpaste-client ui"
+export MUSIC_PLAYER=rhythmbox
+export VIDEO_PLAYER=vlc
+
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 

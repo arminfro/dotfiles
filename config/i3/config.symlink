@@ -11,7 +11,7 @@ font pango:inconsolata nerd 12
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec $TERMINAL
 # bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
@@ -154,19 +154,19 @@ hide_edge_borders none
 for_window [window_role="About"] floating enable
 
 # Keyboard Bindings
-bindsym $mod+q exec gpaste-client ui
-bindsym $mod+w exec firefox
-bindsym $mod+e exec thunderbird
-bindsym $mod+r exec chromium --args --profile-directory=Default
+bindsym $mod+q exec $CLIPBOARD_MANAGER
+bindsym $mod+w exec $BROWSER
+bindsym $mod+e exec $EMAIL_CLIENT
+bindsym $mod+r exec $ALTERNATIVE_BROWSER
 bindsym $mod+t exec telegram-desktop
-bindsym $mod+y exec keepassxc $KEEPASS_DB
+bindsym $mod+y exec $PASSWORD_MANAGER $KEEPASS_DB
 bindsym $mod+a exec $TERMINAL
-bindsym $mod+d exec thunar
-bindsym $mod+z exec rhythmbox
-bindsym $mod+x exec vlc
+bindsym $mod+d exec $FILE_MANAGER
+bindsym $mod+z exec $MUSIC_PLAYER
+bindsym $mod+x exec $VIDEO_PLAYER
 bindsym $mod+c exec virtualbox
 bindsym $mod+n exec sqlitebrowser
-bindsym $mod+m exec VBoxManage startvm ArchLinuxTesting
+bindsym $mod+m exec VBoxManage startvm Fedora34Testing
 
 bindsym $con+$alt+$mod+s exec systemctl poweroff
 

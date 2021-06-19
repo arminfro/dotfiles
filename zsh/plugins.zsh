@@ -55,6 +55,7 @@ zinit light-mode for \
     trystan2k/zsh-tab-title \
     knu/zsh-manydots-magic \
     binury/smart-cd \
+    akarzim/zsh-docker-aliases \
 
 # Marks Dirs, by calling 'mark', Ctrl-g
 if command -v fzf > /dev/null 2>&1; then

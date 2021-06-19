@@ -14,5 +14,3 @@ noremap J 8j
 noremap K 8k
 
 noremap <Leader>a :AnsiEsc <CR>
-
-autocmd VimEnter * AnsiEsc
