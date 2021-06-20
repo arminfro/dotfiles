@@ -1,0 +1,16 @@
+" vi: ft=vim
+
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'romgrk/barbar.nvim'
+
+nnoremap <C-H> <Esc>:BufferPrevious<CR>
+nnoremap <C-L> <Esc>:BufferNext<CR>
+
+" nnoremap <C-H-H> <Esc>:BufferMovePrevious<CR>
+" nnoremap <C-H-L> <Esc>:BufferMoveNext<CR>
+
+nnoremap <silent> <Space>bp :BufferPick<CR>
+nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
+nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
+
+nnoremap <leader>x :BufferClose<CR>

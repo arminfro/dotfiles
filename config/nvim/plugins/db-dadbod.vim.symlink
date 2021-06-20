@@ -6,5 +6,5 @@ let g:db_ui_use_nerd_fonts=1
 
 " put these lines in a project based vimrc.local
 " let g:dbs = [
-"       \ { 'name': 'ar_test', 'url': 'sqlite:/home/.../db/test.db' },
-"       \ ]
+"   \ { 'name': 'test', 'url': 'sqlite:/home/.../db/test.db' },
+"   \ ]

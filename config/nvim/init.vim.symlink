@@ -98,9 +98,6 @@ endif
 " Leader Key maped to ','
 let mapleader=","
 
-nnoremap <C-H> <Esc>:bp<CR>
-nnoremap <C-L> <Esc>:bn<CR>
-
 nnoremap <silent> [b :bprevious<CR>
 nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
@@ -135,7 +132,7 @@ noremap J 8j
 noremap K 8k
 
 " Buffer delete on ,x
-nnoremap <leader>x :bp<cr>:bd #<cr>
+" nnoremap <leader>x :bp<cr>:bd #<cr>
 
 " vnoremap <leader>l  :e ~/.config/nvim/init.vim<cr>
 
@@ -195,8 +192,9 @@ endif
 call plug#begin()
   "// Interface - colors
   Plug 'nekonako/xresources-nvim', " uses Xresources for colorscheme
+  Plug 'glepnir/zephyr-nvim', { 'branch': 'main' } " A dark neovim colorscheme written in lua and syntax based on nvim-treesitter
   Plug 'yamatsum/nvim-cursorline', { 'branch': 'main' } " highlights words under cursor
-  Plug 'edluffy/specs.nvim', { 'branch': 'main' } " cursor visualization
+  " Plug 'edluffy/specs.nvim', { 'branch': 'main' } " cursor visualization
   Plug 'gennaro-tedesco/nvim-peekup' " register interaction
 
   "// Config
@@ -214,6 +212,7 @@ call plug#begin()
   Plug 'axelf4/vim-strip-trailing-whitespace' " Remove trailing white space
   Plug 'vim-scripts/matchit.zip' " better support for matching by %
   Plug 'tpope/vim-surround' " mappings to change surrounding parentheses
+  Plug 'ggandor/lightspeed.nvim', { 'branch': 'main' } " sneak successor
   Plug 'neovim/pynvim' " python neovim client
 	Plug 'tpope/vim-repeat' " better support for repeat last action
 	Plug 'honza/vim-snippets' " Snippet collection of many languages
@@ -229,9 +228,6 @@ call plug#begin()
 
 	Plug 'sjl/gundo.vim' " vim undo tree
   nnoremap <F7> :GundoToggle<CR>
-
-  Plug 'justinmk/vim-sneak' " Jump to any word, invoked by s
-  let g:sneak#label = 1
 
   "// Ruby & Co
   " Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby']}
@@ -256,7 +252,9 @@ call plug#begin()
   " let g:instant_markdown_browser = "firefox --new-window"
 
   "// xml & html
-  Plug 'AndrewRadev/tagalong.vim' " change both tags
+  " Plug 'AndrewRadev/tagalong.vim' " change both tags
+
+  Plug 'mboughaba/i3config.vim'
 
   for f in split(glob('~/.config/nvim/plugins/*.vim'), '\n')
     exe 'source' f
@@ -359,7 +357,8 @@ nnoremap <C-A> <Esc>:Ag<CR>
 " Workaround <Paste> Issue, https://github.com/neovim/neovim/issues/7994#issuecomment-388296360
 au InsertLeave * set nopaste
 
-colorscheme xresources
+" colorscheme xresources
+colorscheme zephyr
 
 hi Directory guifg=#3971ed " fixes nerdtree
 hi Visual guibg=#373b41
@@ -419,24 +418,6 @@ require'nvim-treesitter.configs'.setup {
   autotag = {
     enable = true,
   }
-}
-
-require('specs').setup{
-    show_jumps  = true,
-    min_jump = 30,
-    popup = {
-        delay_ms = 0, -- delay before popup displays
-        inc_ms = 30, -- time increments used for fade/resize effects
-        blend = 10, -- starting blend, between 0-100 (fully transparent), see :h winblend
-        width = 10,
-        winhl = "PMenu",
-        fader = require('specs').linear_fader,
-        resizer = require('specs').shrink_resizer
-    },
-    ignore_filetypes = {},
-    ignore_buftypes = {
-        nofile = true,
-    },
 }
 
 require('nvim-autopairs').setup()
