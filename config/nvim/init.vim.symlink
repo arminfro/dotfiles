@@ -200,6 +200,7 @@ call plug#begin()
   "// Config
   Plug 'tpope/vim-sensible' " sane config defaults
   Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] } " mapping guide
+  Plug 'dstein64/vim-startuptime' " measure start up time
   " Plug 'tpope/vim-obsession' " vim session management
 
   "// Common Tooling
@@ -212,7 +213,6 @@ call plug#begin()
   Plug 'axelf4/vim-strip-trailing-whitespace' " Remove trailing white space
   Plug 'vim-scripts/matchit.zip' " better support for matching by %
   Plug 'tpope/vim-surround' " mappings to change surrounding parentheses
-  Plug 'ggandor/lightspeed.nvim', { 'branch': 'main' } " sneak successor
   Plug 'neovim/pynvim' " python neovim client
 	Plug 'tpope/vim-repeat' " better support for repeat last action
 	Plug 'honza/vim-snippets' " Snippet collection of many languages
@@ -220,6 +220,7 @@ call plug#begin()
   Plug 'wellle/visual-split.vim' " split to new window by visualizing text
   Plug 'tpope/vim-commentary/' " comments text on gc
   Plug 'JoosepAlviste/nvim-ts-context-commentstring', { 'branch': 'main' } " comments based on the cursor location
+  Plug 'windwp/nvim-ts-autotag', { 'branch': 'main' } " autoclose and autorename tags
   " Plug 'AndrewRadev/splitjoin.vim' " splits or joins code lines
 	" Plug 'vim-scripts/loremipsum' " random text generator
 	" Plug 'vim-scripts/Align' " align text
@@ -422,4 +423,11 @@ require'nvim-treesitter.configs'.setup {
 
 require('nvim-autopairs').setup()
 require 'colorizer'.setup()
+
+require('startify')
+require('gline')
 EOF
+
+" overwrite color for 'kevinhwang91/nvim-hlslens'
+hi link HlSearchLens LineNr
+

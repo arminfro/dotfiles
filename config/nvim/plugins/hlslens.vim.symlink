@@ -1,8 +1,7 @@
 " vi: ft=vim
 
-Plug 'kevinhwang91/nvim-hlslens' " better glance at matched information, seamlessly jump between matched instances
-
-hi link HlSearchLens LineNr
+" better glance at matched information, seamlessly jump between matched instances
+Plug 'kevinhwang91/nvim-hlslens', { 'branch': 'main' }
 
 noremap <silent> n <Cmd>execute('normal! ' . v:count1 . 'n')<CR>
             \<Cmd>lua require('hlslens').start()<CR>

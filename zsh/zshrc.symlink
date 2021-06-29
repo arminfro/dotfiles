@@ -1,3 +1,5 @@
+# vi: ft=zsh
+
 # If not running interactively → don't do anything
 # [[ $- != *i* ]] && return
 
@@ -38,7 +40,7 @@ if [[ -f $DIRSTACKFILE  ]]; then
   setopt PUSHD_MINUS
 fi
 
-# initialize autocomplete here, otherwise functions won't be loaded
+# initialize autocomplete here, otherwise functions wont be loaded
 autoload -U compinit
 compinit
 

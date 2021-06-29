@@ -8,7 +8,7 @@ export PAGER=/usr/bin/nvimpager # && alias less=$PAGER
 
 export FILE_MANAGER=thunar
 export PASSWORD_MANAGER=keepassxc
-export ALTERNATIVE_BROWSER="chromium --args --profile-directory=Default"
+export ALTERNATIVE_BROWSER="chromium"
 export EMAIL_CLIENT=thunderbird
 export BROWSER=firefox
 export CLIPBOARD_MANAGER="gpaste-client ui"

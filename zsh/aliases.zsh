@@ -1,7 +1,5 @@
 alias reload!='. ~/.zshrc'
 
-alias ls='exa --icons -s changed'
-
 alias vterm="nvim term://zsh"
 alias journal-follow="journalctl -b -f | ccze -A -o nolookups"
 alias ge="git edit"

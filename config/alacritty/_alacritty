@@ -1,5 +1,7 @@
 #compdef alacritty
 
+# ref https://github.com/alacritty/alacritty/blob/master/INSTALL.md#zsh
+
 local ign
 
 (( $#words > 2 )) && ign='!'
