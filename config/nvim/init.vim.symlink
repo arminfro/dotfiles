@@ -425,7 +425,6 @@ require('nvim-autopairs').setup()
 require 'colorizer'.setup()
 
 require('startify')
-require('gline')
 EOF
 
 " overwrite color for 'kevinhwang91/nvim-hlslens'
