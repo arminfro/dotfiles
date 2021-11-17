@@ -155,7 +155,7 @@ set scrollback=100000
 " vnoremap <Space> za
 
 " map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
-nnoremap Y y$
+" nnoremap Y y$
 
 " Some vim features on leader
 " noremap <Leader>e :e <C-R>=expand("%:p:h") . '/'<CR>
@@ -195,7 +195,7 @@ call plug#begin()
   Plug 'glepnir/zephyr-nvim', { 'branch': 'main' } " A dark neovim colorscheme written in lua and syntax based on nvim-treesitter
   Plug 'yamatsum/nvim-cursorline', { 'branch': 'main' } " highlights words under cursor
   " Plug 'edluffy/specs.nvim', { 'branch': 'main' } " cursor visualization
-  Plug 'gennaro-tedesco/nvim-peekup' " register interaction
+  Plug 'gennaro-tedesco/nvim-peekup' " register interaction, opens with ""
 
   "// Config
   Plug 'tpope/vim-sensible' " sane config defaults
@@ -216,7 +216,7 @@ call plug#begin()
   Plug 'neovim/pynvim' " python neovim client
 	Plug 'tpope/vim-repeat' " better support for repeat last action
 	Plug 'honza/vim-snippets' " Snippet collection of many languages
-  Plug 'brooth/far.vim' " Find And Replace Vim plugin
+  " Plug 'brooth/far.vim' " Find And Replace Vim plugin
   Plug 'wellle/visual-split.vim' " split to new window by visualizing text
   Plug 'tpope/vim-commentary/' " comments text on gc
   Plug 'JoosepAlviste/nvim-ts-context-commentstring', { 'branch': 'main' } " comments based on the cursor location
@@ -229,6 +229,9 @@ call plug#begin()
 
 	Plug 'sjl/gundo.vim' " vim undo tree
   nnoremap <F7> :GundoToggle<CR>
+
+  Plug 'mattn/emmet-vim' " shorthand html
+  " let g:user_emmet_leader_key='<C-Z>'
 
   "// Ruby & Co
   " Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby']}
@@ -252,9 +255,6 @@ call plug#begin()
   " " let g:instant_markdown_slow = 1
   " let g:instant_markdown_browser = "firefox --new-window"
 
-  "// xml & html
-  " Plug 'AndrewRadev/tagalong.vim' " change both tags
-
   Plug 'mboughaba/i3config.vim'
 
   for f in split(glob('~/.config/nvim/plugins/*.vim'), '\n')
@@ -275,34 +275,34 @@ call plug#begin()
     " au FileType rust nmap <leader>rs <Plug>(rust-def-split)
   endif
 
-" Winresizer - window resize mode by `Ctrl+I`
-Plug 'simeji/winresizer'
-let g:winresizer_start_key = '<C-I>'
+  " Winresizer - window resize mode by `Ctrl+I`
+  Plug 'simeji/winresizer'
+  let g:winresizer_start_key = '<C-I>'
 
-" Startify
-Plug 'mhinz/vim-startify' " Startup screen
-let g:startify_change_to_dir = 0
+  " Startify
+  Plug 'mhinz/vim-startify' " Startup screen
+  let g:startify_change_to_dir = 0
 
-Plug 'Yggdroot/indentLine' " shows thin vertical lines for indentation
-let g:indentLine_color_term = 240
+  Plug 'Yggdroot/indentLine' " shows thin vertical lines for indentation
+  let g:indentLine_color_term = 240
 
-" vim-autosave
-" :AutoSaveToggle
-Plug '907th/vim-auto-save'
-let g:auto_save_events = ["FocusLost"]
-let g:auto_save_write_all_buffers = 1 " write all open buffers as if you would use :wa
-let g:auto_save = 1                   " enable AutoSave on Vim startup
-let g:auto_save_silent = 1  " do not display the auto-save notification
+  " vim-autosave
+  " :AutoSaveToggle
+  Plug '907th/vim-auto-save'
+  let g:auto_save_events = ["FocusLost"]
+  let g:auto_save_write_all_buffers = 1 " write all open buffers as if you would use :wa
+  let g:auto_save = 1                   " enable AutoSave on Vim startup
+  let g:auto_save_silent = 1  " do not display the auto-save notification
 
-" Documentation generator
-" Plug 'kkoomen/vim-doge'
-" let g:doge_mapping_comment_jump_forward = 'C-j'
+  " Documentation generator
+  " Plug 'kkoomen/vim-doge'
+  " let g:doge_mapping_comment_jump_forward = 'C-j'
 
-" Neovim Terminal
-" Plug 'brettanomyces/nvim-terminus'
-" Plug 'glacambre/shelley' " better neovim support for zsh terminal
+  " Neovim Terminal
+  " Plug 'brettanomyces/nvim-terminus'
+  " Plug 'glacambre/shelley' " better neovim support for zsh terminal
 
-" Opens fold automatically if cursor is placed on line, see https://stackoverflow.com/a/7035949/6115544
+  " Opens fold automatically if cursor is placed on line, see https://stackoverflow.com/a/7035949/6115544
   " nnoremap <silent> j :<c-u>call MoveUpDown('j', +1, 1)<cr>
   " nnoremap <silent> k :<c-u>call MoveUpDown('k', -1, 1)<cr>
   " nnoremap <silent> gj :<c-u>call MoveUpDown('gj', +1, 1)<cr>
@@ -318,17 +318,19 @@ let g:auto_save_silent = 1  " do not display the auto-save notification
     " execute 'norm! ' . n . a:cmd
   " endfunction
 
-" # Auto commands #
-" on events, command mode in neovim terminal
-" au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
-" tnoremap <Esc> <C-\><C-n>
+  " # Auto commands #
+  " on events, command mode in neovim terminal
+  " au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
+  " tnoremap <Esc> <C-\><C-n>
 
-" Plug 'svermeulen/vim-subversive' " easier substitution with new operators
-" nmap s <plug>(SubversiveSubstitute)
-" nmap ss <plug>(SubversiveSubstituteLine)
-" nmap S <plug>(SubversiveSubstituteToEndOfLine)
+  " Plug 'svermeulen/vim-subversive' " easier substitution with new operators
+  " nmap s <plug>(SubversiveSubstitute)
+  " nmap ss <plug>(SubversiveSubstituteLine)
+  " nmap S <plug>(SubversiveSubstituteToEndOfLine)
 
 call plug#end()
+
+:command! CopyFilepath let @+ = expand('%:p')
 
 nnoremap <F1> :Helptags<CR>
 nnoremap <F3> :CocList snippets<CR>
@@ -364,7 +366,7 @@ colorscheme zephyr
 hi Directory guifg=#3971ed " fixes nerdtree
 hi Visual guibg=#373b41
 hi Comment guifg=#969896
-hi LineNr guifg=#373b41
+hi LineNr guifg=#969896
 
 " fixes background color
 hi Normal guibg=030405 ctermbg=030405
@@ -421,12 +423,14 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
+
+require'nvim-tree'.setup()
 require('nvim-autopairs').setup()
 require 'colorizer'.setup()
 
 require('startify')
 EOF
 
-" overwrite color for 'kevinhwang91/nvim-hlslens'
-hi link HlSearchLens LineNr
+" " overwrite color for 'kevinhwang91/nvim-hlslens'
+" hi link HlSearchLens LineNr
 

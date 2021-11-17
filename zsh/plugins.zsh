@@ -23,6 +23,7 @@ autoload -Uz _zinit
 # needs to go early, cause of keybindings
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
+ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 
 # up here to be able to overwrite some by following plugins
 zinit snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
@@ -30,11 +31,11 @@ zinit snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
 zinit ice wait"1" lucid
 zinit light Aloxaf/fzf-tab
 
+zinit ice pick"async.zsh" ver"main"
+zinit light katrinleinweber/oh-my-zsh-youtube-dl-aliases
+
 zinit light-mode for \
-    zinit-zsh/z-a-patch-dl \
-    zinit-zsh/z-a-as-monitor \
-    zinit-zsh/z-a-bin-gem-node \
-    zdharma/fast-syntax-highlighting \
+    zdharma-continuum/fast-syntax-highlighting \
     zsh-users/zsh-autosuggestions \
     zsh-users/zsh-completions \
     zsh-users/zsh-history-substring-search \
@@ -44,7 +45,7 @@ zinit light-mode for \
     arzzen/calc.plugin.zsh \
     zpm-zsh/colors \
     ael-code/zsh-colored-man-pages \
-    zdharma/history-search-multi-word \
+    zdharma-continuum/history-search-multi-word \
     brymck/print-alias \
     zsh-vi-more/vi-motions \
     nviennot/zsh-vim-plugin \
@@ -55,7 +56,6 @@ zinit light-mode for \
     unixorn/rake-completion.zshplugin \
     binury/smart-cd \
     akarzim/zsh-docker-aliases \
-    katrinleinweber/oh-my-zsh-youtube-dl-aliases \
     hcgraf/zsh-sudo \
     mattmc3/zsh-safe-rm \
     jgogstad/passwordless-history \

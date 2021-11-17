@@ -1,9 +1,9 @@
 " vi: ft=vim
 
 Plug 'tpope/vim-fugitive'
-nnoremap <Leader>gs :Gstatus <CR>
-nnoremap <Leader>gc :Gcommit <CR>
-nnoremap <Leader>gd :Gdiff <CR>
+nnoremap <Leader>gs :Git<CR>
+nnoremap <Leader>gc :Git commit <CR>
+nnoremap <Leader>gd :Gdiffsplit <CR>
 
 Plug 'junegunn/gv.vim'
 nnoremap <Leader>gb :GV<CR>

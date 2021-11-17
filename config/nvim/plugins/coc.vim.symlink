@@ -12,7 +12,9 @@ let g:coc_global_extensions = [
       \ 'coc-markdownlint',
       \ 'coc-sh',
       \ 'coc-snippets',
+      \ 'coc-solargraph',
       \ 'coc-tabnine',
+      \ 'coc-tailwindcss',
       \ 'coc-tag',
       \ 'coc-tsserver',
       \ 'coc-ultisnips',
@@ -37,7 +39,6 @@ let g:coc_global_extensions = [
       " \ 'coc-pairs',
       " \ 'coc-project',
       " \ 'coc-react-refactor',
-      " \ 'coc-solargraph',
       " \ 'coc-spell-checker',
       " \ 'coc-sql', " seemed buggy
       " \ 'coc-stylelint', " probs in browser
