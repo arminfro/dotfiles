@@ -23,43 +23,44 @@
 ##   http://www.gnu.org/licenses/
 
 class String
-  def obfuscate; gsub(/@/, " at the ").gsub(/\.(\w+)(>|$)/, ' dot \1s\2') end
-  def htmlize; gsub("&", "&amp;").gsub("<", "&lt;").gsub(">", "&gt;") end
+  def obfuscate() = gsub(/@/, ' at the ').gsub(/\.(\w+)(>|$)/, ' dot \1s\2')
+
+  def htmlize() = gsub('&', '&amp;').gsub('<', '&lt;').gsub('>', '&gt;')
+
   # Fix for invalid encodings http://stackoverflow.com/a/24037885
   def clean
-    if RUBY_VERSION >= "2.1"
+    if RUBY_VERSION >= '2.1'
       scrub
-    elsif RUBY_VERSION >= "1.9"
-      encode("UTF-16be", :invalid => :replace).encode("UTF-8")
+    elsif RUBY_VERSION >= '1.9'
+      encode('UTF-16be', invalid: :replace).encode('UTF-8')
     else
       self
     end
   end
 end
 
-lines = {}
-verbose = ARGV.delete("-v")
-obfuscate = ARGV.delete("-o")
-htmlize = ARGV.delete("-h")
+lines     = {}
+verbose   = ARGV.delete('-v')
+obfuscate = ARGV.delete('-o')
+htmlize   = ARGV.delete('-h')
 
 author = nil
-state = :pre_author
+state  = :pre_author
 `git log -M -C -C -p --no-color`.clean.split("\n").each do |l|
-  case
-  when (state == :pre_author || state == :post_author) && l =~ /Author: (.*)$/
-    author = $1
-    state = :post_author
+  if %i[pre_author post_author].include?(state) && l =~ /Author: (.*)$/
+    author          = Regexp.last_match(1)
+    state           = :post_author
     lines[author] ||= 0
-  when state == :post_author && l =~ /^\+\+\+/
+  elsif state == :post_author && l =~ /^\+\+\+/
     state = :in_diff
-  when state == :in_diff && l =~ /^[\+\-]/
+  elsif state == :in_diff && l =~ /^[+\-]/
     lines[author] += 1
-  when state == :in_diff && l =~ /^commit /
+  elsif state == :in_diff && l =~ /^commit /
     state = :pre_author
   end
 end
 
-lines.sort_by { |a, c| -c }.each do |a, c|
+lines.sort_by { |_a, c| -c }.each do |a, c|
   a = a.obfuscate if obfuscate
   a = a.htmlize if htmlize
   if verbose
