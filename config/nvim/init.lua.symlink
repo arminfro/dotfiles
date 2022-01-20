@@ -1,0 +1,20 @@
+-- vi: ft=lua
+
+-- config/setup
+require "config"
+
+-- Plugins
+require "plugins"
+
+-- mappings
+require "mappings"
+
+-- treesitter
+require "treesitter"
+
+-- settings(options)
+require "settings"
+
+vim.cmd [[
+  hi LineNr guifg=#969896
+]]

@@ -35,6 +35,7 @@
   "solargraph.diagnostics": true,
   "solargraph.formatting": true,
   "solargraph.hover": true,
+  "rust-analyzer.server.path": "/usr/bin/rust-analyzer",
   "suggest.acceptSuggestionOnCommitCharacter": true,
   "suggest.maxCompleteItemCount": 30,
   "suggest.noselect": false,

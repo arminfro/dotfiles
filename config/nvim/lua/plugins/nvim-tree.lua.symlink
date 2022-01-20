@@ -1,0 +1,65 @@
+-- vi: ft=lua
+local function run(use, map)
+    use {
+        'kyazdani42/nvim-tree.lua',
+        config = function() require'nvim-tree'.setup {} end
+    }
+
+    require'nvim-tree'.setup {
+        ignore = { '.git', 'node_modules', '.cache' },
+        indent_markers = 1,
+        git_hl = 1,
+        highlight_opened_files = 1,
+        root_folder_modifier = ':~',
+        add_trailing = 1,
+        group_empty = 1,
+        disable_window_picker = 1,
+        icon_padding = ' ',
+        respect_buf_cwd = 1,
+        refresh_wait = 500,
+        window_picker_exclude = {
+            filetype = {
+                'notify',
+                'packer',
+                'qf'
+            },
+            buftype = {
+                'terminal'
+            }
+        },
+        icons = {
+            default = '',
+            symlink= '',
+            git= {
+                unstaged= "✗",
+                staged= "✓",
+                unmerged= "",
+                renamed= "➜",
+                untracked= "★",
+                deleted= "",
+                ignored= "◌"
+            },
+            folder= {
+                arrow_open= "",
+                arrow_closed= "",
+                default= "",
+                open= "",
+                empty= "",
+                empty_open= "",
+                symlink= "",
+                symlink_open= "",
+            },
+            lsp= {
+                hint= "",
+                info= "",
+                warning= "",
+                error= "",
+            }
+        }
+    }
+
+    map('n', '<leader>r', ':NvimTreeRefresh<CR>', {})
+    map('n', '<leader>f', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
+end
+
+return { run = run}

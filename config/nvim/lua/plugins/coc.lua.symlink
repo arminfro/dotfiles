@@ -1,0 +1,114 @@
+-- vi: ft=lua
+
+-- local map = vim.api.nvim_set_keymap
+
+-- vim.opt.cmdheight = 2
+-- vim.opt.updatetime = 100
+-- vim.opt.shortmess= vim.opt.shortmess + "c"
+-- vim.o.hidden = true
+-- vim.o.backup = false
+-- vim.o.writebackup = false
+
+-- -- Use <C-j> for both expand and jump (make expand higher priority.)
+-- -- https://github.com/neoclide/coc-snippets/issues/173
+-- map("i", "<C-j>", "<Plug>(coc-snippets-expand-jump)", {})
+
+-- map("n", "[j", "<Plug>(coc-diagnostic-prev)", {silent = true})
+-- map("n", "]j", "<Plug>(coc-diagnostic-next)", {silent = true})
+
+-- map("n", "[h", "<Plug>(coc-git-prevchunk)", {silent = true})
+-- map("n", "]h", "<Plug>(coc-git-nextchunk)", {silent = true})
+
+-- map("n", "gd", "<Plug>(coc-definition)", {silent = true})
+-- map("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
+-- map("n", "gi", "<Plug>(coc-implementation)", {silent = true})
+-- map("n", "gr", "<Plug>(coc-references)", {silent = true})
+
+-- map("n", "<space>a", ":<C-u>CocList diagnostics<CR>", {silent = true})
+-- map("n", "<space>e", ":<C-u>CocList extensions<CR>", {silent = true})
+-- map("n", "<space>c", ":<C-u>CocList commands<CR>", {silent = true})
+-- map("n", "<space>o", ":<C-u>CocList outline<CR>", {silent = true})
+-- -- map("n", "<space>s", ":<C-u>CocList -I symbols<CR>", {silent = true})
+
+-- -- " Search workspace symbols
+-- -- nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+-- -- " Do default action for next item.
+-- -- nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+-- -- " Do default action for previous item.
+-- -- nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+-- -- " Resume latest coc list
+-- -- nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+-- map("n", "<F3>", ":CocList snippets<CR>", {})
+-- map("n", "<F4>", ":CocAction<CR>", {})
+-- map("n", "<F5>", ":CocList<CR>", {})
+-- map("n", "<F6>", ":CocCommand<CR>", {})
+-- map("n", "<leader>.", "<Plug>(coc-codeaction)", {})
+
+-- map("n", "U", ":call CocActionAsync('doHover')<CR>", {silent = true, noremap = true})
+-- map("n", "<F2>", "<Plug>(coc-rename)", {})
+-- -- map("n", "<leader>f", ":CocCommand prettier.formatFile<CR>", {noremap = true})
+
+-- -- Use <c-space> to trigger completion.
+-- map("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
+
+-- map("i", "<TAB>", "pumvisible() ? '<C-n>' : '<TAB>'", {noremap = true, silent = true, expr = true})
+-- map("i", "<S-TAB>", "pumvisible() ? '<C-p>' : '<C-h>'", {noremap = true, expr = true})
+
+-- map("i", "<CR>", "pumvisible() ? coc#_select_confirm() : '<C-G>u<CR><C-R>=coc#on_enter()<CR>'", {silent = true, expr = true, noremap = true})
+
+-- -- vim.env.coc_global_extensions = "'coc-cssmodules', 'coc-eslint', 'coc-fzf-preview', 'coc-git', 'coc-html', 'coc-json', 'coc-lists', 'coc-markdownlint', 'coc-sh', 'coc-snippets', 'coc-solargraph', 'coc-tabnine', 'coc-tailwindcss', 'coc-tag', 'coc-rls', 'coc-rust-analyzer', 'coc-tsserver', 'coc-ultisnips', 'coc-vimlsp', 'coc-webpack', 'coc-yaml', 'coc-xml'"
+
+-- vim.g.coc_global_extensions = {
+--       'coc-cssmodules',
+--       'coc-eslint',
+--       'coc-fzf-preview',
+--       'coc-git',
+--       'coc-html',
+--       'coc-json',
+--       'coc-lists',
+--       'coc-markdownlint',
+--       'coc-sh',
+--       'coc-snippets',
+--       -- 'coc-solargraph',
+--       'coc-tabnine',
+--       'coc-tailwindcss',
+--       'coc-tag',
+--       -- 'coc-rls',
+--       -- 'coc-rust-analyzer',
+--       'coc-tsserver',
+--       'coc-ultisnips',
+--       'coc-vimlsp',
+--       'coc-webpack',
+--       'coc-yaml',
+--       'coc-xml'
+-- }
+
+-- -- " \ 'coc-angular',
+-- --       " \ 'coc-cspell-dicts',
+-- --       " \ 'coc-css',
+-- --       " \ 'coc-db',
+-- --       " \ 'coc-deno',
+-- --       " \ 'coc-dictionary',
+-- --       " \ 'coc-docker',
+-- --       " \ 'coc-emoji',
+-- --       " \ 'coc-explorer',
+-- --       " \ 'coc-github',
+-- --       " \ 'coc-highlight',
+-- --       " \ 'coc-import-cost',
+-- --       " \ 'coc-marketplace',
+-- --       " \ 'coc-neosnippet',
+-- --       " \ 'coc-pairs',
+-- --       " \ 'coc-project',
+-- --       " \ 'coc-react-refactor',
+-- --       " \ 'coc-spell-checker',
+-- --       " \ 'coc-sql', " seemed buggy
+-- --       " \ 'coc-stylelint', " probs in browser
+-- --       " \ 'coc-swagger',
+-- --       " \ 'coc-syntax',
+-- --       " \ 'coc-texlab',
+-- --       " \ 'coc-tslint-plugin', " deprecated
+-- --       " \ 'coc-vimtex',
+-- --       " \ 'coc-word',
+-- --       " \ 'coc-xml',
+-- --       " \ 'coc-yank',

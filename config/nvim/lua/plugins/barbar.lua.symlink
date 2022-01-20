@@ -1,0 +1,43 @@
+-- vi: ft=lua
+
+local opts = { noremap = true, silent = true }
+
+local function run(use, map)
+  use 'romgrk/barbar.nvim'
+
+  vim.g.bufferline = {
+    -- Enable/disable auto-hiding the tab bar when there is a single buffer
+    auto_hide = false,
+  }
+  -- vim.opt.termguicolors=true
+  -- vim.highlight.link('BufferInactiveMod', 'BufferInactive')
+  -- vim.highlight.link('BufferVisibleMod ', 'BufferVisible')
+  local cmd = vim.cmd
+
+  cmd[[set termguicolors]]
+  cmd[[highlight BufferCurrent             guibg=#5fd7ff guifg=#282a2e]]
+  cmd[[highlight link BufferCurrentMod     BufferCurrent]]
+  cmd[[highlight link BufferCurrentSign    BufferCurrent]]
+  cmd[[highlight BufferCurrentTarget       guibg=#d7ff5f]]
+  cmd[[highlight BufferInactive            guibg=#0087d7 guifg=#ffffff]]
+  cmd[[highlight link BufferInactiveMod    BufferInactive]]
+  cmd[[highlight link BufferInactiveSign   BufferInactive]]
+  cmd[[highlight link BufferInactiveTarget BufferCurrentTarget]]
+  cmd[[highlight link BufferVisible        BufferInactive]]
+  cmd[[highlight link BufferVisibleMod     BufferVisible]]
+  cmd[[highlight link BufferVisibleSign    BufferVisible]]
+  cmd[[highlight link BufferVisibleTarget  BufferInactiveTarget]]
+  cmd[[highlight BufferTabpages            guibg=#ff0000 guifg=#ff0000]]
+  
+  map('n', '<C-H>', ':BufferPrevious<CR>', opts)
+  map('n', '<C-L>', ':BufferNext<CR>', opts)
+
+  map('n', '<Space>bp', ':BufferPick<CR>', opts)
+  map('n', '<Space>bd', ':BufferOrderByDirectory<CR>', opts)
+  map('n', '<Space>bl', ':BufferOrderByLanguage<CR>', opts)
+
+  map('n', '<leader>x', ':BufferClose<CR>', opts)
+
+end
+
+return { run = run}

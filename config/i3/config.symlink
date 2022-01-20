@@ -164,9 +164,9 @@ bindsym $mod+a exec $TERMINAL
 bindsym $mod+d exec $FILE_MANAGER
 bindsym $mod+z exec $MUSIC_PLAYER
 bindsym $mod+x exec $VIDEO_PLAYER
-bindsym $mod+c exec virtualbox
 bindsym $mod+n exec sqlitebrowser
-bindsym $mod+m exec VBoxManage startvm Fedora34Testing
+bindsym $mod+c exec virtualbox
+bindsym $mod+m exec VBoxManage startvm ArchLinuxTesting
 
 bindsym $con+$alt+$mod+s exec systemctl poweroff
 
@@ -200,3 +200,5 @@ for_window [class="gw2-64.exe" instance="gw2-64.exe" title="Guild Wars 2"] float
 for_window [class="Nextcloud" instance="nextcloud" title="Nextcloud"] floating disable
 for_window [class="alfaview" instance="alfaview" title="alfaview - Region share"] floating enable
 # for_window [class="hearthstone.exe" id=132120577 instance="hearthstone.exe" title="Hearthstone"] floating enable
+
+assign [class="VirtualBox Machine"] 10

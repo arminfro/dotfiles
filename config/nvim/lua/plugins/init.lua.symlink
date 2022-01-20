@@ -1,0 +1,293 @@
+-- vi: ft=lua
+
+-- sync plugins on write/save
+vim.cmd [[
+augroup packer_sync_plugins
+autocmd!
+autocmd BufWritePost plugins.lua source <afile> | PackerSync
+augroup end
+]]
+
+local map = vim.api.nvim_set_keymap
+
+-- Plugins via Packer
+return require("packer").startup {
+  function(use)
+    use "wbthomason/packer.nvim"
+
+    -- sane config defaults
+    use 'tpope/vim-sensible'
+
+    -- A dark neovim colorscheme written in lua and syntax based on nvim-treesitter
+    use {'glepnir/zephyr-nvim', branch = 'main'}
+
+    -- register interaction, opens with ""
+    use 'gennaro-tedesco/nvim-peekup'
+
+    -- collection of language packs
+    use 'sheerun/vim-polyglot'
+
+    -- Search for what's visualized
+    use 'nelstrom/vim-visual-star-search'
+
+    -- remove trailing whitespaces
+    -- use 'axelf4/vim-strip-trailing-whitespace'
+
+    -- winresizer - window resize mode by `Ctrl+I`
+    -- use {
+    -- "simeji/winresizer",
+    --   config = function()
+    --     vim.g.winresizer_start_key = '<C-I>'
+    --   end,
+    -- }
+
+    use "nvim-lua/plenary.nvim"
+
+    use {
+      'AckslD/nvim-whichkey-setup.lua',
+      requires = {'liuchengxu/vim-which-key'},
+    }
+
+    use "rust-lang/rust.vim"
+    vim.g.rustfmt_autosave = 1
+
+    -- use "prettier/vim-prettier"
+
+    use {
+      "prettier/vim-prettier",
+      ft = { 'javascript', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html' },
+      config = function()
+        vim.g["prettier#autoformat"] = 1
+        vim.g["prettier#autoformat_require_pragma"] = 0
+        vim.g["prettier#exec_cmd_async"] = 1
+      end,
+    }
+
+    require("plugins.nvim-tree").run(use, map)
+
+    require("plugins.fzf").run(use, map)
+
+    require("plugins.nvim-cmp").run(use)
+
+    local lspconfig = require("plugins.nvim-lspconfig")
+    lspconfig.run(use, map)
+    require("plugins.dap").run(use, map, lspconfig.on_attach)
+
+    require("plugins.barbar").run(use, map)
+
+    require("plugins.startify").run(use, map)
+
+    -- change surroundings
+    use "tpope/vim-surround"
+
+    -- dot repeat command improved
+    use "tpope/vim-repeat"
+
+    -- sugar for the UNIX shell commands
+    use "tpope/vim-eunuch"
+    -- use "tpope/vim-unimpaired"
+    -- use "tpope/vim-abolish"
+
+    use "editorconfig/editorconfig-vim"
+
+    -- markdown plugins
+    use "ellisonleao/glow.nvim"
+    use { "iamcco/markdown-preview.nvim", run = "cd app && yarn install" }
+
+    -- json pathing
+    -- use "mogelbrod/vim-jsonpath"
+
+    use {
+      "luukvbaal/stabilize.nvim",
+      config = function()
+        require("stabilize").setup()
+      end,
+    }
+
+    use { "stevearc/dressing.nvim" }
+
+    -- automatically call mkdir -p if dir path doesn't exist on save
+    use "pbrisbin/vim-mkdir"
+
+    -- use "vim-test/vim-test"
+
+    use 'mattn/emmet-vim' -- shorthand html
+
+    -- visualize undo tree
+    use "mbbill/undotree"
+    map('n', '<F7>', ":UndotreeToggle<CR>", {})
+
+    -- hows code coverage
+    -- use "ruanyl/coverage.vim" todo, use it!
+
+    use 'ludovicchabant/vim-gutentags' -- Tags generation
+
+    -- use {
+    --   "AckslD/nvim-neoclip.lua",
+    --   config = function()
+    --     require("neoclip").setup()
+    --   end,
+    -- }
+
+    -- shows thin vertical lines for indentation
+    use 'Yggdroot/indentLine'
+    vim.g.indentLine_color_term = 240
+
+    use 'tpope/vim-commentary'
+
+    use 'kevinhwang91/nvim-bqf'
+
+    -- AutoSave
+    use '907th/vim-auto-save'
+    vim.g.auto_save_events = { "FocusLost" } -- TextChanged, FocusLost,InsertLeave
+    vim.g.auto_save_write_all_buffers = 1
+    vim.g.auto_save = 1
+    vim.g.auto_save_silent = 1
+
+    use "andymass/vim-matchup"
+
+    -- colored brackets and parentheses
+    use "p00f/nvim-ts-rainbow"
+
+    use "nvim-lua/popup.nvim"
+
+    use 'voldikss/vim-floaterm'
+    use 'voldikss/fzf-floaterm'
+    map('n', '<F2>', ":FloatermToggle<CR>", {})
+
+    -- show param names while typing
+    -- sitting
+    use {
+      "lewis6991/spellsitter.nvim",
+      config = function()
+        require("spellsitter").setup()
+      end,
+    }
+    use {
+      "nvim-treesitter/nvim-treesitter",
+      run = ":TSUpdate",
+    }
+    use "nvim-treesitter/nvim-treesitter-refactor"
+    use "nvim-treesitter/playground"
+    use "nvim-treesitter/nvim-treesitter-textobjects"
+    use "David-Kunz/treesitter-unit"
+
+    use "lukas-reineke/indent-blankline.nvim"
+    use "rcarriga/nvim-notify"
+
+    use "kyazdani42/nvim-web-devicons"
+
+    use {'glepnir/galaxyline.nvim', branch = 'main'}
+    use {
+      'Avimitin/nerd-galaxyline',
+      requires = { 'glepnir/galaxyline.nvim' },
+    }
+
+    use {
+      "lewis6991/gitsigns.nvim",
+      requires = { "nvim-lua/plenary.nvim" },
+      config = function()
+      end,
+    }
+
+    use {'tpope/vim-fugitive'}
+    use {'junegunn/gv.vim'}
+    -- set tags^=./.git/tags;
+
+    -- highlights words under cursor
+    -- use { 'yamatsum/nvim-cursorline', branch = 'main' }
+
+    use 'dstein64/vim-startuptime'
+
+    -- use 'honza/vim-snippets'
+
+    -- Syntax file for i3 config
+    use 'mboughaba/i3config.vim'
+
+    -- Latex autocompile
+    use {'donRaphaco/neotex', ft = 'tex' }
+
+    -- comments based on the cursor location
+    use {'JoosepAlviste/nvim-ts-context-commentstring', branch = 'main' }
+
+    -- use { 'windwp/nvim-ts-autotag', branch = 'main' }
+    use {
+      "windwp/nvim-ts-autotag",
+      config = function()
+        require("nvim-ts-autotag").setup {}
+      end,
+    }
+
+    -- replaces asteriks with bullets
+    use {
+      "akinsho/org-bullets.nvim",
+      config = function()
+        require("org-bullets").setup {}
+      end,
+    }
+
+    -- table management
+    -- use {
+    --   "dhruvasagar/vim-table-mode",
+    --   config = function()
+    --     vim.g.table_mode_verbose = false
+    --     vim.api.g.table_mode_corner='|'
+    --   end,
+    -- }
+
+    -- use {
+    --   "rmagatti/auto-session",
+    --   config = function()
+    --     require("auto-session").setup {
+    --       log_level = "error",
+    --     }
+    --   end,
+    -- }
+
+    use {
+      "rhysd/git-messenger.vim",
+      config = function()
+        vim.g.git_messenger_floating_win_opts = { border = vim.g.floating_window_border_dark }
+      end,
+    }
+
+    use {
+      "rrethy/vim-hexokinase",
+      run = "make hexokinase",
+      config = function()
+        vim.g.Hexokinase_optInPatterns = "full_hex,rgb,rgba,hsl,hsla"
+      end,
+    }
+
+    -- use {
+    --   "haya14busa/incsearch.vim",
+    --   config = function()
+    --     vim.g["incsearch#auto_nohlsearch"] = true
+    --     vim.g["incsearch#magic"] = "\\v"
+    --     vim.g["incsearch#consistent_n_direction"] = true
+    --     vim.g["incsearch#do_not_save_error_message_history"] = true
+    --   end,
+    -- }
+    use "vim-scripts/CmdlineComplete"
+
+    -- camel case is one word
+    use "bkad/camelcasemotion"
+
+    use {
+      'liuchengxu/vista.vim',
+      config = function()
+        -- alter icons in sidebar
+        -- vim.g.vista_icon_indent = { "", "├─▸" }
+        vim.g['vista#renderer#enable_icon'] = 1
+        vim.g.vista_sidebar_position = 'vertical topleft'
+      end,
+    }
+
+    use 'godlygeek/tabular'
+  end,
+  config = {
+    display = {
+      open_fn = require("packer.util").float,
+    },
+  },
+}

@@ -1,5 +1,0 @@
-" vi: ft=vim
-
-Plug 'glepnir/galaxyline.nvim', { 'branch': 'main' }
-Plug 'Avimitin/nerd-galaxyline'
-

@@ -1,8 +1,0 @@
-" vi: ft=vim
-
-Plug 'godlygeek/tabular' " aligns mulitple lines for specific chars
-nmap <Leader>t= :Tabularize /=<CR>
-vmap <Leader>t= :Tabularize /=<CR>
-vmap <Leader>t" :Tabularize /"<CR>
-nmap <Leader>t: :Tabularize /:\zs<CR>
-vmap <Leader>t: :Tab /:\zs<CR>

@@ -1,0 +1,132 @@
+-- vi: ft=lua
+
+-- vi: ft=lua
+
+local map_opts = {silent=true}
+
+local function run(use, map, on_attach)
+	use 'mfussenegger/nvim-dap'
+	use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+	use 'simrat39/rust-tools.nvim' -- includes helper function to configure dap
+
+
+	local dap = require('dap')
+	local codelldb_path = "/home/armin/.vscode-oss/extensions/vadimcn.vscode-lldb-1.6.10/adapter/codelldb"
+
+	dap.adapters.lldb = function(on_adapter)
+		local stdout = vim.loop.new_pipe(false)
+		local stderr = vim.loop.new_pipe(false)
+
+		local cmd = codelldb_path
+		local handle, pid_or_err
+		local opts = {
+			stdio = { nil, stdout, stderr },
+			args = { "--params", '{"showDisassembly":"never" }' },
+			detached = true,
+			verbatim = true,
+		}
+		handle, pid_or_err = vim.loop.spawn(cmd, opts, function(code)
+			stdout:close()
+			stderr:close()
+			handle:close()
+			if code ~= 0 then
+				print("codelldb exited with code", code)
+			end
+		end)
+
+		assert(handle, "Error running codelldb: " .. tostring(pid_or_err))
+		stdout:read_start(function(err, chunk)
+			assert(not err, err)
+			if chunk then
+				local port = chunk:match("Listening on port (%d+)")
+				if port then
+					vim.schedule(function()
+						on_adapter({
+								type = "server",
+								host = "127.0.0.1",
+								port = port,
+							})
+						end)
+					else
+						vim.schedule(function()
+							require("dap.repl").append(chunk)
+						end)
+					end
+				end
+			end)
+			stderr:read_start(function(err, chunk)
+				assert(not err, err)
+				if chunk then
+					vim.schedule(function()
+						require("dap.repl").append(chunk)
+					end)
+				end
+			end)
+		end
+
+		dap.defaults.fallback.terminal_win_cmd = "below 10new"
+
+		require("dapui").setup({
+				icons = { expanded = "▾", collapsed = "▸" },
+				mappings = {
+					expand = { "<CR>", "<2-LeftMouse>" },
+					open = "o",
+					remove = "d",
+					edit = "e",
+					repl = "r",
+				},
+				sidebar = {
+					elements = {
+						{ id = "breakpoints", size = 0.1 },
+						{ id = "watches", size = 0.45 },
+						{ id = "scopes", size = 0.45 },
+					},
+					size = 40,
+					position = "left",
+				},
+				tray = {
+					elements = { "repl" },
+					size = 30,
+					position = "right",
+				},
+				floating = {
+					max_height = nil,
+					max_width = nil,
+					mappings = {
+						close = { "q", "<Esc>" },
+					},
+				},
+				windows = { indent = 1 },
+			})
+
+		dap.configurations.rust = {
+			{
+				-- The first three options are required by nvim-dap
+				type = "lldb",
+				request = "launch",
+				name = "Launch file",
+
+				-- Options below are for CodeLLDB
+				cwd = "${workspaceFolder}",
+				program = function()
+					local workspaceRoot = require("lspconfig").rust_analyzer.get_root_dir()
+					local workspaceName = vim.fn.fnamemodify(workspaceRoot, ":t")
+
+					return vim.fn.input("Path to executable: ", workspaceRoot .. "/target/debug/" .. workspaceName, "file")
+				end,
+				stopOnEntry = false,
+				sourceLanguages = { "rust" },
+			},
+		}
+		map("n", "<leader>dt", ":lua require'dap'.toggle_breakpoint()<CR>", map_opts)
+		map("n", "<leader>dc", ":lua require'dap'.continue()<CR>", map_opts)
+
+		require("rust-tools").setup({
+				server = { on_attach = on_attach },
+				dap = {
+					adapter = require("dap").adapters.lldb,
+				},
+			})
+	end
+
+	return { run = run}
