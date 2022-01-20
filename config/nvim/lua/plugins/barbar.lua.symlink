@@ -15,11 +15,11 @@ local function run(use, map)
   local cmd = vim.cmd
 
   cmd[[set termguicolors]]
-  cmd[[highlight BufferCurrent             guibg=#5fd7ff guifg=#282a2e]]
+  cmd[[highlight BufferCurrent             guibg=#61afef guifg=#282a2e]]
   cmd[[highlight link BufferCurrentMod     BufferCurrent]]
   cmd[[highlight link BufferCurrentSign    BufferCurrent]]
   cmd[[highlight BufferCurrentTarget       guibg=#d7ff5f]]
-  cmd[[highlight BufferInactive            guibg=#0087d7 guifg=#ffffff]]
+  cmd[[highlight BufferInactive            guibg=#504945 guifg=#bbc2cf]]
   cmd[[highlight link BufferInactiveMod    BufferInactive]]
   cmd[[highlight link BufferInactiveSign   BufferInactive]]
   cmd[[highlight link BufferInactiveTarget BufferCurrentTarget]]

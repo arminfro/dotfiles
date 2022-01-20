@@ -21,12 +21,6 @@ local function run(use, map)
 
   map('n', '<leader>t', '<ESC>:FzfLua <CR>', opts)
   map('n', '<leader>*', '<ESC>:FzfLua grep_cword<CR>', opts)
-
--- map("n", "<F3>", ":CocList snippets<CR>", {})
--- map("n", "<F4>", ":CocAction<CR>", {})
--- map("n", "<F5>", ":CocList<CR>", {})
--- map("n", "<F6>", ":CocCommand<CR>", {})
-
 end
 
 return { run = run}

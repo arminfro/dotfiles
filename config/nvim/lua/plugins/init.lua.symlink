@@ -19,7 +19,12 @@ return require("packer").startup {
     use 'tpope/vim-sensible'
 
     -- A dark neovim colorscheme written in lua and syntax based on nvim-treesitter
-    use {'glepnir/zephyr-nvim', branch = 'main'}
+    use {
+      'glepnir/zephyr-nvim',
+      branch = 'main',
+    }
+    require('zephyr')
+
 
     -- register interaction, opens with ""
     use 'gennaro-tedesco/nvim-peekup'
@@ -29,9 +34,6 @@ return require("packer").startup {
 
     -- Search for what's visualized
     use 'nelstrom/vim-visual-star-search'
-
-    -- remove trailing whitespaces
-    -- use 'axelf4/vim-strip-trailing-whitespace'
 
     -- winresizer - window resize mode by `Ctrl+I`
     -- use {
@@ -85,17 +87,12 @@ return require("packer").startup {
 
     -- sugar for the UNIX shell commands
     use "tpope/vim-eunuch"
-    -- use "tpope/vim-unimpaired"
-    -- use "tpope/vim-abolish"
 
     use "editorconfig/editorconfig-vim"
 
     -- markdown plugins
     use "ellisonleao/glow.nvim"
     use { "iamcco/markdown-preview.nvim", run = "cd app && yarn install" }
-
-    -- json pathing
-    -- use "mogelbrod/vim-jsonpath"
 
     use {
       "luukvbaal/stabilize.nvim",
@@ -121,13 +118,6 @@ return require("packer").startup {
     -- use "ruanyl/coverage.vim" todo, use it!
 
     use 'ludovicchabant/vim-gutentags' -- Tags generation
-
-    -- use {
-    --   "AckslD/nvim-neoclip.lua",
-    --   config = function()
-    --     require("neoclip").setup()
-    --   end,
-    -- }
 
     -- shows thin vertical lines for indentation
     use 'Yggdroot/indentLine'
@@ -226,24 +216,6 @@ return require("packer").startup {
       end,
     }
 
-    -- table management
-    -- use {
-    --   "dhruvasagar/vim-table-mode",
-    --   config = function()
-    --     vim.g.table_mode_verbose = false
-    --     vim.api.g.table_mode_corner='|'
-    --   end,
-    -- }
-
-    -- use {
-    --   "rmagatti/auto-session",
-    --   config = function()
-    --     require("auto-session").setup {
-    --       log_level = "error",
-    --     }
-    --   end,
-    -- }
-
     use {
       "rhysd/git-messenger.vim",
       config = function()
@@ -259,15 +231,6 @@ return require("packer").startup {
       end,
     }
 
-    -- use {
-    --   "haya14busa/incsearch.vim",
-    --   config = function()
-    --     vim.g["incsearch#auto_nohlsearch"] = true
-    --     vim.g["incsearch#magic"] = "\\v"
-    --     vim.g["incsearch#consistent_n_direction"] = true
-    --     vim.g["incsearch#do_not_save_error_message_history"] = true
-    --   end,
-    -- }
     use "vim-scripts/CmdlineComplete"
 
     -- camel case is one word
@@ -276,8 +239,6 @@ return require("packer").startup {
     use {
       'liuchengxu/vista.vim',
       config = function()
-        -- alter icons in sidebar
-        -- vim.g.vista_icon_indent = { "", "├─▸" }
         vim.g['vista#renderer#enable_icon'] = 1
         vim.g.vista_sidebar_position = 'vertical topleft'
       end,
