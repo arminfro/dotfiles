@@ -63,7 +63,7 @@ key_map("n", "<leader>gd", ":Gdiffsplit<CR>", {noremap = true})
 key_map("n", "<leader>gb", ":GV<CR>", {noremap = true})
 
 -- easier save and exit
-key_map("n", "<leader>s", ":wa<CR>", {noremap = true})
+key_map("n", "<leader>,", ":wa<CR>", {noremap = true})
 key_map("n", "<leader>ee", ":qa<CR>", {noremap = true})
 
 key_map("n", "<leader>sc", ":setlocal spell spelllang=en_us,de_de<cr>", {noremap = true})

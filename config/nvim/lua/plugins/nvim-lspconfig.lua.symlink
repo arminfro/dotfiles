@@ -1,209 +1,204 @@
 -- vi: ft=lua
 
-local on_attach = function(_, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+local on_attach = {
+  common = function(_, bufnr)
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  local opts = { noremap = true, silent = true }
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>FzfLua lsp_references<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'U', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<F4>', '<cmd>FzfLua lsp_code_actions<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '[j', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', ']j', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>a', '<cmd>FzfLua lsp_workspace_diagnostics<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>i', '<cmd>FzfLua lsp_live_workspace_symbols<CR>', opts)
-  vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>,', '<cmd>Format<CR>', opts)
-  end
+    local opts = { noremap = true, silent = true }
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>FzfLua lsp_references<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'U', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<F4>', '<cmd>FzfLua lsp_code_actions<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[j', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']j', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>a', '<cmd>FzfLua lsp_workspace_diagnostics<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>i', '<cmd>FzfLua lsp_live_workspace_symbols<CR>', opts)
+    vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>s', '<cmd>Format<CR>', opts)
+  end,
 
-  local function run(use, map)
-    use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
-    use "jose-elias-alvarez/nvim-lsp-ts-utils"
-    use "ray-x/lsp_signature.nvim"
-    use "hrsh7th/cmp-nvim-lsp"
-    use "folke/lua-dev.nvim"
-    use "nvim-lua/lsp_extensions.nvim"
+  tsserver = function(client)
+    require("lsp_signature").on_attach {
+      bind = true, -- This is mandatory, otherwise border config won't get registered.
+      doc_lines = 2, -- will show 2 lines of comment/doc(if there are more than 2 lines in doc, will be truncated)
 
-    -- Add additional capabilities supported by nvim-cmp and snippets
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
-    capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+      floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
+      hint_enable = true, -- virtual hint enable
+      hint_prefix = "🌟 ", -- Panda for parameter
+      hint_scheme = "String",
+      use_lspsaga = false, -- set to true if you want to use lspsaga popup
+      hi_parameter = "Search", -- how your parameter will be highlight
+      max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
+      -- to view the hiding contents
+      max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
+      handler_opts = {
+        border = "single", -- double, single, shadow, none
+      },
+      extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
+    }
 
-    local lspconfig = require('lspconfig')
+    local ts_utils = require "nvim-lsp-ts-utils"
 
-    -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-    local servers = {'bashls', 'jsonls', 'html', 'dockerls', 'solargraph', 'vimls', 'cssmodules_ls', 'cssls', 'emmet_ls', 'eslint', 'sqlls', 'ltex'} -- , 'remark_ls'
-    for _, lsp in ipairs(servers) do
-      lspconfig[lsp].setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-        format = {enable = true}
-      }
-    end
+    -- defaults
+    ts_utils.setup({
+        -- debug = false,
+        -- disable_commands = false,
+        enable_import_on_completion = true,
 
-    -- -- sumneko/lua-language-server 2.5.1
-    lspconfig.sumneko_lua.setup(require("lua-dev").setup {
-        lspconfig = {
-          on_attach = on_attach,
-          capabilities = capabilities,
-          settings = {
-            Lua = {
-              runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = 'LuaJIT',
-                -- Setup your lua path
-                path = "/usr/bin/lua",
-              },
-              diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = { 'vim' },
-              },
-              workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file('', true),
-              },
-              -- Do not send telemetry data containing a randomized but unique identifier
-              telemetry = {
-                enable = false,
-              },
-            },
-          },
-          format = true,
-        },
+        -- eslint
+        -- using eslint lsp directly now, see below
+        eslint_enable_code_actions = true,
+        eslint_enable_disable_comments = true,
+        eslint_bin = "eslint",
+        eslint_config_fallback = nil,
+        eslint_enable_diagnostics = false,
+
+        -- formatting
+        enable_formatting = true,
+        formatter = "prettier",
+        formatter_config_fallback = nil,
+
+        -- parentheses completion
+        complete_parens = true,
+        signature_help_in_parens = true,
+
+        -- update imports on file move
+        update_imports_on_move = false,
+        require_confirmation_on_move = false,
+        watch_dir = nil,
       })
+    -- required to fix code action ranges
+    ts_utils.setup_client(client)
+  end,
+}
 
-    -- Search/Replace visual b/c inccommand preview doesn't show all (PRs in flight on Neovim)
-    -- tsserver - JavaScript lsp config
-    lspconfig.tsserver.setup {
-      on_attach = function(client)
-        require("lsp_signature").on_attach {
-          bind = true, -- This is mandatory, otherwise border config won't get registered.
-          doc_lines = 2, -- will show 2 lines of comment/doc(if there are more than 2 lines in doc, will be truncated)
+local function run(use, map)
+  use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
+  use 'williamboman/nvim-lsp-installer'
+  use "jose-elias-alvarez/nvim-lsp-ts-utils"
+  use "ray-x/lsp_signature.nvim"
+  use "hrsh7th/cmp-nvim-lsp"
+  use "folke/lua-dev.nvim"
+  use "nvim-lua/lsp_extensions.nvim"
 
-          floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
-          hint_enable = true, -- virtual hint enable
-          hint_prefix = "🌟 ", -- Panda for parameter
-          hint_scheme = "String",
-          use_lspsaga = false, -- set to true if you want to use lspsaga popup
-          hi_parameter = "Search", -- how your parameter will be highlight
-          max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
-          -- to view the hiding contents
-          max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
-          handler_opts = {
-            border = "single", -- double, single, shadow, none
-          },
-          extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
-        }
+  use {
+    "windwp/nvim-autopairs",
+    config = function()
+      require('nvim-autopairs').setup{}
+    end,
+  }
 
-        local ts_utils = require "nvim-lsp-ts-utils"
+  -- Add additional capabilities supported by nvim-cmp and snippets
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-        -- defaults
-        ts_utils.setup({
-            -- debug = false,
-            -- disable_commands = false,
-            enable_import_on_completion = true,
+  local lspconfig = require('lspconfig')
+  local lsp_installer = require("nvim-lsp-installer")
 
-            -- eslint
-            -- using eslint lsp directly now, see below
-            eslint_enable_code_actions = true,
-            eslint_enable_disable_comments = true,
-            eslint_bin = "eslint",
-            eslint_config_fallback = nil,
-            eslint_enable_diagnostics = false,
-
-            -- formatting
-            enable_formatting = true,
-            formatter = "prettier",
-            formatter_config_fallback = nil,
-
-            -- parentheses completion
-            complete_parens = true,
-            signature_help_in_parens = true,
-
-            -- update imports on file move
-            update_imports_on_move = false,
-            require_confirmation_on_move = false,
-            watch_dir = nil,
-          })
-        -- required to fix code action ranges
-        ts_utils.setup_client(client)
-      end,
-    }
-
-
-    -- nvim-autopairs
-    use {
-      "windwp/nvim-autopairs",
-      config = function()
-        require('nvim-autopairs').setup{}
-      end,
-    }
-
-
-    -- Enable rust_analyzer
-    -- rust-analyzer 49b097097 2021-12-06 dev
-    lspconfig.rust_analyzer.setup {
+  -- Register a handler that will be called for all installed servers.
+  -- Alternatively, you may also register handlers on specific server instances instead (see example below).
+  lsp_installer.on_server_ready(function(server)
+    local opts = {
+      on_attach = on_attach.common,
       capabilities = capabilities,
-      on_attach = on_attach,
-      settings = {
+      format = {enable = true},
+      -- settings = settings
+    }
+    -- (optional) Customize the options passed to the server
+    if server.name == "tsserver" then
+      opts.on_attach = function(client, bufnr)
+        on_attach.common(nil, bufnr)
+        on_attach.tsserver(client)
+      end
+    elseif server.name == "sumneko_lua" then
+      opts.settings = {
+        Lua = {
+          runtime = {
+            -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+            version = 'LuaJIT',
+            -- Setup your lua path
+            path = "/usr/bin/lua",
+          },
+          diagnostics = {
+            -- Get the language server to recognize the `vim` global
+            globals = { 'vim' },
+          },
+          workspace = {
+            -- Make the server aware of Neovim runtime files
+            library = vim.api.nvim_get_runtime_file('', true),
+          },
+          -- Do not send telemetry data containing a randomized but unique identifier
+          telemetry = {
+            enable = false,
+          },
+        },
+      }
+      -- server:setup(require("lua-dev").setup {
+      --   lspconfig = opts,
+      --   command = {'/home/armin/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server'}
+      -- })
+    elseif server.name == "rust-analyzer" then
+      opts.settings = {
         ["rust-analyzer"] = {
           cargo = { loadOutDirsFromCheck = true },
           procMacro = { enable = true },
         },
-      },
-      format = { enable = true },
-    }
+      }
+    end
+    server:setup(opts)
+  end)
 
-    -- LSP signs default
-    vim.fn.sign_define(
-      "DiagnosticSignError",
-      { texthl = "DiagnosticSignError", text = "", numhl = "DiagnosticSignError" }
-      )
-    vim.fn.sign_define(
-      "DiagnosticSignWarning",
-      { texthl = "DiagnosticSignWarning", text = "", numhl = "DiagnosticSignWarning" }
-      )
-    vim.fn.sign_define("DiagnosticSignHint", { texthl = "DiagnosticSignHint", text = "", numhl = "DiagnosticSignHint" })
-    vim.fn.sign_define("DiagnosticSignInfo", { texthl = "DiagnosticSignInfo", text = "", numhl = "DiagnosticSignInfo" })
+  -- LSP signs default
+  vim.fn.sign_define(
+    "DiagnosticSignError",
+    { texthl = "DiagnosticSignError", text = "", numhl = "DiagnosticSignError" }
+    )
+  vim.fn.sign_define(
+    "DiagnosticSignWarning",
+    { texthl = "DiagnosticSignWarning", text = "", numhl = "DiagnosticSignWarning" }
+    )
+  vim.fn.sign_define("DiagnosticSignHint", { texthl = "DiagnosticSignHint", text = "", numhl = "DiagnosticSignHint" })
+  vim.fn.sign_define("DiagnosticSignInfo", { texthl = "DiagnosticSignInfo", text = "", numhl = "DiagnosticSignInfo" })
 
-    -- LSP Enable diagnostics
-    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = false,
-        underline = true,
-        signs = true,
-        update_in_insert = false,
-        severity_sort = true,
-      })
+  -- LSP Enable diagnostics
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+      virtual_text = false,
+      underline = true,
+      signs = true,
+      update_in_insert = false,
+      severity_sort = true,
+    })
 
-    local border_style = {
-      { "╭", "FloatBorder" },
-      { "─", "FloatBorder" },
-      { "╮", "FloatBorder" },
-      { "│", "FloatBorder" },
-      { "╯", "FloatBorder" },
-      { "─", "FloatBorder" },
-      { "╰", "FloatBorder" },
-      { "│", "FloatBorder" },
-    }
+  local border_style = {
+    { "╭", "FloatBorder" },
+    { "─", "FloatBorder" },
+    { "╮", "FloatBorder" },
+    { "│", "FloatBorder" },
+    { "╯", "FloatBorder" },
+    { "─", "FloatBorder" },
+    { "╰", "FloatBorder" },
+    { "│", "FloatBorder" },
+  }
 
-    local pop_opts = { border = border_style }
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, pop_opts)
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, pop_opts)
-    vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+  local pop_opts = { border = border_style }
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, pop_opts)
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, pop_opts)
+  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
     {
-        underline = true,
-        virtual_text = {
-            spacing = 5,
-            severity_limit = 'Warning',
-        },
-        update_in_insert = true,
+      underline = true,
+      virtual_text = {
+        spacing = 5,
+        severity_limit = 'Warning',
+      },
+      update_in_insert = true,
     }
-)
-  end
+    )
+end
 
-return { run = run, on_attach = on_attach}
+return { run = run, on_attach = on_attach.common}
