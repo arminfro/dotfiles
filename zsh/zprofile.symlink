@@ -4,7 +4,7 @@ export TERMINAL=alacritty
 export EDITOR=nvim
 export SUDO_EDITOR=nvim
 export VISUAL=nvim
-ecoc-rlsxport PAGER=/usr/bin/nvimpager # && alias less=$PAGER
+export PAGER=/usr/bin/nvimpager # && alias less=$PAGER
 
 export FILE_MANAGER=thunar
 export PASSWORD_MANAGER=keepassxc

@@ -1,10 +1,9 @@
 -- vi: ft=lua
+local M = {}
 
-local function run(use, map)
-  local g = vim.g
+local g = vim.g
 
-  use 'mhinz/vim-startify'
-
+function M.config()
   g.startify_lists = {
     -- {type = "sessions", header = {"         Sessions"}},
     {type = "dir", header = {"         Mru files"}},
@@ -15,12 +14,12 @@ local function run(use, map)
   -- { type ='dir',                         header = {'       MRU in '. getcwd() }  },
   g.startify_commands = {
     {h = {"Check Vim health", ":checkhealth"}},
-    {i = {"Install PLugins", ":PackerInstall"}},
+    {i = {"Install Plugins", ":PackerInstall"}},
     {u = {"Update Plugin", ":PackerUpdate"}},
     {c = {"Clean Plugin", ":PackerClean"}},
-    -- {s = {"Sync Plugin", ":PackerSync"}},
-    {s = {"Start Time", ":StartupTime"}},
-    {o = {"Open GitHub repo", ":RepoEdit"}}
+    {s = {"Sync Plugin", ":PackerSync"}},
+    {m = {"Start Time", ":StartupTime"}},
+    -- {o = {"Open GitHub repo", ":RepoEdit"}}
   }
 
   g.startify_bookmarks = {
@@ -41,6 +40,8 @@ local function run(use, map)
   g.startify_files_number = 10
   g.startify_update_oldfiles = 1
   g.startify_change_to_dir = 1
+
+  require("plugins.legendary").startify()
 end
 
-return { run = run}
+return M

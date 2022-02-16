@@ -1,26 +1,21 @@
 -- vi: ft=lua
 
-local opts = {noremap = true, silent=true}
+local M = {}
 
-local function run(use, map)
-  use { 'ibhagwan/fzf-lua',
-    -- optional for icon support
-    requires = { 'kyazdani42/nvim-web-devicons' }
-  }
-  require('fzf-lua').setup{}
-  map('n', '<leader>ge', "<cmd>fzf#vim#complete('git status --short | awk `$1 ~ /^M|A|U/ {print $2}`')", opts)
-  map('n', '<F1>', '<ESC>:FzfLua help_tags<CR>', opts)
-  map('n', '<C-P>', '<ESC>:FzfLua git_files<CR>', opts)
-  map('n', '<C-S>', '<ESC>:FzfLua lines<CR>', opts)
-  map('n', '<C-D>', '<ESC>:FzfLua git_commits<CR>', opts)
-  map('n', '<C-U>', '<ESC>:FzfLua git_status<CR>', opts)
-  map('n', '<C-X>', '<ESC>:FzfLua tags<CR>', opts)
-  map('n', '<C-N>', '<ESC>:FzfLua buffers<CR>', opts)
-  map('n', '<C-O>', '<ESC>:FzfLua commands<CR>', opts)
-  map('n', '<C-A>', '<ESC>:FzfLua grep<CR><CR>', opts)
+function M.config()
+    local status_ok, fzflua = pcall(require, "fzf-lua")
+    if not status_ok then
+        return
+    end
 
-  map('n', '<leader>t', '<ESC>:FzfLua <CR>', opts)
-  map('n', '<leader>*', '<ESC>:FzfLua grep_cword<CR>', opts)
+    fzflua.setup({
+        lsp = {
+          -- make lsp requests synchronous so they work with null-ls
+          async_or_timeout = 3000,
+        },
+      })
+
+    require("plugins.legendary").fzf()
 end
 
-return { run = run}
+return M

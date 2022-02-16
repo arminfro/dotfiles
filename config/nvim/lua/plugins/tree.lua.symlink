@@ -1,0 +1,124 @@
+-- vi: ft=lua
+
+local map = vim.api.nvim_set_keymap
+
+local M = {}
+
+function M.config()
+    local status_ok, nvimtree = pcall(require, "nvim-tree")
+    if not status_ok then
+        return
+    end
+
+    nvimtree.setup {
+        ignore = { '.git', 'node_modules', '.cache' },
+        ignore_ft_on_setup = {
+            "startify",
+        },
+        indent_markers = 1,
+        git_hl = 1,
+        highlight_opened_files = 1,
+        root_folder_modifier = ':~',
+        add_trailing = 1,
+        group_empty = 1,
+        disable_window_picker = 1,
+        icon_padding = ' ',
+        respect_buf_cwd = 1,
+        refresh_wait = 500,
+        window_picker_exclude = {
+            filetype = {
+                'notify',
+                'packer',
+                'qf'
+            },
+            buftype = {
+                'terminal'
+            }
+        },
+        icons = {
+            default = '',
+            symlink= '',
+            git= {
+                unstaged= "✗",
+                staged= "✓",
+                unmerged= "",
+                renamed= "➜",
+                untracked= "★",
+                deleted= "",
+                ignored= "◌"
+            },
+            folder= {
+                arrow_open= "",
+                arrow_closed= "",
+                default= "",
+                open= "",
+                empty= "",
+                empty_open= "",
+                symlink= "",
+                symlink_open= "",
+            },
+            lsp= {
+                hint= "",
+                info= "",
+                warning= "",
+                error= "",
+            }
+        },
+        filters = {
+            dotfiles = false,
+            custom = {
+                ".git",
+                "node_modules",
+                ".cache",
+            },
+        },
+        disable_netrw = true,
+        hijack_netrw = true,
+        auto_close = true,
+        open_on_tab = false,
+        quit_on_open = false,
+        hijack_cursor = true,
+        hide_root_folder = true,
+        update_cwd = true,
+        update_focused_file = {
+            enable = true,
+            update_cwd = true,
+            ignore_list = {},
+        },
+        diagnostics = {
+            enable = false,
+            icons = {
+                hint = "",
+                info = "",
+                warning = "",
+                error = "",
+            },
+        },
+        view = {
+            width = 25,
+            height = 30,
+            side = "left",
+            allow_resize = true,
+            hide_root_folder = false,
+            number = false,
+            relativenumber = false,
+            signcolumn = "yes",
+        },
+        git = {
+            enable = true,
+            ignore = false,
+            timeout = 500,
+        },
+        show_icons = {
+            git = 1,
+            folders = 1,
+            files = 1,
+            folder_arrows = 0,
+            tree_width = 30,
+        },
+    }
+
+    require("plugins.legendary").nvim_tree()
+end
+
+return M

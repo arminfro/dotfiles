@@ -1,0 +1,5 @@
+-- vi: ft=lua
+
+return {
+  filetypes = {'html', 'javascript', 'javascriptreact', 'typescriptreact', 'svelte', 'vue', 'rescript'}
+}

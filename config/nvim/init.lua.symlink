@@ -1,17 +1,27 @@
 -- vi: ft=lua
 
--- config/setup
-require "config"
+local utils = require "core.utils"
 
--- Plugins
-require "plugins"
+utils.disabled_builtins()
 
--- mappings
-require "mappings"
+utils.bootstrap()
 
--- treesitter
-require "treesitter"
+utils.impatient()
 
-vim.cmd [[
-  hi LineNr guifg=#969896
-]]
+local sources = {
+  "config",
+  "core.autocmds",
+  "plugins",
+}
+
+for _, source in ipairs(sources) do
+  local status_ok, fault = pcall(require, source)
+  if not status_ok then
+    error("Failed to load " .. source .. "\n\n" .. fault)
+  end
+end
+
+-- utils.user_settings()
+
+-- utils.compiled()
+

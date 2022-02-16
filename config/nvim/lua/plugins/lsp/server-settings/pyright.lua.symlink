@@ -1,0 +1,11 @@
+-- vi: ft=lua
+
+return {
+  settings = {
+    python = {
+      analysis = {
+        typeCheckingMode = "off",
+      },
+    },
+  },
+}

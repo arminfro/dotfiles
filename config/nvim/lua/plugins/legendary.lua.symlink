@@ -1,0 +1,235 @@
+-- vi: ft=lua
+
+-- there are some more keybindings in plugins.gitsigns, plugins.cmp, plugins.treesitter, plugins.symbols-outline
+local M = {}
+
+local opts = {noremap = true}
+
+function M.toggleterm()
+  require("legendary").bind_keymaps({
+      {'<leader>th',":lua _HTOP_TOGGLE()<CR>", description = "Open Htop", mode = {"n", "v"}, opts},
+      {'<leader>tn',":lua _NODE_TOGGLE()<CR>", description = "Open Node", mode = {"n", "v"}, opts},
+      {'<leader>tt',":lua _TS_NODE_TOGGLE()<CR>", description = "Open TS-Node", mode = {"n", "v"}, opts},
+  })
+end
+
+function M.lazygit()
+  require("legendary").bind_keymaps({
+      {'<leader>gl',":LazyGit<CR>", description = "Open LazyGit", mode = {"n", "v"}, opts},
+  })
+end
+
+function M.gitlinker()
+  require("legendary").bind_keymaps({
+      -- leader gy is actual keymapping, just let it bet set by plugin, works better
+      -- {'<leader>gy',":lua require'gitlinker'.get_buf_range_url()<CR>", description = "Copy Git Link", mode = {"n", "v"}, opts},
+      {'<leader>gY',":lua require'gitlinker'.get_repo_url()<CR>", description = "Copy Repo Url", mode = {"n", "v"}, opts},
+      {'<leader>gB',":lua require'gitlinker'.get_repo_url({action_callback = require'gitlinker.actions'.open_in_browser})<CR>", description = "Open Repo in Browser", mode = {"n", "v"}, opts},
+  })
+end
+
+function M.diffview()
+  require("legendary").bind_keymaps({
+      {'<leader>dp',":DiffviewOpen<CR>", description = "Open Diffview for project", mode = {"n", "v"}, opts},
+      {'<leader>df',":DiffviewOpen<CR>", description = "Open Diffview for current file", mode = {"n", "v"}, opts},
+      {'<leader>dc',":DiffviewClose<CR>", description = "Close Diffview", mode = {"n", "v"}, opts},
+  })
+end
+
+function M.refactoring()
+  require("legendary").bind_keymaps({
+      {'<space>re',":lua require('refactoring').refactor('Extract Function')<CR>", description = "Refactoring, extract function", mode = {"n", "v"}, opts},
+      {'<space>rf',":lua require('refactoring').refactor('Extract Function To File')<CR>", description = "Refactoring, extract function to seperate file", mode = {"n", "v"}, opts},
+      {'<space>rv',":lua require('refactoring').refactor('Extract Variable')<CR>", description = "Refactoring, extract variable", mode = {"n", "v"}, opts},
+      {'<space>ri',":lua require('refactoring').refactor('Inline Variable')<CR>", description = "Refactoring, inline variable", mode = {"n", "v"}, opts},
+  })
+end
+
+function M.yode()
+  require("legendary").bind_keymaps({
+      {'<space>y',':YodeCreateSeditorFloating<CR>', description = "focus on a code part and make it floating", mode = {"n", "v"}, opts},
+  })
+end
+
+function M.startify()
+  require("legendary").bind_keymaps({
+      {'<F1>',':Startify<CR>', description = "Open Startify", mode = {"n"}, opts},
+  })
+end
+
+function M.symbols_outline()
+  require("legendary").bind_keymaps({
+      {'<F8>',':SymbolsOutline<CR>', description = "Toggle Symbols Outline", mode = {"n"}, opts},
+  })
+end
+
+function M.bufferline()
+  require("legendary").bind_keymaps({
+      {'<C-L>',':BufferLineCycleNext<CR>', description = "Go to next buffer", mode = {"n"}, opts},
+      {'<C-H>',':BufferLineCyclePrev<CR>', description = "Go to prev buffer", mode = {"n"}, opts},
+      {'[b',':BufferLineMovePrev<CR>', description = "Move buffer to the right", mode = {"n"}, opts},
+      {']b',':BufferLineMoveNext<CR>', description = "Move buffer to the left", mode = {"n"}, opts},
+      {'<leader>bp',':BufferLinePick<CR>', description = "Pick a buffer", mode = {"n"}, opts},
+      {'<leader>bse',':BufferLineSortByExtension<CR>', description = "Sort Buffers by Extenstion", mode = {"n"}, opts},
+      {'<leader>bsd',':BufferLineSortByDirectory<CR>', description = "Sort Buffers by Directory", mode = {"n"}, opts},
+    })
+end
+
+function M.lsp_ts_utils()
+  require("legendary").bind_keymaps({
+      {'<space>ti',':TSLspImportAll<CR>', description = "TS import all", mode = {"n"}, opts},
+      {'<space>to',':TSLspOrganize<CR>', description = "TS organize imports", mode = {"n"}, opts},
+      {'<space>tr',':TSLspRenameFile<CR>', description = "TS Rename File", mode = {"n"}, opts},
+  })
+end
+
+function M.lsp(bufnr)
+  opts = {buffer = bufnr, noremap = true}
+  local legendary = require("legendary")
+  legendary.bind_commands({
+      { ':Format', 'lua vim.lsp.buf.formatting()', description="Format current buffer"}
+    })
+  legendary.bind_keymaps({
+      {'<space>d','<cmd>lua vim.lsp.buf.definition()<CR>', description = "Go to definition", mode = {"n"}, opts},
+      {'<space>D','<cmd>lua vim.lsp.buf.declaration()<CR>', description = "Go to declaration", mode = {"n"}, opts},
+      {'<space>i','<cmd>lua vim.lsp.buf.implementation()<CR>', description = "Go to implementation", mode = {"n"}, opts},
+      -- {'<space>t','<cmd>lua vim.lsp.buf.type_definition()<CR>', description = "Go to type definition", mode = {"n"}, opts},
+      {'<space>t',':FzfLua lsp_live_workspace_symbols<CR>', description = "Search workspace for Symbols", mode = {"n"}, opts},
+      {'<space>r',':Lspsaga lsp_finder<CR>', description = "Show references of hovered symbol", mode = {"n"}, opts},
+      {'<space>h',':Lspsaga hover_doc<CR>', description = "Show hover of current symbol", mode = {"n"}, opts},
+      {'<space>a',':Lspsaga code_action<CR>', description = "Code Actions by Lsp", mode = {"n"}, opts},
+      {'<space>a',':Lspsaga range_code_action<CR>', description = "Code Actions by Lsp per selection", mode = {"v"}, opts},
+      {'<space>s',':Lspsaga signature_help<CR>', description = "Signature help by Lsp", mode = {"n"}, opts},
+      {'<space>rn',':Lspsaga rename<CR>', description = "Rename current symbol", mode = {"n"}, opts},
+      {'<space>e',':FzfLua lsp_workspace_diagnostics<CR>', description = "Show all diagnostics in quickfix", mode = {"n"}, opts},
+      {'<space>f',':Format<CR>', description = "Format document", mode = {"n"}, opts},
+      {'[j',':Lspsaga diagnostic_jump_prev<CR>', description = "Go to previous diagnostic", mode = {"n"}, opts},
+      {']j',':Lspsaga diagnostic_jump_next<CR>', description = "Go to next diagnostic", mode = {"n"}, opts},
+    })
+end
+
+function M.nvim_tree()
+  require("legendary").bind_keymaps({
+    {'<leader>r',':NvimTreeRefresh<CR>', mode = {"n"}, description = "Refresh nvim-tree", opts},
+    {'<leader>f',':NvimTreeFindFile<CR>', mode = {"n"}, description = "Find current file in nvim-tree", opts},
+  })
+end
+
+function M.fzf()
+  require("legendary").bind_keymaps({
+      {'<F2>', '<ESC>:FzfLua<CR>', mode = {"n"}, description = "Fuzzy searches", opts },
+      {'<F12>', '<ESC>:FzfLua help_tags<CR>', mode = {"n"}, description = "Fuzzy search helptags", opts },
+      {'<C-O>', '<ESC>:FzfLua commands<CR>', mode = {"n"}, description = "Fuzzy search command", opts },
+      {'<C-X>', '<ESC>:FzfLua tags<CR>', mode = {"n"}, description = "Fuzzy search code tags", opts },
+      {'<C-N>', '<ESC>:FzfLua buffers<CR>', mode = {"n"}, description = "Fuzzy search buffer", opts },
+      {'<C-A>', '<ESC>:FzfLua grep_project<CR>', mode = {"n"}, description = "Fuzzy search word", opts },
+      {'<C-S>', '<ESC>:FzfLua lines<CR>', mode = {"n"}, description = "Fuzzy search lines of open buffers", opts },
+      {'<C-P>', '<ESC>:FzfLua git_files<CR>', mode = {"n"}, description = "Fuzzy search files in Git repo", opts },
+      {'<C-D>', '<ESC>:FzfLua git_commits<CR>', mode = {"n"}, description = "Fuzzy search git commits", opts },
+      {'<C-U>', '<ESC>:FzfLua git_status<CR>', mode = {"n"}, description = "Fuzzy search git modified files", opts },
+      {'<leader>gb', '<ESC>:FzfLua git_branches<CR>', mode = {"n"}, description = "Fuzzy search git modified files", opts },
+    })
+end
+
+function M.fugitive()
+  require("legendary").bind_commands({
+      { ':GitResetHard', ':G reset --hard', description="Reset Git hard"},
+    })
+  require("legendary").bind_keymaps({
+      {'<leader>gs', ':Git<CR>', mode = {"n"}, description = "Git status", opts },
+      {'<leader>gc', ':Git commit<CR>', mode = {"n"}, description = "Git commit", opts },
+      {'<leader>gd', ':Gdiffsplit<CR>', mode = {"n"}, description = "Git diff", opts },
+      -- {'<leader>gb', ':GV<CR>', mode = {"n"}, description = "Git commits of current file", opts },
+      {'<leader>grhh', ':GitResetHard<CR>', mode = {"n"}, opts },
+    })
+end
+
+function M.tabular()
+  require("legendary").bind_keymaps({
+      {'<leader>t=', ':Tabularize /=<CR>', mode = {"v", "n"}, description = "Align text on '='", opts },
+      {'<leader>t"', ':Tabularize /"<CR>', mode = {"v", "n"}, description = "Align text on '\"'", opts },
+      {'<leader>t:', ':Tabularize /:\zs<CR>', mode = {"v", "n"}, description = "Align text on ':'", opts },
+      {'<leader>t-', ':Tabularize /-<CR>', mode = {"v", "n"}, description = "Align text on ':'", opts },
+    })
+end
+
+function M.undotree()
+  require("legendary").bind_keymaps({
+      {'<F7>', ':UndotreeToggle<CR>', mode = {"v", "n"}, description = "Toggles Undo Tree", opts },
+    })
+end
+
+function M.config()
+  local status_ok, legendary = pcall(require, "legendary")
+  if not status_ok then
+    return
+  end
+
+  local keymaps = {
+    -- File Movement
+    {'H','^', mode = {"n", "v"}, description = "Jump to beginning of line", opts = { noremap = true } },
+    {'L','g_', mode = {"n", "v"}, description = "Jump to end of line", opts = { noremap = true } },
+    {'J','8j', mode = {"n", "v"}, description = "Jump 8 lines down", opts = { noremap = true } },
+    {'K','8k', mode = {"n", "v"}, description = "Jump 8 lines up", opts = { noremap = true } },
+
+    -- Buffer Movement, gets set up by bufferline plugin
+    -- {'<C-L>',':bnext<CR>', mode = {"n"}, description = "Go to next buffer", opts = { noremap = true } },
+    -- {'<C-H>',':bprevious<CR>', mode = {"n"}, description = "Go to next buffer", opts = { noremap = true } },
+
+    -- Window Movement
+    {'<C-A-J>','<C-W>j', mode = {"n"}, description = "Go a window down", opts = { noremap = true } },
+    {'<C-A-K>','<C-W>k', mode = {"n"}, description = "Go a window up", opts = { noremap = true } },
+    {'<C-A-H>','<C-W>h', mode = {"n"}, description = "Go a window left", opts = { noremap = true } },
+    {'<C-A-L>','<C-W>l', mode = {"n"}, description = "Go a window right", opts = { noremap = true } },
+
+    -- Config
+    {'<leader>rc',':source ~/.config/nvim/init.lua<CR>', mode = {"n"}, description = "Reload vim config", opts = { noremap = true } },
+
+    -- Buffer Managemant
+    {'<leader>x',':bd!<CR>', mode = {"n"}, description = "Close current buffer", opts = { noremap = true } },
+
+    -- Window Managemant
+    {'<leader>wo',':only<CR>', mode = {"n"}, description = "Hide other windows", opts = { noremap = true } },
+    {'<leader>wh',':hide<CR>', mode = {"n"}, description = "Hide this window", opts = { noremap = true } },
+    {'<leader>ws',':vsplit<CR>', mode = {"n"}, description = "Split new window vertically", opts = { noremap = true } },
+    {'<leader>wd',':windo diffthis<CR>', mode = {"n"}, description = "Diff this window", opts = { noremap = true } },
+    {'<leader>wt',':windo diffoff<CR>', mode = {"n"}, description = "Diff off", opts = { noremap = true } },
+
+    -- Copy to clipboard
+    {'<leader>y','"+y', mode = {"n", "v"}, description = "Copy to clipboard", opts = { noremap = true } },
+    {'<leader>Y','"+yg_', mode = {"n"}, description = "Copy to clipboard until end of line", opts = { noremap = true } },
+    {'<leader>yy','"+yy', mode = {"n"}, description = "Copy entire line to clipboard", opts = { noremap = true } },
+
+    -- Paste from clipboard
+    {'<leader>p','"p', mode = {"n", "v"}, description = "Paste from clipboard at current position", opts = { noremap = true } },
+    {'<leader>P','"P', mode = {"n", "v"}, description = "Paste from clipboard before current position", opts = { noremap = true } },
+
+    -- easier save and exit
+    {'<leader>,', ':wa<CR>', mode = {"n"}, description = "Save all buffers", opts = { noremap = true } },
+    {'<leader>q', ':qa<CR>', mode = {"n"}, description = "Quit", opts = { noremap = true } },
+
+    -- activate spell checker
+    {'<leader>sc', ':setlocal spell spelllang=en_us,de_de<cr>', mode = {"n"}, description = "Activate spell checker", opts = { noremap = true } },
+
+    {'<leader>l', ':Legend ""<cr>', mode = {"n"}, description = "open Legend", opts = { noremap = true } },
+  }
+
+  local commands = {
+    { ':CopyFilePath', "let @+ = expand('%:p')", description = "Copy's current file path to clipboard" },
+    { ':SourceVimConfig', ":source ~/.config/nvim/init.lua<CR>", description = "Source vim config" },
+    { ':CurrentFileType', ":lua vim.bo.filetype<CR>", description = "Get current Filetype" },
+
+  }
+
+  legendary.setup({
+      -- Include builtins by default, set to false to disable
+      include_builtin = true,
+      -- Customize the prompt that appears on your vim.ui.select() handler
+      select_prompt = 'Legendary',
+      keymaps = keymaps,
+      commands = commands,
+    })
+
+end
+
+return M

@@ -26,6 +26,23 @@ block = "focused_window"
 max_width = 21
 
 [[block]]
+block = "custom"
+json = true
+command = ''' echo "{\"icon\":\"ping\",\"text\":\"`ping -c4 1.1.1.1 | tail -n1 | cut -d'/' -f5`\"}" '''
+interval = 60
+on_click = "<command>"
+
+[[block]]
+block = "custom"
+command = "echo `uname` `uname -r | tr - . | cut -d. -f1-2`@`cat /etc/hostname`"
+interval = "once"
+
+[[block]]
+block = "custom"
+command = "echo '\uf0ac' `sh ~/.dotfiles/bin/public-ip-info`"
+interval = 30
+
+[[block]]
 block = "docker"
 interval = 2
 format = "{running}/{total}"
