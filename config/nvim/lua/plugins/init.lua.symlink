@@ -110,7 +110,7 @@ packer.startup {
 
     -- Better Git diffing
     -- see h:diffview-config for default keybindings
-    use { 
+    use {
       'sindrets/diffview.nvim',
       config = function ()
         require("plugins.legendary").diffview()
@@ -170,7 +170,7 @@ packer.startup {
     use {
       'weilbith/nvim-code-action-menu',
       cmd = 'CodeActionMenu',
-    } 
+    }
 
     -- lazygit vim frontend
     use {
@@ -636,7 +636,7 @@ packer.startup {
     -- open files at the last cursor position, todo doesnt work
     -- use {
     --    'ethanholz/nvim-lastplace',
-    --   config = function() 
+    --   config = function()
     --     require'nvim-lastplace'.setup {
     --       lastplace_ignore_buftype = {"quickfix", "nofile", "help"},
     --       lastplace_ignore_filetype = {"gitcommit", "gitrebase", "svn", "hgcommit", "startify"},
