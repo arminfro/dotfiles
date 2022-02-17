@@ -62,7 +62,7 @@ There's a few special files in the hierarchy.
   your `$HOME`. This is so you can keep all of those versioned in your dotfiles
   but still keep those autoloaded files in your home directory. These get
   symlinked in when you run `script/bootstrap`.
-- **topic/{system,node,python,ruby}_packages**: Will get installed when you run `script/install`.
+- **topic/{system,node,python,ruby}\_packages**: Will get installed when you run `script/install`.
 
 ## install
 
@@ -71,7 +71,7 @@ This repository is expected to be in `~/.dotfiles`.
 Example one liner for fedora:
 
 ```sh
-git clone https://github.com/arminfro/dotfiles.git ~/.dotfiles && cd ~/.dotfiles/script && ./fedora  && ./bootstrap  && ./install 
+git clone https://github.com/arminfro/dotfiles.git ~/.dotfiles && cd ~/.dotfiles/script && ./fedora  && ./bootstrap  && ./install && zsh
 ```
 
 This will activate some repos and installs all packages.
