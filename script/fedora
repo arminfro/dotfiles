@@ -1,9 +1,12 @@
 #!/bin/bash
 
-echo 'Need sudo for adding yarn and neovim-nightly repo'
+echo 'Need sudo for adding yarn, i3status-rust and neovim-nightly repo'
 
 # install yarn repo
 sudo curl -sL https://dl.yarnpkg.com/rpm/yarn.repo -o /etc/yum.repos.d/yarn.repo
+
+# install i3status-rust repo
+sudo dnf copr -y enable atim/i3status-rust 
 
 # install neovim-nightly repo
 sudo dnf copr -y enable agriffis/neovim-nightly

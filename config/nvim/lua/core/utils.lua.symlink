@@ -3,7 +3,6 @@
 local M = {}
 
 local g = vim.g
-local set = vim.opt
 
 function M.bootstrap()
   local fn = vim.fn
@@ -17,7 +16,7 @@ function M.bootstrap()
       "https://github.com/wbthomason/packer.nvim",
       install_path,
     }
-    print "Cloning packer...\nSetup AstroVim"
+    print "Cloning packer..."
     vim.cmd [[packadd packer.nvim]]
   end
 end
