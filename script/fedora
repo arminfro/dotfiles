@@ -2,5 +2,15 @@
 
 echo 'Need sudo for adding yarn and neovim-nightly repo'
 
+# install yarn repo
 sudo curl -sL https://dl.yarnpkg.com/rpm/yarn.repo -o /etc/yum.repos.d/yarn.repo
+
+# install neovim-nightly repo
 sudo dnf copr -y enable agriffis/neovim-nightly
+
+# install patched font
+git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.nerd-fonts
+cd ~/.nerd-fonts 
+./install.sh Inconsolata
+cd ~
+rm -rf ~/.nerd-fonts
