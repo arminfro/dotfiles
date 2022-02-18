@@ -9,3 +9,8 @@ if ! [[ -d /tmp/i3-gnome-flashback ]]; then
 fi
 
 sudo dnf install -y gnome-tweak-tool gnome-tweaks gnome-flashback.x86_64
+
+echo 'exec --no-startup-id gnome-panel' >> ~/.dotfiles/config/i3/config.symlink
+
+# prevent overwriting of caps:esc switch, https://askubuntu.com/a/582498
+gsettings set org.gnome.settings-daemon.plugins.keyboard active false

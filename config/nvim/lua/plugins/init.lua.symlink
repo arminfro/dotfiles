@@ -21,7 +21,7 @@ packer.startup {
     -- Managemant tool for keybindings and commands
     use {
       'mrjones2014/legendary.nvim',
-      commit = '3127aca',
+      -- commit = '3127aca',
       config = function()
         require("plugins.legendary").config()
       end

@@ -11,8 +11,8 @@ font pango:inconsolata nerd 12
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec $TERMINAL
-# bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec --no-startup-id $TERMINAL
+# bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -154,45 +154,45 @@ hide_edge_borders none
 for_window [window_role="About"] floating enable
 
 # Keyboard Bindings
-bindsym $mod+q exec $CLIPBOARD_MANAGER
-bindsym $mod+w exec $BROWSER
-bindsym $mod+e exec $EMAIL_CLIENT
-bindsym $mod+r exec $ALTERNATIVE_BROWSER
-bindsym $mod+t exec telegram-desktop
-bindsym $mod+y exec $PASSWORD_MANAGER $KEEPASS_DB
-bindsym $mod+a exec $TERMINAL
-bindsym $mod+d exec $FILE_MANAGER
-bindsym $mod+z exec $MUSIC_PLAYER
-bindsym $mod+x exec $VIDEO_PLAYER
-bindsym $mod+n exec sqlitebrowser
-bindsym $mod+c exec virtualbox
-bindsym $mod+m exec VBoxManage startvm ArchLinuxTesting
+bindsym $mod+q exec --no-startup-id $CLIPBOARD_MANAGER
+bindsym $mod+w exec --no-startup-id $BROWSER
+bindsym $mod+e exec --no-startup-id $EMAIL_CLIENT
+bindsym $mod+r exec --no-startup-id $ALTERNATIVE_BROWSER
+bindsym $mod+t exec --no-startup-id telegram-desktop
+bindsym $mod+y exec --no-startup-id $PASSWORD_MANAGER $KEEPASS_DB
+bindsym $mod+a exec --no-startup-id $TERMINAL
+bindsym $mod+d exec --no-startup-id $FILE_MANAGER
+bindsym $mod+z exec --no-startup-id $MUSIC_PLAYER
+bindsym $mod+x exec --no-startup-id $VIDEO_PLAYER
+bindsym $mod+n exec --no-startup-id sqlitebrowser
+bindsym $mod+c exec --no-startup-id virtualbox
+bindsym $mod+m exec --no-startup-id VBoxManage startvm ArchLinuxTesting
 
-bindsym $con+$alt+$mod+s exec systemctl poweroff
+bindsym $con+$alt+$mod+s exec --no-startup-id systemctl poweroff
 
-bindsym $con+$alt+y exec ~/.dotfiles/bin/keyboard-layout --de=true
-bindsym $con+$alt+u exec ~/.dotfiles/bin/keyboard-layout --us=true
+bindsym $con+$alt+y exec --no-startup-id ~/.dotfiles/bin/keyboard-layout --de=true
+bindsym $con+$alt+u exec --no-startup-id ~/.dotfiles/bin/keyboard-layout --us=true
 
 for_window [window_role="About"] floating enable
 
-bindsym $con+$alt+$mod+l exec ~/.dotfiles/bin/lock
-bindsym $con+$alt+$mod+t exec ~/.dotfiles/bin/turbo-start
+bindsym $con+$alt+$mod+l exec --no-startup-id ~/.dotfiles/bin/lock
+bindsym $con+$alt+$mod+t exec --no-startup-id ~/.dotfiles/bin/turbo-start
 
-bindsym --release $con+$alt+m exec xset dpms force off
+bindsym --release $con+$alt+m exec --no-startup-id xset dpms force off
 
-bindsym XF86AudioRaiseVolume exec amixer set Master 7%+ unmute
-bindsym XF86AudioLowerVolume exec amixer set Master 8%- unmute
-bindsym XF86AudioMute exec amixer set Master toggle
-bindsym XF86MonBrightnessDown exec xbacklight -dec 15
-bindsym XF86MonBrightnessUp exec xbacklight -inc 15
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 7%+ unmute
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 8%- unmute
+bindsym XF86AudioMute exec --no-startup-id amixer set Master toggle
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 15
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 15
 
 # Autostart
-exec syndaemon -i 1 -K -d
-exec redshift
-exec unclutter -idle 2 -noevents
-exec gpaste-client start
-exec ~/.dotfiles/bin/keyboard-layout --us=true
-exec ~/.screenlayout/dual-screen.sh
+exec --no-startup-id syndaemon -i 1 -K -d
+exec --no-startup-id redshift
+exec --no-startup-id unclutter -idle 2 -noevents
+exec --no-startup-id gpaste-client start
+exec --no-startup-id ~/.dotfiles/bin/keyboard-layout --us=true
+exec --no-startup-id ~/.screenlayout/dual-screen.sh
 exec --no-startup-id "~/.dotfiles/bin/i3-workspace -w 1 -l browse"
 exec --no-startup-id "~/.dotfiles/bin/i3-workspace -w 2 -l admin"
 

@@ -10,7 +10,13 @@ function M.config()
 
   treesitter.setup {
     -- todo, set list
-    ensure_installed = "maintained",
+    ensure_installed = {
+      'bash', 'css', 'dockerfile', 'dot', 'graphql',
+      'hjson', 'html', 'http', 'javascript', 'jsdoc',
+      'json', 'json5', 'latex', 'lua', 'norg', 'python',
+      'regex', 'ruby', 'rust', 'scss', 'tsx', 'typescript',
+      'vim', 'yaml'
+    },
     incremental_selection = {
       enable = true,
       keymaps = {
