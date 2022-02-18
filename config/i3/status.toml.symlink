@@ -2,11 +2,6 @@
 
 icons = "awesome"
 
-[[block]]
-block = "custom"
-command = 'public-ip-info'
-interval = 30
-
 [theme]
 name = "solarized-dark"
 [theme.overrides]
@@ -42,10 +37,25 @@ block = "custom"
 command = "echo '\uf0ac' `sh ~/.dotfiles/bin/public-ip-info`"
 interval = 30
 
+# start docker daemon to use this block
+# [[block]]
+# block = "docker"
+# interval = 2
+# format = "{running}/{total}"
+
+# [[block]]
+# block = "weather"
+# format = "{weather} in {location}@{temp}C"
+# service = { name = "openweathermap", api_key = "", city_id = "", units = "metric" }
+
 [[block]]
-block = "docker"
-interval = 2
-format = "{running}/{total}"
+block = "sound"
+
+# change to your network interface
+# [[block]]
+# block = "net"
+# device = "enp34s0"
+# interval = 5
 
 [[block]]
 block = "disk_space"

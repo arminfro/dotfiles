@@ -13,4 +13,13 @@ sudo dnf install -y gnome-tweak-tool gnome-tweaks gnome-flashback.x86_64
 echo 'exec --no-startup-id gnome-panel' >> ~/.dotfiles/config/i3/config.symlink
 
 # prevent overwriting of caps:esc switch, https://askubuntu.com/a/582498
-gsettings set org.gnome.settings-daemon.plugins.keyboard active false
+# gsettings set org.gnome.settings-daemon.plugins.keyboard active false
+
+# https://wiki.archlinux.org/title/GNOME/Tips_and_tricks#Hotkey_alternatives#De-bind_the_Super_key
+gsettings set org.gnome.mutter overlay-key ''
+
+# To disable Shell animations
+# gsettings set org.gnome.desktop.interface enable-animations false
+
+# Disable confirmation window when closing Terminal
+gsettings set org.gnome.Terminal.Legacy.Settings confirm-close false

@@ -68,7 +68,7 @@ There's a few special files in the hierarchy.
 
 This repository is expected to be in `~/.dotfiles`.
 
-Example one liner for fedora:
+Example one liner for fedora (only use it at fresh system installation, or do copy of your configs first):
 
 ```sh
 git clone https://github.com/arminfro/dotfiles.git ~/.dotfiles && cd ~/.dotfiles/script && ./fedora  && ./bootstrap  && ./install && zsh
@@ -81,3 +81,5 @@ Everything is configured and tweaked within `~/.dotfiles`.
 
 The main file you'll want to change right off the bat is `zsh/zshrc.symlink`,
 which sets up a few paths and applications that'll be different on your particular machine.
+
+You may type `install-i3-gnome-flashback` to install i3-gnome combi. Otherwise use `i3` only.

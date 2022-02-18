@@ -173,11 +173,6 @@ bindsym $con+$alt+$mod+s exec --no-startup-id systemctl poweroff
 bindsym $con+$alt+y exec --no-startup-id ~/.dotfiles/bin/keyboard-layout --de=true
 bindsym $con+$alt+u exec --no-startup-id ~/.dotfiles/bin/keyboard-layout --us=true
 
-for_window [window_role="About"] floating enable
-
-bindsym $con+$alt+$mod+l exec --no-startup-id ~/.dotfiles/bin/lock
-bindsym $con+$alt+$mod+t exec --no-startup-id ~/.dotfiles/bin/turbo-start
-
 bindsym --release $con+$alt+m exec --no-startup-id xset dpms force off
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 7%+ unmute
@@ -187,18 +182,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 15
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 15
 
 # Autostart
-exec --no-startup-id syndaemon -i 1 -K -d
-exec --no-startup-id redshift
-exec --no-startup-id unclutter -idle 2 -noevents
-exec --no-startup-id gpaste-client start
+# exec --no-startup-id redshift
+# # exec --no-startup-id unclutter -idle 2 -noevents
+# exec --no-startup-id gpaste-client start
 exec --no-startup-id ~/.dotfiles/bin/keyboard-layout --us=true
-exec --no-startup-id ~/.screenlayout/dual-screen.sh
-exec --no-startup-id "~/.dotfiles/bin/i3-workspace -w 1 -l browse"
-exec --no-startup-id "~/.dotfiles/bin/i3-workspace -w 2 -l admin"
-
-for_window [class="gw2-64.exe" instance="gw2-64.exe" title="Guild Wars 2"] floating enable
-for_window [class="Nextcloud" instance="nextcloud" title="Nextcloud"] floating disable
-for_window [class="alfaview" instance="alfaview" title="alfaview - Region share"] floating enable
-# for_window [class="hearthstone.exe" id=132120577 instance="hearthstone.exe" title="Hearthstone"] floating enable
-
-assign [class="VirtualBox Machine"] 10
