@@ -33,10 +33,6 @@ gcom () {
   git commit -m "$(git branch | awk '/^\*/ { print $2   }'), $argv"
 }
 
-gcount () {
-  git ls-files | xargs wc -l
-}
-
 gcurl () {
   curl -i -X GET $1
 }
