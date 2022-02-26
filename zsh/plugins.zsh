@@ -37,9 +37,9 @@ zplug "akarzim/zsh-docker-aliases", if:"[ -x $(which docker) ]"
 zplug "zpm-zsh/ls"
 zplug "plugins/git", from:oh-my-zsh, if:"[ -x $(which git) ]"
 zplug "plugins/archlinux", from:oh-my-zsh, if:"[ -x $(which pacman) ]"
-zplug "plugins/systemd", from:oh-my-zsh, if:"[ -x $(which systemctl)]"
+zplug "plugins/systemd", from:oh-my-zsh #, if:"[ -x $(which systemctl)]" # somehow this evalutes to false ?
 zplug "plugins/bundler", from:oh-my-zsh, if:"[ -x $(which bundler) ]"
-zplug "plugins/deno", from:oh-my-zsh, if:"[ -x $(which deno) ]"
+# zplug "plugins/deno", from:oh-my-zsh, if:"[ -x $(which deno) ]"
 zplug "plugins/firewalld", from:oh-my-zsh, if:"[ -x $(which firewall)-cmd]"
 zplug "plugins/fd", from:oh-my-zsh, if:"[ -x $(which fd) ]"
 zplug "plugins/isodate", from:oh-my-zsh
@@ -77,7 +77,6 @@ zplug "hlissner/zsh-autopair"
 zplug "zpm-zsh/colors"
 zplug "plugins/zsh-colored-man-pages", from:oh-my-zsh
 zplug "plugins/fancy-ctrl-z", from:oh-my-zsh
-zplug "plugins/extract", from:oh-my-zsh
 zplug "spaceship-prompt/spaceship-prompt", use:spaceship.zsh, as:theme
 zplug "brymck/print-alias"
 zplug "changyuheng/fz", defer:1, on:"skywind3000/z.lua"
@@ -99,29 +98,16 @@ zplug "jgogstad/passwordless-history"
 # tracks metadata to zsh history
 # integration with zsh-autosuggestions not working as I wish, that's why HISTFILE is still defined
 zplug "larkery/zsh-histdb"
-# _zsh_autosuggest_strategy_histdb_top_here() {
-#    local query="select commands.argv from commands where commands.argv LIKE 
-# '$(sql_escape $1)%' OR '%$(sql_escape $1)' OR '%$(sql_escape $1)%'
-# group by commands.argv order by count(*) desc limit 1"
-#    suggestion=$(_histdb_query "$query")
-# }
-# ZSH_AUTOSUGGEST_STRATEGY=histdb_top_here
-
-# errors: repository not found
-# zplug "direnv/direnv", \
-#     from:gh-r, \
-#     as:command, \
-#     rename-to:direnv, \
-#     use:"direnv.linux-amd64"
 
 # commands
+zplug "skywind3000/z.lua"
 zplug "arzzen/calc.plugin.zsh"
 zplug "LucasLarson/gunstage", as:command, use:"bin/git-unstage", rename-to:gunstage, at:main, if:"[ -x $(which git) ]"
-# generate .gitignore with templates from gitignore.io offline
-zplug "plugins/gitignore", from:oh-my-zsh, if:"[ -x $(which git) ]"
 zplug "plugins/genpass", from:oh-my-zsh
 zplug "plugins/urltools", from:oh-my-zsh
-zplug "skywind3000/z.lua"
+zplug "plugins/extract", from:oh-my-zsh
+# generate .gitignore with templates from gitignore.io offline
+zplug "plugins/gitignore", from:oh-my-zsh, if:"[ -x $(which git) ]"
 
 # # ctrl-o to copy current command before <CR>
 # zplug "plugins/copybuffer", from:oh-my-zsh

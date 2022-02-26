@@ -1,6 +1,3 @@
-export LSCOLORS="exfxcxdxbxegedabagacad"
-export CLICOLOR=true
-
 fpath=($ZSH/functions $fpath)
 
 autoload -U $ZSH/functions/*(:t)
@@ -156,3 +153,9 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 if [ -x base16_google-dark ] ; then
 	base16_google-dark
 fi
+
+# if [[ $1 == eval ]]
+# then
+#     "$@"
+# set --
+# fi

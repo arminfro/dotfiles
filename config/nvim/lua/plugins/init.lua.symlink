@@ -101,7 +101,7 @@ packer.startup {
     }
 
     -- Focus on code in floating window
-    use {'hoschi/yode-nvim',
+    use { 'hoschi/yode-nvim',
       config = function ()
         require('yode-nvim').setup({})
         require("plugins.legendary").yode()
@@ -109,7 +109,7 @@ packer.startup {
     }
 
     -- Better Git diffing
-    -- see h:diffview-config for default keybindings
+    -- see :h diffview-config for default keybindings
     use {
       'sindrets/diffview.nvim',
       config = function ()
@@ -521,6 +521,8 @@ packer.startup {
       end,
     }
 
+    -- Git status left of line number
+    -- see :h gitsigns-mappings for default keybindings
     use {
       "lewis6991/gitsigns.nvim",
       config = function()
