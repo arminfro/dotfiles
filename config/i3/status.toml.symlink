@@ -2,6 +2,12 @@
 
 icons = "awesome"
 
+# <<<<< Colors <<<<<
+# vi:syntax=toml
+
+# base16-i3status-rust (https://github.com/mystfox/base16-i3status-rust)
+# Google Dark by Seth Wright (http://sethawright.com)
+
 [theme]
 name = "solarized-dark"
 [theme.overrides]
@@ -15,6 +21,8 @@ warning_bg = "#FBA922"
 warning_fg = "#1d1f21"
 critical_bg = "#CC342B"
 critical_fg = "#1d1f21"
+# The rest of the theme settings are left at default.
+# >>>>> Colors >>>>>
 
 [[block]]
 block = "focused_window"

@@ -175,73 +175,6 @@ font:
   # effect.
   use_thin_strokes: true
 
-# If `true`, bold text is drawn using the bright color variants.
-draw_bold_text_with_bright_colors: true
-
-# https://github.com/aarowill/base16-alacritty/blob/master/colors/base16-google-dark-256.yml
-# Base16 Google Dark 256 - alacritty color config
-# Seth Wright (http://sethawright.com)
-colors:
-  # Default colors
-  primary:
-    background: '0x1d1f21'
-    foreground: '0xc5c8c6'
-
-  # Colors the cursor will use if `custom_cursor_colors` is true
-  cursor:
-    text: '0x1d1f21'
-    cursor: '0xc5c8c6'
-
-  # Normal colors
-  normal:
-    black:   '0x1d1f21'
-    red:     '0xcc342b'
-    green:   '0x198844'
-    yellow:  '0xfba922'
-    blue:    '0x3971ed'
-    magenta: '0xa36ac7'
-    cyan:    '0x3971ed'
-    white:   '0xc5c8c6'
-
-  # Bright colors
-  bright:
-    black:   '0x969896'
-    red:     '0xcc342b'
-    green:   '0x198844'
-    yellow:  '0xfba922'
-    blue:    '0x3971ed'
-    magenta: '0xa36ac7'
-    cyan:    '0x3971ed'
-    white:   '0xffffff'
-
-  indexed_colors:
-    - { index: 16, color: '0xf96a38' }
-    - { index: 17, color: '0x3971ed' }
-    - { index: 18, color: '0x282a2e' }
-    - { index: 19, color: '0x373b41' }
-    - { index: 20, color: '0xb4b7b4' }
-    - { index: 21, color: '0xe0e0e0' }
-
-# Visual Bell
-#
-# Any time the BEL code is received, Alacritty "rings" the visual bell. Once
-# rung, the terminal background will be set to white and transition back to the
-# default background color. You can control the rate of this transition by
-# setting the `duration` property (represented in milliseconds). You can also
-# configure the transition function by setting the `animation` property.
-#
-# Values for `animation`:
-#   - Ease
-#   - EaseOut
-#   - EaseOutSine
-#   - EaseOutQuad
-#   - EaseOutCubic
-#   - EaseOutQuart
-#   - EaseOutQuint
-#   - EaseOutExpo
-#   - EaseOutCirc
-#   - Linear
-#
 # Specifying a `duration` of `0` will disable the visual bell.
 visual_bell:
   animation: EaseOutExpo
@@ -585,4 +518,43 @@ key_bindings:
   - { key: F11,      mods: Super,   chars: "\x1b[23;3~"                      }
   - { key: F12,      mods: Super,   chars: "\x1b[24;3~"                      }
   - { key: NumpadEnter,             chars: "\n"                              }
+
+# <<<<< Colors <<<<<
+# Base16 Google Dark - alacritty color config
+# Seth Wright (http://sethawright.com)
+colors:
+  # Default colors
+  primary:
+    background: '0x1d1f21'
+    foreground: '0xc5c8c6'
+
+  # Colors the cursor will use if `custom_cursor_colors` is true
+  cursor:
+    text: '0x1d1f21'
+    cursor: '0xc5c8c6'
+
+  # Normal colors
+  normal:
+    black:   '0x1d1f21'
+    red:     '0xCC342B'
+    green:   '0x198844'
+    yellow:  '0xFBA922'
+    blue:    '0x3971ED'
+    magenta: '0xA36AC7'
+    cyan:    '0x3971ED'
+    white:   '0xc5c8c6'
+
+  # Bright colors
+  bright:
+    black:   '0x969896'
+    red:     '0xF96A38'
+    green:   '0x282a2e'
+    yellow:  '0x373b41'
+    blue:    '0xb4b7b4'
+    magenta: '0xe0e0e0'
+    cyan:    '0x3971ED'
+    white:   '0xffffff'
+
+draw_bold_text_with_bright_colors: false
+# >>>>> Colors >>>>>
 

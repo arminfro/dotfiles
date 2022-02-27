@@ -24,8 +24,6 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 # ctrl-p, ctrl-n to cycle through history stack
 # see more keybindings: https://github.com/jeffreytse/zsh-vi-mode#-usage
 zplug "jeffreytse/zsh-vi-mode"
-ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
-
 
 # NOTE: fzf-tab needs to be loaded after compinit, but before plugins which will wrap widgets, such as zsh-autosuggestions or fast-syntax-highlighting!!
 zplug "Aloxaf/fzf-tab", defer:2, if:"[ -x $(which fzf) ]"
@@ -123,3 +121,5 @@ fi
 
 # source plugins and add commands to $PATH
 zplug load
+
+ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
