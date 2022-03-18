@@ -2,7 +2,7 @@
 
 local M = {}
 
-local colorscheme = "zephyr"
+local colorscheme = "zephyrium"
 
 vim.cmd(string.format(
   [[

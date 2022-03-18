@@ -6,8 +6,8 @@ export SUDO_EDITOR=nvim
 export VISUAL=nvim
 export PAGER=/usr/bin/nvimpager # && alias less=$PAGER
 
-export FILE_MANAGER=thunar
-export PASSWORD_MANAGER=keepassxc
+export FILE_MANAGER=nautilus
+export PASSWORD_MANAGER=keepass
 export ALTERNATIVE_BROWSER="chromium"
 export EMAIL_CLIENT=thunderbird
 export BROWSER=firefox

@@ -21,7 +21,6 @@ packer.startup {
     -- Managemant tool for keybindings and commands
     use {
       'mrjones2014/legendary.nvim',
-      -- commit = '3127aca',
       config = function()
         require("plugins.legendary").config()
       end
@@ -90,10 +89,9 @@ packer.startup {
 
     -- dark neovim colorscheme
     use {
-      'glepnir/zephyr-nvim',
-      branch = 'main',
+      'titanzero/zephyrium',
       config = function ()
-        require('zephyr')
+        require('zephyrium')
         vim.cmd [[
           hi LineNr guifg=#969896
         ]]
@@ -193,6 +191,9 @@ packer.startup {
     use {
       'AckslD/nvim-whichkey-setup.lua',
       requires = {'liuchengxu/vim-which-key'},
+      config = function()
+        require("plugins.legendary").which_key()
+      end,
     }
 
     -- Smooth scrolling, todo, decrease animation time
@@ -227,7 +228,6 @@ packer.startup {
     use {
       "kyazdani42/nvim-tree.lua",
       -- cmd = "NvimTreeToggle",
-      -- commit = "8b27fd4",
       config = function()
         require("plugins.tree").config()
       end,
@@ -277,6 +277,8 @@ packer.startup {
         {'hrsh7th/cmp-calc', after = "nvim-cmp"},
         -- completion for neovim lua api
         {'hrsh7th/cmp-nvim-lua', after = "nvim-cmp"},
+        -- better sort completion items that start with one or more underlines
+        { "lukas-reineke/cmp-under-comparator" },
         {
           -- collection of configurations for built-in language server client
           'neovim/nvim-lspconfig',
@@ -340,6 +342,14 @@ packer.startup {
           }
         }
       }
+    }
+
+    -- horizontal highlights for text filetypes like markdown, rmd, vimwiki and orgmode.
+    use {
+      'lukas-reineke/headlines.nvim',
+      config = function()
+        require('headlines').setup()
+      end,
     }
 
     use {
@@ -468,6 +478,7 @@ packer.startup {
           -- Parenthesis highlighting
           "p00f/nvim-ts-rainbow",
           after = "nvim-treesitter",
+          commit = "7e1af3e61b8f529031b54369fd54936c2a288e1b",
         },
         {
           -- Autoclose tags
@@ -510,6 +521,9 @@ packer.startup {
     use {
       "moll/vim-bbye",
       after = "bufferline.nvim",
+      config = function ()
+        require("plugins.legendary").vim_bbye()
+      end
     }
 
     -- Statusline
@@ -544,14 +558,7 @@ packer.startup {
     -- Latex autocompile
     use {'donRaphaco/neotex', ft = 'tex' }
 
-    -- replaces asteriks with bullets
-    use {
-      "akinsho/org-bullets.nvim",
-      config = function()
-        require("org-bullets").setup {}
-      end,
-    }
-
+    -- reveal the hidden message from Git under the cursor quickly
     use {
       "rhysd/git-messenger.vim",
       config = function()
@@ -568,8 +575,6 @@ packer.startup {
       end,
     }
 
-    use "vim-scripts/CmdlineComplete"
-
     -- camel case is one word
     use "bkad/camelcasemotion"
 
@@ -583,29 +588,7 @@ packer.startup {
     }
 
     -- highlights words under cursor
-    -- use { 'yamatsum/nvim-cursorline', branch = 'main' }
-
-    -- use {
-    --   'weilbith/nvim-code-action-menu',
-    --   cmd = 'CodeActionMenu',
-    -- }
-
-    -- todo, look into
-    -- use {
-    --   "nvim-neorg/neorg",
-    --   config = function()
-    --   end
-    -- }
-
-
-    -- use {
-    --   "folke/twilight.nvim",
-    --   config = function()
-    --     require("twilight").setup {
-    --       dimming = { alpha = 0.7 }
-    --     }
-    --   end
-    -- }
+    use { 'yamatsum/nvim-cursorline', branch = 'main' }
 
     -- throws error cause of python dependency, todo
     -- use {'gelguy/wilder.nvim',
@@ -615,6 +598,23 @@ packer.startup {
     --       use_python_remote_plugin = 0,
     --     })
     --   end,
+    -- }
+
+    -- use "vim-scripts/CmdlineComplete"
+
+    -- replaces asteriks with bullets
+    -- use {
+    --   "akinsho/org-bullets.nvim",
+    --   config = function()
+    --     require("org-bullets").setup {}
+    --   end,
+    -- }
+
+    -- todo, look into
+    -- use {
+    --   "nvim-neorg/neorg",
+    --   config = function()
+    --   end
     -- }
 
     -- is for telescope only (yet)

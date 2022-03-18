@@ -13,6 +13,12 @@ function M.toggleterm()
   })
 end
 
+function M.which_key()
+  require("legendary").bind_keymaps({
+      {'<leader>k',":WhichKey ''<CR>", description = "Open WhichKey", mode = {"n", "v"}, opts},
+  })
+end
+
 function M.lazygit()
   require("legendary").bind_keymaps({
       {'<leader>gl',":LazyGit<CR>", description = "Open LazyGit", mode = {"n", "v"}, opts},
@@ -90,21 +96,21 @@ function M.lsp(bufnr)
       { ':Format', 'lua vim.lsp.buf.formatting()', description="Format current buffer"}
     })
   legendary.bind_keymaps({
-      {'<space>d','<cmd>lua vim.lsp.buf.definition()<CR>', description = "Go to definition", mode = {"n"}, opts},
-      {'<space>D','<cmd>lua vim.lsp.buf.declaration()<CR>', description = "Go to declaration", mode = {"n"}, opts},
-      {'<space>i','<cmd>lua vim.lsp.buf.implementation()<CR>', description = "Go to implementation", mode = {"n"}, opts},
-      -- {'<space>t','<cmd>lua vim.lsp.buf.type_definition()<CR>', description = "Go to type definition", mode = {"n"}, opts},
-      {'<space>t',':FzfLua lsp_live_workspace_symbols<CR>', description = "Search workspace for Symbols", mode = {"n"}, opts},
-      {'<space>r',':Lspsaga lsp_finder<CR>', description = "Show references of hovered symbol", mode = {"n"}, opts},
-      {'<space>h',':Lspsaga hover_doc<CR>', description = "Show hover of current symbol", mode = {"n"}, opts},
-      {'<space>a',':Lspsaga code_action<CR>', description = "Code Actions by Lsp", mode = {"n"}, opts},
-      {'<space>a',':Lspsaga range_code_action<CR>', description = "Code Actions by Lsp per selection", mode = {"v"}, opts},
-      {'<space>s',':Lspsaga signature_help<CR>', description = "Signature help by Lsp", mode = {"n"}, opts},
-      {'<space>rn',':Lspsaga rename<CR>', description = "Rename current symbol", mode = {"n"}, opts},
-      {'<space>e',':FzfLua lsp_workspace_diagnostics<CR>', description = "Show all diagnostics in quickfix", mode = {"n"}, opts},
-      {'<space>f',':Format<CR>', description = "Format document", mode = {"n"}, opts},
-      {'[j',':Lspsaga diagnostic_jump_prev<CR>', description = "Go to previous diagnostic", mode = {"n"}, opts},
-      {']j',':Lspsaga diagnostic_jump_next<CR>', description = "Go to next diagnostic", mode = {"n"}, opts},
+      {'<space>d','<cmd>lua vim.lsp.buf.definition()<CR>', description = "LSP, Go to definition", mode = {"n"}, opts},
+      {'<space>D','<cmd>lua vim.lsp.buf.declaration()<CR>', description = "LSP, Go to declaration", mode = {"n"}, opts},
+      {'<space>i','<cmd>lua vim.lsp.buf.implementation()<CR>', description = "LSP, Go to implementation", mode = {"n"}, opts},
+      -- {'<space>t','<cmd>lua vim.lsp.buf.type_definition()<CR>', description = "LSP, Go to type definition", mode = {"n"}, opts},
+      {'<space>t',':FzfLua lsp_live_workspace_symbols<CR>', description = "LSP, Search workspace for Symbols", mode = {"n"}, opts},
+      {'<space>r',':Lspsaga lsp_finder<CR>', description = "LSP, Show references of hovered symbol", mode = {"n"}, opts},
+      {'<space>h',':Lspsaga hover_doc<CR>', description = "LSP, Show hover of current symbol", mode = {"n"}, opts},
+      {'<space>a',':Lspsaga code_action<CR>', description = "LSP, Code Actions by Lsp", mode = {"n"}, opts},
+      {'<space>a',':Lspsaga range_code_action<CR>', description = "LSP, Code Actions by Lsp per selection", mode = {"v"}, opts},
+      {'<space>s',':Lspsaga signature_help<CR>', description = "LSP, Signature help by Lsp", mode = {"n"}, opts},
+      {'<space>rn',':Lspsaga rename<CR>', description = "LSP, Rename current symbol", mode = {"n"}, opts},
+      {'<space>e',':FzfLua lsp_workspace_diagnostics<CR>', description = "LSP, Show all diagnostics in quickfix", mode = {"n"}, opts},
+      {'<space>f',':Format<CR>', description = "LSP, Format document", mode = {"n"}, opts},
+      {'[j',':Lspsaga diagnostic_jump_prev<CR>', description = "LSP, Go to previous diagnostic", mode = {"n"}, opts},
+      {']j',':Lspsaga diagnostic_jump_next<CR>', description = "LSP, Go to next diagnostic", mode = {"n"}, opts},
     })
 end
 
@@ -129,6 +135,9 @@ function M.fzf()
       {'<C-U>', '<ESC>:FzfLua git_status<CR>', mode = {"n"}, description = "Fuzzy search git modified files", opts },
       {'<leader>gb', '<ESC>:FzfLua git_branches<CR>', mode = {"n"}, description = "Fuzzy search git modified files", opts },
     })
+  require("legendary").bind_commands({
+    { ':SetFileType', "<ESC>:FzfLua filetypes<CR>", description = "Set Filetype" },
+  })
 end
 
 function M.fugitive()
@@ -153,9 +162,16 @@ function M.tabular()
     })
 end
 
-function M.undotree()
+function M.vim_bbye()
   require("legendary").bind_keymaps({
       {'<F7>', ':UndotreeToggle<CR>', mode = {"v", "n"}, description = "Toggles Undo Tree", opts },
+    })
+end
+
+function M.undotree()
+  require("legendary").bind_keymaps({
+      -- Buffer Managemant
+      {'<leader>x',':Bdelete<CR>', mode = {"n"}, description = "Close current buffer", opts = { noremap = true } },
     })
 end
 
@@ -185,9 +201,6 @@ function M.config()
     -- Config
     {'<leader>rc',':source ~/.config/nvim/init.lua<CR>', mode = {"n"}, description = "Reload vim config", opts = { noremap = true } },
 
-    -- Buffer Managemant
-    {'<leader>x',':bd!<CR>', mode = {"n"}, description = "Close current buffer", opts = { noremap = true } },
-
     -- Window Managemant
     {'<leader>wo',':only<CR>', mode = {"n"}, description = "Hide other windows", opts = { noremap = true } },
     {'<leader>wh',':hide<CR>', mode = {"n"}, description = "Hide this window", opts = { noremap = true } },
@@ -211,14 +224,13 @@ function M.config()
     -- activate spell checker
     {'<leader>sc', ':setlocal spell spelllang=en_us,de_de<cr>', mode = {"n"}, description = "Activate spell checker", opts = { noremap = true } },
 
-    {'<leader>l', ':Legend ""<cr>', mode = {"n"}, description = "open Legend", opts = { noremap = true } },
+    {'<leader>l', ':Legendary<cr>', mode = {"n"}, description = "open Legend", opts = { noremap = true } },
   }
 
   local commands = {
     { ':CopyFilePath', "let @+ = expand('%:p')", description = "Copy's current file path to clipboard" },
     { ':SourceVimConfig', ":source ~/.config/nvim/init.lua<CR>", description = "Source vim config" },
-    { ':CurrentFileType', ":lua vim.bo.filetype<CR>", description = "Get current Filetype" },
-
+    -- { ':GetFileType', "<ESC>:lua vim.bo.filetype<CR>", description = "Get current Filetype" },
   }
 
   legendary.setup({

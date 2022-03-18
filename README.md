@@ -74,12 +74,10 @@ Example one liner for fedora (only use it at fresh system installation, or do co
 git clone https://github.com/arminfro/dotfiles.git ~/.dotfiles && cd ~/.dotfiles/script && ./fedora  && ./bootstrap  && ./install && zsh
 ```
 
-This will activate some repos and installs all packages.
+This will activate some repos and installs some packages.
 
 It will symlink the appropriate files in `.dotfiles` to your home directory.
 Everything is configured and tweaked within `~/.dotfiles`.
 
 The main file you'll want to change right off the bat is `zsh/zshrc.symlink`,
 which sets up a few paths and applications that'll be different on your particular machine.
-
-You may type `install-i3-gnome-flashback` to install i3-gnome combi. Otherwise use `i3` only.

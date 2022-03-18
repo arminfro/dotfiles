@@ -167,9 +167,6 @@ focus_follows_mouse no
 default_border pixel 2
 hide_edge_borders none
 
-for_window [window_role="About"] floating enable
-
-# Keyboard Bindings
 bindsym $mod+q exec --no-startup-id $CLIPBOARD_MANAGER
 bindsym $mod+w exec --no-startup-id $BROWSER
 bindsym $mod+e exec --no-startup-id $EMAIL_CLIENT
