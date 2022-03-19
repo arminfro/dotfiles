@@ -1,6 +1,7 @@
 i3
 i3status-rust
-dmenu
+rofi
 xbacklight
+xrandr
 feh
 ccze
