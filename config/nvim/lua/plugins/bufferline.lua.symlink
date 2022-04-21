@@ -55,7 +55,7 @@ function M.config()
       buffer_selected = {
         guifg = colors.grey,
         guibg = colors.black,
-        gui = colors.none,
+        gui = "bold",
       },
       buffer_visible = {
         guifg = colors.grey,

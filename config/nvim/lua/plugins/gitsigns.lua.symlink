@@ -59,6 +59,7 @@ function M.config()
     yadm = {
       enable = false,
     },
+      -- todo, improve: https://github.com/SmiteshP/Dotfiles/blob/master/.config/nvim/lua/config/gitsigns.lua#L15
       keymaps = {
         -- Default keymap options
         noremap = true,

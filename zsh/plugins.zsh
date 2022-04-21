@@ -30,12 +30,14 @@ zplug "Aloxaf/fzf-tab", defer:2, if:"[ -x $(which fzf 2> /dev/null) ]"
 
 # aliases
 zplug "plugins/common-aliases", from:oh-my-zsh
+zplug "plugins/copyfile", from:oh-my-zsh
+zplug "plugins/copypath", from:oh-my-zsh
 zplug "katrinleinweber/oh-my-zsh-youtube-dl-aliases", at:main, if:"[ -x $(which youtube-dl 2> /dev/null) ]"
 zplug "akarzim/zsh-docker-aliases", if:"[ -x $(which docker 2> /dev/null) ]"
 zplug "zpm-zsh/ls"
 zplug "plugins/git", from:oh-my-zsh, if:"[ -x $(which git 2> /dev/null) ]"
 zplug "plugins/archlinux", from:oh-my-zsh, if:"[ -x $(which pacman 2> /dev/null) ]"
-zplug "plugins/systemd", from:oh-my-zsh #, if:"[ -x $(which systemctl 2> /dev/null)]" # somehow this evalutes to false ?
+zplug "plugins/systemd", from:oh-my-zsh #, if:"[ -x $(which systemctl 2> /dev/null)]" # somehow this evaluates to false ?
 zplug "plugins/bundler", from:oh-my-zsh, if:"[ -x $(which bundler 2> /dev/null) ]"
 # zplug "plugins/deno", from:oh-my-zsh, if:"[ -x $(which deno 2> /dev/null) ]"
 zplug "plugins/firewalld", from:oh-my-zsh, if:"[ -x $(which firewall-cmd 2> /dev/null)]"
@@ -77,12 +79,13 @@ zplug "plugins/zsh-colored-man-pages", from:oh-my-zsh
 zplug "plugins/fancy-ctrl-z", from:oh-my-zsh
 zplug "spaceship-prompt/spaceship-prompt", use:spaceship.zsh, as:theme
 zplug "brymck/print-alias"
+zplug "marzocchi/zsh-notify"
 zplug "changyuheng/fz", defer:1, on:"skywind3000/z.lua"
 FZ_HISTORY_CD_CMD=_zlua
 # adds more vim motions to the built-in
 zplug "zsh-vi-more/vi-motions"
 # supports vim with line number command, e.g.: package.json:12
-zplug "nviennot/zsh-vim-plugin" 
+zplug "nviennot/zsh-vim-plugin"
 # runs ls and git status after chpwd, compatible with exa
 zplug "binury/smart-cd"
 # double tab escape to prefix command with sudo

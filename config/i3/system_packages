@@ -5,3 +5,6 @@ xbacklight
 xrandr
 feh
 ccze
+bat
+xprop
+xwininfo

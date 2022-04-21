@@ -1,48 +1,46 @@
 -- vi: ft=lua
 
-local M = {}
+local api = vim.api
 
-local colorscheme = "zephyrium"
+--- Remove all trailing whitespace on save
+local TrimWhiteSpaceGrp = api.nvim_create_augroup("TrimWhiteSpaceGrp", { clear = true })
+api.nvim_create_autocmd("BufWritePre", {
+	command = [[:%s/\s\+$//e]],
+	group = TrimWhiteSpaceGrp,
+})
 
-vim.cmd(string.format(
-  [[
-    augroup colorscheme
-      autocmd!
-      autocmd VimEnter * colorscheme %s
-    augroup end]],
-  colorscheme
-))
+-- Close nvim if NvimTree is only running buffer
+api.nvim_create_autocmd(
+	"BufEnter",
+	{ command = [[if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]] }
+)
 
-vim.cmd [[
-  augroup cursor_off
-    autocmd!
-    autocmd WinLeave * set nocursorline
-    autocmd WinEnter * set cursorline
-  augroup end
-]]
+-- Highlight on yank
+local yankGrp = api.nvim_create_augroup("YankHighlight", { clear = true })
+api.nvim_create_autocmd("TextYankPost", {
+	command = "silent! lua vim.highlight.on_yank()",
+	group = yankGrp,
+})
+-- go to last loc when opening a buffer
+api.nvim_create_autocmd(
+	"BufReadPost",
+	{ command = [[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]] }
+)
+-- windows to close with "q"
+api.nvim_create_autocmd(
+	"FileType",
+	{ pattern = { "help", "startuptime", "qf", "lspinfo" }, command = [[nnoremap <buffer><silent> q :close<CR>]] }
+)
+api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
 
--- vim.cmd [[
---   augroup packer_user_config
---     autocmd!
---     autocmd BufWritePost plugins.lua source <afile> | PackerCompile
---   augroup end
--- ]]
-
--- vim.cmd [[
---   augroup cursor_off
---     autocmd!
---     autocmd VimEnter * SymbolOutline<CR>
---   augroup end
--- ]]
-
--- vim.cmd [[
---   augroup dashboard_settings
---     autocmd!
---     autocmd FileType dashboard set showtabline=0
---     autocmd BufWinLeave <buffer> set showtabline=2
---     autocmd BufEnter * if &ft is "dashboard" | set laststatus=0 | else | set laststatus=2 | endif
---     autocmd BufEnter * if &ft is "dashboard" | set nocursorline | endif
---   augroup end
--- ]]
-
-return M
+-- show cursor line only in active window
+local cursorGrp = api.nvim_create_augroup("CursorLine", { clear = true })
+api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+	pattern = "*",
+	command = "set cursorline",
+	group = cursorGrp,
+})
+api.nvim_create_autocmd(
+	{ "InsertEnter", "WinLeave" },
+	{ pattern = "*", command = "set nocursorline", group = cursorGrp }
+)

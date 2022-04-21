@@ -1,41 +1,41 @@
 -- vi: ft=lua
 
 return {
-  on_attach = function(client)
-    local ts_utils_status_ok, ts_utils = pcall(require, "nvim-lsp-ts-utils")
-    if not ts_utils_status_ok then
-      return
-    end
+	on_attach = function(client)
+		local ts_utils_status_ok, ts_utils = pcall(require, "nvim-lsp-ts-utils")
+		if not ts_utils_status_ok then
+			return
+		end
 
-    -- defaults
-    ts_utils.setup({
-        -- debug = false,
-        -- disable_commands = false,
-        enable_import_on_completion = true,
+		-- defaults
+		ts_utils.setup({
+			-- debug = false,
+			-- disable_commands = false,
+			enable_import_on_completion = true,
 
-        -- -- eslint
-        -- -- using eslint lsp directly now, see below
-        -- eslint_enable_code_actions = true,
-        -- eslint_enable_disable_comments = true,
-        -- eslint_bin = "eslint",
-        -- eslint_config_fallback = nil,
-        -- eslint_enable_diagnostics = false,
+			-- -- eslint
+			-- -- using eslint lsp directly now, see below
+			-- eslint_enable_code_actions = true,
+			-- eslint_enable_disable_comments = true,
+			-- eslint_bin = "eslint",
+			-- eslint_config_fallback = nil,
+			-- eslint_enable_diagnostics = false,
 
-        -- formatting
-        enable_formatting = true,
-        formatter = "prettier",
-        formatter_config_fallback = nil,
+			-- formatting
+			enable_formatting = false,
+			-- formatter = "prettier",
+			-- formatter_config_fallback = nil,
 
-        -- parentheses completion
-        complete_parens = true,
-        signature_help_in_parens = true,
+			-- parentheses completion
+			complete_parens = true,
+			signature_help_in_parens = true,
 
-        -- update imports on file move
-        update_imports_on_move = false,
-        require_confirmation_on_move = false,
-        watch_dir = nil,
-      })
-    -- required to fix code action ranges
-    ts_utils.setup_client(client)
-  end
+			-- update imports on file move
+			update_imports_on_move = false,
+			require_confirmation_on_move = false,
+			watch_dir = nil,
+		})
+		-- required to fix code action ranges
+		ts_utils.setup_client(client)
+	end,
 }

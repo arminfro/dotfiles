@@ -4,10 +4,10 @@ export TERMINAL=alacritty
 export EDITOR=nvim
 export SUDO_EDITOR=nvim
 export VISUAL=nvim
-export PAGER=/usr/bin/nvimpager # && alias less=$PAGER
+export PAGER=nvimpager # && alias less=$PAGER
 
 export FILE_MANAGER=nautilus
-export PASSWORD_MANAGER=keepass
+export PASSWORD_MANAGER=keepassxc
 export ALTERNATIVE_BROWSER="chromium"
 export EMAIL_CLIENT=thunderbird
 export BROWSER=firefox

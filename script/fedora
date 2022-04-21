@@ -1,19 +1,25 @@
 #!/bin/bash
 
-echo 'Need sudo for adding yarn, i3status-rust and neovim-nightly repo'
+echo 'Need sudo for adding repos'
 
 # install yarn repo
 sudo curl -sL https://dl.yarnpkg.com/rpm/yarn.repo -o /etc/yum.repos.d/yarn.repo
 
 # install i3status-rust repo
-sudo dnf copr -y enable atim/i3status-rust 
+sudo dnf copr -y enable atim/i3status-rust
 
 # install neovim-nightly repo
 sudo dnf copr -y enable agriffis/neovim-nightly
 
+# install lazygit repo
+sudo dnf copr -y enable atim/lazygit -y
+
 # install patched font
 git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.nerd-fonts
-cd ~/.nerd-fonts 
+cd ~/.nerd-fonts
 ./install.sh Inconsolata
 cd ~
 rm -rf ~/.nerd-fonts
+
+sudo dnf install -y gnome-tweaks keepassxc \
+  ncurses-devel automake autoconf gcc # deps for htop-vim

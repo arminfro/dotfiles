@@ -4,8 +4,6 @@
 [hub]
         protocol = https
 [alias]
-        promote           = !$ZSH/bin/git-promote
-        wtf               = !$ZSH/bin/git-wtf
         rank-contributors = !$ZSH/bin/git-rank-contributors
         count             = !git shortlog -sn
         mylog             = log --pretty=format:'%h %ad %Cgreen %s %Creset  [%an]' --graph --date = short
@@ -19,7 +17,7 @@
         ui = true
 [core]
         excludesfile = ~/.gitignore
-        editor = vim
+        editor = nvim
 [apply]
         whitespace = nowarn
 [mergetool]

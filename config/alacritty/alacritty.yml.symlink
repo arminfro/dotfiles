@@ -525,7 +525,7 @@ key_bindings:
 colors:
   # Default colors
   primary:
-    background: '0x1d1f21'
+    background: '0x282a36'
     foreground: '0xc5c8c6'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
@@ -535,7 +535,7 @@ colors:
 
   # Normal colors
   normal:
-    black:   '0x1d1f21'
+    black:   '0x282a36'
     red:     '0xCC342B'
     green:   '0x198844'
     yellow:  '0xFBA922'
