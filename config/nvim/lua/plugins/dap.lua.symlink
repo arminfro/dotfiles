@@ -3,25 +3,24 @@
 local M = {}
 
 function M.config(on_attach)
-
 	local dap_status_ok, dap = pcall(require, "dap")
 	if not dap_status_ok then
-	  return
+		return
 	end
 
 	local dap_ui_status_ok, dap_ui = pcall(require, "dapui")
 	if not dap_ui_status_ok then
-	  return
+		return
 	end
 
 	local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
 	if not lspconfig_status_ok then
-	  return
+		return
 	end
 
 	local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
 	if not rust_tools_status_ok then
-	  return
+		return
 	end
 
 	local codelldb_path = "~/.vscode-oss/extensions/vadimcn.vscode-lldb-1.6.10/adapter/codelldb"
@@ -55,62 +54,62 @@ function M.config(on_attach)
 				if port then
 					vim.schedule(function()
 						on_adapter({
-								type = "server",
-								host = "127.0.0.1",
-								port = port,
-							})
-						end)
-					else
-						vim.schedule(function()
-							dap.repl.append(chunk)
-						end)
-					end
-				end
-			end)
-			stderr:read_start(function(err, chunk)
-				assert(not err, err)
-				if chunk then
+							type = "server",
+							host = "127.0.0.1",
+							port = port,
+						})
+					end)
+				else
 					vim.schedule(function()
 						dap.repl.append(chunk)
 					end)
 				end
-			end)
-		end
+			end
+		end)
+		stderr:read_start(function(err, chunk)
+			assert(not err, err)
+			if chunk then
+				vim.schedule(function()
+					dap.repl.append(chunk)
+				end)
+			end
+		end)
+	end
 
-		dap.defaults.fallback.terminal_win_cmd = "below 10new"
+	dap.defaults.fallback.terminal_win_cmd = "below 10new"
 
-		dap_ui.setup({
-			icons = { expanded = "▾", collapsed = "▸" },
+	dap_ui.setup({
+		icons = { expanded = "▾", collapsed = "▸" },
+		mappings = {
+			expand = { "<CR>", "<2-LeftMouse>" },
+			open = "o",
+			remove = "d",
+			edit = "e",
+			repl = "r",
+		},
+		sidebar = {
+			elements = {
+				{ id = "breakpoints", size = 0.1 },
+				{ id = "watches", size = 0.45 },
+				{ id = "scopes", size = 0.45 },
+			},
+			size = 40,
+			position = "left",
+		},
+		tray = {
+			elements = { "repl" },
+			size = 30,
+			position = "right",
+		},
+		floating = {
+			max_height = nil,
+			max_width = nil,
 			mappings = {
-				expand = { "<CR>", "<2-LeftMouse>" },
-				open = "o",
-				remove = "d",
-				edit = "e",
-				repl = "r",
+				close = { "q", "<Esc>" },
 			},
-			sidebar = {
-				elements = {
-					{ id = "breakpoints", size = 0.1 },
-					{ id = "watches", size = 0.45 },
-					{ id = "scopes", size = 0.45 },
-				},
-				size = 40,
-				position = "left",
-			},
-			tray = {
-				elements = { "repl" },
-				size = 30,
-				position = "right",
-			},
-			floating = {
-				max_height = nil,
-				max_width = nil,
-				mappings = {
-					close = { "q", "<Esc>" },
-				},
-			},
-			windows = { indent = 1 },
-		})
+		},
+		windows = { indent = 1 },
+	})
 
 	-- dap.adapters.ruby = {
 	-- 	type = 'executable';
@@ -131,58 +130,58 @@ function M.config(on_attach)
 
 	dap.configurations.lua = {
 		{
-			type = 'nlua',
-			request = 'attach',
+			type = "nlua",
+			request = "attach",
 			name = "Attach to running Neovim instance",
 			host = function()
-				local value = vim.fn.input('Host [127.0.0.1]: ')
+				local value = vim.fn.input("Host [127.0.0.1]: ")
 				if value ~= "" then
 					return value
 				end
-				return '127.0.0.1'
+				return "127.0.0.1"
 			end,
 			port = function()
-				local val = tonumber(vim.fn.input('Port: '))
+				local val = tonumber(vim.fn.input("Port: "))
 				assert(val, "Please provide a port number")
 				return val
 			end,
-		}
+		},
 	}
 
 	dap.adapters.nlua = function(callback, config)
-		callback({ type = 'server', host = config.host, port = config.port })
+		callback({ type = "server", host = config.host, port = config.port })
 	end
 
-		dap.configurations.rust = {
-			{
-				-- The first three options are required by nvim-dap
-				type = "lldb",
-				request = "launch",
-				name = "Launch file",
+	dap.configurations.rust = {
+		{
+			-- The first three options are required by nvim-dap
+			type = "lldb",
+			request = "launch",
+			name = "Launch file",
 
-				-- Options below are for CodeLLDB
-				cwd = "${workspaceFolder}",
-				program = function()
-					local workspaceRoot = lspconfig.rust_analyzer.get_root_dir()
-					local workspaceName = vim.fn.fnamemodify(workspaceRoot, ":t")
+			-- Options below are for CodeLLDB
+			cwd = "${workspaceFolder}",
+			program = function()
+				local workspaceRoot = lspconfig.rust_analyzer.get_root_dir()
+				local workspaceName = vim.fn.fnamemodify(workspaceRoot, ":t")
 
-					return vim.fn.input("Path to executable: ", workspaceRoot .. "/target/debug/" .. workspaceName, "file")
-				end,
-				stopOnEntry = false,
-				sourceLanguages = { "rust" },
-			},
-		}
+				return vim.fn.input("Path to executable: ", workspaceRoot .. "/target/debug/" .. workspaceName, "file")
+			end,
+			stopOnEntry = false,
+			sourceLanguages = { "rust" },
+		},
+	}
 
-		-- map("n", "<leader>dt", ":lua require'dap'.toggle_breakpoint()<CR>", map_opts)
-		-- map("n", "<leader>dc", ":lua require'dap'.continue()<CR>", map_opts)
+	-- map("n", "<leader>dt", ":lua require'dap'.toggle_breakpoint()<CR>", map_opts)
+	-- map("n", "<leader>dc", ":lua require'dap'.continue()<CR>", map_opts)
 
-		-- rust_tools.setup({})
-		rust_tools.setup({
-				server = { on_attach = on_attach.common },
-				dap = {
-					adapter = dap.adapters.lldb,
-				},
-			})
+	-- rust_tools.setup({})
+	rust_tools.setup({
+		server = { on_attach = on_attach.common },
+		dap = {
+			adapter = dap.adapters.lldb,
+		},
+	})
 end
 
 return M

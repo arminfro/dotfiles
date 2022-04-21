@@ -1,12 +1,6 @@
 -- vi: ft=lua
 
-local M = {}
-
-local opts = { noremap = true, silent = true }
-local map = vim.api.nvim_set_keymap
-local set = vim.opt
-
-vim.g.mapleader = ','
+vim.g.mapleader = ","
 
 -- set.fileencoding = "utf-8"                      -- File content encoding for the buffer
 -- set.spelllang = "en"                            -- Support US english
@@ -46,7 +40,7 @@ vim.g.mapleader = ','
 -- set.timeoutlen = 300                            -- Length of time to wait for a mapped sequence
 -- set.updatetime = 300                            -- Length of time to wait before triggering the plugin
 
-vim.syntax = 'on'
+vim.syntax = "on"
 
 vim.g.rehash256 = 1
 
@@ -59,43 +53,43 @@ vim.opt.whichwrap = "b,s,<,>,[,]"
 vim.opt.wrap = true
 
 -- Always draw the signcolumn.
-vim.opt.signcolumn= "yes"
+vim.opt.signcolumn = "yes"
 
 vim.opt.mouse = "a"
 
 -- Folding
-vim.opt.foldopen="block,hor,insert,jump,mark,percent,quickfix,search,tag,undo"
+vim.opt.foldopen = "block,hor,insert,jump,mark,percent,quickfix,search,tag,undo"
 -- vim.opt.foldopen={"block","hor","insert","jump","mark","percent","quickfix","search","tag","undo"}
 
 -- Tab completion for filenames like bash
 -- https://stackoverflow.com/a/526940/6115544
-vim.opt.wildmode="longest,list,full"
-vim.opt.wildmenu=true
+vim.opt.wildmode = "longest,list,full"
+vim.opt.wildmenu = true
 
-vim.cmd "filetype plugin indent on"
+vim.cmd("filetype plugin indent on")
 
 -- " One such option is the 'hidden' option, which allows you to re-use the same
 -- " window and switch from an unsaved buffer without saving it first. Also allows
 -- " you to keep an undo history for multiple files when re-using the same window
-vim.opt.hidden=true
+vim.opt.hidden = true
 
 -- " Set 'nocompatible' to ward off unexpected things that your distro might
 -- " have made, as well as sanely reset options when re-sourcing .vimrc
-vim.nocompatible=true
+vim.nocompatible = true
 
 -- " Show partial commands in the last line of the screen
-vim.opt.showcmd=true
+vim.opt.showcmd = true
 
 -- " Use case insensitive search, except when using capital letters
-vim.opt.ignorecase=true
-vim.opt.smartcase=true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 -- " Instead of failing a command because of unsaved changes, instead raise a
 -- " dialogue asking if you wish to save changed files.
-vim.opt.confirm=true
+vim.opt.confirm = true
 
 -- " Use visual bell instead of beeping when doing something wrong
-vim.opt.visualbell=true
+vim.opt.visualbell = true
 
 -- " And reset the terminal code for the visual bell. If visualbell is set, and
 -- " this line is also included, vim will neither flash nor beep. If visualbell
@@ -115,19 +109,19 @@ vim.opt.relativenumber = true
 -- " set notimeout ttimeout ttimeoutlen=200
 
 -- " Use <F12> to toggle between 'paste' and 'nopaste'
-vim.opt.pastetoggle='<F12>'
+vim.opt.pastetoggle = "<F12>"
 
 -- vim.opt.wildignore+='/*/tmp/*,*.so,*.swp,*.zip'
 
 -- if (has("termguicolors"))
-vim.opt.termguicolors=true
+vim.opt.termguicolors = true
 -- endif
 
 --Make line numbers default
 vim.wo.number = true
 
 --Enable mouse mode
-vim.o.mouse = 'a'
+vim.o.mouse = "a"
 
 --Enable break indent
 vim.o.breakindent = true
@@ -141,4 +135,4 @@ vim.o.smartcase = true
 
 --Decrease update time
 vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
+vim.wo.signcolumn = "yes"

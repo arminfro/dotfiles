@@ -3,19 +3,19 @@
 local M = {}
 
 function M.config()
-    local status_ok, fzflua = pcall(require, "fzf-lua")
-    if not status_ok then
-        return
-    end
+	local status_ok, fzflua = pcall(require, "fzf-lua")
+	if not status_ok then
+		return
+	end
 
-    fzflua.setup({
-        lsp = {
-          -- make lsp requests synchronous so they work with null-ls
-          async_or_timeout = 3000,
-        },
-      })
+	fzflua.setup({
+		lsp = {
+			-- make lsp requests synchronous so they work with null-ls
+			async_or_timeout = 3000,
+		},
+	})
 
-    require("plugins.legendary").fzf()
+	require("plugins.legendary").fzf()
 end
 
 return M
