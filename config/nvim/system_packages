@@ -5,3 +5,10 @@ the_silver_searcher
 libstdc++-static
 gcc-c++
 lazygit
+ShellCheck
+ripgrep
+pandoc
+xclip
+ffmpeg
+zathura
+keepassxc

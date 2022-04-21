@@ -31,8 +31,9 @@ function M.config()
 		sources = {
 			c.spell,
 			d.rubocop,
+			d.shellcheck,
+			d.zsh,
 			f.black,
-			f.codespell, -- works?
 			f.rubocop,
 			f.rustfmt,
 			f.prettier,
