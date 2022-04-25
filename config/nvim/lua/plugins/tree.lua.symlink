@@ -65,8 +65,8 @@ function M.config()
 		filters = {
 			dotfiles = false,
 			custom = {
-				".git",
-				"node_modules",
+				-- ".git",
+				-- "node_modules",
 				".cache",
 			},
 		},

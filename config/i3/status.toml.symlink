@@ -31,8 +31,8 @@ max_width = 21
 [[block]]
 block = "custom"
 json = true
-command = ''' echo "{\"icon\":\"ping\",\"text\":\"`ping -c4 1.1.1.1 | tail -n1 | cut -d'/' -f5`\"}" '''
-interval = 60
+command = ''' echo "{\"icon\":\"ping\",\"text\":\"`ping -c4 ping.archlinux.org | tail -n1 | cut -d'/' -f5`\"}" '''
+interval = 120
 on_click = "<command>"
 
 [[block]]

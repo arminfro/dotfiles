@@ -33,6 +33,9 @@ api.nvim_create_autocmd(
 )
 api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
 
+-- set spelling features on markdown
+api.nvim_create_autocmd("FileType", { pattern = "markdown", command = [[setlocal spell spelllang=en,de]] })
+
 -- show cursor line only in active window
 local cursorGrp = api.nvim_create_augroup("CursorLine", { clear = true })
 api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {

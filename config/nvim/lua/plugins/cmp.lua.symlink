@@ -124,8 +124,7 @@ function M.config()
 			{ name = "emoji" },
 			{ name = "calc" },
 			{ name = "luasnip" },
-			{ name = "rg" },
-			{ name = "spell" },
+			{ name = "rg", max_item_count = 4, keyword_length = 4 },
 		},
 		formatting = {
 			format = function(entry, vim_item)
@@ -144,6 +143,12 @@ function M.config()
 				return vim_item
 			end,
 		},
+	})
+
+	cmp.setup.filetype("markdown", {
+		sources = cmp.config.sources({
+			{ name = "dictionary" },
+		}),
 	})
 end
 

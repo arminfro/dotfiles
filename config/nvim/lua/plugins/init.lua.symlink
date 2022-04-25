@@ -297,12 +297,17 @@ packer.startup({
 				-- better sort completion items that start with one or more underlines
 				{ "lukas-reineke/cmp-rg", after = "nvim-cmp" },
 				{
-					"f3fora/cmp-spell",
+					"uga-rosa/cmp-dictionary",
 					after = "nvim-cmp",
-					ft = "markdown",
 					config = function()
-						vim.opt.spell = true
-						vim.opt.spelllang = { "en_us" }
+						require("cmp_dictionary").setup({
+							dic = {
+								["markdown"] = {
+									"~/.config/nvim/spell/english-autocomplete.txt",
+									"~/.config/nvim/spell/german-autocomplete.txt",
+								},
+							},
+						})
 					end,
 				},
 				{ "lukas-reineke/cmp-under-comparator" },
@@ -340,7 +345,7 @@ packer.startup({
 							after = "nvim-lspconfig",
 							requires = { "nvim-lua/plenary.nvim" },
 							config = require("plugins.null-ls").config,
-						}, -- shows param signatures in insert mode
+						},
 						-- add closing pairs () [] ...
 						{
 							"windwp/nvim-autopairs",
@@ -349,23 +354,23 @@ packer.startup({
 								require("plugins.autopairs").config()
 							end,
 						},
-						{
-							-- debugger, not working yet
-							"mfussenegger/nvim-dap",
-							requires = {
-								{
-									"suketa/nvim-dap-ruby",
-									before = "nvim-lspconfig",
-									config = function()
-										require("dap-ruby").setup()
-									end,
-								},
-								{ "jbyuki/one-small-step-for-vimkind", before = "nvim-lspconfig" },
-								{ "rcarriga/nvim-dap-ui", before = "nvim-lspconfig" },
-								{ "simrat39/rust-tools.nvim", before = "nvim-lspconfig" }, -- has some helper function to configure dap
-							},
-							before = "nvim-lspconfig",
-						},
+						-- {
+						-- 	-- debugger, not working yet
+						-- 	"mfussenegger/nvim-dap",
+						-- 	requires = {
+						-- 		{
+						-- 			"suketa/nvim-dap-ruby",
+						-- 			before = "nvim-lspconfig",
+						-- 			config = function()
+						-- 				require("dap-ruby").setup()
+						-- 			end,
+						-- 		},
+						-- 		{ "jbyuki/one-small-step-for-vimkind", before = "nvim-lspconfig" },
+						-- 		{ "rcarriga/nvim-dap-ui", before = "nvim-lspconfig" },
+						-- 		{ "simrat39/rust-tools.nvim", before = "nvim-lspconfig" }, -- has some helper function to configure dap
+						-- 	},
+						-- 	before = "nvim-lspconfig",
+						-- },
 						use({
 							-- LSP symbols for completion menu
 							"simrat39/symbols-outline.nvim",
@@ -388,17 +393,20 @@ packer.startup({
 			},
 		})
 
-		-- use({
-		--   "folke/trouble.nvim",
-		--   requires = "kyazdani42/nvim-web-devicons",
-		--   config = require("plugins.trouble").config
-		-- })
+		-- pretty list for showing diagnostics, references, quickfix and location lists
+		-- see config & keymaps: https://github.com/folke/trouble.nvim#setup
+		use({
+			"folke/trouble.nvim",
+			requires = "kyazdani42/nvim-web-devicons",
+			config = require("plugins.trouble").config,
+		})
 
+		-- todo, doesnt work
 		-- use({
-		--   "folke/todo-comments.nvim",
-		--   requires = "nvim-lua/plenary.nvim",
-		--   event = "BufReadPost",
-		--   config = require("plugins.todo").config
+		-- 	"folke/todo-comments.nvim",
+		-- 	requires = "nvim-lua/plenary.nvim",
+		-- 	event = "BufReadPost",
+		-- 	config = require("plugins.todo").config,
 		-- })
 
 		-- horizontal highlights for text filetypes like markdown, rmd, vimwiki and orgmode.
@@ -704,6 +712,22 @@ packer.startup({
 
 		-- AnsiEsc Command
 		use({ "powerman/vim-plugin-AnsiEsc" })
+
+		-- writing support
+		use({
+			"Pocco81/AbbrevMan.nvim",
+			config = function()
+				local abbrev_man = require("abbrev-man")
+
+				abbrev_man.setup({
+					load_natural_dictionaries_at_startup = true,
+					natural_dictionaries = {
+						["nt_en"] = {},
+						["nt_de"] = require("plugins.abbrev").german_vowel_dict,
+					},
+				})
+			end,
+		})
 
 		-- lsp bufferline component
 		use({

@@ -133,6 +133,9 @@ vim.opt.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
+-- todo, doesnt work
+-- vim.opt.spell = false
+
 --Decrease update time
 vim.o.updatetime = 250
 vim.wo.signcolumn = "yes"
