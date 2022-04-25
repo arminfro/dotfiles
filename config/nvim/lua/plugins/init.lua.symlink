@@ -331,7 +331,11 @@ packer.startup({
 						-- Inlay Hints for rust-analyzer
 						{ "nvim-lua/lsp_extensions.nvim", before = "nvim-lspconfig" },
 						-- Show function signature when you type
-						{ "ray-x/lsp_signature.nvim", before = "nvim-lspconfig" }, -- shows param signatures in insert mode
+						{ "hrsh7th/cmp-nvim-lsp-signature-help", before = "nvim-lspconfig" },
+						-- / search completed by nvim-cmp
+						{ "hrsh7th/cmp-nvim-lsp-document-symbol", before = "nvim-lspconfig" },
+						-- ctags completion
+						{ "quangnguyen30192/cmp-nvim-tags", before = "nvim-lspconfig" },
 						-- typescript lsp utilities
 						{
 							"jose-elias-alvarez/nvim-lsp-ts-utils",

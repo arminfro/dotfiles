@@ -95,7 +95,7 @@ function M.config()
 				else
 					fallback()
 				end
-			end, { "i", "s" }),
+			end, { "i", "c" }),
 
 			["<S-Tab>"] = cmp.mapping(function(fallback)
 				if cmp.visible() then
@@ -105,13 +105,14 @@ function M.config()
 				else
 					fallback()
 				end
-			end, { "i", "s" }),
+			end, { "i", "c" }),
 		},
 		sources = {
 			{ name = "nvim_lsp" },
-			{ name = "nvim_lsp_document_symbol" },
+			{ name = "nvim_lsp_signature_help" },
 			{ name = "path" },
 			{ name = "nvim_lua" },
+			{ name = "tags" },
 			{
 				name = "buffer",
 				opts = {
@@ -120,11 +121,11 @@ function M.config()
 					end,
 				},
 			},
-			{ name = "cmdline" },
-			{ name = "emoji" },
-			{ name = "calc" },
 			{ name = "luasnip" },
 			{ name = "rg", max_item_count = 4, keyword_length = 4 },
+			{ name = "emoji" },
+			{ name = "calc" },
+			{ name = "npm", keyword_length = 4 },
 		},
 		formatting = {
 			format = function(entry, vim_item)
@@ -149,6 +150,19 @@ function M.config()
 		sources = cmp.config.sources({
 			{ name = "dictionary" },
 		}),
+	})
+
+	cmp.setup.cmdline("/", {
+		sources = cmp.config.sources({
+			{ name = "nvim_lsp_document_symbol" },
+			{ name = "buffer" },
+		}),
+	})
+
+	cmp.setup.cmdline(":", {
+		sources = {
+			{ name = "cmdline", keyword_length = 2 },
+		},
 	})
 end
 

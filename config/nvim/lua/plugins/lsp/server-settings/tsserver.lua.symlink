@@ -22,7 +22,7 @@ return {
 			-- eslint_enable_diagnostics = false,
 
 			-- formatting
-			enable_formatting = false,
+			-- enable_formatting = false,
 			-- formatter = "prettier",
 			-- formatter_config_fallback = nil,
 
@@ -35,7 +35,11 @@ return {
 			require_confirmation_on_move = false,
 			watch_dir = nil,
 		})
+
+		client.resolved_capabilities.document_formatting = false
+		client.resolved_capabilities.document_range_formatting = false
+
 		-- required to fix code action ranges
-		ts_utils.setup_client(client)
+		-- ts_utils.setup_client(client)
 	end,
 }
