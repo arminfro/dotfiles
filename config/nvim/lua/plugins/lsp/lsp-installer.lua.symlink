@@ -1,6 +1,12 @@
+---@diagnostic disable: undefined-field
 -- vi: ft=lua
 
 local M = {}
+
+M.server_opts = {
+	on_attach = require("plugins.lsp.handlers").on_attach,
+	capabilities = require("plugins.lsp.handlers").capabilities,
+}
 
 function M.config()
 	local status_ok, lsp_installer_servers = pcall(require, "nvim-lsp-installer.servers")
@@ -22,74 +28,44 @@ function M.config()
 		"solargraph",
 		"sumneko_lua",
 		"tailwindcss",
-		"tsserver",
 		"yamlls",
 		"zk",
 		"emmet_ls",
 	}
 
-	-- local merge_server_opts = function (server_opts, common_opts)
-	--   return vim.tbl_deep_extend("force", server_opts, common_opts, { on_attach = function(client, bufnr)
-	--     opts.on_attach(client, bufnr)
-	--     server_opts.on_attach(client)
-	--   end})
-	-- end
-
 	for _, server_name in pairs(servers) do
 		local server_available, server = lsp_installer_servers.get_server(server_name)
 		if server_available then
-			local opts = {
-				on_attach = require("plugins.lsp.handlers").on_attach,
-				capabilities = require("plugins.lsp.handlers").capabilities,
-			}
+			local opts = copy(M.server_opts)
 
 			if server.name == "eslint" then
-				local server_opts = require("plugins.lsp.server-settings.eslint")
-				opts = vim.tbl_deep_extend("force", server_opts, opts)
-				-- opts = merge_server_opts(server_opts, opts)
+				local local_server_opts = require("plugins.lsp.server-settings.eslint")
+				opts = vim.tbl_deep_extend("force", local_server_opts, opts)
 			end
 
 			if server.name == "emmet_ls" then
-				local server_opts = require("plugins.lsp.server-settings.emmet-ls")
-				opts = vim.tbl_deep_extend("force", server_opts, opts)
+				local local_server_opts = require("plugins.lsp.server-settings.emmet-ls")
+				opts = vim.tbl_deep_extend("force", local_server_opts, opts)
 			end
 
 			if server.name == "jsonls" then
-				local server_opts = require("plugins.lsp.server-settings.jsonls")
-				opts = vim.tbl_deep_extend("force", server_opts, opts)
+				local local_server_opts = require("plugins.lsp.server-settings.jsonls")
+				opts = vim.tbl_deep_extend("force", local_server_opts, opts)
 			end
 
 			if server.name == "rust-analyzer" then
-				local server_opts = require("plugins.lsp.server-settings.rust-analyser")
-				opts = vim.tbl_deep_extend("force", server_opts, opts)
+				local local_server_opts = require("plugins.lsp.server-settings.rust-analyser")
+				opts = vim.tbl_deep_extend("force", local_server_opts, opts)
 			end
 
 			if server.name == "sumneko_lua" then
-				local server_opts = require("plugins.lsp.server-settings.sumneko_lua")
-				opts = vim.tbl_deep_extend("force", server_opts, opts, {
-					commands = {
-						Format = {
-							function()
-								require("stylua").format_file()
-							end,
-						},
-					},
-				})
-			end
-
-			if server.name == "tsserver" then
-				local server_opts = require("plugins.lsp.server-settings.tsserver")
-				opts = vim.tbl_deep_extend("force", server_opts, opts, {
-					on_attach = function(client, bufnr)
-						server_opts.on_attach(client)
-						require("plugins.lsp.handlers").on_attach(client, bufnr)
-					end,
-				})
+				local local_server_opts = require("plugins.lsp.server-settings.sumneko_lua")
+				opts = vim.tbl_deep_extend("force", local_server_opts, opts)
 			end
 
 			if server.name == "pyright" then
-				local server_opts = require("plugins.lsp.server-settings.pyright")
-				opts = vim.tbl_deep_extend("force", server_opts, opts)
+				local local_server_opts = require("plugins.lsp.server-settings.pyright")
+				opts = vim.tbl_deep_extend("force", local_server_opts, opts)
 			end
 
 			server:setup(opts)

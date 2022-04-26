@@ -2,10 +2,8 @@
 
 local utils = require("core.utils")
 
-utils.disabled_builtins()
-
+utils.disable_builtins()
 utils.bootstrap()
-
 utils.impatient()
 
 local sources = {

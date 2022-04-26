@@ -208,40 +208,16 @@ packer.startup({
 		-- Rust support
 		use({
 			"rust-lang/rust.vim",
+			event = "BufRead",
 			config = function()
 				vim.g.rustfmt_autosave = 1
 			end,
 		})
 
-		-- vim prettier plugin
-		use({
-			"prettier/vim-prettier",
-			ft = {
-				"javascript",
-				"typescript",
-				"typescriptreact",
-				"css",
-				"less",
-				"scss",
-				"json",
-				"graphql",
-				"markdown",
-				"vue",
-				"svelte",
-				"yaml",
-				"html",
-			},
-			-- config = function()
-			--   vim.g["prettier#autoformat"] = 1
-			--   vim.g["prettier#autoformat_require_pragma"] = 0
-			--   vim.g["prettier#exec_cmd_async"] = 1
-			-- end,
-		})
-
 		-- File explorer
 		use({
 			"kyazdani42/nvim-tree.lua",
-			-- cmd = "NvimTreeToggle",
+			event = "BufRead",
 			config = function()
 				require("plugins.tree").config()
 			end,
@@ -258,6 +234,7 @@ packer.startup({
 		-- Snippet engine
 		use({
 			"L3MON4D3/LuaSnip",
+			event = "BufRead",
 			config = function()
 				require("luasnip/loaders/from_vscode").lazy_load({
 					paths = {
@@ -271,8 +248,6 @@ packer.startup({
 				"rafamadriz/friendly-snippets",
 			},
 		})
-
-		-- vim.api.nvim_win_set_buf()
 
 		-- Completion engine
 		use({
@@ -296,6 +271,7 @@ packer.startup({
 				{ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
 				-- better sort completion items that start with one or more underlines
 				{ "lukas-reineke/cmp-rg", after = "nvim-cmp" },
+				{ "lukas-reineke/cmp-under-comparator", after = "nvim-cmp" },
 				{
 					"uga-rosa/cmp-dictionary",
 					after = "nvim-cmp",
@@ -310,7 +286,6 @@ packer.startup({
 						})
 					end,
 				},
-				{ "lukas-reineke/cmp-under-comparator" },
 				{
 					-- collection of configurations for built-in language server client
 					"neovim/nvim-lspconfig",
@@ -338,15 +313,14 @@ packer.startup({
 						{ "quangnguyen30192/cmp-nvim-tags", before = "nvim-lspconfig" },
 						-- typescript lsp utilities
 						{
-							"jose-elias-alvarez/nvim-lsp-ts-utils",
-							before = "nvim-lspconfig",
+							"jose-elias-alvarez/typescript.nvim",
 							config = function()
-								require("plugins.legendary").lsp_ts_utils()
+								require("plugins.legendary").typescript_lsp()
+								require("plugins.lsp.server-settings.typescript-lsp").setup()
 							end,
 						},
 						{
 							"jose-elias-alvarez/null-ls.nvim",
-							after = "nvim-lspconfig",
 							requires = { "nvim-lua/plenary.nvim" },
 							config = require("plugins.null-ls").config,
 						},
@@ -401,6 +375,7 @@ packer.startup({
 		-- see config & keymaps: https://github.com/folke/trouble.nvim#setup
 		use({
 			"folke/trouble.nvim",
+			event = "BufRead",
 			requires = "kyazdani42/nvim-web-devicons",
 			config = require("plugins.trouble").config,
 		})
@@ -416,6 +391,7 @@ packer.startup({
 		-- horizontal highlights for text filetypes like markdown, rmd, vimwiki and orgmode.
 		use({
 			"lukas-reineke/headlines.nvim",
+			event = "BufRead",
 			config = function()
 				require("headlines").setup()
 			end,
@@ -430,10 +406,16 @@ packer.startup({
 		})
 
 		-- change surroundings
-		use("tpope/vim-surround")
+		use({
+			"tpope/vim-surround",
+			event = "BufRead",
+		})
 
 		-- dot repeat command improved
-		use("tpope/vim-repeat")
+		use({
+			"tpope/vim-repeat",
+			event = "BufRead",
+		})
 
 		-- sugar for the UNIX shell commands
 		use("tpope/vim-eunuch")
@@ -444,6 +426,7 @@ packer.startup({
 		-- stabilize buffer content on window open/close events
 		use({
 			"luukvbaal/stabilize.nvim",
+			event = "BufRead",
 			config = function()
 				require("stabilize").setup()
 			end,
@@ -465,6 +448,7 @@ packer.startup({
 		-- visualize undo tree
 		use({
 			"mbbill/undotree",
+			command = "UndotreeToggle",
 			config = function()
 				require("plugins.legendary").undotree()
 			end,
@@ -474,22 +458,30 @@ packer.startup({
 		-- use "ruanyl/coverage.vim" todo, use it!
 
 		-- Tags generation
-		use("ludovicchabant/vim-gutentags")
+		use({
+			"ludovicchabant/vim-gutentags",
+			event = "BufRead",
+		})
 
 		-- shows thin vertical lines for indentation
 		use({
 			"Yggdroot/indentLine",
+			event = "BufRead",
 			config = function()
 				vim.g.indentLine_color_term = 240
 			end,
 		})
 
 		-- comment plugin
-		use("tpope/vim-commentary")
+		use({
+			"tpope/vim-commentary",
+			event = "BufRead",
+		})
 
 		-- AutoSave
 		use({
 			"Pocco81/AutoSave.nvim",
+			event = "BufRead",
 			config = function()
 				require("autosave").setup({
 					events = { "FocusLost" },
@@ -499,13 +491,15 @@ packer.startup({
 			end,
 		})
 
-		-- it extends vim's % key to language-specific words instead of just single characters.
-		use("andymass/vim-matchup")
+		-- extends vim's % key to language-specific words instead of just single characters.
+		use({
+			"andymass/vim-matchup",
+			event = "BufRead",
+		})
 
 		-- Terminal
 		use({
 			"akinsho/nvim-toggleterm.lua",
-			cmd = "ToggleTerm",
 			config = function()
 				require("plugins.toggleterm").config()
 				require("plugins.legendary").toggleterm()
@@ -516,6 +510,7 @@ packer.startup({
 		-- sitting
 		use({
 			"lewis6991/spellsitter.nvim",
+			event = "BufRead",
 			config = function()
 				require("spellsitter").setup()
 			end,
@@ -524,18 +519,8 @@ packer.startup({
 		-- Syntax highlighting
 		use({
 			"nvim-treesitter/nvim-treesitter",
+			event = "BufRead",
 			run = ":TSUpdate",
-			-- event = "BufRead",
-			-- cmd = {
-			--   "TSInstall",
-			--   "TSInstallInfo",
-			--   "TSInstallSync",
-			--   "TSUninstall",
-			--   "TSUpdate",
-			--   "TSUpdateSync",
-			--   "TSDisableAll",
-			--   "TSEnableAll",
-			-- },
 			config = function()
 				require("plugins.treesitter").config()
 			end,
@@ -544,6 +529,14 @@ packer.startup({
 					-- Parenthesis highlighting
 					"p00f/nvim-ts-rainbow",
 					after = "nvim-treesitter",
+				},
+				{
+					-- lsp bufferline component
+					"SmiteshP/nvim-gps",
+					after = "nvim-treesitter",
+					config = function()
+						require("nvim-gps").setup()
+					end,
 				},
 				{
 					-- Autoclose tags
@@ -570,7 +563,10 @@ packer.startup({
 			},
 		})
 
-		use("lukas-reineke/indent-blankline.nvim")
+		use({
+			"lukas-reineke/indent-blankline.nvim",
+			event = "BufRead",
+		})
 
 		-- Bufferline
 		use({
@@ -580,11 +576,22 @@ packer.startup({
 			config = function()
 				require("plugins.bufferline").config()
 			end,
+			requires = {
+				{
+					-- lsp bufferline component
+					"SmiteshP/nvim-gps",
+					after = "nvim-treesitter",
+					config = function()
+						require("nvim-gps").setup()
+					end,
+				},
+				},
 		})
 
 		-- Better buffer closing
 		use({
 			"moll/vim-bbye",
+			event = "BufRead",
 			after = "bufferline.nvim",
 			config = function()
 				require("plugins.legendary").vim_bbye()
@@ -604,6 +611,7 @@ packer.startup({
 		-- see :h gitsigns-mappings for default keybindings
 		use({
 			"lewis6991/gitsigns.nvim",
+			event = "BufRead",
 			config = function()
 				require("plugins.gitsigns").config()
 			end,
@@ -619,7 +627,7 @@ packer.startup({
 		use("dstein64/vim-startuptime")
 
 		-- Syntax file for i3 config
-		use("mboughaba/i3config.vim")
+		use({ "mboughaba/i3config.vim", event = "BufRead", ft = "i3config" })
 
 		-- Latex autocompile
 		use({ "donRaphaco/neotex", ft = "tex" })
@@ -627,6 +635,7 @@ packer.startup({
 		-- reveal the hidden message from Git under the cursor quickly
 		use({
 			"rhysd/git-messenger.vim",
+			event = "BufRead",
 			config = function()
 				vim.g.git_messenger_floating_win_opts = { border = vim.g.floating_window_border_dark }
 			end,
@@ -636,6 +645,7 @@ packer.startup({
 		use({
 			"rrethy/vim-hexokinase",
 			run = "make hexokinase",
+			event = "BufRead",
 			config = function()
 				vim.g.Hexokinase_optInPatterns = "full_hex,rgb,rgba,hsl,hsla"
 			end,
@@ -647,6 +657,7 @@ packer.startup({
 		-- align text
 		use({
 			"godlygeek/tabular",
+			event = "BufRead",
 			config = function()
 				require("plugins.legendary").tabular()
 			end,
@@ -654,11 +665,12 @@ packer.startup({
 		})
 
 		-- highlights words under cursor
-		use({ "yamatsum/nvim-cursorline", branch = "main" })
+		use({ "yamatsum/nvim-cursorline", branch = "main", event = "BufRead" })
 
 		-- motion plugin
 		use({
 			"ggandor/leap.nvim",
+			event = "BufRead",
 			config = function()
 				require("leap").set_default_keymaps()
 			end,
@@ -666,19 +678,17 @@ packer.startup({
 
 		-- markdown, toggle todo list items
 		-- and create links from visual selection
-		use({ "walterl/downtools" })
+		use({ "walterl/downtools", event = "BufRead" })
 
 		-- markdown set of functions and and mappings to those functions
 		-- which make it easy to navigate and manipulate markdown notebooks/journals/wikis
 		-- https://github.com/jakewvincent/mkdnflow.nvim#-commands-and-default-mappings
 		use({
 			"jakewvincent/mkdnflow.nvim",
-			commit = "1a374d9",
+			event = "BufRead",
 			config = function()
 				vim.o.autowriteall = true
-				require("mkdnflow").setup({
-					-- default_bib_path = '/home/armin/Documents/zettelkasten/citations.bib'
-				})
+				require("mkdnflow").setup({})
 			end,
 		})
 
@@ -686,6 +696,7 @@ packer.startup({
 		use({
 			"jghauser/auto-pandoc.nvim",
 			requires = "nvim-lua/plenary.nvim",
+			event = "BufRead",
 			config = function()
 				require("auto-pandoc")
 				require("plugins.legendary").auto_pandoc()
@@ -695,6 +706,7 @@ packer.startup({
 		-- paste image from clipboard in markdown
 		use({
 			"ekickx/clipboard-image.nvim",
+			event = "BufRead",
 			config = function()
 				require("clipboard-image").setup({
 					-- Default configuration for all filetype
@@ -709,17 +721,18 @@ packer.startup({
 		})
 
 		-- markdown in vim float window rendering
-		use("ellisonleao/glow.nvim")
+		use({ "ellisonleao/glow.nvim", event = "BufRead" })
 
 		-- markdown in browser rendering
-		use({ "iamcco/markdown-preview.nvim", run = "cd app && yarn install" })
+		use({ "iamcco/markdown-preview.nvim", event = "BufRead", run = "cd app && yarn install" })
 
 		-- AnsiEsc Command
-		use({ "powerman/vim-plugin-AnsiEsc" })
+		use({ "powerman/vim-plugin-AnsiEsc", command = "AnsiEsc" })
 
 		-- writing support
 		use({
 			"Pocco81/AbbrevMan.nvim",
+			event = "BufRead",
 			config = function()
 				local abbrev_man = require("abbrev-man")
 
@@ -730,15 +743,6 @@ packer.startup({
 						["nt_de"] = require("plugins.abbrev").german_vowel_dict,
 					},
 				})
-			end,
-		})
-
-		-- lsp bufferline component
-		use({
-			"SmiteshP/nvim-gps",
-			requires = "nvim-treesitter/nvim-treesitter",
-			config = function()
-				require("nvim-gps").setup()
 			end,
 		})
 

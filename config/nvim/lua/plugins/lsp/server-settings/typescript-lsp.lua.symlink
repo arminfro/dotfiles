@@ -1,0 +1,17 @@
+-- vi: ft=lua
+
+local M = {}
+
+function M.config()
+	local typescript_status_ok, typescript = pcall(require, "typescript")
+	if not typescript_status_ok then
+		return
+	end
+
+	typescript.setup({
+		debug = false, -- enable debug logging for commands
+		server = require("plugins.lsp.lsp-installer").server_opts,
+	})
+end
+
+return M

@@ -1,6 +1,13 @@
 -- vi: ft=lua
 
 return {
+	commands = {
+		Format = {
+			function()
+				require("stylua").format_file()
+			end,
+		},
+	},
 	settings = {
 		Lua = {
 			runtime = {
@@ -10,7 +17,7 @@ return {
 				path = "/usr/bin/lua",
 			},
 			format = {
-				enable = false,
+				enable = true,
 				defaultConfig = {
 					indent_style = "space",
 					indent_size = "2",

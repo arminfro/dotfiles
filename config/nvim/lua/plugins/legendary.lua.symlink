@@ -27,7 +27,7 @@ end
 
 function M.gitlinker()
 	require("legendary").bind_keymaps({
-		-- leader gy is actual keymapping, just let it bet set by plugin, works better
+		-- leader gy is actual keymapping, just let it be set by plugin, works better
 		-- {'<leader>gy',":lua require'gitlinker'.get_buf_range_url()<CR>", description = "Copy Git Link", mode = {"n", "v"}, opts},
 		{
 			"<leader>gY",
@@ -151,11 +151,11 @@ function M.bufferline()
 	})
 end
 
-function M.lsp_ts_utils()
+function M.typescript_lsp()
 	require("legendary").bind_keymaps({
-		{ "<space>ti", ":TSLspImportAll<CR>", description = "TS import all", mode = { "n" }, opts },
-		{ "<space>to", ":TSLspOrganize<CR>", description = "TS organize imports", mode = { "n" }, opts },
-		{ "<space>tr", ":TSLspRenameFile<CR>", description = "TS Rename File", mode = { "n" }, opts },
+		{ "<space>ti", ":TypescriptAddMissingImports<CR>", description = "TS import all", mode = { "n" }, opts },
+		{ "<space>to", ":TypescriptOrganizeImports<CR>", description = "TS remove unused", mode = { "n" }, opts },
+		{ "<space>tr", ":TypescriptRenameFile<CR>", description = "TS Rename File", mode = { "n" }, opts },
 	})
 end
 
@@ -265,7 +265,7 @@ end
 
 function M.fzf()
 	require("legendary").bind_keymaps({
-		{ "<F2>", "<ESC>:FzfLua<CR>", mode = { "n" }, description = "Fuzzy searches", opts },
+		{ "<F2>", "<ESC>:FzfLua<CR>", mode = { "n", "v" }, description = "Fuzzy searches", opts },
 		{ "<F12>", "<ESC>:FzfLua help_tags<CR>", mode = { "n" }, description = "Fuzzy search helptags", opts },
 		{ "<C-O>", "<ESC>:FzfLua commands<CR>", mode = { "n" }, description = "Fuzzy search command", opts },
 		{ "<C-X>", "<ESC>:FzfLua tags<CR>", mode = { "n" }, description = "Fuzzy search code tags", opts },
