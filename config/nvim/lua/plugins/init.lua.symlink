@@ -229,7 +229,7 @@ packer.startup({
     use({
       "numToStr/Navigator.nvim",
       config = function()
-        require("Navigator").setup()
+        require("Navigator").setup({})
         require("plugins.legendary").navigator()
       end,
     })
@@ -239,6 +239,7 @@ packer.startup({
       "rmagatti/auto-session",
       config = function()
         require("auto-session").setup({
+          auto_session_enable_last_session = false,
           log_level = "error",
         })
       end,
@@ -321,11 +322,12 @@ packer.startup({
             -- json,yml, schema definition
             { "b0o/schemastore.nvim", before = "nvim-lspconfig" },
             -- installer for many lsp
-            { "williamboman/nvim-lsp-installer", before = "nvim-lspconfig" },
+            { "williamboman/nvim-lsp-installer", before = "nvim-lspconfig",
+              requires = { "shoukoo/stylua.nvim" },
+            },
             -- nvim lua api type_definition
             { "folke/lua-dev.nvim", before = "nvim-lspconfig" }, -- lua vim api completion
             -- completion plugin for lsp
-            { "shoukoo/stylua.nvim", before = "nvim-lspconfig" },
             { "hrsh7th/cmp-nvim-lsp", before = "nvim-lspconfig" },
             -- Inlay Hints for rust-analyzer
             { "nvim-lua/lsp_extensions.nvim", before = "nvim-lspconfig" },
@@ -356,15 +358,20 @@ packer.startup({
                 require("plugins.autopairs").config()
               end,
             },
-            use({
+            -- zettelkasten with lsp support
+            { "mickael-menu/zk-nvim",
+              after = "nvim-lspconfig",
+              config = require("plugins.zk").config
+            },
+            {
               -- LSP symbols for completion menu
               "simrat39/symbols-outline.nvim",
               cmd = "SymbolsOutline",
               setup = function()
                 require("plugins.symbols-outline").setup()
               end,
-            }),
-            use({
+            },
+            {
               -- LSP enhancement
               "tami5/lspsaga.nvim",
               event = "BufRead",
@@ -372,7 +379,7 @@ packer.startup({
                 require("plugins.lsp.lspsaga").config()
                 require("plugins.legendary").lspsaga()
               end,
-            }),
+            },
             -- { "lukas-reineke/lsp-format.nvim", before = "nvim-lspconfig",
             --   config = function ()
             --     require("plugins.lsp.format")
@@ -472,8 +479,6 @@ packer.startup({
     -- automatically call mkdir -p if path doesn't exist on save
     use("pbrisbin/vim-mkdir")
 
-    -- use "vim-test/vim-test"
-
     -- visualize undo tree
     use({
       "mbbill/undotree",
@@ -485,6 +490,8 @@ packer.startup({
 
     -- hows code coverage
     -- use "ruanyl/coverage.vim" todo, use it!
+
+    -- use "vim-test/vim-test"
 
     -- Tags generation
     use({
@@ -587,11 +594,13 @@ packer.startup({
       },
     })
 
+    -- adds indentation guides to all lines
     use({
       "lukas-reineke/indent-blankline.nvim",
       event = "BufRead",
     })
 
+    -- highlights which characters to target for f, F and family.
     use({
       "kepbod/quick-scope",
       config = function()
@@ -634,6 +643,7 @@ packer.startup({
     use({
       "nvim-lualine/lualine.nvim",
       after = "bufferline.nvim",
+      event = "BufRead",
       config = function()
         require("plugins.lualine").config()
       end,
@@ -706,7 +716,16 @@ packer.startup({
     })
 
     -- highlights words under cursor
-    use({ "yamatsum/nvim-cursorline", branch = "main", event = "BufRead" })
+    use({ "yamatsum/nvim-cursorline", branch = "main",
+      config = function()
+        require('nvim-cursorline').setup({})
+      end
+    })
+
+    -- line joining and splitting
+    use {
+      "AndrewRadev/splitjoin.vim",
+    }
 
     -- motion plugin
     use({

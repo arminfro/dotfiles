@@ -257,9 +257,11 @@ end
 
 function M.nvim_tree()
   require("legendary").bind_keymaps({
-    { "<leader>r", ":NvimTreeRefresh<CR>", mode = { "n" }, description = "Refresh nvim-tree", opts },
+    -- todo, only in nvim-tree
+    { "<leader>tr", ":NvimTreeRefresh<CR>", mode = { "n" }, description = "Refresh nvim-tree", opts },
+    -- { "<leader>to", ':lua vim.fn.system("xdg-open "' .. require"nvim-tree.lib".get_node_at_cursor().absolute_path .. ')<CR>', mode = { "n" }, description = "Refresh nvim-tree", opts },
     {
-      "<leader>f",
+      "<leader>tf",
       ":NvimTreeFindFile<CR>",
       mode = { "n" },
       description = "Find current file in nvim-tree",

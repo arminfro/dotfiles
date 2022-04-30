@@ -1,0 +1,22 @@
+-- vi: ft=lua
+
+local M = {}
+
+function M.config()
+	local status_ok, zk = pcall(require, "zk")
+	if not status_ok then
+		return
+	end
+
+	local commands = require('zk.commands')
+
+	commands.add('ZkInbox', function(options)
+		options = options or {}
+		options = vim.tbl_extend('force', options, { dir = 'inbox' })
+		zk.new(options)
+	end)
+
+	zk.setup({})
+end
+
+return M

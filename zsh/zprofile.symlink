@@ -15,8 +15,12 @@ export CLIPBOARD_MANAGER="gpaste-client ui"
 export MUSIC_PLAYER=rhythmbox
 export VIDEO_PLAYER=vlc
 
+export ZK_NOTEBOOK_DIR="~/Documents/gitjournal"
+
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
+
+export XDG_CONFIG_HOME="~/.config"
 
 if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
   exec startx
