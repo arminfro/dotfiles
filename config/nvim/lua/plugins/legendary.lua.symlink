@@ -270,6 +270,14 @@ function M.nvim_tree()
   })
 end
 
+function M.http_rest()
+  require("legendary").bind_keymaps({
+    { "<leader>rr", "<Plug>RestNvim", mode = { "n", "v" }, description = "run the http request under the cursor", opts },
+    { "<leader>rp", "<Plug>RestNvimPreview", mode = { "n", "v" }, description = "preview http request curl command under the cursor", opts },
+    { "<leader>rl", "<Plug>RestNvimLast", mode = { "n", "v" }, description = "re-run last http request", opts },
+  })
+end
+
 function M.fzf()
   require("legendary").bind_keymaps({
     { "<F2>", "<ESC>:FzfLua<CR>", mode = { "n", "v" }, description = "Fuzzy searches", opts },
