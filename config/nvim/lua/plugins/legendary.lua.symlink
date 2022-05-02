@@ -154,7 +154,7 @@ end
 function M.typescript_lsp()
   require("legendary").bind_keymaps({
     { "<space>ti", ":TypescriptAddMissingImports<CR>", description = "TS import all", mode = { "n" }, opts },
-    { "<space>to", ":TypescriptOrganizeImports<CR>", description = "TS remove unused", mode = { "n" }, opts },
+    { "<space>to", ":TypescriptOrganizeImports<CR>", description = "TS remove unused imports", mode = { "n" }, opts },
     { "<space>tr", ":TypescriptRenameFile<CR>", description = "TS Rename File", mode = { "n" }, opts },
   })
 end
@@ -163,7 +163,7 @@ function M.lsp(bufnr)
   opts = { buffer = bufnr, noremap = true }
   local legendary = require("legendary")
   legendary.bind_commands({
-    { ":Format", "lua vim.lsp.buf.formatting()", description = "Format current buffer" },
+    { ":Format", "lua vim.lsp.buf.format()", description = "Format current buffer" },
   })
   legendary.bind_keymaps({
     {

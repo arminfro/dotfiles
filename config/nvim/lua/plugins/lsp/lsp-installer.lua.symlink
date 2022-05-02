@@ -4,77 +4,77 @@
 local M = {}
 
 M.server_opts = {
-	on_attach = require("plugins.lsp.handlers").on_attach,
-	capabilities = require("plugins.lsp.handlers").capabilities,
+  on_attach = require("plugins.lsp.handlers").on_attach,
+  capabilities = require("plugins.lsp.handlers").capabilities,
 }
 
 function M.config()
-	local status_ok, lsp_installer_servers = pcall(require, "nvim-lsp-installer.servers")
-	if not status_ok then
-		return
-	end
+  local status_ok, lsp_installer_servers = pcall(require, "nvim-lsp-installer.servers")
+  if not status_ok then
+    return
+  end
 
-	local servers = {
-		"bashls",
-		"cssls",
-		"cssmodules_ls",
-		"docker_ls",
-		"eslint",
-		"graphql",
-		"html",
-		"jsonls",
-		"remark_ls",
-		"rust_analyzer",
-		"solargraph",
-		"sumneko_lua",
-		"tailwindcss",
-		"yamlls",
-		"zk",
-		"emmet_ls",
-	}
+  local servers = {
+    "bashls",
+    "cssls",
+    "cssmodules_ls",
+    "docker_ls",
+    "eslint",
+    "graphql",
+    "html",
+    "jsonls",
+    "remark_ls",
+    "rust_analyzer",
+    "solargraph",
+    "sumneko_lua",
+    "tailwindcss",
+    "yamlls",
+    "zk",
+    "emmet_ls",
+  }
 
-	for _, server_name in pairs(servers) do
-		local server_available, server = lsp_installer_servers.get_server(server_name)
-		if server_available then
-			local opts = copy(M.server_opts)
+  for _, server_name in pairs(servers) do
+    local server_available, server = lsp_installer_servers.get_server(server_name)
+    if server_available then
+      local opts = copy(M.server_opts)
 
-			if server.name == "eslint" then
-				local local_server_opts = require("plugins.lsp.server-settings.eslint")
-				opts = vim.tbl_deep_extend("force", local_server_opts, opts)
-			end
+      if server.name == "eslint" then
+        local local_server_opts = require("plugins.lsp.server-settings.eslint")
+        opts = vim.tbl_deep_extend("force", local_server_opts, opts)
+      end
 
-			if server.name == "emmet_ls" then
-				local local_server_opts = require("plugins.lsp.server-settings.emmet-ls")
-				opts = vim.tbl_deep_extend("force", local_server_opts, opts)
-			end
+      if server.name == "emmet_ls" then
+        local local_server_opts = require("plugins.lsp.server-settings.emmet-ls")
+        opts = vim.tbl_deep_extend("force", local_server_opts, opts)
+      end
 
-			if server.name == "jsonls" then
-				local local_server_opts = require("plugins.lsp.server-settings.jsonls")
-				opts = vim.tbl_deep_extend("force", local_server_opts, opts)
-			end
+      if server.name == "jsonls" then
+        local local_server_opts = require("plugins.lsp.server-settings.jsonls")
+        opts = vim.tbl_deep_extend("force", local_server_opts, opts)
+      end
 
-			if server.name == "rust-analyzer" then
-				local local_server_opts = require("plugins.lsp.server-settings.rust-analyser")
-				opts = vim.tbl_deep_extend("force", local_server_opts, opts)
-			end
+      if server.name == "rust-analyzer" then
+        local local_server_opts = require("plugins.lsp.server-settings.rust-analyser")
+        opts = vim.tbl_deep_extend("force", local_server_opts, opts)
+      end
 
-			if server.name == "sumneko_lua" then
-				local local_server_opts = require("plugins.lsp.server-settings.sumneko_lua")
-				opts = vim.tbl_deep_extend("force", local_server_opts, opts)
-			end
+      if server.name == "sumneko_lua" then
+        local local_server_opts = require("plugins.lsp.server-settings.sumneko_lua")
+        opts = vim.tbl_deep_extend("force", local_server_opts, opts)
+      end
 
-			if server.name == "pyright" then
-				local local_server_opts = require("plugins.lsp.server-settings.pyright")
-				opts = vim.tbl_deep_extend("force", local_server_opts, opts)
-			end
+      if server.name == "pyright" then
+        local local_server_opts = require("plugins.lsp.server-settings.pyright")
+        opts = vim.tbl_deep_extend("force", local_server_opts, opts)
+      end
 
-			server:setup(opts)
+      server:setup(opts)
 
-			if not server:is_installed() then
-				server:install()
-			end
-		end
-	end
+      if not server:is_installed() then
+        server:install()
+      end
+    end
+  end
 end
 
 return M
