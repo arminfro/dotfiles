@@ -81,7 +81,7 @@ function M.config()
       ignore_list = {},
     },
     diagnostics = {
-      enable = false,
+      enable = true,
       icons = {
         hint = "",
         info = "",

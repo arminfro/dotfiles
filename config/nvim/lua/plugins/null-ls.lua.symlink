@@ -36,14 +36,21 @@ function M.config()
       f.rubocop,
       f.rustfmt,
       f.prettier,
-      f.stylua,
+      f.stylua.with({
+        extra_args = {
+          "--indent-type",
+          "Spaces",
+          "--indent-width",
+          "2",
+          "--quote-style",
+          "ForceDouble",
+        },
+      }),
     },
 
     -- sets format on save
     -- temporarily disabled, see https://github.com/jose-elias-alvarez/null-ls.nvim/issues/778
     on_attach = function(client, bufnr)
-      print("hello from on_attach")
-      -- set_format_on_save
       if client.supports_method("textDocument/formatting") then
         vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
         vim.api.nvim_create_autocmd({ "BufWritePre" }, {

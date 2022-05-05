@@ -23,7 +23,7 @@ function M.config()
     "graphql",
     "html",
     "jsonls",
-    "remark_ls",
+    -- "remark_ls", -- seems buggy on autofix
     "rust_analyzer",
     "solargraph",
     "sumneko_lua",

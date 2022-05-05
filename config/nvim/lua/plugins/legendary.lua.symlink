@@ -95,7 +95,7 @@ end
 
 function M.auto_pandoc()
   require("legendary").bind_commands({
-    { ":PandocMdConvert", 'lua require("auto-pandoc").run_pandoc()', description = "Convert Md to Pdf" },
+    { ":PandocMdConvert", "lua require('auto-pandoc').run_pandoc()", description = "Convert Md to Pdf" },
   })
   require("legendary").bind_keymaps({
     { "<leader>pc", ":PandocMdConvert<CR>", description = "Convert Md to Pdf", mode = { "n", "v" }, opts },
@@ -154,8 +154,38 @@ end
 function M.typescript_lsp()
   require("legendary").bind_keymaps({
     { "<space>ti", ":TypescriptAddMissingImports<CR>", description = "TS import all", mode = { "n" }, opts },
-    { "<space>to", ":TypescriptOrganizeImports<CR>", description = "TS remove unused imports", mode = { "n" }, opts },
+    {
+      "<space>to",
+      ":TypescriptOrganizeImports<CR>",
+      description = "TS remove unused imports",
+      mode = { "n" },
+      opts,
+    },
     { "<space>tr", ":TypescriptRenameFile<CR>", description = "TS Rename File", mode = { "n" }, opts },
+  })
+end
+
+function M.nvim_window()
+  require("legendary").bind_keymaps({
+    {
+      "<leader>ww",
+      "<cmd>lua require('nvim-window').pick()<CR>",
+      description = "Pick window to focus, nvim-window",
+      mode = { "n" },
+      opts,
+    },
+  })
+end
+
+function M.trouble()
+  require("legendary").bind_keymaps({
+    {
+      "<F7>",
+      ":TroubleToggle<CR>",
+      description = "Trouble: Workspace diagnostics in quickfix window",
+      mode = { "n" },
+      opts,
+    },
   })
 end
 
@@ -257,6 +287,13 @@ end
 
 function M.nvim_tree()
   require("legendary").bind_keymaps({
+    {
+      "<F9>",
+      ":NvimTreeToggle<CR>",
+      description = "toggle NvimTree",
+      mode = { "n" },
+      opts,
+    },
     -- todo, only in nvim-tree
     { "<leader>tr", ":NvimTreeRefresh<CR>", mode = { "n" }, description = "Refresh nvim-tree", opts },
     -- { "<leader>to", ':lua vim.fn.system("xdg-open "' .. require"nvim-tree.lib".get_node_at_cursor().absolute_path .. ')<CR>', mode = { "n" }, description = "Refresh nvim-tree", opts },
@@ -272,8 +309,20 @@ end
 
 function M.http_rest()
   require("legendary").bind_keymaps({
-    { "<leader>rr", "<Plug>RestNvim", mode = { "n", "v" }, description = "run the http request under the cursor", opts },
-    { "<leader>rp", "<Plug>RestNvimPreview", mode = { "n", "v" }, description = "preview http request curl command under the cursor", opts },
+    {
+      "<leader>rr",
+      "<Plug>RestNvim",
+      mode = { "n", "v" },
+      description = "run the http request under the cursor",
+      opts,
+    },
+    {
+      "<leader>rp",
+      "<Plug>RestNvimPreview",
+      mode = { "n", "v" },
+      description = "preview http request curl command under the cursor",
+      opts,
+    },
     { "<leader>rl", "<Plug>RestNvimLast", mode = { "n", "v" }, description = "re-run last http request", opts },
   })
 end
@@ -337,28 +386,27 @@ end
 function M.tabular()
   require("legendary").bind_keymaps({
     { "<leader>t=", ":Tabularize /=<CR>", mode = { "v", "n" }, description = "Align text on '='", opts },
-    { '<leader>t"', ':Tabularize /"<CR>', mode = { "v", "n" }, description = "Align text on '\"'", opts },
+    { "<leader>t\"", ":Tabularize /\"<CR>", mode = { "v", "n" }, description = "Align text on '\"'", opts },
     { "<leader>t:", ":Tabularize /:\zs<CR>", mode = { "v", "n" }, description = "Align text on ':'", opts },
     { "<leader>t-", ":Tabularize /-<CR>", mode = { "v", "n" }, description = "Align text on ':'", opts },
   })
 end
 
-function M.vim_bbye()
+function M.git_messenger()
   require("legendary").bind_keymaps({
-    { "<F7>", ":UndotreeToggle<CR>", mode = { "v", "n" }, description = "Toggles Undo Tree", opts },
+    {
+      "<leader>gm",
+      ":GitMessenger<CR>",
+      mode = { "n" },
+      description = "Git commit message in floating window",
+      opts,
+    },
   })
 end
 
 function M.undotree()
   require("legendary").bind_keymaps({
-    -- Buffer Managemant
-    {
-      "<leader>x",
-      ":Bdelete<CR>",
-      mode = { "n" },
-      description = "Close current buffer",
-      opts = { noremap = true },
-    },
+    { "<F10>", ":UndotreeToggle<CR>", mode = { "v", "n" }, description = "Toggles Undo Tree", opts },
   })
 end
 
@@ -393,12 +441,20 @@ function M.config()
   end
 
   local keymaps = {
-    -- File Movement
+    -- Cursors Movement
     { "H", "^", mode = { "n", "v" }, description = "Jump to beginning of line", opts },
     { "L", "g_", mode = { "n", "v" }, description = "Jump to end of line", opts },
     { "J", "8j", mode = { "n" }, description = "Jump 8 lines down", opts },
     { "K", "8k", mode = { "n" }, description = "Jump 8 lines up", opts },
 
+    -- Buffer Managemant
+    {
+      "<leader>q",
+      ":bd<CR>",
+      mode = { "n" },
+      description = "Close current buffer",
+      opts = { noremap = true },
+    },
     -- Buffer Movement, gets set up by bufferline plugin
     -- {'<C-L>',':bnext<CR>', mode = {"n"}, description = "Go to next buffer", opts },
     -- {'<C-H>',':bprevious<CR>', mode = {"n"}, description = "Go to next buffer", opts },
@@ -441,9 +497,9 @@ function M.config()
     { "<leader>wt", ":window diffoff<CR>", mode = { "n" }, description = "Diff off", opts },
 
     -- Copy to clipboard
-    { "<leader>y", '"+y', mode = { "n", "v" }, description = "Copy to clipboard", opts },
-    { "<leader>Y", '"+yg_', mode = { "n" }, description = "Copy to clipboard until end of line", opts },
-    { "<leader>yy", '"+yy', mode = { "n" }, description = "Copy entire line to clipboard", opts },
+    { "<leader>y", "\"+y", mode = { "n", "v" }, description = "Copy to clipboard", opts },
+    { "<leader>Y", "\"+yg_", mode = { "n" }, description = "Copy to clipboard until end of line", opts },
+    { "<leader>yy", "\"+yy", mode = { "n" }, description = "Copy entire line to clipboard", opts },
 
     -- Paste from clipboard
     -- { "<leader>p", '"p', mode = { "n", "v" }, description = "Paste from clipboard at current position", opts },
@@ -457,7 +513,8 @@ function M.config()
 
     -- easier save and exit
     { "<leader>,", ":wa<CR>", mode = { "n" }, description = "Save all buffers", opts },
-    { "<leader>q", ":qa<CR>", mode = { "n" }, description = "Quit", opts },
+    { "<leader>Q", ":qa<CR>", mode = { "n" }, description = "Quit", opts },
+    { "<leader>!", ":qa!<CR>", mode = { "n" }, description = "Quit", opts },
 
     -- spell checker
     { "<leader>z", "1z=", mode = { "n" }, description = "Fix to first spell suggestion", opts },

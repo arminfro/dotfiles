@@ -18,7 +18,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 -- add later
 -- AckslD/nvim-revJ.lua
 -- FuDesign2008/json2ts.vim
--- ten3roberts/qf.nvim
 packer.startup({
   function(use)
     -- Plugin manager
@@ -116,7 +115,7 @@ packer.startup({
       requires = "nvim-lua/plenary.nvim",
     })
 
-    -- Show commit info at current line
+    -- Show commit info at current line on cursorhold
     use({
       "APZelos/blamer.nvim",
       config = function()
@@ -128,6 +127,7 @@ packer.startup({
     -- Generate code documentation
     use({
       "danymat/neogen",
+      cmd = "Neogen",
       config = function()
         require("neogen").setup({
           enabled = true,
@@ -142,6 +142,7 @@ packer.startup({
       config = function()
         local indentscope = require("mini.indentscope")
         indentscope.setup({
+          ---@diagnostic disable-next-line: missing-parameter -- it's optional
           draw = { animation = indentscope.gen_animation("none") },
           symbol = "¦",
         })
@@ -226,6 +227,7 @@ packer.startup({
       end,
     })
 
+    -- smoothly navigate between splits and panes
     use({
       "numToStr/Navigator.nvim",
       config = function()
@@ -234,21 +236,11 @@ packer.startup({
       end,
     })
 
-    -- auto saves and loads vim sessions
-    -- use({
-    --   "rmagatti/auto-session",
-    --   config = function()
-    --     require("auto-session").setup({
-    --       auto_session_enable_last_session = false,
-    --       log_level = "error",
-    --     })
-    --   end,
-    -- })
-
-    use {
+    -- nvim http client (curl wrapper)
+    use({
       "NTBBloodbath/rest.nvim",
       requires = { "nvim-lua/plenary.nvim" },
-      event = 'BufEnter',
+      event = "BufEnter",
       config = function()
         require("rest-nvim").setup({
           -- Open request results in a horizontal split
@@ -268,13 +260,13 @@ packer.startup({
           },
           -- Jump to request line on run
           jump_to_request = false,
-          env_file = '.env',
+          env_file = ".env",
           custom_dynamic_variables = {},
           yank_dry_run = true,
         })
         require("plugins.legendary").http_rest()
-      end
-    }
+      end,
+    })
 
     -- FZF vim plugin implemented in lua
     use({
@@ -353,7 +345,9 @@ packer.startup({
             -- json,yml, schema definition
             { "b0o/schemastore.nvim", before = "nvim-lspconfig" },
             -- installer for many lsp
-            { "williamboman/nvim-lsp-installer", before = "nvim-lspconfig",
+            {
+              "williamboman/nvim-lsp-installer",
+              before = "nvim-lspconfig",
               requires = { "shoukoo/stylua.nvim" },
             },
             -- nvim lua api type_definition
@@ -377,6 +371,7 @@ packer.startup({
               end,
             },
             {
+              -- linter which integrates into lsp
               "jose-elias-alvarez/null-ls.nvim",
               requires = { "nvim-lua/plenary.nvim" },
               config = require("plugins.null-ls").config,
@@ -390,14 +385,15 @@ packer.startup({
               end,
             },
             -- zettelkasten with lsp support
-            { "mickael-menu/zk-nvim",
+            {
+              "mickael-menu/zk-nvim",
               after = "nvim-lspconfig",
-              config = require("plugins.zk").config
+              config = require("plugins.zk").config,
             },
             {
-              -- LSP symbols for completion menu
+              -- tree like view for symbols using lsp
               "simrat39/symbols-outline.nvim",
-              cmd = "SymbolsOutline",
+              event = "BufRead",
               setup = function()
                 require("plugins.symbols-outline").setup()
               end,
@@ -438,6 +434,13 @@ packer.startup({
       },
     })
 
+    -- window picker
+    use({
+      "https://gitlab.com/yorickpeterse/nvim-window.git",
+      config = require("plugins.legendary").nvim_window,
+      event = "BufRead",
+    })
+
     -- pretty list for showing diagnostics, references, quickfix and location lists
     -- see config & keymaps: https://github.com/folke/trouble.nvim#setup
     use({
@@ -446,14 +449,6 @@ packer.startup({
       requires = "kyazdani42/nvim-web-devicons",
       config = require("plugins.trouble").config,
     })
-
-    -- todo, doesnt work
-    -- use({
-    --   "folke/todo-comments.nvim",
-    --   requires = "nvim-lua/plenary.nvim",
-    --   event = "BufReadPost",
-    --   config = require("plugins.todo").config,
-    -- })
 
     -- horizontal highlights for text filetypes like markdown, rmd, vimwiki and orgmode.
     use({
@@ -464,8 +459,8 @@ packer.startup({
       end,
     })
 
+    -- Start screen
     use({
-      -- Start screen
       "mhinz/vim-startify",
       config = function()
         require("plugins.startify").config()
@@ -493,7 +488,6 @@ packer.startup({
     -- stabilize buffer content on window open/close events
     use({
       "luukvbaal/stabilize.nvim",
-      event = "BufRead",
       config = function()
         require("stabilize").setup()
       end,
@@ -518,11 +512,6 @@ packer.startup({
         require("plugins.legendary").undotree()
       end,
     })
-
-    -- hows code coverage
-    -- use "ruanyl/coverage.vim" todo, use it!
-
-    -- use "vim-test/vim-test"
 
     -- Tags generation
     use({
@@ -660,16 +649,6 @@ packer.startup({
       },
     })
 
-    -- Better buffer closing
-    use({
-      "moll/vim-bbye",
-      event = "BufRead",
-      after = "bufferline.nvim",
-      config = function()
-        require("plugins.legendary").vim_bbye()
-      end,
-    })
-
     -- Statusline
     use({
       "nvim-lualine/lualine.nvim",
@@ -706,6 +685,7 @@ packer.startup({
       event = "BufRead",
     })
 
+    -- measure start up time
     use("dstein64/vim-startuptime")
 
     -- Syntax file for i3 config
@@ -720,6 +700,7 @@ packer.startup({
       event = "BufRead",
       config = function()
         vim.g.git_messenger_floating_win_opts = { border = vim.g.floating_window_border_dark }
+        require("plugins.legendary").git_messenger()
       end,
     })
 
@@ -730,6 +711,18 @@ packer.startup({
       event = "BufRead",
       config = function()
         vim.g.Hexokinase_optInPatterns = "full_hex,rgb,rgba,hsl,hsla"
+      end,
+    })
+
+    -- dims your inactive windows, making it easier to see the active window at a glance
+    -- BUG: does not work well with git-messenger
+    use({
+      "sunjon/shade.nvim",
+      event = "BufRead",
+      config = function()
+        require("shade").setup({
+          overlay_opacity = 70,
+        })
       end,
     })
 
@@ -747,16 +740,18 @@ packer.startup({
     })
 
     -- highlights words under cursor
-    use({ "yamatsum/nvim-cursorline", branch = "main",
+    use({
+      "yamatsum/nvim-cursorline",
+      branch = "main",
       config = function()
-        require('nvim-cursorline').setup({})
-      end
+        require("nvim-cursorline").setup({})
+      end,
     })
 
     -- line joining and splitting
-    use {
+    use({
       "AndrewRadev/splitjoin.vim",
-    }
+    })
 
     -- motion plugin
     use({
@@ -769,6 +764,7 @@ packer.startup({
 
     -- markdown, toggle todo list items
     -- and create links from visual selection
+    -- todo, needed?
     use({ "walterl/downtools", event = "BufRead" })
 
     -- markdown set of functions and and mappings to those functions
@@ -848,6 +844,40 @@ packer.startup({
       end,
     })
 
+    -- make Neovim's quickfix window better
+    use({
+      "romainl/vim-qf",
+      config = function()
+        vim.g.qf_nowrap = false
+        vim.g.qf_max_height = 20
+      end,
+      requires = {
+        {
+          "kevinhwang91/nvim-bqf",
+          config = function()
+            require("bqf").setup({
+              preview = {
+                delay_syntax = 0,
+              },
+            })
+          end,
+        },
+        {
+          "https://gitlab.com/yorickpeterse/nvim-pqf.git",
+          config = function()
+            require("pqf").setup({
+              signs = {
+                error = "",
+                warning = "",
+                info = "",
+                hint = "",
+              },
+            })
+          end,
+        },
+      },
+    })
+
     -- throws error cause of python dependency, todo
     -- use {'gelguy/wilder.nvim',
     --   config = function ()
@@ -890,51 +920,24 @@ packer.startup({
     --   end,
     -- }
 
-    -- make Neovim's quickfix window better
-    use({
-      "romainl/vim-qf",
-      config = function()
-        vim.g.qf_nowrap = false
-        vim.g.qf_max_height = 20
-      end,
-      requires = {
-        {
-          "kevinhwang91/nvim-bqf",
-          config = function()
-            require("bqf").setup({
-              preview = {
-                delay_syntax = 0,
-              },
-            })
-          end,
-        },
-        {
-          "https://gitlab.com/yorickpeterse/nvim-pqf.git",
-          config = function()
-            require("pqf").setup({
-              signs = {
-                error = "",
-                warning = "",
-                info = "",
-                hint = "",
-              },
-            })
-          end,
-        },
-      },
-    })
-
-    -- open files at the last cursor position, todo doesnt work
-    -- use {
-    --    'ethanholz/nvim-lastplace',
+    -- auto saves and loads vim sessions
+    -- use({
+    --   "rmagatti/auto-session",
     --   config = function()
-    --     require'nvim-lastplace'.setup {
-    --       lastplace_ignore_buftype = {"quickfix", "nofile", "help"},
-    --       lastplace_ignore_filetype = {"gitcommit", "gitrebase", "svn", "hgcommit", "startify"},
-    --       lastplace_open_folds = true
-    --     }
-    --   end
-    -- }
+    --     require("auto-session").setup({
+    --       auto_session_enable_last_session = false,
+    --       log_level = "error",
+    --     })
+    --   end,
+    -- })
+
+    -- todo, doesnt work
+    -- use({
+    --   "folke/todo-comments.nvim",
+    --   requires = "nvim-lua/plenary.nvim",
+    --   event = "BufReadPost",
+    --   config = require("plugins.todo").config,
+    -- })
   end,
   config = {
     display = {
