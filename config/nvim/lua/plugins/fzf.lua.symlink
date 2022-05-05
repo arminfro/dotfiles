@@ -8,12 +8,14 @@ function M.config()
     return
   end
 
+  local filterOpts = "!{.git,node_modules,vendor,lib,package-lock.json,yarn.lock}"
+
   fzflua.setup({
     grep = {
-        rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=512 -g '!{.git,node_modules,vendor,lib,package-lock.json,yarn.lock}'",
+      rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=512 -g" .. filterOpts,
     },
     lsp = {
-      async_or_timeout  = 3000,       -- timeout(ms) or 'true' for async calls
+      async_or_timeout = 3000, -- timeout(ms) or 'true' for async calls
     },
   })
 

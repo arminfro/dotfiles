@@ -7,6 +7,7 @@ local g = vim.g
 function M.bootstrap()
   local fn = vim.fn
   local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+  ---@diagnostic disable-next-line: missing-parameter
   if fn.empty(fn.glob(install_path)) > 0 then
     PACKER_BOOTSTRAP = fn.system({
       "git",
@@ -42,35 +43,34 @@ function M.impatient()
 end
 
 function _G.copy(obj, seen)
-    if type(obj) ~= "table" then
-        return obj
-    end
-    if seen and seen[obj] then
-        return seen[obj]
-    end
-    local s = seen or {}
-    local res = {}
-    s[obj] = res
-    for k, v in next, obj do
-        res[copy(k, s)] = copy(v, s)
-    end
-    return setmetatable(res, getmetatable(obj))
+  if type(obj) ~= "table" then
+    return obj
+  end
+  if seen and seen[obj] then
+    return seen[obj]
+  end
+  local s = seen or {}
+  local res = {}
+  s[obj] = res
+  for k, v in next, obj do
+    res[copy(k, s)] = copy(v, s)
+  end
+  return setmetatable(res, getmetatable(obj))
 end
 
 -- print tables
 function _G.P(...)
-    local objects = vim.tbl_map(vim.inspect, { ... })
-    print(unpack(objects))
+  local objects = vim.tbl_map(vim.inspect, { ... })
+  print(unpack(objects))
 end
 
 -- expressive if
 function _G.if_exp(bool, a, b)
-    if bool then
-        return a
-    else
-        return b
-    end
+  if bool then
+    return a
+  else
+    return b
+  end
 end
-
 
 return M

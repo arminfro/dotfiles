@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-parameter
 -- vi: ft=lua
 
 local M = {}
@@ -13,21 +14,21 @@ function M.config()
     return
   end
 
-  local zephyrium_colors= require("zephyrium")
+  local zephyrium_colors = require("zephyrium")
 
   local colors = {
-    yellow =zephyrium_colors.yellow,
-    yellow_1 =zephyrium_colors.orange,
-    grey =zephyrium_colors.bg_highlight,
-    white =zephyrium_colors.fg,
-    cyan =zephyrium_colors.cyan,
-    darkblue =zephyrium_colors.bracket,
-    green =zephyrium_colors.green,
-    orange =zephyrium_colors.orange,
-    violet =zephyrium_colors.violet,
-    magenta =zephyrium_colors.magenta,
-    blue =zephyrium_colors.blue,
-    red =zephyrium_colors.red,
+    yellow = zephyrium_colors.yellow,
+    yellow_1 = zephyrium_colors.orange,
+    grey = zephyrium_colors.bg_highlight,
+    white = zephyrium_colors.fg,
+    cyan = zephyrium_colors.cyan,
+    darkblue = zephyrium_colors.bracket,
+    green = zephyrium_colors.green,
+    orange = zephyrium_colors.orange,
+    violet = zephyrium_colors.violet,
+    magenta = zephyrium_colors.magenta,
+    blue = zephyrium_colors.blue,
+    red = zephyrium_colors.red,
   }
 
   local conditions = {

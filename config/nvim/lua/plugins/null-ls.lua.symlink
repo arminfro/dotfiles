@@ -60,8 +60,8 @@ function M.config()
             vim.lsp.buf.format({
               filter = function(clients)
                 -- filter out clients that you don't want to use
-                return vim.tbl_filter(function(client)
-                  return client.name ~= "solargraph"
+                return vim.tbl_filter(function(client2)
+                  return client2.name ~= "solargraph"
                 end, clients)
               end,
             })

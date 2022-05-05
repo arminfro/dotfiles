@@ -1,13 +1,13 @@
 -- vi: ft=lua
 
-vim.cmd [[syntax enable]]
-vim.cmd [[filetype plugin indent on]]
+vim.cmd([[syntax enable]])
+vim.cmd([[filetype plugin indent on]])
 
 local opt = setmetatable({}, {
-    __newindex = function(_, key, value)
-        vim.o[key] = value
-        vim.bo[key] = value
-    end,
+  __newindex = function(_, key, value)
+    vim.o[key] = value
+    vim.bo[key] = value
+  end,
 })
 
 -- opt.dict = "~/dotfiles/lib/10k.txt"
@@ -75,40 +75,40 @@ vim.wo.cursorline = true
 -- vim.wo.winhighlight = "NormalNC:WinNormalNC"
 vim.opt.list = true
 vim.opt.listchars = {
-    -- space = "⋅",
-    -- nbsp = "_",
-    tab = "__",
-    eol = "↴",
-    trail = "•",
-    extends = "❯",
-    precedes = "❮",
+  -- space = "⋅",
+  -- nbsp = "_",
+  tab = "__",
+  eol = "↴",
+  trail = "•",
+  extends = "❯",
+  precedes = "❮",
 }
 vim.opt.fillchars = {
-    fold = " ",
-    diff = "╱",
+  fold = " ",
+  diff = "╱",
 }
 
 vim.g.floating_window_border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 vim.g.floating_window_border_dark = {
-    { "╭", "FloatBorderDark" },
-    { "─", "FloatBorderDark" },
-    { "╮", "FloatBorderDark" },
-    { "│", "FloatBorderDark" },
-    { "╯", "FloatBorderDark" },
-    { "─", "FloatBorderDark" },
-    { "╰", "FloatBorderDark" },
-    { "│", "FloatBorderDark" },
+  { "╭", "FloatBorderDark" },
+  { "─", "FloatBorderDark" },
+  { "╮", "FloatBorderDark" },
+  { "│", "FloatBorderDark" },
+  { "╯", "FloatBorderDark" },
+  { "─", "FloatBorderDark" },
+  { "╰", "FloatBorderDark" },
+  { "│", "FloatBorderDark" },
 }
 vim.g.no_man_maps = true
 vim.g.vim_json_syntax_conceal = false
 vim.g.vim_json_conceal = false
 vim.g.mapleader = ","
 
-vim.diagnostic.config {
-    virtual_text = {
-        spacing = 3,
-        prefix = " ",
-        severity_sort = true,
-        source = "if_many",
-    },
-}
+vim.diagnostic.config({
+  virtual_text = {
+    spacing = 3,
+    prefix = " ",
+    severity_sort = true,
+    source = "if_many",
+  },
+})

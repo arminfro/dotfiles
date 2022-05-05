@@ -28,7 +28,13 @@ end
 function M.gitlinker()
   require("legendary").bind_keymaps({
     -- leader gy is actual keymapping, just let it be set by plugin, works better
-    -- {'<leader>gy',":lua require'gitlinker'.get_buf_range_url()<CR>", description = "Copy Git Link", mode = {"n", "v"}, opts},
+    -- {
+    --   "<leader>gy",
+    --   ":lua require'gitlinker'.get_buf_range_url()<CR>",
+    --   description = "Copy Git Link",
+    --   mode = { "n", "v" },
+    --   opts,
+    -- },
     {
       "<leader>gY",
       ":lua require'gitlinker'.get_repo_url()<CR>",
@@ -217,7 +223,13 @@ function M.lsp(bufnr)
       mode = { "n" },
       opts,
     },
-    -- {'<space>t','<cmd>lua vim.lsp.buf.type_definition()<CR>', description = "LSP, Go to type definition", mode = {"n"}, opts},
+    -- {
+    --   "<space>t",
+    --   "<cmd>lua vim.lsp.buf.type_definition()<CR>",
+    --   description = "LSP, Go to type definition",
+    --   mode = { "n" },
+    --   opts,
+    -- },
     {
       "<space>t",
       ":FzfLua lsp_live_workspace_symbols<CR>",
@@ -296,7 +308,6 @@ function M.nvim_tree()
     },
     -- todo, only in nvim-tree
     { "<leader>tr", ":NvimTreeRefresh<CR>", mode = { "n" }, description = "Refresh nvim-tree", opts },
-    -- { "<leader>to", ':lua vim.fn.system("xdg-open "' .. require"nvim-tree.lib".get_node_at_cursor().absolute_path .. ')<CR>', mode = { "n" }, description = "Refresh nvim-tree", opts },
     {
       "<leader>tf",
       ":NvimTreeFindFile<CR>",

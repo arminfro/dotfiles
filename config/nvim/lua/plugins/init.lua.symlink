@@ -425,7 +425,8 @@ packer.startup({
             --     },
             --     { "jbyuki/one-small-step-for-vimkind", before = "nvim-lspconfig" },
             --     { "rcarriga/nvim-dap-ui", before = "nvim-lspconfig" },
-            --     { "simrat39/rust-tools.nvim", before = "nvim-lspconfig" }, -- has some helper function to configure dap
+            --     -- has some helper function to configure dap
+            --     { "simrat39/rust-tools.nvim", before = "nvim-lspconfig" },
             --   },
             --   before = "nvim-lspconfig",
             -- },
