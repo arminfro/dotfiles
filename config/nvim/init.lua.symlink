@@ -7,6 +7,7 @@ utils.bootstrap()
 utils.impatient()
 
 local sources = {
+  "core.globals",
   "config",
   "core.autocmds",
   "plugins",

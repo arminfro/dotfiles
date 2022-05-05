@@ -5,11 +5,17 @@ local M = {}
 
 local opts = { noremap = true }
 
+local open_and_restore_focus_cb = require("core.utils").open_and_restore_focus_cb
+
 function M.toggleterm()
+  local terminals = require("plugins.toggleterm").terminals()
   require("legendary").bind_keymaps({
-    { "<leader>th", ":lua _HTOP_TOGGLE()<CR>", description = "Open Htop", mode = { "n", "v" }, opts },
-    { "<leader>tn", ":lua _NODE_TOGGLE()<CR>", description = "Open Node", mode = { "n", "v" }, opts },
-    { "<leader>tt", ":lua _TS_NODE_TOGGLE()<CR>", description = "Open TS-Node", mode = { "n", "v" }, opts },
+    { "<leader>th", terminals.htop, description = "Open Htop", mode = { "n", "v" }, opts },
+    { "<leader>tn", terminals.node, description = "Open Node repl", mode = { "n", "v" }, opts },
+    { "<leader>tt", terminals.ts_node, description = "Open TS-Node repl", mode = { "n", "v" }, opts },
+    { "<leader>tr", terminals.ruby, description = "Open Ruby irb repl", mode = { "n", "v" }, opts },
+    { "<leader>tl", terminals.lua, description = "Open Lua repl", mode = { "n", "v" }, opts },
+    { "<leader>tp", terminals.lua, description = "Open Python repl", mode = { "n", "v" }, opts },
   })
 end
 
@@ -22,6 +28,18 @@ end
 function M.lazygit()
   require("legendary").bind_keymaps({
     { "<leader>gl", ":LazyGit<CR>", description = "Open LazyGit", mode = { "n", "v" }, opts },
+  })
+end
+
+function M.git_messenger()
+  require("legendary").bind_keymaps({
+    {
+      "<leader>gm",
+      ":GitMessenger<CR>",
+      mode = { "n" },
+      description = "Git commit message in floating window",
+      opts,
+    },
   })
 end
 
@@ -52,45 +70,51 @@ function M.gitlinker()
   })
 end
 
+function M.fugitive()
+  require("legendary").bind_commands({
+    { ":GitResetHard", ":G reset --hard", description = "Reset Git hard" },
+  })
+  require("legendary").bind_keymaps({
+    { "<leader>gs", ":Git<CR>", mode = { "n" }, description = "Git status", opts },
+    { "<leader>gc", ":Git commit<CR>", mode = { "n" }, description = "Git commit", opts },
+    -- { "<leader>gd", ":Gdiffsplit<CR>", mode = { "n" }, description = "Git diff", opts },
+    -- {'<leader>gb', ':GV<CR>', mode = {"n"}, description = "Git commits of current file", opts },
+    { "<leader>grhh", ":GitResetHard<CR>", mode = { "n" }, opts },
+  })
+end
+
 function M.diffview()
   require("legendary").bind_keymaps({
-    { "<leader>dp", ":DiffviewOpen<CR>", description = "Open Diffview for project", mode = { "n", "v" }, opts },
-    {
-      "<leader>df",
-      ":DiffviewOpen<CR>",
-      description = "Open Diffview for current file",
-      mode = { "n", "v" },
-      opts,
-    },
-    { "<leader>dc", ":DiffviewClose<CR>", description = "Close Diffview", mode = { "n", "v" }, opts },
+    { "<leader>gd", ":DiffviewOpen<CR>", description = "Open Diffview for project", mode = { "n" }, opts },
+    -- { "<leader>dc", ":DiffviewClose<CR>", description = "Close Diffview", mode = { "n", "v" }, opts },
   })
 end
 
 function M.refactoring()
   require("legendary").bind_keymaps({
     {
-      "<space>re",
+      "<leader>re",
       ":lua require('refactoring').refactor('Extract Function')<CR>",
       description = "Refactoring, extract function",
       mode = { "n", "v" },
       opts,
     },
     {
-      "<space>rf",
+      "<leader>rf",
       ":lua require('refactoring').refactor('Extract Function To File')<CR>",
       description = "Refactoring, extract function to separate file",
       mode = { "n", "v" },
       opts,
     },
     {
-      "<space>rv",
+      "<leader>rv",
       ":lua require('refactoring').refactor('Extract Variable')<CR>",
       description = "Refactoring, extract variable",
       mode = { "n", "v" },
       opts,
     },
     {
-      "<space>ri",
+      "<leader>ri",
       ":lua require('refactoring').refactor('Inline Variable')<CR>",
       description = "Refactoring, inline variable",
       mode = { "n", "v" },
@@ -112,7 +136,7 @@ end
 function M.yode()
   require("legendary").bind_keymaps({
     {
-      "<space>y",
+      "<leader>f",
       ":YodeCreateSeditorFloating<CR>",
       description = "focus on a code part and make it floating",
       mode = { "n", "v" },
@@ -129,7 +153,7 @@ end
 
 function M.symbols_outline()
   require("legendary").bind_keymaps({
-    { "<F8>", ":SymbolsOutline<CR>", description = "Toggle Symbols Outline", mode = { "n" }, opts },
+    { "<F9>", ":SymbolsOutline<CR>", description = "Toggle Symbols Outline", mode = { "n" }, opts },
   })
 end
 
@@ -157,25 +181,11 @@ function M.bufferline()
   })
 end
 
-function M.typescript_lsp()
-  require("legendary").bind_keymaps({
-    { "<space>ti", ":TypescriptAddMissingImports<CR>", description = "TS import all", mode = { "n" }, opts },
-    {
-      "<space>to",
-      ":TypescriptOrganizeImports<CR>",
-      description = "TS remove unused imports",
-      mode = { "n" },
-      opts,
-    },
-    { "<space>tr", ":TypescriptRenameFile<CR>", description = "TS Rename File", mode = { "n" }, opts },
-  })
-end
-
 function M.nvim_window()
   require("legendary").bind_keymaps({
     {
       "<leader>ww",
-      "<cmd>lua require('nvim-window').pick()<CR>",
+      require("nvim-window").pick,
       description = "Pick window to focus, nvim-window",
       mode = { "n" },
       opts,
@@ -186,8 +196,10 @@ end
 function M.trouble()
   require("legendary").bind_keymaps({
     {
-      "<F7>",
-      ":TroubleToggle<CR>",
+      "<F8>",
+      open_and_restore_focus_cb(function()
+        vim.cmd("TroubleToggle")
+      end),
       description = "Trouble: Workspace diagnostics in quickfix window",
       mode = { "n" },
       opts,
@@ -238,6 +250,20 @@ function M.lsp(bufnr)
       opts,
     },
     { "<space>f", ":Format<CR>", description = "LSP, Format document", mode = { "n" }, opts },
+  })
+end
+
+function M.typescript_lsp()
+  require("legendary").bind_keymaps({
+    { "<space>ti", ":TypescriptAddMissingImports<CR>", description = "TS import all", mode = { "n" }, opts },
+    {
+      "<space>to",
+      ":TypescriptOrganizeImports<CR>",
+      description = "TS remove unused imports",
+      mode = { "n" },
+      opts,
+    },
+    { "<space>tr", ":TypescriptRenameFile<CR>", description = "TS Rename File", mode = { "n" }, opts },
   })
 end
 
@@ -300,14 +326,14 @@ end
 function M.nvim_tree()
   require("legendary").bind_keymaps({
     {
-      "<F9>",
-      ":NvimTreeToggle<CR>",
+      "<F7>",
+      open_and_restore_focus_cb(function()
+        vim.cmd("NvimTreeToggle")
+      end),
       description = "toggle NvimTree",
       mode = { "n" },
       opts,
     },
-    -- todo, only in nvim-tree
-    { "<leader>tr", ":NvimTreeRefresh<CR>", mode = { "n" }, description = "Refresh nvim-tree", opts },
     {
       "<leader>tf",
       ":NvimTreeFindFile<CR>",
@@ -321,20 +347,20 @@ end
 function M.http_rest()
   require("legendary").bind_keymaps({
     {
-      "<leader>rr",
+      "<leader>hr",
       "<Plug>RestNvim",
       mode = { "n", "v" },
       description = "run the http request under the cursor",
       opts,
     },
     {
-      "<leader>rp",
+      "<leader>hp",
       "<Plug>RestNvimPreview",
       mode = { "n", "v" },
       description = "preview http request curl command under the cursor",
       opts,
     },
-    { "<leader>rl", "<Plug>RestNvimLast", mode = { "n", "v" }, description = "re-run last http request", opts },
+    { "<leader>hl", "<Plug>RestNvimLast", mode = { "n", "v" }, description = "re-run last http request", opts },
   })
 end
 
@@ -381,37 +407,12 @@ function M.fzf()
   })
 end
 
-function M.fugitive()
-  require("legendary").bind_commands({
-    { ":GitResetHard", ":G reset --hard", description = "Reset Git hard" },
-  })
-  require("legendary").bind_keymaps({
-    { "<leader>gs", ":Git<CR>", mode = { "n" }, description = "Git status", opts },
-    { "<leader>gc", ":Git commit<CR>", mode = { "n" }, description = "Git commit", opts },
-    { "<leader>gd", ":Gdiffsplit<CR>", mode = { "n" }, description = "Git diff", opts },
-    -- {'<leader>gb', ':GV<CR>', mode = {"n"}, description = "Git commits of current file", opts },
-    { "<leader>grhh", ":GitResetHard<CR>", mode = { "n" }, opts },
-  })
-end
-
 function M.tabular()
   require("legendary").bind_keymaps({
     { "<leader>t=", ":Tabularize /=<CR>", mode = { "v", "n" }, description = "Align text on '='", opts },
     { "<leader>t\"", ":Tabularize /\"<CR>", mode = { "v", "n" }, description = "Align text on '\"'", opts },
     { "<leader>t:", ":Tabularize /:\zs<CR>", mode = { "v", "n" }, description = "Align text on ':'", opts },
     { "<leader>t-", ":Tabularize /-<CR>", mode = { "v", "n" }, description = "Align text on ':'", opts },
-  })
-end
-
-function M.git_messenger()
-  require("legendary").bind_keymaps({
-    {
-      "<leader>gm",
-      ":GitMessenger<CR>",
-      mode = { "n" },
-      description = "Git commit message in floating window",
-      opts,
-    },
   })
 end
 

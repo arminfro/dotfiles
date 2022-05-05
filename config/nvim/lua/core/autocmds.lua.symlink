@@ -54,13 +54,10 @@ api.nvim_create_autocmd("VimEnter", {
     -- pass VIM_IDE system env variable to open trouble SymbolsOutline and nvim-tree
     -- works only if a file is openend right away
     if os.getenv("VIM_IDE") then
-      local winnr = api.nvim_get_current_win()
-      require("trouble").open()
-      api.nvim_set_current_win(winnr)
-      vim.cmd("SymbolsOutline")
-      api.nvim_set_current_win(winnr)
-      require("nvim-tree").open()
-      api.nvim_set_current_win(winnr)
+      local u = require("core.utils")
+      u.open_and_restore_window(require("nvim-tree").open)
+      u.open_and_restore_window(require("trouble").open)
+      u.open_and_restore_window(require("symbols-outline").toggle_outline)
     end
   end,
 })

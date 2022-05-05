@@ -438,7 +438,21 @@ packer.startup({
     -- window picker
     use({
       "https://gitlab.com/yorickpeterse/nvim-window.git",
-      config = require("plugins.legendary").nvim_window,
+      config = function()
+        require("nvim-window").setup({
+          chars = {
+            "h",
+            "j",
+            "k",
+            "l",
+            "a",
+            "s",
+            "d",
+            "f",
+          },
+        })
+        require("plugins.legendary").nvim_window()
+      end,
       event = "BufRead",
     })
 
@@ -717,15 +731,15 @@ packer.startup({
 
     -- dims your inactive windows, making it easier to see the active window at a glance
     -- BUG: does not work well with git-messenger
-    use({
-      "sunjon/shade.nvim",
-      event = "BufRead",
-      config = function()
-        require("shade").setup({
-          overlay_opacity = 70,
-        })
-      end,
-    })
+    -- use({
+    --   "sunjon/shade.nvim",
+    --   event = "BufRead",
+    --   config = function()
+    --     require("shade").setup({
+    --       overlay_opacity = 70,
+    --     })
+    --   end,
+    -- })
 
     -- camel case is one word
     use("bkad/camelcasemotion")
