@@ -1,7 +1,0 @@
--- vi: ft=lua
-
-return {
-  default_config = {
-    cmd = { 'zk', 'lsp' },
-	}
-}
