@@ -219,7 +219,7 @@ packer.startup({
     -- Rust support
     use({
       "rust-lang/rust.vim",
-      disable = not if_exe_exists("rust"),
+      disable = not if_exe_exists("rustc"),
       event = "BufRead",
       config = function()
         vim.g.rustfmt_autosave = 1
