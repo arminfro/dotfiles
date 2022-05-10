@@ -23,16 +23,32 @@ function M.bootstrap()
 end
 
 function M.disable_builtins()
-  g.loaded_gzip = false
-  g.loaded_netrwPlugin = false
-  g.loaded_netrwSettngs = false
-  g.loaded_netrwFileHandlers = false
-  g.loaded_tar = false
-  g.loaded_tarPlugin = false
+  local default_plugins = {
+    "2html_plugin",
+    "getscript",
+    "getscriptPlugin",
+    "gzip",
+    "logipat",
+    "netrw",
+    "netrwPlugin",
+    "netrwSettings",
+    "netrwFileHandlers",
+    "matchit",
+    "tar",
+    "tarPlugin",
+    "rrhelper",
+    "remote_plugin",
+    "spellfile_plugin",
+    "vimball",
+    "vimballPlugin",
+    "zip",
+    "zipPlugin",
+  }
+
   g.zipPlugin = false
-  g.loaded_zipPlugin = false
-  g.loaded_2html_plugin = false
-  g.loaded_remote_plugins = false
+  for _, plugin in pairs(default_plugins) do
+    g["loaded_" .. plugin] = 1
+  end
 end
 
 function M.impatient()

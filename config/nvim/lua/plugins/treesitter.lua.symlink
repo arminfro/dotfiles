@@ -12,6 +12,11 @@ function M.config()
     -- todo, set list
     ensure_installed = {
       "bash",
+      "c",
+      "c_sharp",
+      "cmake",
+      "comment",
+      "cpp",
       "css",
       "dockerfile",
       "dot",
@@ -25,12 +30,17 @@ function M.config()
       "json5",
       "latex",
       "lua",
+      "make",
       "norg",
       "python",
       "regex",
       "ruby",
       "rust",
       "scss",
+      "sparql",
+      "svelte",
+      "todotxt",
+      "toml",
       "tsx",
       "typescript",
       "vim",
@@ -64,7 +74,7 @@ function M.config()
     },
     autopairs = { enable = true },
     highlight = {
-      additional_vim_regex_highlighting = { "markdown" }
+      additional_vim_regex_highlighting = { "markdown" },
     },
     rainbow = {
       enable = true,

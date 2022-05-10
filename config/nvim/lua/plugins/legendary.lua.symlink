@@ -139,7 +139,7 @@ function M.yode()
       "<leader>f",
       ":YodeCreateSeditorFloating<CR>",
       description = "focus on a code part and make it floating",
-      mode = { "n", "v" },
+      mode = { "v" },
       opts,
     },
   })
@@ -335,7 +335,7 @@ function M.nvim_tree()
       opts,
     },
     {
-      "<leader>tf",
+      "<leader>f",
       ":NvimTreeFindFile<CR>",
       mode = { "n" },
       description = "Find current file in nvim-tree",
@@ -371,7 +371,7 @@ function M.fzf()
     { "<C-O>", "<ESC>:FzfLua commands<CR>", mode = { "n" }, description = "Fuzzy search command", opts },
     { "<C-X>", "<ESC>:FzfLua tags<CR>", mode = { "n" }, description = "Fuzzy search code tags", opts },
     { "<C-N>", "<ESC>:FzfLua buffers<CR>", mode = { "n" }, description = "Fuzzy search buffer", opts },
-    { "<C-A>", "<ESC>:FzfLua grep_project<CR>", mode = { "n" }, description = "Fuzzy search word", opts },
+    { "<C-A>", "<ESC>:FzfLua grep<CR><CR>", mode = { "n" }, description = "Fuzzy search word", opts },
     {
       "<C-S>",
       "<ESC>:FzfLua lines<CR>",
@@ -494,10 +494,17 @@ function M.config()
 
     -- Edit
     {
+      "<leader>el",
+      ":edit ~/.dotfiles/config/nvim/lua/plugins/legendary.lua.symlink<CR>",
+      mode = { "n" },
+      description = "Edit Legendary File",
+      opts,
+    },
+    {
       "<leader>ep",
       ":edit ~/.local/share/nvim/site/pack/packer<CR>",
       mode = { "n" },
-      description = "Reload vim config",
+      description = "Open packer plugin install directory",
       opts,
     },
 
@@ -536,14 +543,6 @@ function M.config()
 
   local commands = {
     { ":CopyFilePath", "let @+ = expand('%:p')", description = "Copy's current file path to clipboard" },
-    { ":SourceVimConfig", ":source ~/.config/nvim/init.lua<CR>", description = "Source vim config" },
-    -- {
-    --   ":ConvertTabsToSpaces",
-    --   ":s/\t/  /g<CR>",
-    --   mode = { "v" },
-    --   description = "Convert tab characters to 2 space characters in buffer",
-    -- },
-    -- { ':GetFileType', "<ESC>:lua vim.bo.filetype<CR>", description = "Get current Filetype" },
   }
 
   legendary.setup({
