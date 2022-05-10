@@ -9,6 +9,10 @@ end
 
 local packer_group = vim.api.nvim_create_augroup("Packer", { clear = true })
 
+local if_exe_exists = function(exe)
+  return vim.fn.executable(exe) == 1
+end
+
 vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = "*/config/nvim/lua/plugins/init.lua.symlink",
   command = "PackerCompile",
@@ -109,6 +113,7 @@ packer.startup({
     -- see :h diffview-config for default keybindings
     use({
       "sindrets/diffview.nvim",
+      disable = not if_exe_exists("git"),
       config = function()
         require("plugins.legendary").diffview()
       end,
@@ -118,6 +123,7 @@ packer.startup({
     -- Show commit info at current line on cursorhold
     use({
       "APZelos/blamer.nvim",
+      disable = not if_exe_exists("git"),
       config = function()
         vim.g.blamer_enabled = 1
         vim.g.blamer_delay = 1500
@@ -152,6 +158,7 @@ packer.startup({
     -- generate git links
     use({
       "ruifm/gitlinker.nvim",
+      disable = not if_exe_exists("git"),
       requires = "nvim-lua/plenary.nvim",
       config = function()
         require("gitlinker").setup({})
@@ -176,6 +183,7 @@ packer.startup({
     -- lazygit vim frontend
     use({
       "kdheepak/lazygit.nvim",
+      disable = not if_exe_exists("lazygit"),
       config = function()
         require("plugins.legendary").lazygit()
       end,
@@ -211,6 +219,7 @@ packer.startup({
     -- Rust support
     use({
       "rust-lang/rust.vim",
+      disable = not if_exe_exists("rust"),
       event = "BufRead",
       config = function()
         vim.g.rustfmt_autosave = 1
@@ -239,6 +248,7 @@ packer.startup({
     -- nvim http client (curl wrapper)
     use({
       "NTBBloodbath/rest.nvim",
+      disable = not if_exe_exists("curl"),
       requires = { "nvim-lua/plenary.nvim" },
       event = "BufEnter",
       config = function()
@@ -271,6 +281,7 @@ packer.startup({
     -- FZF vim plugin implemented in lua
     use({
       "ibhagwan/fzf-lua",
+      disable = not if_exe_exists("fzf"),
       config = function()
         require("plugins.fzf").config()
       end,
@@ -387,6 +398,7 @@ packer.startup({
             -- zettelkasten with lsp support
             {
               "mickael-menu/zk-nvim",
+              disable = not if_exe_exists("zk"),
               after = "nvim-lspconfig",
               config = require("plugins.zk").config,
             },
@@ -531,6 +543,7 @@ packer.startup({
     -- Tags generation
     use({
       "ludovicchabant/vim-gutentags",
+      disable = not if_exe_exists("ctags"),
       event = "BufRead",
     })
 
@@ -578,7 +591,6 @@ packer.startup({
     })
 
     -- show param names while typing
-    -- sitting
     use({
       "lewis6991/spellsitter.nvim",
       event = "BufRead",
@@ -606,6 +618,7 @@ packer.startup({
         },
         {
           -- Autoclose tags
+          -- todo, autorename seems broken
           "windwp/nvim-ts-autotag",
           after = "nvim-treesitter",
           config = function()
@@ -679,6 +692,7 @@ packer.startup({
     -- see :h gitsigns-mappings for default keybindings
     use({
       "lewis6991/gitsigns.nvim",
+      disable = not if_exe_exists("git"),
       event = "BufRead",
       config = function()
         require("plugins.gitsigns").config()
@@ -688,6 +702,7 @@ packer.startup({
     -- git wrapper
     use({
       "tpope/vim-fugitive",
+      disable = not if_exe_exists("git"),
       config = function()
         require("plugins.legendary").fugitive()
       end,
@@ -704,7 +719,7 @@ packer.startup({
     use("dstein64/vim-startuptime")
 
     -- Syntax file for i3 config
-    use({ "mboughaba/i3config.vim", event = "BufRead", ft = "i3config" })
+    use({ "mboughaba/i3config.vim", event = "BufRead", ft = "i3config", disable = not if_exe_exists("i3") })
 
     -- Latex autocompile
     use({ "donRaphaco/neotex", ft = "tex" })
@@ -712,6 +727,7 @@ packer.startup({
     -- reveal the hidden message from Git under the cursor quickly
     use({
       "rhysd/git-messenger.vim",
+      disable = not if_exe_exists("git"),
       event = "BufRead",
       config = function()
         vim.g.git_messenger_floating_win_opts = { border = vim.g.floating_window_border_dark }
@@ -722,6 +738,7 @@ packer.startup({
     -- asynchronously displaying the colours in the file
     use({
       "rrethy/vim-hexokinase",
+      disable = not if_exe_exists("go"),
       run = "make hexokinase",
       event = "BufRead",
       config = function()
@@ -798,6 +815,7 @@ packer.startup({
     use({
       "jghauser/auto-pandoc.nvim",
       requires = "nvim-lua/plenary.nvim",
+      disable = not if_exe_exists("pandoc"),
       event = "BufRead",
       config = function()
         require("auto-pandoc")
@@ -958,6 +976,7 @@ packer.startup({
     display = {
       open_fn = require("packer.util").float,
     },
+    compile_on_sync = true,
   },
 })
 
