@@ -113,6 +113,7 @@ packer.startup({
     -- see :h diffview-config for default keybindings
     use({
       "sindrets/diffview.nvim",
+      event = "BufRead",
       disable = not if_exe_exists("git"),
       config = function()
         require("plugins.legendary").diffview()
@@ -413,19 +414,13 @@ packer.startup({
             {
               -- LSP enhancement
               "tami5/lspsaga.nvim",
-              event = "BufRead",
+              -- event = "BufRead",
               config = function()
                 require("plugins.lsp.lspsaga").config()
                 require("plugins.legendary").lspsaga()
               end,
             },
-            -- { "lukas-reineke/lsp-format.nvim", before = "nvim-lspconfig",
-            --   config = function ()
-            --     require("plugins.lsp.format")
-            --   end
-            -- },
             -- {
-            --   -- debugger, not working yet
             --   "mfussenegger/nvim-dap",
             --   requires = {
             --     {
@@ -439,8 +434,12 @@ packer.startup({
             --     { "rcarriga/nvim-dap-ui", before = "nvim-lspconfig" },
             --     -- has some helper function to configure dap
             --     { "simrat39/rust-tools.nvim", before = "nvim-lspconfig" },
+            --     { "theHamsta/nvim-dap-virtual-text" },
             --   },
             --   before = "nvim-lspconfig",
+            --   config = function()
+            --     require("plugins.dap").config()
+            --   end,
             -- },
           },
         },
@@ -541,11 +540,11 @@ packer.startup({
     })
 
     -- Tags generation
-    use({
-      "ludovicchabant/vim-gutentags",
-      disable = not if_exe_exists("ctags"),
-      event = "BufRead",
-    })
+    -- use({
+    --   "ludovicchabant/vim-gutentags",
+    --   disable = not if_exe_exists("ctags"),
+    --   event = "BufRead",
+    -- })
 
     -- shows thin vertical lines for indentation
     use({
@@ -620,10 +619,11 @@ packer.startup({
           -- Autoclose tags
           -- todo, autorename seems broken
           "windwp/nvim-ts-autotag",
-          after = "nvim-treesitter",
-          config = function()
-            require("nvim-ts-autotag").setup()
-          end,
+          -- branch = "main",
+          -- before = "nvim-treesitter",
+          -- config = function()
+          --   require("nvim-ts-autotag").setup()
+          -- end,
         },
         {
           -- Context based commenting
@@ -659,8 +659,6 @@ packer.startup({
     -- Bufferline
     use({
       "akinsho/bufferline.nvim",
-      after = "nvim-web-devicons",
-      before = "fzf-lua",
       config = function()
         require("plugins.bufferline").config()
       end,
@@ -802,14 +800,14 @@ packer.startup({
     -- markdown set of functions and and mappings to those functions
     -- which make it easy to navigate and manipulate markdown notebooks/journals/wikis
     -- https://github.com/jakewvincent/mkdnflow.nvim#-commands-and-default-mappings
-    use({
-      "jakewvincent/mkdnflow.nvim",
-      event = "BufRead",
-      config = function()
-        vim.o.autowriteall = true
-        require("mkdnflow").setup({})
-      end,
-    })
+    -- use({
+    --   "jakewvincent/mkdnflow.nvim",
+    --   event = "BufRead",
+    --   config = function()
+    --     vim.o.autowriteall = true
+    --     require("mkdnflow").setup({})
+    --   end,
+    -- })
 
     -- convert markdown using pandoc
     use({
@@ -852,7 +850,7 @@ packer.startup({
     -- writing support
     use({
       "Pocco81/AbbrevMan.nvim",
-      event = "BufRead",
+      -- event = "BufRead",
       config = function()
         local abbrev_man = require("abbrev-man")
 

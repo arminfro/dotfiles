@@ -26,6 +26,15 @@ function M.config()
   local d = null_ls.builtins.diagnostics
   local f = null_ls.builtins.formatting
 
+  local lsp_formatting = function(bufnr)
+    vim.lsp.buf.format({
+      filter = function(client)
+        return client.name ~= "solargraph"
+      end,
+      bufnr = bufnr,
+    })
+  end
+
   null_ls.setup({
     debug = false,
     sources = {
@@ -57,14 +66,7 @@ function M.config()
           group = augroup,
           buffer = bufnr,
           callback = function()
-            vim.lsp.buf.format({
-              filter = function(clients)
-                -- filter out clients that you don't want to use
-                return vim.tbl_filter(function(client2)
-                  return client2.name ~= "solargraph"
-                end, clients)
-              end,
-            })
+            lsp_formatting(bufnr)
           end,
         })
       end

@@ -9,10 +9,10 @@ function M.config()
   end
 
   local prettier = {
-    tabWidth = 4,
     singleQuote = true,
     trailingComma = "all",
-    configPrecedence = "prefer-file",
+    -- tabWidth = 2,
+    -- configPrecedence = "prefer-file",
   }
 
   lsp_format.setup({

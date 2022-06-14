@@ -270,13 +270,6 @@ end
 function M.lspsaga()
   require("legendary").bind_keymaps({
     {
-      "<space>r",
-      ":Lspsaga lsp_finder<CR>",
-      description = "LSP, Show references of hovered symbol",
-      mode = { "n" },
-      opts,
-    },
-    {
       "<space>h",
       ":Lspsaga hover_doc<CR>",
       description = "LSP, Show hover of current symbol",
@@ -299,13 +292,6 @@ function M.lspsaga()
       opts,
     },
     { "<space>rn", ":Lspsaga rename<CR>", description = "LSP, Rename current symbol", mode = { "n" }, opts },
-    {
-      "<space>e",
-      ":FzfLua lsp_workspace_diagnostics<CR>",
-      description = "LSP, Show all diagnostics in quickfix",
-      mode = { "n" },
-      opts,
-    },
     {
       "[j",
       ":Lspsaga diagnostic_jump_prev<CR>",
@@ -347,20 +333,20 @@ end
 function M.http_rest()
   require("legendary").bind_keymaps({
     {
-      "<leader>hr",
+      "<leader>ar",
       "<Plug>RestNvim",
       mode = { "n", "v" },
       description = "run the http request under the cursor",
       opts,
     },
     {
-      "<leader>hp",
+      "<leader>ap",
       "<Plug>RestNvimPreview",
       mode = { "n", "v" },
       description = "preview http request curl command under the cursor",
       opts,
     },
-    { "<leader>hl", "<Plug>RestNvimLast", mode = { "n", "v" }, description = "re-run last http request", opts },
+    { "<leader>al", "<Plug>RestNvimLast", mode = { "n", "v" }, description = "re-run last http request", opts },
   })
 end
 
@@ -399,6 +385,28 @@ function M.fzf()
       "<ESC>:FzfLua git_branches<CR>",
       mode = { "n" },
       description = "Fuzzy search git modified files",
+      opts,
+    },
+    -- LSP related
+    {
+      "<space>r",
+      "<ESC>:FzfLua lsp_references<CR>",
+      description = "LSP, Show references of hovered symbol",
+      mode = { "n" },
+      opts,
+    },
+    {
+      "<space>e",
+      ":FzfLua lsp_workspace_diagnostics<CR>",
+      description = "LSP, Show all diagnostics in quickfix",
+      mode = { "n" },
+      opts,
+    },
+    {
+      "<leader>gn",
+      ":FzfLua git_status<CR>",
+      description = "Git, see modified files, git status in fzf",
+      mode = { "n" },
       opts,
     },
   })

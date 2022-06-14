@@ -68,6 +68,8 @@ zplug "plugins/ufw", from:oh-my-zsh, , if:"[ -x $(which ufw 2> /dev/null) ]"
 # zplug "alexiszamanidis/zsh-git-fzf", if:"[ -x $(which fzf 2> /dev/null) ]"
 
 # utility
+# new shells will have PWD set to last openend
+zplug "andreaconti/auto-cd", at:main
 zplug "olets/zsh-window-title", at:main
 zplug "zdharma-continuum/fast-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
