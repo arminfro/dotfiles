@@ -1,0 +1,139 @@
+# NOTE SETTINGS
+[note]
+
+# Language used when writing notes.
+# This is used to generate slugs or with date formats.
+language = "en"
+
+# The default title used for new note, if no `--title` flag is provided.
+default-title = "Untitled"
+
+# Template used to generate a note's filename, without extension.
+# filename = "{{date now '%Y-%m-%d'}}_{{slug title}}"
+
+# The file extension used for the notes.
+extension = "md"
+
+# Template used to generate a note's content.
+# If not an absolute path, it is relative to .zk/templates/
+template = "default.md"
+
+# The charset used for random IDs.
+id-charset = "alphanum"
+
+# Length of the generated IDs.
+id-length = 4
+
+# Letter case for the random IDs.
+id-case = "lower"
+
+# EXTRA VARIABLES
+[extra]
+author = ""
+
+# GROUP OVERRIDES
+[group.dailies]
+paths = ["dailies"]
+[group.dailies.note]
+template = "daily.md"
+filename = "{{date now '%F'}}"
+
+[group.issues]
+paths = ['issues']
+filename = "{{ slug title }}"
+[group.issues.note]
+template = "issue.md"
+
+[group.tasks]
+paths = ['tasks']
+filename = "{{ slug title }}"
+[group.tasks.note]
+template = "task.md"
+
+# MARKDOWN SETTINGS
+[format.markdown]
+# Enable support for #hashtags
+hashtags = true
+# Enable support for :colon:separated:tags:
+colon-tags = false
+multiword-tags = true
+
+# EXTERNAL TOOLS
+[tool]
+
+# Default editor used to open notes.
+editor = "nvim"
+
+# Pager used to scroll through long output.
+# pager = "less -FIRX"
+
+# Command used to preview a note during interactive fzf mode.
+fzf-preview = "bat -p --color always {-1}"
+# fzf-preview = "zk list --quiet --format full --limit 1 {-1}"
+
+# NAMED FILTERS
+[filter]
+recents = "--sort created- --created-after 'last two weeks'"
+
+# COMMAND ALIASES
+[alias]
+
+daily = 'zk new --no-input "$ZK_NOTEBOOK_DIR/dailies" $@'
+daily-create = 'zk daily --print-path'
+
+issue = 'zk new --no-input "$ZK_NOTEBOOK_DIR/issues" $@'
+
+task = 'zk new --no-input "$ZK_NOTEBOOK_DIR/tasks" $@'
+
+edit = "zk edit --interactive $@"
+
+# Edit the last modified note.
+edit-last = "zk edit --limit 1 --sort modified- $@"
+
+ls = "zk list $@"
+ed = "zk edit $@"
+edl = "zk edit-last $@"
+n = "zk new $@"
+
+# new inbox ??
+new-inbox = 'zk new --no-input "$ZK_NOTEBOOK_DIR/inbox"'
+
+# Edit the notes selected interactively among the notes created the last two weeks.
+recent = "zk edit --sort created- --created-after 'last two weeks' --interactive"
+
+# open config
+conf = '$EDITOR "$ZK_NOTEBOOK_DIR/.zk/config.toml"'
+
+# create notes with `zk new --title "An interesting concept"`
+nt = 'zk new --title "$*"'
+
+# sort by word count
+wc = "zk list --format '{{word-count}}\t{{title}}' --sort word-count $@"
+
+# Print the backlinks of a note
+bl = "zk list --link-to $@"
+
+# Browse the Git history of selected notes
+log = "zk list --quiet --format path --delimiter0 $@ | xargs -0 git log --patch --"
+
+# pull commit and push notes
+save = 'git add . && git commit -m "$*" && git pull --rebase && git push'
+
+# look for potential new links to establish, by listing every note whose title is mentioned in the note you are working on but which are not already linked to it
+unlinked-mentions = "zk list --mentioned-by $1 --no-linked-by $1"
+
+# Show a random note.
+lucky = "zk list --quiet --format full --sort random --limit 1"
+
+# LSP (EDITOR INTEGRATION)
+[lsp]
+
+[lsp.diagnostics]
+# Report titles of wiki-links as hints.
+wiki-title = "hint"
+# Warn for dead links between notes.
+dead-link = "error"
+
+[lsp.completion]
+note-label = "{{title}}"
+note-filter-text = "{{title}}"

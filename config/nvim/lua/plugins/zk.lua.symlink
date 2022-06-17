@@ -10,9 +10,23 @@ function M.config()
 
   local commands = require("zk.commands")
 
-  commands.add("ZkInbox", function(options)
+  -- local function make_new_fn(defaults, picker_options)
+  --   return function(options)
+  --     options = vim.tbl_extend("force", defaults, options or {})
+  --     zk.new(options, picker_options)
+  --   end
+  -- end
+  -- commands.add("ZkDaily", make_new_fn({ orphan = true }, { dir = "dailies" }))
+
+  commands.add("ZkDaily", function(options)
     options = options or {}
-    options = vim.tbl_extend("force", options, { dir = "inbox" })
+    options = vim.tbl_extend("force", options, { dir = "dailies" })
+    zk.new(options)
+  end)
+
+  commands.add("ZkTask", function(options)
+    options = options or {}
+    options = vim.tbl_extend("force", options, { dir = "tasks", title = vim.fn.input("Title: ") })
     zk.new(options)
   end)
 

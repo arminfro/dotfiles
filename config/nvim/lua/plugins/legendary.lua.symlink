@@ -19,6 +19,12 @@ function M.toggleterm()
   })
 end
 
+function M.glow()
+  require("legendary").bind_keymaps({
+    { "<leader>tg", ":Glow<CR>", description = "Open Glow Markdown renderer", mode = { "n", "v" }, opts },
+  })
+end
+
 function M.which_key()
   require("legendary").bind_keymaps({
     { "<leader>k", ":WhichKey ''<CR>", description = "Open WhichKey", mode = { "n", "v" }, opts },
@@ -264,6 +270,46 @@ function M.typescript_lsp()
       opts,
     },
     { "<space>tr", ":TypescriptRenameFile<CR>", description = "TS Rename File", mode = { "n" }, opts },
+  })
+end
+
+function M.zk()
+  require("legendary").bind_keymaps({
+    {
+      "<leader>zl",
+      ":ZkNotes<CR>",
+      description = "zk, list notes",
+      mode = { "n" },
+      opts,
+    },
+    {
+      "<leader>zt",
+      ":ZkTags<CR>",
+      description = "zk, list tags",
+      mode = { "n" },
+      opts,
+    },
+    {
+      "<leader>zi",
+      ":lua require('zk.commands').get('ZkNewFromTitleSelection')({ extra = { branch = vim.fn.input('Branch: ') }, group = 'issues', dir = 'issues' })<CR>",
+      description = "zk, new",
+      mode = { "v" },
+      opts,
+    },
+    {
+      "<leader>zn",
+      ":lua require('zk.commands').get('ZkNew')({ title = vim.fn.input('Title: ') })<CR>",
+      description = "zk, new",
+      mode = { "n" },
+      opts,
+    },
+    {
+      "<leader>zd",
+      ":ZkDaily<CR>",
+      description = "zk, create or edit daily",
+      mode = { "n" },
+      opts,
+    },
   })
 end
 
@@ -551,6 +597,7 @@ function M.config()
 
   local commands = {
     { ":CopyFilePath", "let @+ = expand('%:p')", description = "Copy's current file path to clipboard" },
+    { ":PasteGitStatus", ":r! git status -s", description = "Paste git status short output" },
   }
 
   legendary.setup({
