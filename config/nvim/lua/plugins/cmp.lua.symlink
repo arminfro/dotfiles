@@ -128,7 +128,7 @@ function M.config()
     sources = {
       { name = "nvim_lsp", max_item_count = 20, priority_weight = 110 },
       { name = "nvim_lsp_signature_help", priority_weight = 100 },
-      { name = "buffer", max_item_count = 5, priority_weight = 90 },
+      { name = "buffer", max_item_count = 12, priority_weight = 90 },
       { name = "nvim_lua", priority_weight = 80 },
       { name = "luasnip", priority_weight = 70 },
       { name = "path", priority_weight = 60 },

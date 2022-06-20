@@ -101,6 +101,8 @@ zplug "jgogstad/passwordless-history"
 # tracks metadata to zsh history
 # integration with zsh-autosuggestions not working as I wish, that's why HISTFILE is still defined
 zplug "larkery/zsh-histdb"
+# jira wrapper
+zplug "unixorn/jira-commands", at:main
 
 # commands
 zplug "skywind3000/z.lua"

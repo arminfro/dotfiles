@@ -169,11 +169,28 @@ packer.startup({
 
     -- scrollbar on the right
     use({
-      "dstein64/nvim-scrollview",
+      "lewis6991/satellite.nvim",
       config = function()
-        vim.g.scrollview_excluded_filetypes = { "NvimTree" }
+        require("satellite").setup()
       end,
     })
+
+    -- use({
+    --   "kevinhwang91/nvim-ufo",
+    --   requires = "kevinhwang91/promise-async",
+    --   config = function()
+    --     vim.wo.foldcolumn = "1"
+    --     vim.wo.foldlevel = 99 -- feel free to decrease the value
+    --     vim.wo.foldenable = true
+    --     local capabilities = vim.lsp.protocol.make_client_capabilities()
+    --     capabilities.textDocument.foldingRange = {
+    --       dynamicRegistration = false,
+    --       lineFoldingOnly = true,
+    --     }
+
+    --     require("ufo").setup()
+    --   end,
+    -- })
 
     -- more details on code actions
     use({
@@ -510,6 +527,18 @@ packer.startup({
 
     -- sugar for the UNIX shell commands
     use("tpope/vim-eunuch")
+
+    -- supported langs: Ruby, Lua, Vimscript, Bash
+    use({
+      "RRethy/nvim-treesitter-endwise",
+      config = function()
+        require("nvim-treesitter.configs").setup({
+          endwise = {
+            enable = true,
+          },
+        })
+      end,
+    })
 
     -- editorconfig support
     use("editorconfig/editorconfig-vim")

@@ -30,6 +30,11 @@ function M.config()
     zk.new(options)
   end)
 
+  commands.add("ZkIssuesToday", function(options)
+    options = options or {}
+    options = vim.tbl_extend("force", options, { dir = "issues", modified = "today" })
+    zk.pick_notes(options)
+  end)
   zk.setup({})
 end
 

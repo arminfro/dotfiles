@@ -292,8 +292,15 @@ function M.zk()
     {
       "<leader>zi",
       ":lua require('zk.commands').get('ZkNewFromTitleSelection')({ extra = { branch = vim.fn.input('Branch: ') }, group = 'issues', dir = 'issues' })<CR>",
-      description = "zk, new",
+      description = "zk, new issue",
       mode = { "v" },
+      opts,
+    },
+    {
+      "<leader>zi",
+      ":ZkIssuesToday<CR>",
+      description = "zk, list issues modified today",
+      mode = { "n" },
       opts,
     },
     {

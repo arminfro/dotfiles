@@ -82,6 +82,7 @@ daily = 'zk new --no-input "$ZK_NOTEBOOK_DIR/dailies" $@'
 daily-create = 'zk daily --print-path'
 
 issue = 'zk new --no-input "$ZK_NOTEBOOK_DIR/issues" $@'
+issues-today = 'zk list --modified today "$ZK_NOTEBOOK_DIR/issues"'
 
 task = 'zk new --no-input "$ZK_NOTEBOOK_DIR/tasks" $@'
 

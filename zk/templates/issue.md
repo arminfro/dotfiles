@@ -31,15 +31,8 @@ tags:
 
 ## Scripts
 
-### Create and checkout branch
-
 ```sh
 git checkout -b {{extra.branch}}
-```
-
-### Push branch
-
-```sh
 # git add .
 # git commit -m '' # -m ''
 git push origin {{extra.branch}}
