@@ -255,7 +255,7 @@ function M.lsp(bufnr)
       mode = { "n" },
       opts,
     },
-    { "<space>f", ":Format<CR>", description = "LSP, Format document", mode = { "n" }, opts },
+    { "<leader>F", ":Format<CR>", description = "LSP, Format document", mode = { "n" }, opts },
   })
 end
 
@@ -298,6 +298,13 @@ function M.zk()
     },
     {
       "<leader>zi",
+      ":ZkLastIssue<CR>",
+      description = "zk, open last modified issue",
+      mode = { "n" },
+      opts,
+    },
+    {
+      "<leader>zI",
       ":ZkIssuesToday<CR>",
       description = "zk, list issues modified today",
       mode = { "n" },
@@ -318,6 +325,16 @@ function M.zk()
       opts,
     },
   })
+  require("legendary").bind_commands({
+    {
+      ":ZkLastIssue",
+      function()
+        local last_issue = os.capture("find $ZK_NOTEBOOK_DIR/issues -mtime 0 -type f | tail -1")
+        vim.cmd("edit " .. last_issue)
+      end,
+      description = "Set Filetype",
+    },
+  })
 end
 
 function M.lspsaga()
@@ -335,6 +352,13 @@ function M.lspsaga()
       ":Lspsaga range_code_action<CR>",
       description = "LSP, Code Actions by Lsp per selection",
       mode = { "v" },
+      opts,
+    },
+    {
+      "<space>f",
+      ":Lspsaga lsp_finder<CR>",
+      description = "LSP, find usage of cursor symbol",
+      mode = { "n" },
       opts,
     },
     {
@@ -575,6 +599,8 @@ function M.config()
     { "<leader>ws", ":vsplit<CR>", mode = { "n" }, description = "Split new window vertically", opts },
     { "<leader>wd", ":window diffthis<CR>", mode = { "n" }, description = "Diff this window", opts },
     { "<leader>wt", ":window diffoff<CR>", mode = { "n" }, description = "Diff off", opts },
+    { "<leader>wv", ":vsplit<CR>", mode = { "n" }, description = "Split vertically", opts },
+    { "<leader>wH", ":split<CR>", mode = { "n" }, description = "Split horizontally", opts },
 
     -- Copy to clipboard
     { "<leader>y", "\"+y", mode = { "n", "v" }, description = "Copy to clipboard", opts },
