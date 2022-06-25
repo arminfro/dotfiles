@@ -175,6 +175,9 @@ packer.startup({
       end,
     })
 
+    -- reasonable defaults for most search-related vim features
+    use({ "wincent/loupe" })
+
     -- use({
     --   "kevinhwang91/nvim-ufo",
     --   requires = "kevinhwang91/promise-async",
@@ -309,6 +312,7 @@ packer.startup({
     use({
       "ibhagwan/fzf-lua",
       disable = not if_exe_exists("fzf"),
+      requires = "akinsho/bufferline.nvim",
       config = function()
         require("plugins.fzf").config()
       end,
@@ -329,7 +333,6 @@ packer.startup({
             -- Snippet engine
             {
               "L3MON4D3/LuaSnip",
-              event = "BufRead",
               config = function()
                 require("luasnip/loaders/from_vscode").lazy_load({
                   paths = {
@@ -362,12 +365,14 @@ packer.startup({
         {
           "uga-rosa/cmp-dictionary",
           config = function()
+            local dictionaries = {
+              "~/.config/nvim/spell/english-autocomplete.txt",
+              "~/.config/nvim/spell/german-autocomplete.txt",
+            }
             require("cmp_dictionary").setup({
               dic = {
-                ["markdown"] = {
-                  "~/.config/nvim/spell/english-autocomplete.txt",
-                  "~/.config/nvim/spell/german-autocomplete.txt",
-                },
+                ["markdown"] = dictionaries,
+                ["gitcommit"] = dictionaries,
               },
             })
           end,
@@ -403,6 +408,7 @@ packer.startup({
             {
               -- typescript lsp utilities
               "jose-elias-alvarez/typescript.nvim",
+              before = "fzf-lua", -- otherwise FzfLua buffers won't work
               config = function()
                 require("plugins.legendary").typescript_lsp()
                 require("plugins.lsp.server-settings.typescript-lsp").setup()
@@ -503,15 +509,6 @@ packer.startup({
       event = "BufRead",
       requires = "kyazdani42/nvim-web-devicons",
       config = require("plugins.trouble").config,
-    })
-
-    -- horizontal highlights for text filetypes like markdown, rmd, vimwiki and orgmode.
-    use({
-      "lukas-reineke/headlines.nvim",
-      event = "BufRead",
-      config = function()
-        require("headlines").setup()
-      end,
     })
 
     -- Start screen
@@ -833,10 +830,20 @@ packer.startup({
       end,
     })
 
-    -- markdown, toggle todo list items
-    -- and create links from visual selection
-    -- todo, needed?
-    use({ "walterl/downtools", event = "BufRead" })
+    -- horizontal highlights for text filetypes like markdown, rmd, vimwiki and orgmode.
+    use({
+      "lukas-reineke/headlines.nvim",
+      event = "BufRead",
+      config = function()
+        require("headlines").setup()
+      end,
+    })
+
+    -- markdown helper
+    -- <C-Space> - create and toggle checkboxes
+    -- <C-k> - create link from selection
+    -- <C-b> - bold visual selection
+    use({ "walterl/downtools", ft = "markdown" })
 
     -- markdown set of functions and and mappings to those functions
     -- which make it easy to navigate and manipulate markdown notebooks/journals/wikis

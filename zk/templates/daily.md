@@ -1,15 +1,16 @@
 ---
-id: {{ id }}
-created: {{ date now 'timestamp' }}
-created: {{date now 'timestamp'}}
-course: {{dir}}
+id: { { id } }
+created: { { date now 'timestamp' } }
+course: { { dir } }
 aliases:
-  - {{date now 'timestamp'}}
-author: {{ extra.author }}
+  - { { date now 'timestamp' } }
+author: { { extra.author } }
+pandoc_:
+  - output: .pdf
 tags:
-  - {{ extra.tags }}
-  - {{ date now 'CW_%V/%y' }}
-  - {{ date now '%B/%y' }}
+  - { { extra.tags } }
+  - { { date now 'CW_%V/%y' } }
+  - { { date now '%B/%y' } }
 ---
 
 # {{ date now "full" }}
