@@ -1,40 +1,61 @@
 ---
-id: { { id } }
-slug: { { slug title } }
-title: { { title } }
-created: { { date now 'timestamp' } }
-course: { { dir } }
+id: {{ id }}
+slug: {{ title }}
+created: {{ date now 'timestamp' }}
+title: {{title}}
+created: {{date now 'timestamp'}}
+course: {{dir}}
 aliases:
-  - { { title } }
-  - { { date now 'timestamp' } }
-author: { { extra.author } }
-pandoc_:
-  - output: .pdf
+  - {{title}}
+  - {{date now 'timestamp'}}
+author: {{ extra.author }}
 tags:
-  - { { dir } }
+  - {{ title }}
+  - {{ dir }}
+  - {{ date now 'CW_%V/%y' }}
+  - {{ date now '%B/%y' }}
 ---
 
-# {{title}}
+# {{title}} {{extra.branch}}
 
 ## Links
 
-- ticket-url/{{slug title}}
-- branch-url/{{extra.branch}}
-- pr-url
+- [Ticket](https://jira.sageinternal.de/browse/{{title}})
+- [Branch](https://tfs-de.sageinternal.de/SMB/SBC%20WebClient/_git/SBC-WebClient?fix%2F{{title}}_{{slug extra.branch}})
+- [Pull Request](https://tfs-de.sageinternal.de/SMB/SBC%20WebClient/_git/SBC-WebClient/pullrequest/)
 
-## Notes
+## Procedure
 
-<!-- ### Environment -->
-<!-- ### Precondition -->
-<!-- ### Steps to reproduce -->
-<!-- ### Current behavior -->
-<!-- ### Expected behavior -->
+- [] Assign Ticket
+- [] Start Progress
+- [] Find Problem
+  - Description:
+- [] Find Solution
+  - Description:
+- [] Commit & Push
+  - [] check if Ticket has version
+  - [] (optioal) run tests locally
+- [] create Pull Request
+  - [] (optioal) enter nr in link
+- [] wait for PR, set to 'Test'
+
+## Git status
+
+```sh
+# :r !git status --short
+```
+
+## Git diff
+
+```sh
+# :r !git diff
+```
 
 ## Scripts
 
 ```sh
-git checkout -b {{extra.branch}}
+git checkout -b fix/{{title}}_{{slug extra.branch}}
 # git add .
 # git commit -m '' # -m ''
-git push origin {{extra.branch}}
+git push origin fix/{{title}}_{{slug extra.branch}}
 ```

@@ -179,12 +179,16 @@ bindsym $mod+z exec --no-startup-id $MUSIC_PLAYER
 bindsym $mod+x exec --no-startup-id $VIDEO_PLAYER
 bindsym $mod+n exec --no-startup-id sqlitebrowser
 bindsym $mod+c exec --no-startup-id virtualbox
-bindsym $mod+m exec --no-startup-id VBoxManage startvm ArchLinuxTesting
+bindsym $mod+m exec --no-startup-id VBoxManage startvm Fedora35Testing
 
 bindsym $con+$alt+$mod+s exec --no-startup-id systemctl poweroff
 
 bindsym $con+$alt+y exec --no-startup-id ~/.dotfiles/bin/keyboard-layout --de=true
 bindsym $con+$alt+u exec --no-startup-id ~/.dotfiles/bin/keyboard-layout --us=true
+
+bindsym $con+$alt+$mod+s exec --no-startup-id systemctl poweroff
+
+bindsym $con+$alt+$mod+l exec --no-startup-id --no-startup-id ~/.dotfiles/bin/lock
 
 bindsym --release $con+$alt+m exec --no-startup-id xset dpms force off
 

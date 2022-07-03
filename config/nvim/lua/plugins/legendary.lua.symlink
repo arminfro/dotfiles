@@ -7,6 +7,22 @@ local opts = { noremap = true }
 
 local open_and_restore_focus_cb = require("core.utils").open_and_restore_focus_cb
 
+function M.tree_climber()
+  local tc = require("tree-climber")
+  require("legendary").bind_keymaps({
+    -- { "H", tc.goto_parent, description = "TreeClimber TS AST jump to Parent", mode = { "n", "v", "o" }, opts },
+    -- { "L", tc.goto_child, description = "TreeClimber TS AST jump to Child", mode = { "n", "v", "o" }, opts },
+    { "J", tc.goto_next, description = "TreeClimber TS AST jump to Next", mode = { "n", "v", "o" }, opts },
+    { "K", tc.goto_prev, description = "TreeClimber TS AST jump to Prev", mode = { "n", "v", "o" }, opts },
+  })
+end
+
+function M.maximize()
+  require("legendary").bind_keymaps({
+    { "<leader>Z", require("maximize").toggle, description = "Toggle maximize window", mode = { "n", "v" }, opts },
+  })
+end
+
 function M.toggleterm()
   local terminals = require("plugins.toggleterm").terminals()
   require("legendary").bind_keymaps({
@@ -210,6 +226,24 @@ function M.trouble()
       mode = { "n" },
       opts,
     },
+  })
+end
+
+function M.yanky()
+  require("legendary").bind_keymaps({
+    {
+      "<leader>P",
+      ":YankyRingHistory<CR>",
+      description = "Paste from clipboard and yank history",
+      mode = { "n" },
+      opts,
+    },
+  })
+end
+
+function M.docs_view()
+  require("legendary").bind_keymaps({
+    { "<F11>", ":DocsViewToggle<CR>", description = "Show docs view Documentation", mode = { "n" }, opts },
   })
 end
 
@@ -541,8 +575,6 @@ function M.config()
     -- Cursors Movement
     { "H", "^", mode = { "n", "v" }, description = "Jump to beginning of line", opts },
     { "L", "g_", mode = { "n", "v" }, description = "Jump to end of line", opts },
-    { "J", "8j", mode = { "n" }, description = "Jump 8 lines down", opts },
-    { "K", "8k", mode = { "n" }, description = "Jump 8 lines up", opts },
 
     -- Buffer Managemant
     {
@@ -631,6 +663,8 @@ function M.config()
   local commands = {
     { ":CopyFilePath", "let @+ = expand('%:p')", description = "Copy's current file path to clipboard" },
     { ":PasteGitStatus", ":r! git status -s", description = "Paste git status short output" },
+    { ":SetGermanSpellFeature", ":setlocal spell spelllang=de", description = "Activate german spelling features" },
+    { ":SetEnglishSpellFeature", ":setlocal spell spelllang=en", description = "Activate english spelling features" },
   }
 
   legendary.setup({

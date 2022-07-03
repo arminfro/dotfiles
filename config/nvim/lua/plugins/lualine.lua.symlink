@@ -14,21 +14,21 @@ function M.config()
     return
   end
 
-  local zephyrium_colors = require("zephyrium")
+  local kanagawa_colors = require("kanagawa.colors").setup()
 
   local colors = {
-    yellow = zephyrium_colors.yellow,
-    yellow_1 = zephyrium_colors.orange,
-    grey = zephyrium_colors.bg_highlight,
-    white = zephyrium_colors.fg,
-    cyan = zephyrium_colors.cyan,
-    darkblue = zephyrium_colors.bracket,
-    green = zephyrium_colors.green,
-    orange = zephyrium_colors.orange,
-    violet = zephyrium_colors.violet,
-    magenta = zephyrium_colors.magenta,
-    blue = zephyrium_colors.blue,
-    red = zephyrium_colors.red,
+    yellow = kanagawa_colors.autumnYellow,
+    yellow_1 = kanagawa_colors.roninYellow,
+    grey = kanagawa_colors.sumiInk3,
+    white = kanagawa_colors.fujiWhite,
+    cyan = kanagawa_colors.crystalBlue,
+    darkblue = kanagawa_colors.dragonBlue,
+    green = kanagawa_colors.autumnGreen,
+    orange = kanagawa_colors.roninYellow,
+    violet = kanagawa_colors.springViolet1,
+    magenta = kanagawa_colors.springViolet2,
+    blue = kanagawa_colors.crystalBlue,
+    red = kanagawa_colors.samuraiRed,
   }
 
   local conditions = {
@@ -61,7 +61,7 @@ function M.config()
       lualine_y = {},
       lualine_z = {},
       lualine_c = {
-        { gps.get_location, cond = gps.is_available },
+        { gps.get_location, cond = gps.is_available, color = { fg = colors.blue } },
       },
       lualine_x = {},
     },
@@ -94,11 +94,6 @@ function M.config()
   ins_left({
     "diff",
     symbols = { added = " ", modified = "柳", removed = " " },
-    diff_color = {
-      added = { fg = colors.green },
-      modified = { fg = colors.yellow_1 },
-      removed = { fg = colors.red },
-    },
     cond = conditions.hide_in_width,
     padding = { left = 2, right = 1 },
   })
@@ -107,11 +102,7 @@ function M.config()
     "diagnostics",
     sources = { "nvim_diagnostic" },
     symbols = { error = " ", warn = " ", info = " ", hint = " " },
-    diagnostics_color = {
-      color_error = { fg = colors.red },
-      color_warn = { fg = colors.yellow },
-      color_info = { fg = colors.cyan },
-    },
+    diagnostics_color = {},
     padding = { left = 2, right = 1 },
   })
 
@@ -186,11 +177,12 @@ function M.config()
   ins_right({
     "location",
     padding = { left = 1, right = 1 },
+    color = { fg = colors.yellow, bg = colors.grey },
   })
 
   ins_right({
     "progress",
-    color = { fg = colors.fg, gui = "none" },
+    color = { fg = colors.yellow, bg = colors.grey },
     padding = { left = 0, right = 0 },
   })
 
@@ -207,14 +199,6 @@ function M.config()
     color = { fg = colors.yellow, bg = colors.grey },
     cond = nil,
   })
-
-  -- ins_right {
-  --   function()
-  --     return "▊"
-  --   end,
-  --   color = { fg = colors.blue },
-  --   padding = { left = 1, right = 0 },
-  -- }
 
   lualine.setup(config)
 end

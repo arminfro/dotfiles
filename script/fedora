@@ -30,6 +30,12 @@ mv /tmp/Inconsolata ~/.local/share/fonts/
 sudo dnf install -y gnome-tweaks keepassxc \
   ncurses-devel automake autoconf gcc # deps for htop-vim
 
+# install nemo
+sudo dnf install -y nemo nemo-audio-tab nemo-compare nemo-emblems nemo-extensions nemo-fileroller nemo-image-converter nemo-preview nemo-seahorse nemo-search-helpers
+xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
+gsettings set org.gnome.desktop.background show-desktop-icons false
+gsettings set org.nemo.desktop show-desktop-icons true
+
 ## install vscode
 # sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 # cat <<EOF | sudo tee /etc/yum.repos.d/vscode.repo

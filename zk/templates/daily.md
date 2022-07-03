@@ -1,16 +1,15 @@
 ---
-id: { { id } }
-created: { { date now 'timestamp' } }
-course: { { dir } }
+id: {{ id }}
+created: {{ date now 'timestamp' }}
+created: {{date now 'timestamp'}}
+course: {{dir}}
 aliases:
-  - { { date now 'timestamp' } }
-author: { { extra.author } }
-pandoc_:
-  - output: .pdf
+  - {{date now 'timestamp'}}
+author: {{ extra.author }}
 tags:
-  - { { extra.tags } }
-  - { { date now 'CW_%V/%y' } }
-  - { { date now '%B/%y' } }
+  - daily
+  - {{ date now 'CW_%V/%y' }}
+  - {{ date now '%B/%y' }}
 ---
 
 # {{ date now "full" }}
@@ -18,5 +17,3 @@ tags:
 ## Tickets
 
 - OL-
-
-## Clipboard History

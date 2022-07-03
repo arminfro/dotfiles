@@ -105,12 +105,13 @@ vim.g.vim_json_conceal = false
 vim.g.mapleader = ","
 
 vim.diagnostic.config({
-  virtual_text = {
-    spacing = 3,
-    prefix = " ",
-    severity_sort = true,
-    source = "if_many",
-  },
+  virtual_text = false,
+  -- virtual_text = {
+  --   spacing = 3,
+  --   prefix = " ",
+  --   severity_sort = true,
+  --   source = "if_many",
+  -- },
 })
 
 function os.capture(cmd, raw)

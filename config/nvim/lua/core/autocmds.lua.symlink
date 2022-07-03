@@ -9,44 +9,59 @@ api.nvim_create_autocmd("BufWritePre", {
   group = TrimWhiteSpaceGrp,
 })
 
--- Close nvim if NvimTree is only running buffer
-api.nvim_create_autocmd(
-  "BufEnter",
-  { command = [[if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]] }
-)
+-- todo, does not work
+-- api.nvim_create_autocmd("BufWritePost", {
+--   pattern = "*.lua.symlink", --vim.fn.expand("~/.dotfiles/config/nvim/lua/plugins/init.lua.symlink"),
+--   command = "PackerCompile",
+--   -- group = packer_group,
+-- })
 
--- Highlight on yank
-local yankGrp = api.nvim_create_augroup("YankHighlight", { clear = true })
-api.nvim_create_autocmd("TextYankPost", {
-  command = "silent! lua vim.highlight.on_yank()",
-  group = yankGrp,
-})
+-- Close nvim if NvimTree is only running buffer
+-- api.nvim_create_autocmd(
+--   "BufEnter",
+--   { command = [[if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]] }
+-- )
+
 -- go to last loc when opening a buffer
-api.nvim_create_autocmd(
-  "BufReadPost",
-  { command = [[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]] }
-)
+-- api.nvim_create_autocmd(
+--   "BufReadPost",
+--   { command = [[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]] }
+-- )
+
 -- windows to close with "q"
 api.nvim_create_autocmd(
   "FileType",
   { pattern = { "help", "startuptime", "qf", "lspinfo" }, command = [[nnoremap <buffer><silent> q :close<CR>]] }
 )
+
 api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
 
+api.nvim_create_autocmd(
+  "FileType",
+  { pattern = "nvim-docs-view", command = [[nnoremap <buffer><silent> q :close<CR>]] }
+)
+
+api.nvim_create_autocmd("FileType", { pattern = "fugitive", command = [[nnoremap <buffer><silent> q :close<CR>]] })
+
+api.nvim_create_autocmd(
+  "FileType",
+  { pattern = "DiffviewFiles", command = [[nnoremap <buffer><silent> q :DiffviewClose<CR>]] }
+)
+
 -- set spelling features on markdown
-api.nvim_create_autocmd("FileType", { pattern = "markdown", command = [[setlocal spell spelllang=en,de]] })
+-- api.nvim_create_autocmd("FileType", { pattern = "markdown", command = [[setlocal spell spelllang=en,de]] })
 
 -- show cursor line only in active window
-local cursorGrp = api.nvim_create_augroup("CursorLine", { clear = true })
-api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
-  pattern = "*",
-  command = "set cursorline",
-  group = cursorGrp,
-})
-api.nvim_create_autocmd(
-  { "InsertEnter", "WinLeave" },
-  { pattern = "*", command = "set nocursorline", group = cursorGrp }
-)
+-- local cursorGrp = api.nvim_create_augroup("CursorLine", { clear = true })
+-- api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+--   pattern = "*",
+--   command = "set cursorline",
+--   group = cursorGrp,
+-- })
+-- api.nvim_create_autocmd(
+--   { "InsertEnter", "WinLeave" },
+--   { pattern = "*", command = "set nocursorline", group = cursorGrp }
+-- )
 
 api.nvim_create_autocmd("VimEnter", {
   pattern = { "*" },
@@ -55,9 +70,9 @@ api.nvim_create_autocmd("VimEnter", {
     -- works only if a file is openend right away
     if os.getenv("VIM_IDE") then
       local u = require("core.utils")
-      u.open_and_restore_window(require("nvim-tree").open)
-      u.open_and_restore_window(require("trouble").open)
-      u.open_and_restore_window(require("symbols-outline").toggle_outline)
+      u.open_and_restore_focus(require("nvim-tree").open)
+      u.open_and_restore_focus(require("trouble").open)
+      u.open_and_restore_focus(require("symbols-outline").toggle_outline)
     end
   end,
 })

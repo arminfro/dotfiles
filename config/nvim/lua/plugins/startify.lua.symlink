@@ -16,7 +16,7 @@ function M.config()
     { h = { "Check Vim health", ":checkhealth" } },
     { i = { "Install Plugins", ":PackerInstall" } },
     { u = { "Update Plugin", ":PackerUpdate" } },
-    { c = { "Clean Plugin", ":PackerClean" } },
+    { c = { "Compile Plugin", ":PackerCompile" } },
     { s = { "Sync Plugin", ":PackerSync" } },
     { m = { "Start Time", ":StartupTime" } },
     -- {o = {"Open GitHub repo", ":RepoEdit"}}
