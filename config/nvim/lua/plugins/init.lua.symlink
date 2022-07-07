@@ -770,15 +770,15 @@ packer.startup({
       end,
     })
 
-    -- standalone UI for nvim-lsp progress
-    use({
-      "j-hui/fidget.nvim",
-      after = "kanagawa.nvim",
-      -- requires = { "nvim-treesitter/nvim-treesitter" },
-      config = function()
-        require("fidget").setup({})
-      end,
-    })
+    -- standalone UI for nvim-lsp progress, currently issue with buffers
+    -- use({
+    --   "j-hui/fidget.nvim",
+    --   after = "kanagawa.nvim",
+    --   -- requires = { "nvim-treesitter/nvim-treesitter" },
+    --   config = function()
+    --     require("fidget").setup({})
+    --   end,
+    -- })
 
     -- highlights function arguments usage same as argument itself
     use({
@@ -786,14 +786,6 @@ packer.startup({
       requires = { "nvim-treesitter/nvim-treesitter", "rebelot/kanagawa.nvim" },
       config = function()
         require("hlargs").setup({ color = require("kanagawa.colors").setup().surimiOrange })
-      end,
-    })
-
-    -- virtual lines below source code line for column specifics
-    use({
-      "Maan2003/lsp_lines.nvim",
-      config = function()
-        require("lsp_lines").register_lsp_virtual_lines()
       end,
     })
 
