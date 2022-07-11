@@ -233,7 +233,7 @@ packer.startup({
     -- Look at urls in document, also list plugin links
     use({
       "axieax/urlview.nvim",
-      command = "UrlView",
+      cmd = "UrlView",
     })
 
     -- use({
@@ -263,12 +263,12 @@ packer.startup({
     -- })
 
     -- Smooth scrolling
-    use({
-      "declancm/cinnamon.nvim",
-      config = function()
-        require("cinnamon").setup()
-      end,
-    })
+    -- use({
+    --   "declancm/cinnamon.nvim",
+    --   config = function()
+    --     require("cinnamon").setup()
+    --   end,
+    -- })
 
     -- Rust support
     use({
@@ -598,7 +598,7 @@ packer.startup({
     -- visualize undo tree
     use({
       "mbbill/undotree",
-      command = "UndotreeToggle",
+      cmd = "UndotreeToggle",
       config = function()
         require("plugins.legendary").undotree()
       end,
@@ -724,7 +724,7 @@ packer.startup({
     -- gives yank history
     use({
       "gbprod/yanky.nvim",
-      command = "YankyRingHistory",
+      cmd = "YankyRingHistory",
       config = function()
         require("yanky").setup({})
         require("plugins.legendary").yanky()
@@ -734,7 +734,7 @@ packer.startup({
     -- Incremental rename command with TS visualized feedback
     use({
       "smjonas/inc-rename.nvim",
-      command = "IncRename",
+      cmd = "IncRename",
       config = function()
         require("inc_rename").setup()
       end,
@@ -743,7 +743,7 @@ packer.startup({
     -- Shows documentation for cursor in seperate buffer
     use({
       "amrbashir/nvim-docs-view",
-      -- cmd = { "DocsViewToggle" },
+      cmd = { "DocsViewToggle" },
       config = function()
         require("docs-view").setup({
           position = "bottom",
@@ -754,12 +754,12 @@ packer.startup({
     })
 
     -- 4 basic motions: jump to next/previous sibling in the tree, jump to parent, and jump to child
-    use({
-      "drybalka/tree-climber.nvim",
-      config = function()
-        require("plugins.legendary").tree_climber()
-      end,
-    })
+    -- use({
+    --   "drybalka/tree-climber.nvim",
+    --   config = function()
+    --     require("plugins.legendary").tree_climber()
+    --   end,
+    -- })
 
     -- <leader>Z to toggle maximizing the current neovim window
     use({
@@ -843,10 +843,10 @@ packer.startup({
 
     -- place, toggle and display marks
     -- keybindings: https://github.com/chentoast/marks.nvim#mappings
-    use({
-      "chentoast/marks.nvim",
-      event = "BufRead",
-    })
+    -- use({
+    --   "chentoast/marks.nvim",
+    --   event = "BufRead",
+    -- })
 
     -- measure start up time
     use("dstein64/vim-startuptime")
@@ -995,7 +995,7 @@ packer.startup({
     use({ "iamcco/markdown-preview.nvim", event = "BufRead", run = "cd app && yarn install" })
 
     -- AnsiEsc Command
-    use({ "powerman/vim-plugin-AnsiEsc", command = "AnsiEsc" })
+    use({ "powerman/vim-plugin-AnsiEsc", cmd = "AnsiEsc" })
 
     -- writing support
     use({

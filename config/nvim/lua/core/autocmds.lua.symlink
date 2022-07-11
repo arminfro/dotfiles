@@ -36,6 +36,8 @@ api.nvim_create_autocmd(
 
 api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
 
+api.nvim_create_autocmd("FileType", { pattern = "git", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
+
 api.nvim_create_autocmd(
   "FileType",
   { pattern = "nvim-docs-view", command = [[nnoremap <buffer><silent> q :close<CR>]] }

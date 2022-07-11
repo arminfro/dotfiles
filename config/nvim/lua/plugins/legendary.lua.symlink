@@ -7,15 +7,15 @@ local opts = { noremap = true }
 
 local open_and_restore_focus_cb = require("core.utils").open_and_restore_focus_cb
 
-function M.tree_climber()
-  local tc = require("tree-climber")
-  require("legendary").bind_keymaps({
-    -- { "H", tc.goto_parent, description = "TreeClimber TS AST jump to Parent", mode = { "n", "v", "o" }, opts },
-    -- { "L", tc.goto_child, description = "TreeClimber TS AST jump to Child", mode = { "n", "v", "o" }, opts },
-    { "J", tc.goto_next, description = "TreeClimber TS AST jump to Next", mode = { "n", "v", "o" }, opts },
-    { "K", tc.goto_prev, description = "TreeClimber TS AST jump to Prev", mode = { "n", "v", "o" }, opts },
-  })
-end
+-- function M.tree_climber()
+--   local tc = require("tree-climber")
+--   require("legendary").bind_keymaps({
+--     -- { "H", tc.goto_parent, description = "TreeClimber TS AST jump to Parent", mode = { "n", "v", "o" }, opts },
+--     -- { "L", tc.goto_child, description = "TreeClimber TS AST jump to Child", mode = { "n", "v", "o" }, opts },
+--     { "J", tc.goto_next, description = "TreeClimber TS AST jump to Next", mode = { "n", "v", "o" }, opts },
+--     { "K", tc.goto_prev, description = "TreeClimber TS AST jump to Prev", mode = { "n", "v", "o" }, opts },
+--   })
+-- end
 
 function M.maximize()
   require("legendary").bind_keymaps({
