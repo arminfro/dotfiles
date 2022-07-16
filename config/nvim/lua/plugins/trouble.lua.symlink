@@ -13,7 +13,6 @@ function M.config()
     -- auto_close = true,
     use_diagnostic_signs = true,
   })
-  require("plugins.legendary").trouble()
 end
 
 return M

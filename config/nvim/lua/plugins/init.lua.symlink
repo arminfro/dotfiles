@@ -189,14 +189,6 @@ packer.startup({
     --   end,
     -- })
 
-    use({
-      "ziontee113/icon-picker.nvim",
-      requires = "stevearc/dressing.nvim",
-      config = function()
-        require("icon-picker")
-      end,
-    })
-
     -- more details on code actions
     use({
       "weilbith/nvim-code-action-menu",
@@ -234,6 +226,11 @@ packer.startup({
     use({
       "axieax/urlview.nvim",
       cmd = "UrlView",
+      config = function()
+        require("urlview").setup({
+          default_picker = "telescope",
+        })
+      end,
     })
 
     -- use({
@@ -332,14 +329,25 @@ packer.startup({
       end,
     })
 
-    -- FZF vim plugin implemented in lua
     use({
-      "ibhagwan/fzf-lua",
-      disable = not if_exe_exists("fzf"),
-      requires = { "kyazdani42/nvim-web-devicons" },
+      "nvim-telescope/telescope.nvim",
+      requires = {
+        "gbprod/yanky.nvim",
+        "kdheepak/lazygit.nvim",
+        "rcarriga/nvim-notify",
+        "nvim-telescope/telescope-symbols.nvim",
+        -- "folke/trouble.nvim",
+      },
       config = function()
-        require("plugins.fzf").config()
+        require("plugins.telescope").config()
+        require("plugins.legendary").telescope()
       end,
+    })
+
+    use({
+      "nvim-telescope/telescope-fzf-native.nvim",
+      requires = { "nvim-telescope/telescope.nvim" },
+      run = "make",
     })
 
     -- Completion engine
@@ -530,9 +538,11 @@ packer.startup({
     -- see config & keymaps: https://github.com/folke/trouble.nvim#setup
     use({
       "folke/trouble.nvim",
-      event = "BufRead",
-      requires = "kyazdani42/nvim-web-devicons",
-      config = require("plugins.trouble").config,
+      requires = { "kyazdani42/nvim-web-devicons" },
+      config = function()
+        require("plugins.trouble").config()
+        require("plugins.legendary").trouble()
+      end,
     })
 
     -- Start screen
@@ -724,9 +734,8 @@ packer.startup({
     -- gives yank history
     use({
       "gbprod/yanky.nvim",
-      cmd = "YankyRingHistory",
       config = function()
-        require("yanky").setup({})
+        require("yanky").setup()
         require("plugins.legendary").yanky()
       end,
     })

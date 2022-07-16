@@ -461,14 +461,53 @@ function M.http_rest()
   })
 end
 
+function M.telescope()
+  local telescope = require("telescope")
+  local telescope_builtins = require("telescope.builtin")
+  require("legendary").bind_keymaps({
+    { "<F2>", telescope_builtins.builtin, mode = { "n", "v" }, description = "Fuzzy searches", opts },
+    { "<F12>", telescope_builtins.help_tags, mode = { "n" }, description = "Fuzzy search helptags", opts },
+    { "<C-O>", telescope_builtins.commands, mode = { "n" }, description = "Fuzzy search command", opts },
+    { "<C-A>", telescope_builtins.grep_string, mode = { "n" }, description = "Fuzzy search word", opts },
+    { "<C-N>", telescope_builtins.buffers, mode = { "n" }, description = "Fuzzy search buffer", opts },
+    {
+      "<C-P>",
+      telescope_builtins.git_files,
+      mode = { "n" },
+      description = "Fuzzy search files in Git repo",
+      opts,
+    },
+    { "<C-D>", telescope_builtins.git_commits, mode = { "n" }, description = "Fuzzy search git commits", opts },
+    {
+      "<leader>p",
+      function()
+        telescope.extensions.yank_history.yank_history({})
+      end,
+      mode = { "n" },
+      description = "Fuzzy search yank history",
+      opts,
+    },
+    -- {
+    --   "<leader>gb",
+    --   telescope_builtins.git_branches,
+    --   mode = { "n" },
+    --   description = "Fuzzy search git modified files",
+    --   opts,
+    -- },
+    -- LSP related
+    {
+      "<space>r",
+      telescope_builtins.lsp_references,
+      description = "LSP, Show references of hovered symbol",
+      mode = { "n" },
+      opts,
+    },
+  })
+end
+
 function M.fzf()
   require("legendary").bind_keymaps({
-    { "<F2>", "<ESC>:FzfLua<CR>", mode = { "n", "v" }, description = "Fuzzy searches", opts },
-    { "<F12>", "<ESC>:FzfLua help_tags<CR>", mode = { "n" }, description = "Fuzzy search helptags", opts },
-    { "<C-O>", "<ESC>:FzfLua commands<CR>", mode = { "n" }, description = "Fuzzy search command", opts },
     { "<C-X>", "<ESC>:FzfLua tags<CR>", mode = { "n" }, description = "Fuzzy search code tags", opts },
-    { "<C-N>", "<ESC>:FzfLua buffers<CR>", mode = { "n" }, description = "Fuzzy search buffer", opts },
-    { "<C-A>", "<ESC>:FzfLua grep<CR><CR>", mode = { "n" }, description = "Fuzzy search word", opts },
     {
       "<C-S>",
       "<ESC>:FzfLua lines<CR>",
@@ -477,33 +516,10 @@ function M.fzf()
       opts,
     },
     {
-      "<C-P>",
-      "<ESC>:FzfLua git_files<CR>",
-      mode = { "n" },
-      description = "Fuzzy search files in Git repo",
-      opts,
-    },
-    { "<C-D>", "<ESC>:FzfLua git_commits<CR>", mode = { "n" }, description = "Fuzzy search git commits", opts },
-    {
       "<C-U>",
       "<ESC>:FzfLua git_status<CR>",
       mode = { "n" },
       description = "Fuzzy search git modified files",
-      opts,
-    },
-    {
-      "<leader>gb",
-      "<ESC>:FzfLua git_branches<CR>",
-      mode = { "n" },
-      description = "Fuzzy search git modified files",
-      opts,
-    },
-    -- LSP related
-    {
-      "<space>r",
-      "<ESC>:FzfLua lsp_references<CR>",
-      description = "LSP, Show references of hovered symbol",
-      mode = { "n" },
       opts,
     },
     {
