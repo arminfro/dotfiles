@@ -330,12 +330,27 @@ packer.startup({
     })
 
     use({
+      "skywind3000/asynctasks.vim",
+      requires = "skywind3000/asyncrun.vim",
+      -- config = function() end,
+    })
+
+    use({
       "nvim-telescope/telescope.nvim",
       requires = {
         "gbprod/yanky.nvim",
         "kdheepak/lazygit.nvim",
         "rcarriga/nvim-notify",
         "nvim-telescope/telescope-symbols.nvim",
+        "nvim-telescope/telescope-frecency.nvim",
+        "nvim-telescope/telescope-project.nvim",
+        "nvim-telescope/telescope-node-modules.nvim",
+        "crispgm/telescope-heading.nvim",
+        "LinArcX/telescope-env.nvim",
+        "olacin/telescope-cc.nvim",
+        "nvim-telescope/telescope-packer.nvim",
+        "benfowler/telescope-luasnip.nvim",
+        "LinArcX/telescope-changes.nvim",
         -- "folke/trouble.nvim",
       },
       config = function()
@@ -348,6 +363,19 @@ packer.startup({
       "nvim-telescope/telescope-fzf-native.nvim",
       requires = { "nvim-telescope/telescope.nvim" },
       run = "make",
+    })
+
+    -- use({
+    --   "nvim-telescope/telescope-project.nvim",
+    --   requires = { "nvim-telescope/telescope.nvim" },
+    -- })
+
+    use({
+      "nvim-telescope/telescope-frecency.nvim",
+      config = function()
+        require("telescope").load_extension("frecency")
+      end,
+      requires = { "tami5/sqlite.lua" },
     })
 
     -- Completion engine
@@ -734,6 +762,7 @@ packer.startup({
     -- gives yank history
     use({
       "gbprod/yanky.nvim",
+      before = "nvim-telescope/telescope.nvim",
       config = function()
         require("yanky").setup()
         require("plugins.legendary").yanky()

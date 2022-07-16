@@ -90,6 +90,24 @@ function M.config()
         override_file_sorter = true, -- override the file sorter
         case_mode = "smart_case", -- or "ignore_case" or "respect_case"
       },
+      frecency = {
+        ignore_patterns = { "*.git/*", "*/tmp/*" },
+        workspaces = {
+          ["conf"] = "/home/armin/.dotfiles",
+          -- ["data"] = "/home/my_username/.local/share",
+          -- ["project"] = "/home/my_username/projects",
+          -- ["wiki"] = "/home/my_username/wiki",
+        },
+      },
+      project = {
+        base_dirs = {
+          "~/Workspace",
+          "~/tempy",
+          "~/.dotfiles",
+        },
+        hidden_files = true, -- default: false
+        -- theme = "dropdown",
+      },
     },
     file_previewer = previewers.vim_buffer_cat.new,
     grep_previewer = previewers.vim_buffer_vimgrep.new,
@@ -99,8 +117,17 @@ function M.config()
   })
   telescope.load_extension("fzf")
   telescope.load_extension("yank_history")
-  telescope.load_extension("lazygit")
+  telescope.load_extension("project")
+  telescope.load_extension("node_modules")
+  telescope.load_extension("heading")
+  telescope.load_extension("conventional_commits")
+  telescope.load_extension("luasnip")
+  telescope.load_extension("changes")
+  -- no shortcuts yet
   telescope.load_extension("notify")
+  telescope.load_extension("packer")
+  telescope.load_extension("lazygit")
+  telescope.load_extension("env")
 end
 
 return M

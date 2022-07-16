@@ -325,7 +325,13 @@ function M.zk()
     },
     {
       "<leader>zi",
-      ":lua require('zk.commands').get('ZkNewFromTitleSelection')({ extra = { branch = vim.fn.input('Branch: ') }, group = 'issues', dir = 'issues' })<CR>",
+      function()
+        require("zk.commands").get("ZkNewFromTitleSelection")({
+          extra = { branch = vim.fn.input("Branch: ") },
+          group = "issues",
+          dir = "issues",
+        })
+      end,
       description = "zk, new issue",
       mode = { "v" },
       opts,
@@ -388,13 +394,13 @@ function M.lspsaga()
       mode = { "v" },
       opts,
     },
-    {
-      "<space>f",
-      ":Lspsaga lsp_finder<CR>",
-      description = "LSP, find usage of cursor symbol",
-      mode = { "n" },
-      opts,
-    },
+    -- {
+    -- "<space>f",
+    -- ":Lspsaga lsp_finder<CR>",
+    -- description = "LSP, find usage of cursor symbol",
+    -- mode = { "n" },
+    -- opts,
+    -- },
     {
       "<space>s",
       ":Lspsaga signature_help<CR>",
@@ -479,12 +485,84 @@ function M.telescope()
     },
     { "<C-D>", telescope_builtins.git_commits, mode = { "n" }, description = "Fuzzy search git commits", opts },
     {
+      "<C-U>",
+      telescope_builtins.git_status,
+      mode = { "n" },
+      description = "Fuzzy search git modified files",
+      opts,
+    },
+    {
       "<leader>p",
       function()
         telescope.extensions.yank_history.yank_history({})
       end,
       mode = { "n" },
-      description = "Fuzzy search yank history",
+      description = "Fuzzy git_status yank history",
+      opts,
+    },
+    {
+      "<leader>..",
+      telescope.extensions.frecency.frecency,
+      mode = { "n" },
+      description = "Fuzzy search frecency files",
+      opts,
+    },
+    {
+      "<leader>.,",
+      telescope_builtins.resume,
+      mode = { "n" },
+      description = "Fuzzy search, resume last search",
+      opts,
+    },
+    {
+      "<leader>.m",
+      telescope.extensions.changes.changes,
+      mode = { "n" },
+      description = "Fuzzy Search Conventional Commit",
+      opts,
+    },
+    {
+      "<leader>.c",
+      telescope.extensions.conventional_commits.conventional_commits,
+      mode = { "n" },
+      description = "Fuzzy Search Conventional Commit",
+      opts,
+    },
+    {
+      "<leader>.h",
+      telescope.extensions.heading.heading,
+      mode = { "n" },
+      description = "Fuzzy search headings",
+      opts,
+    },
+    {
+      "<leader>.n",
+      telescope.extensions.node_modules.list,
+      mode = { "n" },
+      description = "Fuzzy search installed node modules",
+      opts,
+    },
+    {
+      "<leader>.s",
+      telescope.extensions.luasnip.luasnip,
+      mode = { "n" },
+      description = "Fuzzy search emojis and symbols",
+      opts,
+    },
+    {
+      "<leader>.e",
+      telescope_builtins.symbols,
+      mode = { "n" },
+      description = "Fuzzy search emojis and symbols",
+      opts,
+    },
+    {
+      "<leader>.p",
+      function()
+        require("telescope").extensions.project.project({})
+      end,
+      mode = { "n" },
+      description = "Fuzzy search projects",
       opts,
     },
     -- {
@@ -513,13 +591,6 @@ function M.fzf()
       "<ESC>:FzfLua lines<CR>",
       mode = { "n" },
       description = "Fuzzy search lines of open buffers",
-      opts,
-    },
-    {
-      "<C-U>",
-      "<ESC>:FzfLua git_status<CR>",
-      mode = { "n" },
-      description = "Fuzzy search git modified files",
       opts,
     },
     {
