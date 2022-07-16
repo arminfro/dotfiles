@@ -186,8 +186,6 @@ bindsym $con+$alt+$mod+s exec --no-startup-id systemctl poweroff
 bindsym $con+$alt+y exec --no-startup-id ~/.dotfiles/bin/keyboard-layout --de=true
 bindsym $con+$alt+u exec --no-startup-id ~/.dotfiles/bin/keyboard-layout --us=true
 
-bindsym $con+$alt+$mod+s exec --no-startup-id systemctl poweroff
-
 bindsym $con+$alt+$mod+l exec --no-startup-id --no-startup-id ~/.dotfiles/bin/lock
 
 bindsym --release $con+$alt+m exec --no-startup-id xset dpms force off
