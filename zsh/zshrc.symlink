@@ -1,9 +1,9 @@
 # vi: ft=zsh
 
-if [[ ! -f $HOME/.zplug/init.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing Initiative Plugin Manager (%F{33}github.com/zplug/zplug%F{220})…%f"
-    command mkdir -p "$HOME/.zplug"
-    command git clone https://github.com/zplug/zplug "$HOME/.zplug" && \
+if [[ ! -f $HOME/.zgenom/zgenom.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing Initiative Plugin Manager (%F{33}github.com/jandamm/zgenom%F{220})…%f"
+    command mkdir -p "$HOME/.zgenom"
+    command git clone https://github.com/jandamm/zgenom.git "$HOME/.zgenom" && \
         print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
         print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
@@ -11,12 +11,12 @@ fi
 # If not running interactively → don't do anything
 # [[ $- != *i* ]] && return
 
-# shortcut to this dotfiles path is $ZSH
-export ZSH=$HOME/.dotfiles
+# shortcut to this dotfiles path is $DOTFILES
+export DOTFILES=$HOME/.dotfiles
 
 # all of our zsh files
 typeset -U config_files
-config_files=($ZSH/**/*.zsh)
+config_files=($DOTFILES/**/*.zsh)
 
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}; do

@@ -4,7 +4,7 @@
 [hub]
         protocol = https
 [alias]
-        rank-contributors = !$ZSH/bin/git-rank-contributors
+        rank-contributors = !$DOTFILES/bin/git-rank-contributors
         count             = !git shortlog -sn
         mylog             = log --pretty=format:'%h %ad %Cgreen %s %Creset  [%an]' --graph --date = short
         st                = status
