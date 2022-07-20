@@ -13,121 +13,125 @@ export SPACESHIP_PACKAGE_COLOR="161"
 
 export SPACESHIP_VI_MODE_NORMAL="[]"
 export SPACESHIP_VI_MODE_INSERT="[]"
-#        
 
-# zplug
-source ~/.zplug/init.zsh
+# load zgenom
+source "${HOME}/.zgenom/zgenom.zsh"
 
-# zplug manages itself
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+if_exist() {
+    if hash $1 &>/dev/null; then
+        return 0 # true
+    else
+        return 1 # false
+    fi
+}
 
-# ctrl-p, ctrl-n to cycle through history stack
-# see more keybindings: https://github.com/jeffreytse/zsh-vi-mode#-usage
-zplug "jeffreytse/zsh-vi-mode"
+compinit
 
-# NOTE: fzf-tab needs to be loaded after compinit, but before plugins which will wrap widgets, such as zsh-autosuggestions or fast-syntax-highlighting!!
-zplug "Aloxaf/fzf-tab", defer:2, if:"[ -x $(which fzf 2> /dev/null) ]"
+# if the init script doesn't exist
+if ! zgenom saved; then
+  echo "Creating a zgenom save"
 
-# aliases
-zplug "plugins/common-aliases", from:oh-my-zsh
-zplug "plugins/copyfile", from:oh-my-zsh
-zplug "plugins/copypath", from:oh-my-zsh
-zplug "katrinleinweber/oh-my-zsh-youtube-dl-aliases", at:main, if:"[ -x $(which youtube-dl 2> /dev/null) ]"
-zplug "akarzim/zsh-docker-aliases", if:"[ -x $(which docker 2> /dev/null) ]"
-zplug "zpm-zsh/ls"
-zplug "plugins/git", from:oh-my-zsh, if:"[ -x $(which git 2> /dev/null) ]"
-zplug "plugins/archlinux", from:oh-my-zsh, if:"[ -x $(which pacman 2> /dev/null) ]"
-zplug "plugins/systemd", from:oh-my-zsh #, if:"[ -x $(which systemctl 2> /dev/null)]" # somehow this evaluates to false ?
-zplug "plugins/bundler", from:oh-my-zsh, if:"[ -x $(which bundler 2> /dev/null) ]"
-# zplug "plugins/deno", from:oh-my-zsh, if:"[ -x $(which deno 2> /dev/null) ]"
-zplug "plugins/firewalld", from:oh-my-zsh, if:"[ -x $(which firewall-cmd 2> /dev/null)]"
-zplug "plugins/fd", from:oh-my-zsh, if:"[ -x $(which fd 2> /dev/null) ]"
-zplug "plugins/isodate", from:oh-my-zsh
-zplug "plugins/rsync", from:oh-my-zsh, if:"[ -x $(which rsync 2> /dev/null) ]"
-zplug "plugins/vscode", from:oh-my-zsh, if:"[ -x $(which code 2> /dev/null) ]"
-zplug "plugins/yum", from:oh-my-zsh, if:"[ -x $(which yum 2> /dev/null) ]"
-zplug "plugins/dnf", from:oh-my-zsh, if:"[ -x $(which dnf 2> /dev/null) ]"
+  # ctrl-p, ctrl-n to cycle through history stack
+  # see more keybindings: https://github.com/jeffreytse/zsh-vi-mode#-usage
+  zgenom load jeffreytse/zsh-vi-mode
 
-# completions
-zplug "zsh-users/zsh-autosuggestions"
-zplug "srijanshetty/zsh-pandoc-completion", if:"[ -x $(which pandoc 2> /dev/null) ]"
-zplug "MenkeTechnologies/zsh-cargo-completion", if:"[ -x $(which cargo 2> /dev/null) ]"
-zplug "zpm-zsh/ssh", if:"[ -x $(which ssh 2> /dev/null) ]" # completion for ssh hostnames
-zplug "unixorn/rake-completion.zshplugin", if:"[ -x $(which rake 2> /dev/null) ]"
-zplug "plugins/gem", from:oh-my-zsh, if:"[ -x $(which gem 2> /dev/null) ]"
-zplug "plugins/ruby", from:oh-my-zsh, if:"[ -x $(which ruby 2> /dev/null) ]"
-zplug "plugins/rails", from:oh-my-zsh, if:"[ -x $(which rails 2> /dev/null) ]"
-zplug "plugins/docker", from:oh-my-zsh, if:"[ -x $(which docker 2> /dev/null) ]"
-zplug "plugins/docker-compose", from:oh-my-zsh, if:"[ -x $(which docker-compose 2> /dev/null) ]"
-zplug "plugins/rust", from:oh-my-zsh, if:"[ -x $(which rust 2> /dev/null) ]"
-zplug "plugins/ripgrep", from:oh-my-zsh, if:"[ -x $(which rg 2> /dev/null) ]"
-zplug "plugins/yarn", from:oh-my-zsh, if:"[ -x $(which yarn 2> /dev/null) ]"
-zplug "plugins/npm", from:oh-my-zsh, , if:"[ -x $(which npm 2> /dev/null) ]"
-zplug "plugins/ufw", from:oh-my-zsh, , if:"[ -x $(which ufw 2> /dev/null) ]"
-# errors: git-fzf:19: command not found: _status
-# zplug "alexiszamanidis/zsh-git-fzf", if:"[ -x $(which fzf 2> /dev/null) ]"
+  # aliases
+  zgenom ohmyzsh plugins/common-aliases
+  zgenom ohmyzsh plugins/copyfile
+  zgenom ohmyzsh plugins/copypath
+  zgenom ohmyzsh plugins/isodate
+  zgenom load zpm-zsh/ls
+  if_exist systemctl  && zgenom ohmyzsh plugins/systemd
+  if_exist bundler && zgenom ohmyzsh plugins/bundler
+  if_exist deno  && zgenom ohmyzsh zplug plugins/deno
+  if_exist firewall-cmd && zgenom ohmyzsh plugins/firewalld
+  if_exist fd && zgenom ohmyzsh plugins/fd
+  if_exist rsync && zgenom ohmyzsh plugins/rsync
+  if_exist code && zgenom ohmyzsh plugins/vscode
+  if_exist yum && zgenom ohmyzsh plugins/yum
+  if_exist dnf && zgenom ohmyzsh plugins/dnf
+  if_exist git && zgenom ohmyzsh plugins/git
+  if_exist pacman && zgenom ohmyzsh plugins/archlinux
+  if_exist youtube-dl && zgenom load katrinleinweber/oh-my-zsh-youtube-dl-aliases
+  if_exist docker && zgenom load akarzim/zsh-docker-aliases
 
-# utility
-# new shells will have PWD set to last openend
-zplug "andreaconti/auto-cd", at:main
-zplug "olets/zsh-window-title", at:main
-zplug "zdharma-continuum/fast-syntax-highlighting"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "chrissicool/zsh-256color"
-zplug "MichaelAquilina/zsh-you-should-use"
-zplug "hlissner/zsh-autopair"
-zplug "zpm-zsh/colors"
-zplug "plugins/zsh-colored-man-pages", from:oh-my-zsh
-zplug "plugins/fancy-ctrl-z", from:oh-my-zsh
-zplug "spaceship-prompt/spaceship-prompt", use:spaceship.zsh, as:theme
-zplug "brymck/print-alias"
-zplug "marzocchi/zsh-notify"
-zplug "changyuheng/fz", defer:1, on:"skywind3000/z.lua"
-FZ_HISTORY_CD_CMD=_zlua
-# adds more vim motions to the built-in
-zplug "zsh-vi-more/vi-motions"
-# supports vim with line number command, e.g.: package.json:12
-zplug "nviennot/zsh-vim-plugin"
-# runs ls and git status after chpwd, compatible with exa
-zplug "binury/smart-cd"
-# double tab escape to prefix command with sudo
-zplug "plugins/sudo", from:oh-my-zsh
-# preventing any code from actually running while pasting
-zplug "plugins/safe-paste", from:oh-my-zsh
-# rm commands deletes into trash directory
-zplug "mattmc3/zsh-safe-rm"
-# filter commands for sensitive information before storing in history
-zplug "jgogstad/passwordless-history"
-# tracks metadata to zsh history
-# integration with zsh-autosuggestions not working as I wish, that's why HISTFILE is still defined
-zplug "larkery/zsh-histdb"
-# jira wrapper
-zplug "unixorn/jira-commands", at:main
+  # completions
+  zgenom load zsh-users/zsh-autosuggestions
+  if_exist pandoc && zgenom load srijanshetty/zsh-pandoc-completion
+  # if_exist rustc && zgenom ohmyzsh plugins/rustup
+  # if_exist cargo && zgenom ohmyzsh plugins/cargo
+  # if_exist cargo && zgenom load MenkeTechnologies/zsh-cargo-completion
+  # if_exist rustc && zgenom ohmyzsh plugins/rust
+  if_exist ssh && zgenom load zpm-zsh/ssh
+  if_exist rake && zgenom load unixorn/rake-completion.zshplugin
+  if_exist gem && zgenom ohmyzsh plugins/gem
+  if_exist ruby && zgenom ohmyzsh plugins/ruby
+  if_exist rails && zgenom ohmyzsh plugins/rails
+  if_exist docker && zgenom ohmyzsh plugins/docker
+  if_exist docker-compose && zgenom ohmyzsh plugins/docker-compose
+  if_exist rg && zgenom ohmyzsh plugins/ripgrep
+  if_exist yarn && zgenom ohmyzsh plugins/yarn
+  if_exist npm && zgenom ohmyzsh plugins/npm
+  if_exist ufw && zgenom ohmyzsh plugins/ufw
+  # errors: git-fzf:19: command not found: _status
+  # zplug "alexiszamanidis/zsh-git-fzf", if:"[ -x $(which fzf 2> /dev/null) ]"
 
-# commands
-zplug "skywind3000/z.lua"
-zplug "arzzen/calc.plugin.zsh"
-zplug "LucasLarson/gunstage", as:command, use:"bin/git-unstage", rename-to:gunstage, at:main, if:"[ -x $(which git 2> /dev/null) ]"
-zplug "plugins/genpass", from:oh-my-zsh
-zplug "plugins/urltools", from:oh-my-zsh
-zplug "plugins/extract", from:oh-my-zsh
-# generate .gitignore with templates from gitignore.io offline
-zplug "plugins/gitignore", from:oh-my-zsh, if:"[ -x $(which git 2> /dev/null) ]"
+  # utility
+  zgenom load spaceship-prompt/spaceship-prompt
+  if_exist fzf && zgenom load Aloxaf/fzf-tab
+  zgenom ohmyzsh plugins/fancy-ctrl-z
+  # double tab escape to prefix command with sudo
+  zgenom ohmyzsh plugins/sudo
+  # preventing any code from actually running while pasting
+  zgenom ohmyzsh plugins/safe-paste
+  # new shells will have PWD set to last openend
+  zgenom load andreaconti/auto-cd
+  zgenom load olets/zsh-window-title
+  zgenom load zdharma-continuum/fast-syntax-highlighting
+  zgenom load zsh-users/zsh-history-substring-search
+  zgenom load chrissicool/zsh-256color
+  zgenom load MichaelAquilina/zsh-you-should-use
+  zgenom load hlissner/zsh-autopair
+  zgenom load zpm-zsh/colors
+  zgenom load brymck/print-alias
+  # zgenom load marzocchi/zsh-notify todo, failed to load
+  zgenom load changyuheng/fz; FZ_HISTORY_CD_CMD=_zlua
+  # adds more vim motions to the built-in
+  zgenom load zsh-vi-more/vi-motions
+  # supports vim with line number command, e.g.: package.json:12
+  zgenom load nviennot/zsh-vim-plugin
+  # runs ls and git status after chpwd, compatible with exa
+  zgenom load binury/smart-cd
+  # rm commands deletes into trash directory
+  zgenom load mattmc3/zsh-safe-rm
+  # filter commands for sensitive information before storing in history
+  zgenom load jgogstad/passwordless-history
+  # tracks metadata to zsh history
+  # integration with zsh-autosuggestions not working as I wish, that's why HISTFILE is still defined
+  zgenom load larkery/zsh-histdb
+  # jira wrapper
+  zgenom load unixorn/jira-commands
 
-# # ctrl-o to copy current command before <CR>
-# zplug "plugins/copybuffer", from:oh-my-zsh
-# zplug "zdharma-continuum/history-search-multi-word"
-# zplug "plugins/web-search", from:oh-my-zsh
-# zplug "knu/zsh-manydots-magic", lazy:false
-# zplug "plugins/copyfile", from:oh-my-zsh #, as:command, use:"copyfile.plugin.zsh", rename-to:copyfile
+  # commands
+  # zgenom load knu/zsh-manydots-magic # todo
+  zgenom load skywind3000/z.lua
+  zgenom load arzzen/calc.plugin.zsh
+  if_exist git && zgenom load LucasLarson/gunstage # git unstage command
+  zgenom ohmyzsh plugins/genpass
+  zgenom ohmyzsh plugins/urltools
+  zgenom ohmyzsh plugins/extract
+  # generate .gitignore with templates from gitignore.io offline
+  if_exist git && zgenom ohmyzsh plugins/gitignore
 
-# Install plugins if there are plugins that have not been installed
-if ! zplug check; then
-    zplug install;
+  # # ctrl-o to copy current command before <CR>
+  # zplug "plugins/copybuffer", from:oh-my-zsh
+  # zplug "zdharma-continuum/history-search-multi-word"
+  # zplug "plugins/web-search", from:oh-my-zsh
+  # zplug "plugins/copyfile", from:oh-my-zsh #, as:command, use:"copyfile.plugin.zsh", rename-to:copyfile
+
+  # generate the init script from plugins above
+  zgenom save
 fi
-
-# source plugins and add commands to $PATH
-zplug load
 
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 
