@@ -351,6 +351,7 @@ packer.startup({
         "nvim-telescope/telescope-packer.nvim",
         "benfowler/telescope-luasnip.nvim",
         "LinArcX/telescope-changes.nvim",
+        "olimorris/persisted.nvim",
         -- "folke/trouble.nvim",
       },
       config = function()
@@ -363,6 +364,24 @@ packer.startup({
       "nvim-telescope/telescope-fzf-native.nvim",
       requires = { "nvim-telescope/telescope.nvim" },
       run = "make",
+    })
+
+    -- gives yank history
+    use({
+      "gbprod/yanky.nvim",
+      config = function()
+        require("yanky").setup()
+        require("plugins.legendary").yanky()
+      end,
+    })
+
+    use({
+      "olimorris/persisted.nvim",
+      config = function()
+        require("persisted").setup({
+          use_git_branch = true,
+        })
+      end,
     })
 
     -- use({
@@ -756,16 +775,6 @@ packer.startup({
       "kepbod/quick-scope",
       config = function()
         vim.g.qs_highlight_on_keys = { "f", "F", "t", "T" }
-      end,
-    })
-
-    -- gives yank history
-    use({
-      "gbprod/yanky.nvim",
-      before = "nvim-telescope/telescope.nvim",
-      config = function()
-        require("yanky").setup()
-        require("plugins.legendary").yanky()
       end,
     })
 
