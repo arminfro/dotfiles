@@ -474,7 +474,7 @@ function M.telescope()
     { "<F2>", telescope_builtins.builtin, mode = { "n", "v" }, description = "Fuzzy searches", opts },
     { "<F12>", telescope_builtins.help_tags, mode = { "n" }, description = "Fuzzy search helptags", opts },
     { "<C-O>", telescope_builtins.commands, mode = { "n" }, description = "Fuzzy search command", opts },
-    { "<C-A>", telescope_builtins.grep_string, mode = { "n" }, description = "Fuzzy search word", opts },
+    { "<C-A>", telescope_builtins.live_grep, mode = { "n" }, description = "Fuzzy search word", opts },
     { "<C-N>", telescope_builtins.buffers, mode = { "n" }, description = "Fuzzy search buffer", opts },
     {
       "<C-P>",

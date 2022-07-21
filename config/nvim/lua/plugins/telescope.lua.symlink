@@ -42,12 +42,12 @@ function M.config()
         "rg",
         "--color=never",
         "--no-heading",
-        "--with-filename",
+        -- "--with-filename",
         "--line-number",
         "--column",
         "--smart-case",
         "--hidden",
-        "--glob=!.git/",
+        "--glob=!{.git,node_modules,vendor,lib,package-lock.json,yarn.lock}",
       },
       mappings = {
         i = {
