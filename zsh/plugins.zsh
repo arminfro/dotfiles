@@ -65,8 +65,8 @@ if ! zgenom saved; then
   if_exist ssh && zgenom load zpm-zsh/ssh
   if_exist rake && zgenom load unixorn/rake-completion.zshplugin
   if_exist gem && zgenom ohmyzsh plugins/gem
-  if_exist ruby && zgenom ohmyzsh plugins/ruby
-  if_exist rails && zgenom ohmyzsh plugins/rails
+  if_exist ruby && genome ohmyzsh plugins/ruby
+  # if_exist rails && zgenom ohmyzsh plugins/rails
   if_exist docker && zgenom ohmyzsh plugins/docker
   if_exist docker-compose && zgenom ohmyzsh plugins/docker-compose
   if_exist rg && zgenom ohmyzsh plugins/ripgrep
@@ -78,7 +78,7 @@ if ! zgenom saved; then
 
   # utility
   zgenom load spaceship-prompt/spaceship-prompt
-  if_exist fzf && zgenom load Aloxaf/fzf-tab
+  zgenom load Aloxaf/fzf-tab # todo, does not seem to work: if_exist fzf && ...
   zgenom ohmyzsh plugins/fancy-ctrl-z
   # double tab escape to prefix command with sudo
   zgenom ohmyzsh plugins/sudo
@@ -113,7 +113,7 @@ if ! zgenom saved; then
   zgenom load unixorn/jira-commands
 
   # commands
-  # zgenom load knu/zsh-manydots-magic # todo
+  zgenom load knu/zsh-manydots-magic; autoload -Uz manydots-magic; manydots-magic
   zgenom load skywind3000/z.lua
   zgenom load arzzen/calc.plugin.zsh
   if_exist git && zgenom load LucasLarson/gunstage # git unstage command

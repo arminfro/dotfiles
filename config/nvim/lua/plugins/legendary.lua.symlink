@@ -474,7 +474,7 @@ function M.telescope()
     { "<F2>", telescope_builtins.builtin, mode = { "n", "v" }, description = "Fuzzy searches", opts },
     { "<F12>", telescope_builtins.help_tags, mode = { "n" }, description = "Fuzzy search helptags", opts },
     { "<C-O>", telescope_builtins.commands, mode = { "n" }, description = "Fuzzy search command", opts },
-    { "<C-A>", telescope_builtins.live_grep, mode = { "n" }, description = "Fuzzy search word", opts },
+    { "<C-A>", telescope_builtins.grep_string, mode = { "n" }, description = "Fuzzy search word", opts },
     { "<C-N>", telescope_builtins.buffers, mode = { "n" }, description = "Fuzzy search buffer", opts },
     {
       "<C-P>",
@@ -489,6 +489,13 @@ function M.telescope()
       telescope_builtins.git_status,
       mode = { "n" },
       description = "Fuzzy search git modified files",
+      opts,
+    },
+    {
+      "<C-X>",
+      telescope_builtins.lsp_dynamic_workspace_symbols,
+      mode = { "n" },
+      description = "Fuzzy search code tags/symbols",
       opts,
     },
     {
@@ -565,6 +572,20 @@ function M.telescope()
       description = "Fuzzy search projects",
       opts,
     },
+    {
+      "<leader>.s",
+      telescope_builtins.spell_suggest,
+      mode = { "n" },
+      description = "Fuzzy search spell suggesting",
+      opts,
+    },
+    {
+      "<leader>.k",
+      telescope_builtins.keymaps,
+      mode = { "n" },
+      description = "Fuzzy search keybindings",
+      opts,
+    },
     -- {
     --   "<leader>gb",
     --   telescope_builtins.git_branches,
@@ -580,37 +601,37 @@ function M.telescope()
       mode = { "n" },
       opts,
     },
-  })
-end
-
-function M.fzf()
-  require("legendary").bind_keymaps({
-    { "<C-X>", "<ESC>:FzfLua tags<CR>", mode = { "n" }, description = "Fuzzy search code tags", opts },
-    {
-      "<C-S>",
-      "<ESC>:FzfLua lines<CR>",
-      mode = { "n" },
-      description = "Fuzzy search lines of open buffers",
-      opts,
-    },
     {
       "<space>e",
-      ":FzfLua lsp_workspace_diagnostics<CR>",
+      telescope_builtins.diagnostics,
       description = "LSP, Show all diagnostics in quickfix",
       mode = { "n" },
       opts,
     },
     {
       "<leader>gn",
-      ":FzfLua git_status<CR>",
+      telescope_builtins.git_status,
       description = "Git, see modified files, git status in fzf",
       mode = { "n" },
       opts,
     },
   })
   require("legendary").bind_commands({
-    { ":SetFileType", "<ESC>:FzfLua filetypes<CR>", description = "Set Filetype" },
+    { ":SetFileType", telescope_builtins.filetypes, description = "Set Filetype" },
   })
+end
+
+function M.fzf()
+  -- todo, look for telescope replacement
+  -- require("legendary").bind_keymaps({
+  --   {
+  --     "<C-S>",
+  --     "<ESC>:FzfLua lines<CR>",
+  --     mode = { "n" },
+  --     description = "Fuzzy search lines of open buffers",
+  --     opts,
+  --   },
+  -- })
 end
 
 function M.tabular()
