@@ -110,16 +110,6 @@ packer.startup({
       requires = "nvim-lua/plenary.nvim",
     })
 
-    -- Show commit info at current line on cursorhold
-    use({
-      "APZelos/blamer.nvim",
-      disable = not if_exe_exists("git"),
-      config = function()
-        vim.g.blamer_enabled = 1
-        vim.g.blamer_delay = 1500
-      end,
-    })
-
     -- Generate code documentation
     use({
       "danymat/neogen",
@@ -460,13 +450,12 @@ packer.startup({
         {
           -- collection of configurations for built-in language server client
           "neovim/nvim-lspconfig",
-          before = "nvim-cmp",
           config = function()
             require("plugins.lsp")
+            require("plugins.legendary").lsp()
           end,
           requires = {
-            -- "lvimuser/lsp-inlayhints.nvim",
-            -- "ray-x/lsp_signature.nvim",
+            "ray-x/lsp_signature.nvim",
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
             "shoukoo/stylua.nvim",
@@ -484,6 +473,14 @@ packer.startup({
             { "hrsh7th/cmp-nvim-lsp-document-symbol" },
             -- ctags completion
             { "quangnguyen30192/cmp-nvim-tags" },
+            {
+              "lvimuser/lsp-inlayhints.nvim",
+              event = "LspAttach",
+              commit = "0df2f61",
+              config = function()
+                require("plugins.lsp.inlayhints").config()
+              end,
+            },
             {
               "Maan2003/lsp_lines.nvim",
               config = function()
@@ -875,7 +872,18 @@ packer.startup({
       config = function()
         require("plugins.lualine").config()
       end,
-      requires = { "rebelot/kanagawa.nvim", "SmiteshP/nvim-gps" },
+      requires = {
+        "rebelot/kanagawa.nvim",
+        "SmiteshP/nvim-gps",
+        {
+          -- Show commit info at current line on cursorhold as virtual-text
+          "f-person/git-blame.nvim",
+          -- disable = not if_exe_exists("git"),
+          config = function()
+            vim.g.gitblame_display_virtual_text = 0
+          end,
+        },
+      },
     })
 
     -- Git status left of line number

@@ -14,6 +14,7 @@ function M.config()
     return
   end
 
+  local git_blame = require("gitblame")
   local kanagawa_colors = require("kanagawa.colors").setup()
 
   local colors = {
@@ -64,7 +65,9 @@ function M.config()
       lualine_c = {
         { gps.get_location, cond = gps.is_available, color = { fg = colors.blue } },
       },
-      lualine_x = {},
+      lualine_x = {
+        { git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available },
+      },
     },
     inactive_sections = {
       lualine_a = {},
@@ -137,53 +140,53 @@ function M.config()
     padding = { left = 2, right = 1 },
   })
 
-  ins_right({
-    function(msg)
-      msg = msg or "Inactive"
-      local buf_clients = vim.lsp.buf_get_clients()
-      if next(buf_clients) == nil then
-        if type(msg) == "boolean" or #msg == 0 then
-          return "Inactive"
-        end
-        return msg
-      end
-      local buf_ft = vim.bo.filetype
-      local buf_client_names = {}
+  -- ins_right({
+  --   function(msg)
+  --     msg = msg or "Inactive"
+  --     local buf_clients = vim.lsp.buf_get_clients()
+  --     if next(buf_clients) == nil then
+  --       if type(msg) == "boolean" or #msg == 0 then
+  --         return "Inactive"
+  --       end
+  --       return msg
+  --     end
+  --     local buf_ft = vim.bo.filetype
+  --     local buf_client_names = {}
 
-      for _, client in pairs(buf_clients) do
-        if client.name ~= "null-ls" then
-          table.insert(buf_client_names, client.name)
-        end
-      end
+  --     for _, client in pairs(buf_clients) do
+  --       if client.name ~= "null-ls" then
+  --         table.insert(buf_client_names, client.name)
+  --       end
+  --     end
 
-      local formatters = require("core.utils")
-      local supported_formatters = formatters.list_registered_formatters(buf_ft)
-      vim.list_extend(buf_client_names, supported_formatters)
+  --     local formatters = require("core.utils")
+  --     local supported_formatters = formatters.list_registered_formatters(buf_ft)
+  --     vim.list_extend(buf_client_names, supported_formatters)
 
-      local linters = require("core.utils")
-      local supported_linters = linters.list_registered_linters(buf_ft)
-      vim.list_extend(buf_client_names, supported_linters)
+  --     local linters = require("core.utils")
+  --     local supported_linters = linters.list_registered_linters(buf_ft)
+  --     vim.list_extend(buf_client_names, supported_linters)
 
-      return table.concat(buf_client_names, ", ")
-    end,
-    icon = " ",
-    color = { gui = "none" },
-    padding = { left = 0, right = 1 },
-    cond = conditions.hide_in_width,
-  })
+  --     return table.concat(buf_client_names, ", ")
+  --   end,
+  --   icon = " ",
+  --   color = { gui = "none" },
+  --   padding = { left = 0, right = 1 },
+  --   cond = conditions.hide_in_width,
+  -- })
 
-  ins_right({
-    function()
-      local b = vim.api.nvim_get_current_buf()
-      if next(vim.treesitter.highlighter.active[b]) then
-        return " 綠TS"
-      end
-      return ""
-    end,
-    color = { fg = colors.green },
-    padding = { left = 1, right = 0 },
-    cond = conditions.hide_in_width,
-  })
+  -- ins_right({
+  --   function()
+  --     local b = vim.api.nvim_get_current_buf()
+  --     if next(vim.treesitter.highlighter.active[b]) then
+  --       return " 綠TS"
+  --     end
+  --     return ""
+  --   end,
+  --   color = { fg = colors.green },
+  --   padding = { left = 1, right = 0 },
+  --   cond = conditions.hide_in_width,
+  -- })
 
   ins_right({
     "location",
