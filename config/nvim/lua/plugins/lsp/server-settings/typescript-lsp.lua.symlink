@@ -10,7 +10,9 @@ function M.setup()
 
   typescript.setup({
     debug = false, -- enable debug logging for commands
-    server = require("plugins.lsp.lsp-installer").server_opts,
+    server = {
+      on_attach = require("plugins.lsp.on_attach"),
+    },
   })
 end
 

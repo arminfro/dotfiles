@@ -9,6 +9,7 @@ ShellCheck
 ripgrep
 pandoc
 xclip
+cmake
 ffmpeg
 zathura
 keepassxc

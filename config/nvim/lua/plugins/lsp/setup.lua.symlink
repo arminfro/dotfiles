@@ -1,0 +1,245 @@
+-- vi: ft=lua
+
+local M = {}
+
+M.config = function()
+  local ok, lspconfig = pcall(require, "lspconfig")
+  if not ok then
+    return
+  end
+
+  local ok2, mason = pcall(require, "mason")
+  if not ok2 then
+    return
+  end
+
+  mason.setup({
+    max_concurrent_installers = 10,
+    -- log_level = vim.log.levels.TRACE,
+    ui = {
+      icons = {
+        package_installed = "",
+        package_pending = "",
+        package_uninstalled = "",
+      },
+    },
+  })
+
+  local util = require("lspconfig.util")
+  local cmp_lsp = require("cmp_nvim_lsp")
+  local on_attach = require("plugins.lsp.on_attach")
+
+  ---@param opts table|nil
+  local function create_capabilities(opts)
+    local default_opts = {
+      with_snippet_support = true,
+    }
+    opts = opts or default_opts
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = opts.with_snippet_support
+    if opts.with_snippet_support then
+      capabilities.textDocument.completion.completionItem.resolveSupport = {
+        properties = {
+          "documentation",
+          "detail",
+          "additionalTextEdits",
+        },
+      }
+    end
+    return cmp_lsp.update_capabilities(capabilities)
+  end
+
+  util.on_setup = util.add_hook_after(util.on_setup, function(config)
+    if config.on_attach then
+      config.on_attach = util.add_hook_after(config.on_attach, on_attach)
+    else
+      config.on_attach = on_attach
+    end
+    config.capabilities = create_capabilities()
+  end)
+  -- MasonInstall rust_analyzer sumneko_lua emmet-ls typescript-language-server luacheck shfmt fixjson stylua prettierd luaformatter lua-language-server tailwindcss-language-server solargraph json-lsp html-lsp eslint-lsp eslint_d dockerfile-language-server cssmodules-language-server css-lsp bash-language-server
+  local servers = {
+    "bash-language-server",
+    "css-lsp",
+    "cssmodules-language-server",
+    "dockerfile-language-server",
+    "eslint_d",
+    "eslint-lsp",
+    "html-lsp",
+    "json-lsp",
+    "solargraph",
+    "tailwindcss-language-server",
+    "lua-language-server",
+    "luaformatter",
+    "prettierd",
+    "stylua",
+    "fixjson",
+    "shfmt",
+    "luacheck",
+    "typescript-language-server",
+    -- "zk", -- download does not work
+    "emmet-ls",
+    "sumneko_lua",
+    "rust_analyzer",
+  }
+
+  local mason_lspconfig = require("mason-lspconfig")
+
+  mason_lspconfig.setup({
+    ensure_installed = servers,
+    automatic_installation = { exclude = { "rust_analyzer", "solargraph" } },
+  })
+  mason_lspconfig.setup_handlers({
+    function(server_name)
+      lspconfig[server_name].setup({})
+    end,
+    ["jsonls"] = function()
+      lspconfig.jsonls.setup({
+        settings = {
+          json = {
+            schemas = require("schemastore").json.schemas(),
+          },
+        },
+      })
+    end,
+    ["sumneko_lua"] = function()
+      lspconfig.sumneko_lua.setup(require("lua-dev").setup(require("plugins.lsp.server-settings.sumneko_lua")))
+    end,
+    ["yamlls"] = function()
+      lspconfig.yamlls.setup({
+        settings = {
+          yaml = {
+            hover = true,
+            completion = true,
+            validate = true,
+            schemas = require("schemastore").json.schemas(),
+          },
+        },
+      })
+    end,
+  })
+end
+
+-- M.server_opts = {
+--   on_attach = require("plugins.lsp.handlers").on_attach,
+--   capabilities = require("plugins.lsp.handlers").capabilities,
+-- }
+
+-- function M.config()
+--   -- P(require("plugins.lsp.server-settings"))
+--   require("mason").setup()
+--   local mason_lspconfig = require("mason-lspconfig")
+--   local lspconfig = require("lspconfig")
+
+--   -- local status_ok, lsp_installer_servers = pcall(require, "nvim-lsp-installer.servers")
+--   -- if not status_ok then
+--   --   return
+--   -- end
+
+--   local servers = {
+--     "bash-language-server",
+--     "css-lsp",
+--     "cssmodules-language-server",
+--     "dockerfile-language-server",
+--     "eslint_d",
+--     "eslint-lsp",
+--     "html-lsp",
+--     "json-lsp",
+--     "solargraph",
+--     "tailwindcss-language-server",
+--     "lua-language-server",
+--     "luaformatter",
+--     "prettierd",
+--     "stylua",
+--     "fixjson",
+--     "shfmt",
+--     "luacheck",
+--     "typescript-language-server",
+--     "zk",
+--     "emmet-ls",
+--     -- "sumneko_lua",
+--     "rust_analyzer",
+--   }
+
+--   mason_lspconfig.setup({
+--     ensure_installed = servers,
+--     automatic_installation = { exclude = { "rust_analyzer", "solargraph" } },
+
+--     mason_lspconfig.setup_handlers({
+--       function (server_name) -- default handler (optional)
+--         require("lspconfig")[server_name].setup({M.server_opts})
+--       end,
+--       -- ["emmet-ls"] = function() end,
+--       -- ["jsonls"] = function() end,
+--       -- ["rust-analyzer"] = function() end,
+--       ["eslint"] = function()
+--         local local_server_opts = require("plugins.lsp.server-settings.eslint")
+--         local opts = vim.tbl_deep_extend("force", local_server_opts, copy(M.server_opts))
+--         -- P(opts)
+--         lspconfig.eslint.setup(opts)
+--       end,
+--       -- [""] = function() end,
+--       ["sumneko_lua"] = function()
+--         local local_server_opts = require("plugins.lsp.server-settings.sumneko_lua")
+--         local opts = vim.tbl_deep_extend("force", local_server_opts, copy(M.server_opts))
+--         -- P(opts)
+--         lspconfig.eslint.setup(opts)
+--       end,
+--       --     lspconfig.sumneko_lua.setup({
+--       --       settings = {
+--       --         Lua = {
+--       --           diagnostics = {
+--       --             globals = { "vim" },
+--       --           },
+--       --         },
+--       --       },
+--       --     })
+--       --   end,
+--     }),
+--   })
+
+--   -- for _, server_name in pairs(servers) do
+--   -- local server_available, server = lsp_installer_servers.get_server(server_name)
+--   -- if server_available then
+--   --   local opts = copy(M.server_opts)
+
+--   --   if server.name == "eslint" then
+--   --     local local_server_opts = require("plugins.lsp.server-settings.eslint")
+--   --     opts = vim.tbl_deep_extend("force", local_server_opts, opts)
+--   --   end
+
+--   --   if server.name == "emmet_ls" then
+--   --     local local_server_opts = require("plugins.lsp.server-settings.emmet-ls")
+--   --     opts = vim.tbl_deep_extend("force", local_server_opts, opts)
+--   --   end
+
+--   --   if server.name == "jsonls" then
+--   --     local local_server_opts = require("plugins.lsp.server-settings.jsonls")
+--   --     opts = vim.tbl_deep_extend("force", local_server_opts, opts)
+--   --   end
+
+--   --   if server.name == "rust-analyzer" then
+--   --     local local_server_opts = require("plugins.lsp.server-settings.rust-analyser")
+--   --     opts = vim.tbl_deep_extend("force", local_server_opts, opts)
+--   --   end
+
+--   --   if server.name == "sumneko_lua" then
+--   --     local local_server_opts = require("plugins.lsp.server-settings.sumneko_lua")
+--   --     opts = vim.tbl_deep_extend("force", local_server_opts, opts)
+--   --   end
+
+--   --   if server.name == "pyright" then
+--   --     local local_server_opts = require("plugins.lsp.server-settings.pyright")
+--   --     opts = vim.tbl_deep_extend("force", local_server_opts, opts)
+--   --   end
+
+--   --   server:setup(opts)
+
+--   --   if not server:is_installed() then
+--   --     server:install()
+--   --   end
+--   -- end
+--   -- end
+-- end
+
+return M

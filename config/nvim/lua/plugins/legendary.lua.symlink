@@ -93,15 +93,9 @@ function M.gitlinker()
 end
 
 function M.fugitive()
-  require("legendary").bind_commands({
-    { ":GitResetHard", ":G reset --hard", description = "Reset Git hard" },
-  })
   require("legendary").bind_keymaps({
     { "<leader>gs", ":Git<CR>", mode = { "n" }, description = "Git status", opts },
     { "<leader>gc", ":Git commit<CR>", mode = { "n" }, description = "Git commit", opts },
-    -- { "<leader>gd", ":Gdiffsplit<CR>", mode = { "n" }, description = "Git diff", opts },
-    -- {'<leader>gb', ':GV<CR>', mode = {"n"}, description = "Git commits of current file", opts },
-    { "<leader>grhh", ":GitResetHard<CR>", mode = { "n" }, opts },
   })
 end
 
@@ -282,13 +276,6 @@ function M.lsp(bufnr)
     --   mode = { "n" },
     --   opts,
     -- },
-    {
-      "<space>t",
-      ":FzfLua lsp_live_workspace_symbols<CR>",
-      description = "LSP, Search workspace for Symbols",
-      mode = { "n" },
-      opts,
-    },
     { "<leader>F", ":Format<CR>", description = "LSP, Format document", mode = { "n" }, opts },
   })
 end
@@ -474,7 +461,15 @@ function M.telescope()
     { "<F2>", telescope_builtins.builtin, mode = { "n", "v" }, description = "Fuzzy searches", opts },
     { "<F12>", telescope_builtins.help_tags, mode = { "n" }, description = "Fuzzy search helptags", opts },
     { "<C-O>", telescope_builtins.commands, mode = { "n" }, description = "Fuzzy search command", opts },
-    { "<C-A>", telescope_builtins.grep_string, mode = { "n" }, description = "Fuzzy search word", opts },
+    {
+      "<C-A>",
+      function()
+        telescope_builtins.grep_string({ shorten_path = true, word_match = "-w", only_sort_text = true, search = "" })
+      end,
+      mode = { "n" },
+      description = "Fuzzy search word",
+      opts,
+    },
     { "<C-N>", telescope_builtins.buffers, mode = { "n" }, description = "Fuzzy search buffer", opts },
     {
       "<C-P>",
@@ -586,6 +581,13 @@ function M.telescope()
       description = "Fuzzy search keybindings",
       opts,
     },
+    {
+      "<leader>gn",
+      telescope_builtins.git_status,
+      description = "Git, see modified files, git status in fzf",
+      mode = { "n" },
+      opts,
+    },
     -- {
     --   "<leader>gb",
     --   telescope_builtins.git_branches,
@@ -609,15 +611,32 @@ function M.telescope()
       opts,
     },
     {
-      "<leader>gn",
-      telescope_builtins.git_status,
-      description = "Git, see modified files, git status in fzf",
+      "<space>t",
+      telescope_builtins.lsp_dynamic_workspace_symbols,
+      description = "LSP, Search workspace for Symbols",
       mode = { "n" },
       opts,
     },
   })
   require("legendary").bind_commands({
     { ":SetFileType", telescope_builtins.filetypes, description = "Set Filetype" },
+  })
+end
+
+function M.lsp_lines()
+  require("legendary").bind_keymaps({
+    {
+      "<F6>",
+      function()
+        require("lsp_lines").toggle()
+        local is_virtual_text = vim.diagnostic.config().virtual_text
+        vim.diagnostic.config({
+          virtual_text = not is_virtual_text,
+        })
+      end,
+      mode = "n",
+      description = "Toggle lsp_lines",
+    },
   })
 end
 
@@ -710,8 +729,8 @@ function M.config()
       description = "Change panel size to the right",
       opts,
     },
-    { "<Up>", ":resize -1<CR>", "n", mode = { "n" }, description = "Change panel size to the top", opts },
-    { "<Down>", ":resize +1<CR>", "n", mode = { "n" }, description = "Change panel size to the bottom", opts },
+    { "<C-Up>", ":resize -1<CR>", "n", mode = { "n" }, description = "Change panel size to the top", opts },
+    { "<C-Down>", ":resize +1<CR>", "n", mode = { "n" }, description = "Change panel size to the bottom", opts },
 
     -- Move selected line / block of text in visual mode
     { "K", ":move '<-2<CR>gv-gv", "x", mode = { "x" }, description = "", opts },

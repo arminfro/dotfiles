@@ -65,6 +65,7 @@ function M.config()
     },
     { name = "emoji" },
     { name = "calc" },
+    { name = "git" },
   }
 
   local writing_sources = cmp.config.sources(vim.tbl_extend("force", sources, {

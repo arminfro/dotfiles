@@ -14,6 +14,11 @@ function M.config()
   local actions = require("telescope.actions")
   -- local trouble = require("trouble.providers.telescope")
 
+  local is_win = vim.fn.has("win32") == 1
+  if not is_win then
+    require("telescope").load_extension("fzf")
+  end
+
   telescope.setup({
     defaults = {
       prompt_prefix = " ",
@@ -25,7 +30,7 @@ function M.config()
       layout_strategy = "horizontal",
       layout_config = {
         prompt_position = "top",
-        width = 0.75,
+        width = 0.95,
         preview_cutoff = 120,
         horizontal = {
           preview_width = function(_, cols, _)
@@ -58,6 +63,8 @@ function M.config()
           ["<C-n>"] = actions.cycle_history_next,
           ["<C-p>"] = actions.cycle_history_prev,
           ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+          ["<C-y"] = actions.preview_scrolling_up,
+          ["<C-e"] = actions.preview_scrolling_down,
           ["<CR>"] = actions.select_default,
         },
         n = {
@@ -65,6 +72,8 @@ function M.config()
           -- ["<C-t>"] = trouble.open_with_trouble,
           ["<C-p>"] = actions.move_selection_previous,
           ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+          ["<C-y"] = actions.preview_scrolling_up,
+          ["<C-e"] = actions.preview_scrolling_down,
         },
       },
       file_ignore_patterns = {},
@@ -85,12 +94,13 @@ function M.config()
       },
     },
     extensions = {
-      fzf = {
-        fuzzy = true, -- false will only do exact matching
-        override_generic_sorter = true, -- override the generic sorter
-        override_file_sorter = true, -- override the file sorter
-        case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+      fzf = is_win and {} or {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = "smart_case",
       },
+
       frecency = {
         ignore_patterns = { "*.git/*", "*/tmp/*" },
         workspaces = {

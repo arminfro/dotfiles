@@ -49,10 +49,9 @@ function M.config()
     incremental_selection = {
       enable = true,
       keymaps = {
-        init_selection = "gnn",
-        scope_incremental = "grn",
-        node_incremental = "grc",
-        node_decremental = "grm",
+        init_selection = "<S-Tab>", -- normal mode
+        node_incremental = "<Tab>", -- visual mode
+        node_decremental = "<S-Tab>", -- visual mode
       },
     },
     context_commentstring = {

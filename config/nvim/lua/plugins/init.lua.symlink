@@ -400,7 +400,7 @@ packer.startup({
     -- Completion engine
     use({
       "hrsh7th/nvim-cmp",
-      event = "BufRead",
+      -- event = "BufRead",
       config = function()
         require("plugins.cmp").config()
       end,
@@ -440,6 +440,7 @@ packer.startup({
         { "hrsh7th/cmp-nvim-lua" },
         -- better sort completion items that start with one or more underlines
         { "lukas-reineke/cmp-rg" },
+        { "petertriho/cmp-git" },
         { "lukas-reineke/cmp-under-comparator" },
         {
           "uga-rosa/cmp-dictionary",
@@ -464,30 +465,35 @@ packer.startup({
             require("plugins.lsp")
           end,
           requires = {
+            -- "lvimuser/lsp-inlayhints.nvim",
+            -- "ray-x/lsp_signature.nvim",
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
+            "shoukoo/stylua.nvim",
             -- json,yml, schema definition
-            { "b0o/schemastore.nvim", before = "nvim-lspconfig" },
-            -- installer for many lsp
-            {
-              "williamboman/nvim-lsp-installer",
-              before = "nvim-lspconfig",
-              requires = { "shoukoo/stylua.nvim" },
-            },
+            { "b0o/schemastore.nvim" },
             -- nvim lua api type_definition
-            { "folke/lua-dev.nvim", before = "nvim-lspconfig" }, -- lua vim api completion
+            { "folke/lua-dev.nvim" }, -- lua vim api completion
             -- completion plugin for lsp
-            { "hrsh7th/cmp-nvim-lsp", before = "nvim-lspconfig" },
+            { "hrsh7th/cmp-nvim-lsp" },
             -- Inlay Hints for rust-analyzer
-            { "nvim-lua/lsp_extensions.nvim", before = "nvim-lspconfig" },
+            { "nvim-lua/lsp_extensions.nvim" },
             -- Show function signature when you type
-            { "hrsh7th/cmp-nvim-lsp-signature-help", before = "nvim-lspconfig" },
+            { "hrsh7th/cmp-nvim-lsp-signature-help" },
             -- / search completed by nvim-cmp
-            { "hrsh7th/cmp-nvim-lsp-document-symbol", before = "nvim-lspconfig" },
+            { "hrsh7th/cmp-nvim-lsp-document-symbol" },
             -- ctags completion
-            { "quangnguyen30192/cmp-nvim-tags", before = "nvim-lspconfig" },
+            { "quangnguyen30192/cmp-nvim-tags" },
+            {
+              "Maan2003/lsp_lines.nvim",
+              config = function()
+                require("plugins.lsp-line").config()
+                require("plugins.legendary").lsp_lines()
+              end,
+            },
             {
               -- typescript lsp utilities
               "jose-elias-alvarez/typescript.nvim",
-              before = "fzf-lua", -- otherwise FzfLua buffers won't work
               config = function()
                 require("plugins.lsp.server-settings.typescript-lsp").setup()
                 require("plugins.legendary").typescript_lsp()
@@ -511,7 +517,6 @@ packer.startup({
             {
               "mickael-menu/zk-nvim",
               disable = not if_exe_exists("zk"),
-              after = "nvim-lspconfig",
               config = function()
                 require("plugins.zk").config()
                 require("plugins.legendary").zk()
@@ -726,7 +731,7 @@ packer.startup({
     -- Syntax highlighting
     use({
       "nvim-treesitter/nvim-treesitter",
-      event = "BufRead",
+      -- event = "BufRead",
       run = ":TSUpdate",
       config = function()
         require("plugins.treesitter").config()
@@ -818,14 +823,19 @@ packer.startup({
     })
 
     -- standalone UI for nvim-lsp progress, currently issue with buffers
-    -- use({
-    --   "j-hui/fidget.nvim",
-    --   after = "kanagawa.nvim",
-    --   -- requires = { "nvim-treesitter/nvim-treesitter" },
-    --   config = function()
-    --     require("fidget").setup({})
-    --   end,
-    -- })
+    use({
+      "j-hui/fidget.nvim",
+      after = "kanagawa.nvim",
+      -- requires = { "nvim-treesitter/nvim-treesitter" },
+      config = function()
+        require("fidget").setup({
+          window = {
+            relative = "editor",
+            blend = 10,
+          },
+        })
+      end,
+    })
 
     -- highlights function arguments usage same as argument itself
     use({

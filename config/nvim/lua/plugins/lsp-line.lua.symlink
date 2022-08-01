@@ -1,0 +1,29 @@
+-- vi: ft=lua
+
+local M = {}
+
+function M.config()
+  local lsp_lines = require("lsp_lines")
+  lsp_lines.setup()
+
+  -- Default config
+  vim.diagnostic.config({
+    virtual_lines = false,
+    signs = false,
+    float = {
+      header = false,
+      source = "always",
+    },
+  })
+
+  -- todo, mv to legendary
+  vim.keymap.set("n", "<F6>", function()
+    lsp_lines.toggle()
+    local is_virtual_text = vim.diagnostic.config().virtual_text
+    vim.diagnostic.config({
+      virtual_text = not is_virtual_text,
+    })
+  end, { desc = "Toggle lsp_lines" })
+end
+
+return M
