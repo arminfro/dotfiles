@@ -18,6 +18,8 @@ packer.startup({
       "wbthomason/packer.nvim",
     })
 
+
+
     -- Managemant tool for keybindings and commands
     use({
       "mrjones2014/legendary.nvim",
@@ -42,15 +44,6 @@ packer.startup({
       end,
     })
 
-    -- Code Snippet Runner
-    use({
-      "michaelb/sniprun",
-      run = "bash install.sh",
-      config = function()
-        require("sniprun").setup({})
-      end,
-    })
-
     -- Lua functions
     use({
       "nvim-lua/plenary.nvim",
@@ -62,11 +55,9 @@ packer.startup({
     })
 
     -- Boost startup time
+    -- todo, set filetype on .symlink ending
     use({
       "nathom/filetype.nvim",
-      config = function()
-        vim.g.did_load_filetypes = 1
-      end,
     })
 
     -- Cursorhold fix
@@ -87,11 +78,12 @@ packer.startup({
     })
 
     -- sane config defaults
-    use("tpope/vim-sensible")
+    -- use("tpope/vim-sensible")
 
     -- Focus on code in floating window
     use({
       "hoschi/yode-nvim",
+      event = 'BufEnter',
       config = function()
         require("yode-nvim").setup({})
         require("plugins.legendary").yode()
@@ -102,7 +94,8 @@ packer.startup({
     -- see :h diffview-config for default keybindings
     use({
       "sindrets/diffview.nvim",
-      event = "BufRead",
+      -- event = "BufRead",
+      cmd = 'DiffviewOpen',
       disable = not if_exe_exists("git"),
       config = function()
         require("plugins.legendary").diffview()
@@ -122,16 +115,25 @@ packer.startup({
       end,
     })
 
-    -- mini plugin with different functions
+    -- -- mini plugin with different functions
+    -- use({
+    --   "echasnovski/mini.nvim",
+    --   config = function()
+    --     local indentscope = require("mini.indentscope")
+    --     indentscope.setup({
+    --       ---@diagnostic disable-next-line: missing-parameter -- it's optional
+    --       draw = { animation = indentscope.gen_animation("none") },
+    --       symbol = "¦",
+    --     })
+    --   end,
+    -- })
+
+    -- shows thin vertical lines for indentation
     use({
-      "echasnovski/mini.nvim",
+      "Yggdroot/indentLine",
+      event = "BufRead",
       config = function()
-        local indentscope = require("mini.indentscope")
-        indentscope.setup({
-          ---@diagnostic disable-next-line: missing-parameter -- it's optional
-          draw = { animation = indentscope.gen_animation("none") },
-          symbol = "¦",
-        })
+        vim.g.indentLine_color_term = 240
       end,
     })
 
@@ -139,6 +141,7 @@ packer.startup({
     use({
       "ruifm/gitlinker.nvim",
       disable = not if_exe_exists("git"),
+      event = "BufEnter",
       requires = "nvim-lua/plenary.nvim",
       config = function()
         require("gitlinker").setup({})
@@ -153,7 +156,7 @@ packer.startup({
         require("satellite").setup()
         vim.api.nvim_set_hl(0, "ScrollView", { bg = require("kanagawa.colors").setup().dragonBlue })
       end,
-      requires = "kanagawa.nvim",
+      requires = "rebelot/kanagawa.nvim",
     })
 
     -- reasonable defaults for most search-related vim features
@@ -179,12 +182,6 @@ packer.startup({
     --   end,
     -- })
 
-    -- more details on code actions
-    use({
-      "weilbith/nvim-code-action-menu",
-      cmd = "CodeActionMenu",
-    })
-
     -- lazygit vim frontend
     use({
       "kdheepak/lazygit.nvim",
@@ -195,22 +192,22 @@ packer.startup({
     })
 
     -- register interaction, opens with ""
-    use("gennaro-tedesco/nvim-peekup")
+    -- use({"gennaro-tedesco/nvim-peekup", event ="BufEnter"})
 
     -- collection of language packs
-    use("sheerun/vim-polyglot")
+    use({"sheerun/vim-polyglot", event = "BufEnter"})
 
     -- Search for what's visualized, by *
-    use("nelstrom/vim-visual-star-search")
+    use({"nelstrom/vim-visual-star-search", event = "BufEnter"})
 
     -- Look up bindings of keys
-    use({
-      "AckslD/nvim-whichkey-setup.lua",
-      requires = { "liuchengxu/vim-which-key" },
-      config = function()
-        require("plugins.legendary").which_key()
-      end,
-    })
+    -- use({
+    --   "AckslD/nvim-whichkey-setup.lua",
+    --   requires = { "liuchengxu/vim-which-key" },
+    --   config = function()
+    --     require("plugins.legendary").which_key()
+    --   end,
+    -- })
 
     -- Look at urls in document, also list plugin links
     use({
@@ -319,11 +316,11 @@ packer.startup({
       end,
     })
 
-    use({
-      "skywind3000/asynctasks.vim",
-      requires = "skywind3000/asyncrun.vim",
-      -- config = function() end,
-    })
+    -- use({
+    --   "skywind3000/asynctasks.vim",
+    --   requires = "skywind3000/asyncrun.vim",
+    --   -- config = function() end,
+    -- })
 
     use({
       "nvim-telescope/telescope.nvim",
@@ -618,7 +615,7 @@ packer.startup({
     })
 
     -- sugar for the UNIX shell commands
-    use("tpope/vim-eunuch")
+    -- use("tpope/vim-eunuch")
 
     -- supported langs: Ruby, Lua, Vimscript, Bash
     use({
@@ -636,12 +633,12 @@ packer.startup({
     use("editorconfig/editorconfig-vim")
 
     -- stabilize buffer content on window open/close events
-    use({
-      "luukvbaal/stabilize.nvim",
-      config = function()
-        require("stabilize").setup()
-      end,
-    })
+    -- use({
+    --   "luukvbaal/stabilize.nvim",
+    --   config = function()
+    --     require("stabilize").setup()
+    --   end,
+    -- })
 
     -- nice ui elements like select and input
     use({
@@ -669,21 +666,6 @@ packer.startup({
     --   disable = not if_exe_exists("ctags"),
     --   event = "BufRead",
     -- })
-
-    -- shows thin vertical lines for indentation
-    use({
-      "Yggdroot/indentLine",
-      event = "BufRead",
-      config = function()
-        vim.g.indentLine_color_term = 240
-      end,
-    })
-
-    -- comment plugin
-    use({
-      "tpope/vim-commentary",
-      event = "BufRead",
-    })
 
     -- AutoSave
     use({
@@ -723,7 +705,7 @@ packer.startup({
     })
 
     -- filetype detection
-    use({ "spywhere/detect-language.nvim", event = "BufRead" })
+    -- use({ "spywhere/detect-language.nvim", event = "BufRead" })
 
     -- Syntax highlighting
     use({
@@ -781,26 +763,13 @@ packer.startup({
     })
 
     -- Incremental rename command with TS visualized feedback
-    use({
-      "smjonas/inc-rename.nvim",
-      cmd = "IncRename",
-      config = function()
-        require("inc_rename").setup()
-      end,
-    })
-
-    -- Shows documentation for cursor in seperate buffer
-    use({
-      "amrbashir/nvim-docs-view",
-      cmd = { "DocsViewToggle" },
-      config = function()
-        require("docs-view").setup({
-          position = "bottom",
-          height = 4,
-        })
-        require("plugins.legendary").docs_view()
-      end,
-    })
+    -- use({
+    --   "smjonas/inc-rename.nvim",
+    --   cmd = "IncRename",
+    --   config = function()
+    --     require("inc_rename").setup()
+    --   end,
+    -- })
 
     -- 4 basic motions: jump to next/previous sibling in the tree, jump to parent, and jump to child
     -- use({
@@ -822,7 +791,7 @@ packer.startup({
     -- standalone UI for nvim-lsp progress, currently issue with buffers
     use({
       "j-hui/fidget.nvim",
-      after = "kanagawa.nvim",
+      -- after = "rebelot/kanagawa.nvim",
       -- requires = { "nvim-treesitter/nvim-treesitter" },
       config = function()
         require("fidget").setup({
@@ -903,6 +872,15 @@ packer.startup({
       disable = not if_exe_exists("git"),
       config = function()
         require("plugins.legendary").fugitive()
+      end,
+    })
+
+    -- Code Snippet Runner
+    use({
+      "michaelb/sniprun",
+      run = "bash install.sh",
+      config = function()
+        require("sniprun").setup({})
       end,
     })
 
