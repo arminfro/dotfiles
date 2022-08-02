@@ -18,8 +18,6 @@ packer.startup({
       "wbthomason/packer.nvim",
     })
 
-
-
     -- Managemant tool for keybindings and commands
     use({
       "mrjones2014/legendary.nvim",
@@ -83,7 +81,7 @@ packer.startup({
     -- Focus on code in floating window
     use({
       "hoschi/yode-nvim",
-      event = 'BufEnter',
+      event = "BufEnter",
       config = function()
         require("yode-nvim").setup({})
         require("plugins.legendary").yode()
@@ -94,8 +92,7 @@ packer.startup({
     -- see :h diffview-config for default keybindings
     use({
       "sindrets/diffview.nvim",
-      -- event = "BufRead",
-      cmd = 'DiffviewOpen',
+      event = "BufRead",
       disable = not if_exe_exists("git"),
       config = function()
         require("plugins.legendary").diffview()
@@ -195,10 +192,10 @@ packer.startup({
     -- use({"gennaro-tedesco/nvim-peekup", event ="BufEnter"})
 
     -- collection of language packs
-    use({"sheerun/vim-polyglot", event = "BufEnter"})
+    use({ "sheerun/vim-polyglot", event = "BufEnter" })
 
     -- Search for what's visualized, by *
-    use({"nelstrom/vim-visual-star-search", event = "BufEnter"})
+    use({ "nelstrom/vim-visual-star-search", event = "BufEnter" })
 
     -- Look up bindings of keys
     -- use({
@@ -735,6 +732,13 @@ packer.startup({
           -- Context based commenting
           "JoosepAlviste/nvim-ts-context-commentstring",
           after = "nvim-treesitter",
+          requires = {
+            -- comment plugin
+            {
+              "tpope/vim-commentary",
+              event = "BufRead",
+            },
+          },
         },
         -- {
         --   -- Refactor utilities, currently doesnt work, try later
@@ -788,20 +792,21 @@ packer.startup({
       end,
     })
 
-    -- standalone UI for nvim-lsp progress, currently issue with buffers
-    use({
-      "j-hui/fidget.nvim",
-      -- after = "rebelot/kanagawa.nvim",
-      -- requires = { "nvim-treesitter/nvim-treesitter" },
-      config = function()
-        require("fidget").setup({
-          window = {
-            relative = "editor",
-            blend = 10,
-          },
-        })
-      end,
-    })
+    -- standalone UI for nvim-lsp progress, currently issue with buffers,
+    -- temporally deactivated
+    -- use({
+    --   "j-hui/fidget.nvim",
+    --   -- after = "rebelot/kanagawa.nvim",
+    --   -- requires = { "nvim-treesitter/nvim-treesitter" },
+    --   config = function()
+    --     require("fidget").setup({
+    --       window = {
+    --         relative = "editor",
+    --         blend = 10,
+    --       },
+    --     })
+    --   end,
+    -- })
 
     -- highlights function arguments usage same as argument itself
     use({
@@ -847,7 +852,7 @@ packer.startup({
         {
           -- Show commit info at current line on cursorhold as virtual-text
           "f-person/git-blame.nvim",
-          -- disable = not if_exe_exists("git"),
+          disable = not if_exe_exists("git"),
           config = function()
             vim.g.gitblame_display_virtual_text = 0
           end,

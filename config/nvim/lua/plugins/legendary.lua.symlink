@@ -460,6 +460,13 @@ function M.telescope()
   require("legendary").bind_keymaps({
     { "<F2>", telescope_builtins.builtin, mode = { "n", "v" }, description = "Fuzzy searches", opts },
     { "<F12>", telescope_builtins.help_tags, mode = { "n" }, description = "Fuzzy search helptags", opts },
+    {
+      "?",
+      telescope_builtins.current_buffer_fuzzy_find,
+      mode = { "n" },
+      description = "Fuzzy search current buffer",
+      opts,
+    },
     { "<C-O>", telescope_builtins.commands, mode = { "n" }, description = "Fuzzy search command", opts },
     {
       "<C-A>",
