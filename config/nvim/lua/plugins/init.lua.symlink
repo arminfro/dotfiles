@@ -523,12 +523,16 @@ packer.startup({
             },
             {
               -- LSP enhancement
-              "tami5/lspsaga.nvim",
+              "ray-x/navigator.lua",
               -- event = "BufRead",
               config = function()
-                require("plugins.lsp.lspsaga").config()
-                require("plugins.legendary").lspsaga()
+                require("plugins.lsp.navigator").config()
+                require("plugins.legendary").lsp_navigator()
               end,
+              requires = {
+                { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
+                { "neovim/nvim-lspconfig" },
+              },
             },
             -- {
             --   "mfussenegger/nvim-dap",

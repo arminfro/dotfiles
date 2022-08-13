@@ -1,5 +1,5 @@
 alias vim='nvim'
-alias v='vim'
+alias v='nvim'
 
 alias vim-logs='vim ~/.cache/nvim/*.log'
 

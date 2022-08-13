@@ -49,7 +49,16 @@ function M.config()
   local config = {
     extensions = { "quickfix", "toggleterm", "fugitive" },
     options = {
-      disabled_filetypes = { "NvimTree", "dashboard", "Outline" },
+      disabled_filetypes = {
+        "NvimTree",
+        "dashboard",
+        "Outline",
+        "TelescopePrompt",
+        "guihua",
+        "guihua_rust",
+        "clap_input",
+        "fidget",
+      },
       component_separators = "",
       section_separators = "",
       theme = {

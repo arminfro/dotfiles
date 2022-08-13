@@ -41,9 +41,9 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/copypath
   zgenom ohmyzsh plugins/isodate
   zgenom load zpm-zsh/ls
-  if_exist systemctl  && zgenom ohmyzsh plugins/systemd
+  if_exist systemctl && zgenom ohmyzsh plugins/systemd
   if_exist bundler && zgenom ohmyzsh plugins/bundler
-  if_exist deno  && zgenom ohmyzsh zplug plugins/deno
+  if_exist deno && zgenom ohmyzsh zplug plugins/deno
   if_exist firewall-cmd && zgenom ohmyzsh plugins/firewalld
   if_exist fd && zgenom ohmyzsh plugins/fd
   if_exist rsync && zgenom ohmyzsh plugins/rsync
@@ -137,3 +137,11 @@ ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 
 # https://github.com/skywind3000/z.lua#options
 _ZL_MATCH_MODE=1
+
+# # load aliases
+# typeset -U config_files
+# config_files=($DOTFILES/**/*.zsh)
+# for file in ${(M)config_files:#*/aliases.zsh}; do
+#   source $file
+# done
+# unset config_files

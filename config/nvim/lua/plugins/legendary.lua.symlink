@@ -364,48 +364,73 @@ function M.zk()
   })
 end
 
-function M.lspsaga()
+function M.lsp_navigator()
+  -- {
+  -- add_workspace_folder = <function 1>,
+  -- clear_references = <function 2>,
+  -- code_action = <function 3>,
+  -- completion = <function 4>,
+  -- declaration = <function 5>,
+  -- definition = <function 6>,
+  -- document_highlight = <function 7>,
+  -- document_symbol = <function 8>,
+  -- execute_command = <function 9>,
+  -- format = <function 10>,
+  -- formatting = <function 11>,
+  -- formatting_seq_sync = <function 12>,
+  -- formatting_sync = <function 13>,
+  -- hover = <function 14>,
+  -- implementation = <function 15>,
+  -- incoming_calls = <function 16>,
+  -- list_workspace_folders = <function 17>,
+  -- outgoing_calls = <function 18>,
+  -- range_code_action = <function 19>,
+  -- range_formatting = <function 20>,
+  -- references = <function 21>,
+  -- remove_workspace_folder = <function 22>,
+  -- rename = <function 23>,
+  -- server_ready = <function 24>,
+  -- signature_help = <function 25>,
+  -- type_definition = <function 26>,
+  -- workspace_symbol = <function 27>
+  -- }
+  local buf = vim.lsp.buf
+  local diagnostic = vim.diagnostic
+
   require("legendary").bind_keymaps({
     {
       "<space>h",
-      ":Lspsaga hover_doc<CR>",
+      buf.hover,
       description = "LSP, Show hover of current symbol",
       mode = { "n" },
       opts,
     },
-    { "<space>a", ":Lspsaga code_action<CR>", description = "LSP, Code Actions by Lsp", mode = { "n" }, opts },
+    { "<space>a", buf.code_action, description = "LSP, Code Actions by Lsp", mode = { "n" }, opts },
     {
       "<space>a",
-      ":Lspsaga range_code_action<CR>",
+      buf.range_code_action,
       description = "LSP, Code Actions by Lsp per selection",
       mode = { "v" },
       opts,
     },
-    -- {
-    -- "<space>f",
-    -- ":Lspsaga lsp_finder<CR>",
-    -- description = "LSP, find usage of cursor symbol",
-    -- mode = { "n" },
-    -- opts,
-    -- },
     {
       "<space>s",
-      ":Lspsaga signature_help<CR>",
+      buf.signature_help,
       description = "LSP, Signature help by Lsp",
       mode = { "n" },
       opts,
     },
-    { "<space>rn", ":Lspsaga rename<CR>", description = "LSP, Rename current symbol", mode = { "n" }, opts },
+    { "<space>rn", buf.rename, description = "LSP, Rename current symbol", mode = { "n" }, opts },
     {
       "[j",
-      ":Lspsaga diagnostic_jump_prev<CR>",
+      diagnostic.goto_prev,
       description = "LSP, Go to previous diagnostic",
       mode = { "n" },
       opts,
     },
     {
       "]j",
-      ":Lspsaga diagnostic_jump_next<CR>",
+      diagnostic.goto_next,
       description = "LSP, Go to next diagnostic",
       mode = { "n" },
       opts,
