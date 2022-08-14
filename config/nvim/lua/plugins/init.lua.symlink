@@ -581,6 +581,17 @@ packer.startup({
       event = "BufRead",
     })
 
+    use({
+      "bennypowers/nvim-regexplainer",
+      config = function()
+        require("regexplainer").setup({ auto = true })
+      end,
+      requires = {
+        "nvim-treesitter/nvim-treesitter",
+        "MunifTanjim/nui.nvim",
+      },
+    })
+
     -- pretty list for showing diagnostics, references, quickfix and location lists
     -- see config & keymaps: https://github.com/folke/trouble.nvim#setup
     use({
@@ -670,11 +681,11 @@ packer.startup({
 
     -- AutoSave
     use({
-      "Pocco81/AutoSave.nvim",
+      "pocco81/auto-save.nvim",
       event = "BufRead",
       config = function()
-        require("autosave").setup({
-          events = { "FocusLost" },
+        require("auto-save").setup({
+          trigger_events = { "FocusLost" },
           execution_message = nil,
           write_all_buffers = true,
         })
@@ -859,6 +870,9 @@ packer.startup({
           disable = not if_exe_exists("git"),
           config = function()
             vim.g.gitblame_display_virtual_text = 0
+            vim.g.gitblame_date_format = "%r"
+            vim.g.gitblame_highlight_group = "Question"
+            vim.g.gitblame_message_template = "<summary> • <date>"
           end,
         },
       },
@@ -1153,22 +1167,32 @@ packer.startup({
     -- }
 
     -- auto saves and loads vim sessions
-    -- use({
-    --   "rmagatti/auto-session",
-    --   config = function()
-    --     require("auto-session").setup({
-    --       auto_session_enable_last_session = false,
-    --       log_level = "error",
-    --     })
-    --   end,
-    -- })
+    use({
+      "rmagatti/auto-session",
+      requires = "nvim-lualine/lualine.nvim",
+      config = function()
+        require("auto-session").setup({
+          -- auto_session_enable_last_session = false,
+          log_level = "error",
+          cwd_change_handling = {
+            post_cwd_changed_hook = function()
+              -- refresh lualine so the new session name is displayed in the status bar
+              require("lualine").refresh()
+            end,
+          },
+        })
+      end,
+    })
 
-    -- todo, doesnt work
+    -- generate 'print' statements appropriate to the language being edited
+    -- try later, some issue breaks it currently
     -- use({
-    --   "folke/todo-comments.nvim",
-    --   requires = "nvim-lua/plenary.nvim",
-    --   event = "BufReadPost",
-    --   config = require("plugins.todo").config,
+    --   "andrewferrier/debugprint.nvim",
+    --   -- event = "BufRead",
+    --   -- commit = "30a9fb4",
+    --   config = function()
+    --     require("debugprint").setup()
+    --   end,
     -- })
   end,
   config = {
