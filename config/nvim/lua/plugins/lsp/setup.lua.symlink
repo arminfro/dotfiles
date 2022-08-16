@@ -95,6 +95,7 @@ M.config = function()
     end,
     ["jsonls"] = function()
       lspconfig.jsonls.setup({
+        cmd = { vim.fn.stdpath("data") .. "/mason/bin/vscode-json-language-server", "--stdio" },
         settings = {
           json = {
             schemas = require("schemastore").json.schemas(),

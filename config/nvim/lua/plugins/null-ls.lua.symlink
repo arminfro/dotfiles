@@ -27,23 +27,23 @@ function M.config()
   null_ls.setup({
     debug = false,
     sources = {
-      d.rubocop,
-      d.shellcheck,
-      d.zsh,
-      f.black,
-      f.rubocop,
-      f.rustfmt,
-      f.prettierd,
-      f.stylua.with({
-        extra_args = {
-          "--indent-type",
-          "Spaces",
-          "--indent-width",
-          "2",
-          "--quote-style",
-          "ForceDouble",
-        },
-      }),
+      -- d.rubocop,
+      -- d.shellcheck,
+      -- d.zsh,
+      -- f.black,
+      -- f.rubocop,
+      -- f.rustfmt,
+      -- f.prettierd,
+      -- f.stylua.with({
+      --   extra_args = {
+      --     "--indent-type",
+      --     "Spaces",
+      --     "--indent-width",
+      --     "2",
+      --     "--quote-style",
+      --     "ForceDouble",
+      --   },
+      -- }),
     },
   })
 end

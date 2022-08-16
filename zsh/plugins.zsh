@@ -31,7 +31,6 @@ compinit
 if ! zgenom saved; then
   echo "Creating a zgenom save"
 
-  # ctrl-p, ctrl-n to cycle through history stack
   # see more keybindings: https://github.com/jeffreytse/zsh-vi-mode#-usage
   zgenom load jeffreytse/zsh-vi-mode
 
@@ -78,8 +77,10 @@ if ! zgenom saved; then
 
   # utility
   zgenom load spaceship-prompt/spaceship-prompt
+  #  automatically sources (known/whitelisted)
+  zgenom load Tarrasch/zsh-autoenv; AUTOENV_FILE_ENTER=.env
   zgenom load Aloxaf/fzf-tab # todo, does not seem to work: if_exist fzf && ...
-  zgenom ohmyzsh plugins/fancy-ctrl-z
+  # zgenom ohmyzsh plugins/fancy-ctrl-z
   # double tab escape to prefix command with sudo
   zgenom ohmyzsh plugins/sudo
   # preventing any code from actually running while pasting
@@ -95,7 +96,6 @@ if ! zgenom saved; then
   zgenom load zpm-zsh/colors
   zgenom load brymck/print-alias
   # zgenom load marzocchi/zsh-notify todo, failed to load
-  zgenom load changyuheng/fz; FZ_HISTORY_CD_CMD=_zlua
   # adds more vim motions to the built-in
   zgenom load zsh-vi-more/vi-motions
   # supports vim with line number command, e.g.: package.json:12
@@ -113,8 +113,10 @@ if ! zgenom saved; then
   zgenom load unixorn/jira-commands
 
   # commands
-  zgenom load knu/zsh-manydots-magic; autoload -Uz manydots-magic; manydots-magic
+  zgenom load knu/zsh-manydots-magic; autoload -Uz manydots-magic; manydots-magic; setopt autocd
   zgenom load skywind3000/z.lua
+  # fuzzy search to tab completion of z
+  zgenom load changyuheng/fz; FZ_HISTORY_CD_CMD=_zlua
   zgenom load arzzen/calc.plugin.zsh
   if_exist git && zgenom load LucasLarson/gunstage # git unstage command
   zgenom ohmyzsh plugins/genpass
