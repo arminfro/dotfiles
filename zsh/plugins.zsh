@@ -116,7 +116,7 @@ if ! zgenom saved; then
   zgenom load knu/zsh-manydots-magic; autoload -Uz manydots-magic; manydots-magic; setopt autocd
   zgenom load skywind3000/z.lua
   # fuzzy search to tab completion of z
-  zgenom load changyuheng/fz; FZ_HISTORY_CD_CMD=_zlua
+  zgenom load changyuheng/fz
   zgenom load arzzen/calc.plugin.zsh
   if_exist git && zgenom load LucasLarson/gunstage # git unstage command
   zgenom ohmyzsh plugins/genpass
@@ -134,6 +134,8 @@ if ! zgenom saved; then
   # generate the init script from plugins above
   zgenom save
 fi
+
+FZ_HISTORY_CD_CMD=_zlua
 
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 

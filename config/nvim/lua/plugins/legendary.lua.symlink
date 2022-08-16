@@ -144,7 +144,7 @@ function M.auto_pandoc()
     { ":PandocMdConvert", "lua require('auto-pandoc').run_pandoc()", description = "Convert Md to Pdf" },
   })
   require("legendary").bind_keymaps({
-    { "<leader>pc", ":PandocMdConvert<CR>", description = "Convert Md to Pdf", mode = { "n", "v" }, opts },
+    -- { "<leader>pc", ":PandocMdConvert<CR>", description = "Convert Md to Pdf", mode = { "n", "v" }, opts },
     --     {'<leader>ne',':SettleEdit<CR>', description = "Edit a note", mode = {"n", "v"}, opts},
   })
 end
@@ -713,7 +713,7 @@ end
 function M.packer()
   require("legendary").bind_keymaps({
     { "<leader>ps", ":PackerSync<CR>", mode = { "n" }, description = "Packer sync config", opts },
-    { "<leader>pc", ":PackerClean<CR>", mode = { "n" }, description = "Packer clean, remove unused", opts },
+    { "<leader>pc", ":PackerCompile<CR>", mode = { "n" }, description = "Packer compile conifg", opts },
     {
       "<leader>pb",
       ":PackerSnapshot " .. os.date("%Y-%m-%d_%H:%M:%S") .. "<CR>",

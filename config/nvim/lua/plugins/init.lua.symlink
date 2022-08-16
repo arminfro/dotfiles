@@ -680,9 +680,13 @@ packer.startup({
     use({
       "pocco81/auto-save.nvim",
       event = "BufRead",
+      commit = '8df684b',
       config = function()
-        require("auto-save").setup({
-          trigger_events = { "FocusLost" },
+        require("autosave").setup({
+          -- breaking change after locked commit, otherwise:
+          -- require("auto-save").setup({
+          -- trigger_events = { "FocusLost" },
+          events = { "FocusLost" },
           execution_message = nil,
           write_all_buffers = true,
         })
