@@ -552,7 +552,7 @@ function M.telescope()
       "<leader>.m",
       telescope.extensions.changes.changes,
       mode = { "n" },
-      description = "Fuzzy Search Conventional Commit",
+      description = "Fuzzy Search Changes",
       opts,
     },
     {

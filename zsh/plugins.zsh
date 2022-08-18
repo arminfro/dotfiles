@@ -113,7 +113,7 @@ if ! zgenom saved; then
   zgenom load unixorn/jira-commands
 
   # commands
-  zgenom load knu/zsh-manydots-magic; autoload -Uz manydots-magic; manydots-magic; setopt autocd
+  zgenom load knu/zsh-manydots-magic
   zgenom load skywind3000/z.lua
   # fuzzy search to tab completion of z
   zgenom load changyuheng/fz
@@ -136,6 +136,8 @@ if ! zgenom saved; then
 fi
 
 FZ_HISTORY_CD_CMD=_zlua
+
+autoload -Uz manydots-magic; manydots-magic; setopt autocd
 
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 
