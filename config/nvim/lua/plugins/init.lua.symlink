@@ -327,6 +327,8 @@ packer.startup({
         "nvim-telescope/telescope-frecency.nvim",
         "nvim-telescope/telescope-project.nvim",
         "nvim-telescope/telescope-node-modules.nvim",
+        "nvim-telescope/telescope-ui-select.nvim",
+        "nvim-telescope/telescope-file-browser.nvim",
         "crispgm/telescope-heading.nvim",
         "LinArcX/telescope-env.nvim",
         "olacin/telescope-cc.nvim",
@@ -457,8 +459,6 @@ packer.startup({
             { "folke/lua-dev.nvim" }, -- lua vim api completion
             -- completion plugin for lsp
             { "hrsh7th/cmp-nvim-lsp" },
-            -- Inlay Hints for rust-analyzer
-            { "nvim-lua/lsp_extensions.nvim" },
             -- Show function signature when you type
             { "hrsh7th/cmp-nvim-lsp-signature-help" },
             -- / search completed by nvim-cmp
@@ -483,10 +483,6 @@ packer.startup({
             {
               -- typescript lsp utilities
               "jose-elias-alvarez/typescript.nvim",
-              config = function()
-                require("plugins.lsp.server-settings.typescript-lsp").setup()
-                require("plugins.legendary").typescript_lsp()
-              end,
             },
             {
               -- linter which integrates into lsp
@@ -588,6 +584,49 @@ packer.startup({
         "nvim-treesitter/nvim-treesitter",
         "MunifTanjim/nui.nvim",
       },
+    })
+
+    use({
+      "axelvc/template-string.nvim",
+      config = function()
+        require('template-string').setup({
+          filetypes = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' },
+          jsx_brackets = true, -- must add brackets to jsx attributes
+          remove_template_string = false, -- remove backticks when there are no template string
+        })
+      end,
+      requires = "nvim-treesitter/nvim-treesitter"
+    })
+
+    -- use coverage log to display coverage
+    use({
+      "andythigpen/nvim-coverage",
+      requires = "nvim-lua/plenary.nvim",
+      config = function()
+        require('coverage').setup({})
+      end,
+    })
+
+    use({
+      "nvim-neotest/neotest",
+      requires = {
+        'haydenmeade/neotest-jest',
+      },
+      config = function()
+        require("neotest").setup({
+          adapters = {
+            require('neotest-jest')({
+              jestCommand = "npm test --",
+              -- jestConfigFile = "custom.jest.config.ts",
+              env = { CI = true },
+              cwd = function(path)
+                return vim.fn.getcwd()
+              end,
+            }),
+          },
+        })
+        require("plugins.legendary").neotest()
+      end,
     })
 
     -- pretty list for showing diagnostics, references, quickfix and location lists
@@ -1180,6 +1219,7 @@ packer.startup({
     -- }
 
     -- auto saves and loads vim sessions
+    -- don't lazy load, https://github.com/rmagatti/auto-session#recommended-sessionoptions-config
     use({
       "rmagatti/auto-session",
       requires = "nvim-lualine/lualine.nvim",
@@ -1188,6 +1228,8 @@ packer.startup({
           -- auto_session_enable_last_session = false,
           log_level = "error",
           auto_session_enable_last_session = false,
+          auto_restore_enabled = false,
+          auto_session_use_git_branch = true,
           cwd_change_handling = {
             post_cwd_changed_hook = function()
               -- refresh lualine so the new session name is displayed in the status bar

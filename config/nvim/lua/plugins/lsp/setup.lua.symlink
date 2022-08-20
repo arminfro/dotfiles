@@ -87,7 +87,7 @@ M.config = function()
 
   mason_lspconfig.setup({
     ensure_installed = servers,
-    automatic_installation = { exclude = { "rust_analyzer", "solargraph" } },
+    automatic_installation = true,
   })
   mason_lspconfig.setup_handlers({
     function(server_name)
@@ -105,6 +105,16 @@ M.config = function()
     end,
     ["sumneko_lua"] = function()
       lspconfig.sumneko_lua.setup(require("lua-dev").setup(require("plugins.lsp.server-settings.sumneko_lua")))
+    end,
+    ["tsserver"] = function()
+      require("plugins.lsp.server-settings.typescript-lsp").setup()
+      require("plugins.legendary").typescript_lsp()
+    end,
+    ['rust_analyzer'] = function()
+      local rust_tools = require("rust-tools")
+      rust_tools.setup({ server = {
+        on_attach = require("plugins.lsp.handlers").on_attach,
+      } })
     end,
     ["yamlls"] = function()
       lspconfig.yamlls.setup({

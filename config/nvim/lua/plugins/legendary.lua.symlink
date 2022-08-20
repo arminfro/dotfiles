@@ -27,7 +27,7 @@ function M.toggleterm()
   local terminals = require("plugins.toggleterm").terminals()
   require("legendary").bind_keymaps({
     { "<leader>th", terminals.htop, description = "Open Htop", mode = { "n", "v" }, opts },
-    { "<leader>tn", terminals.node, description = "Open Node repl", mode = { "n", "v" }, opts },
+    { "<leader>tj", terminals.node, description = "Open Node repl", mode = { "n", "v" }, opts },
     { "<leader>tt", terminals.ts_node, description = "Open TS-Node repl", mode = { "n", "v" }, opts },
     { "<leader>tr", terminals.ruby, description = "Open Ruby irb repl", mode = { "n", "v" }, opts },
     { "<leader>tl", terminals.lua, description = "Open Lua repl", mode = { "n", "v" }, opts },
@@ -136,6 +136,24 @@ function M.refactoring()
       mode = { "n", "v" },
       opts,
     },
+  })
+end
+
+function M.neotest()
+  local neotest = require("neotest")
+  local run_all_tests_in_file = function()
+    neotest.run.run(vim.fn.expand("%"))
+  end
+  require("legendary").bind_commands({
+    { ":NeoTestRunAllInFile", run_all_tests_in_file, description = "Run all tests" },
+    { ":NeoTestRunNearest", neotest.run.run, description = "Run nearest test" },
+    { ":NeoTestAttachNearest", neotest.run.attach, description = "Attach to the nearest test" },
+    { ":NeoTestOpenSummary", neotest.summary.open, description = "Open test run summary" },
+    { ":NeoTestOpenOutput", neotest.output.open, description = "Open test run output" },
+  })
+  require("legendary").bind_keymaps({
+    { "<leader>tn", neotest.run.run, description = "Run nearest test", mode = { "n", "v" }, opts },
+    { "<leader>ta", run_all_tests_in_file, description = "Run all test", mode = { "n", "v" }, opts },
   })
 end
 
@@ -593,7 +611,7 @@ function M.telescope()
     {
       "<leader>.p",
       function()
-        require("telescope").extensions.project.project({})
+        telescope.extensions.project.project({})
       end,
       mode = { "n" },
       description = "Fuzzy search projects",
@@ -604,6 +622,13 @@ function M.telescope()
       telescope_builtins.spell_suggest,
       mode = { "n" },
       description = "Fuzzy search spell suggesting",
+      opts,
+    },
+    {
+      "<leader>.f",
+      telescope.extensions.file_browser.file_browser,
+      mode = { "n" },
+      description = "Fuzzy File Browser",
       opts,
     },
     {

@@ -6,20 +6,22 @@ local g = vim.g
 function M.config()
   g.startify_lists = {
     -- {type = "sessions", header = {"         Sessions"}},
-    { type = "dir", header = { "         Mru files" } },
-    { type = "commands", header = { "       גּ  Commands" } },
+    { type = "dir", header = { "               Mru files" } },
+    { type = "commands", header = { "             גּ  Commands" } },
   }
 
   -- { type ='dir', header = {'       MRU in '. getcwd() }  },
   g.startify_commands = {
-    { t = { "telescope", ":Telescope" } },
+    { t = { "Telescope", ":Telescope" } },
+    { f = { "File Tree", ":NvimTreeOpen" } },
+    { d = { "Diffview", ":DiffviewOpen" } },
+    { l = { "Lazygit", ":Lazygit" } },
+    { m = { "Mason", ":Mason" } },
     { a = { "Load last Session", ":SessionLoadLast" } },
-    { i = { "Install Plugins", ":PackerInstall" } },
-    { u = { "Update Plugin", ":PackerUpdate" } },
+    { s = { "Install,Sync Plugins", ":PackerSync" } },
     { c = { "Compile Plugin", ":PackerCompile" } },
-    { s = { "Sync Plugin", ":PackerSync" } },
     { h = { "Check Vim health", ":checkhealth" } },
-    { m = { "Start Time", ":StartupTime" } },
+    { w = { "Start Time", ":StartupTime" } },
     -- {o = {"Open GitHub repo", ":RepoEdit"}}
   }
 

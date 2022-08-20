@@ -16,9 +16,9 @@ function M.config()
   -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
 
   -- syntax to adapt builtin config
-  -- null_ls.builtins.formatting.rustfmt.with({
-  --   extra_args = { "--edition=2021" }
-  -- })
+  null_ls.builtins.formatting.rustfmt.with({
+    extra_args = { "--edition=2021" }
+  })
 
   -- local c = null_ls.builtins.completion
   local d = null_ls.builtins.diagnostics
@@ -32,8 +32,9 @@ function M.config()
       -- d.zsh,
       -- f.black,
       -- f.rubocop,
-      -- f.rustfmt,
-      -- f.prettierd,
+      f.rustfmt,
+      f.prettierd,
+      d.eslint_d,
       -- f.stylua.with({
       --   extra_args = {
       --     "--indent-type",

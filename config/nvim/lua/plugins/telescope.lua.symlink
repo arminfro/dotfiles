@@ -101,6 +101,15 @@ function M.config()
         case_mode = "smart_case",
       },
 
+      ["ui-select"] = {
+        require("telescope.themes").get_dropdown {}
+      },
+
+      file_browser = {
+        -- disables netrw and use telescope-file-browser in its place
+        hijack_netrw = true
+      },
+
       frecency = {
         ignore_patterns = { "*.git/*", "*/tmp/*" },
         workspaces = {
@@ -141,6 +150,8 @@ function M.config()
   telescope.load_extension("lazygit")
   telescope.load_extension("env")
   telescope.load_extension("persisted")
+  telescope.load_extension("ui-select")
+  telescope.load_extension("file_browser")
 end
 
 return M

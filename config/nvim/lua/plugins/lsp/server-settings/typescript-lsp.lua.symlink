@@ -11,6 +11,7 @@ function M.setup()
   typescript.setup({
     debug = false, -- enable debug logging for commands
     server = {
+      cmd = { vim.fn.stdpath("data") .. "/mason/bin/typescript-language-server", "--stdio" },
       on_attach = require("plugins.lsp.on_attach"),
       settings = {
         javascript = {
