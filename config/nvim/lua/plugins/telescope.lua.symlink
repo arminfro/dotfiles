@@ -121,8 +121,7 @@ function M.config()
       },
       project = {
         base_dirs = {
-          "~/Workspace",
-          "~/tempy",
+          -- "~/Workspace",
           "~/.dotfiles",
         },
         hidden_files = true, -- default: false

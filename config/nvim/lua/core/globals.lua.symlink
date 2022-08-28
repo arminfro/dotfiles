@@ -32,7 +32,7 @@ function _G.if_exp(bool, a, b)
 end
 
 function _G.packer_print()
-  local file = assert(io.open("/home/armin/packer_plugins.md", "w"))
+  local file = assert(io.open(vim.env["HOME"] .. "/packer_plugins.md", "w"))
   print_table_to_file(require("urlview.search").packer(), file)
   file:close()
 end
