@@ -6,10 +6,10 @@
 language = "en"
 
 # The default title used for new note, if no `--title` flag is provided.
-default-title = "Untitled"
+default-title = "No Title"
 
 # Template used to generate a note's filename, without extension.
-# filename = "{{date now '%Y-%m-%d'}}_{{slug title}}"
+filename = "{{slug title}}_{{date now '%d-%m-%d'}}"
 
 # The file extension used for the notes.
 extension = "md"
@@ -95,9 +95,6 @@ ls = "zk list $@"
 ed = "zk edit $@"
 edl = "zk edit-last $@"
 n = "zk new $@"
-
-# new inbox ??
-new-inbox = 'zk new --no-input "$ZK_NOTEBOOK_DIR/inbox"'
 
 # Edit the notes selected interactively among the notes created the last two weeks.
 recent = "zk edit --sort created- --created-after 'last two weeks' --interactive"

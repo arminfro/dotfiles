@@ -13,10 +13,11 @@ function M.config()
   -- { type ='dir', header = {'       MRU in '. getcwd() }  },
   g.startify_commands = {
     { t = { "Telescope", ":Telescope" } },
-    { f = { "File Tree", ":NvimTreeOpen" } },
+    { f = { "File Tree", ":Telescope file_browser" } },
     { d = { "Diffview", ":DiffviewOpen" } },
     { l = { "Lazygit", ":Lazygit" } },
     { m = { "Mason", ":Mason" } },
+    { m = { "New Note", ":ZkNewDefault" } },
     { a = { "Load last Session", ":SessionLoadLast" } },
     { s = { "Install,Sync Plugins", ":PackerSync" } },
     { c = { "Compile Plugin", ":PackerCompile" } },

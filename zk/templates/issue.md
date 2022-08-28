@@ -1,7 +1,18 @@
 ---
 id: {{ id }}
 slug: {{ title }}
-created: {{ date now 'timestamp' }}
+keywords: []
+abstract: |
+subtitle:
+linkcolor: blue
+pdf-engine: xelatex
+pandoc_:
+  - output: .pdf
+  - toc: true
+  - toc-depth: 6
+header-includes:
+  - |
+    \usepackage[margins=raggedright]{floatrow}
 title: {{title}}
 created: {{date now 'timestamp'}}
 course: {{dir}}

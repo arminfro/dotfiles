@@ -113,7 +113,7 @@ function M.config()
       frecency = {
         ignore_patterns = { "*.git/*", "*/tmp/*" },
         workspaces = {
-          ["conf"] = "/home/armin/.dotfiles",
+          ["conf"] = vim.env["HOME"] .. "/.dotfiles",
           -- ["data"] = "/home/my_username/.local/share",
           -- ["project"] = "/home/my_username/projects",
           -- ["wiki"] = "/home/my_username/wiki",

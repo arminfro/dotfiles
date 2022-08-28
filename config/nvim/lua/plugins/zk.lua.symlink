@@ -18,15 +18,21 @@ function M.config()
   -- end
   -- commands.add("ZkDaily", make_new_fn({ orphan = true }, { dir = "dailies" }))
 
-  commands.add("ZkDaily", function(options)
+  commands.add("ZkNewDaily", function(options)
     options = options or {}
     options = vim.tbl_extend("force", options, { dir = "dailies" })
     zk.new(options)
   end)
 
-  commands.add("ZkTask", function(options)
+  commands.add("ZkNewTask", function(options)
     options = options or {}
     options = vim.tbl_extend("force", options, { dir = "tasks", title = vim.fn.input("Title: ") })
+    zk.new(options)
+  end)
+
+  commands.add("ZkNewDefault", function(options)
+    options = options or {}
+    options = vim.tbl_extend("force", options, { title = vim.fn.input("Title: ") })
     zk.new(options)
   end)
 

@@ -162,8 +162,7 @@ function M.auto_pandoc()
     { ":PandocMdConvert", "lua require('auto-pandoc').run_pandoc()", description = "Convert Md to Pdf" },
   })
   require("legendary").bind_keymaps({
-    -- { "<leader>pc", ":PandocMdConvert<CR>", description = "Convert Md to Pdf", mode = { "n", "v" }, opts },
-    --     {'<leader>ne',':SettleEdit<CR>', description = "Edit a note", mode = {"n", "v"}, opts},
+    { "<leader>pm", ":PandocMdConvert<CR>", description = "Convert Md to Pdf", mode = { "n", "v" }, opts },
   })
 end
 
@@ -341,6 +340,15 @@ function M.zk()
       mode = { "v" },
       opts,
     },
+    -- { -- todo, does not work
+    --   "<leader>zf",
+    --   function()
+    --     require("telescope.builtin").live_grep({cwd = vim.env['ZK_NOTEBOOK_DIR']})
+    --   end,
+    --   description = "zk, grep notes",
+    --   mode = { "v" },
+    --   opts,
+    -- },
     {
       "<leader>zi",
       ":ZkLastIssue<CR>",
@@ -357,14 +365,14 @@ function M.zk()
     },
     {
       "<leader>zn",
-      ":lua require('zk.commands').get('ZkNew')({ title = vim.fn.input('Title: ') })<CR>",
+      ":ZkNewDefault<CR>",
       description = "zk, new",
       mode = { "n" },
       opts,
     },
     {
       "<leader>zd",
-      ":ZkDaily<CR>",
+      ":ZkNewDaily<CR>",
       description = "zk, create or edit daily",
       mode = { "n" },
       opts,
@@ -595,10 +603,17 @@ function M.telescope()
       opts,
     },
     {
-      "<leader>.s",
+      "<leader>.l",
       telescope.extensions.luasnip.luasnip,
       mode = { "n" },
-      description = "Fuzzy search emojis and symbols",
+      description = "Fuzzy search Snippets",
+      opts,
+    },
+    {
+      "<leader>.j",
+      telescope_builtins.jumplist,
+      mode = { "n" },
+      description = "Fuzzy search Jumplist",
       opts,
     },
     {
@@ -677,6 +692,12 @@ function M.telescope()
   })
   require("legendary").bind_commands({
     { ":SetFileType", telescope_builtins.filetypes, description = "Set Filetype" },
+  })
+end
+
+function M.luasnip()
+  require("legendary").bind_commands({
+    { ":LuaSnipEdit", require("luasnip.loaders").edit_snippet_files, description = "Edit Snippet" }
   })
 end
 

@@ -1,1 +1,1 @@
-export PATH="$PATH:/home/armin/.cargo/bin"
+export PATH="$PATH:$HOME/.cargo/bin"

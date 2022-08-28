@@ -1,7 +1,18 @@
 ---
 id: {{ id }}
-created: {{ date now 'timestamp' }}
 created: {{date now 'timestamp'}}
+keywords: []
+abstract: |
+subtitle:
+linkcolor: blue
+pdf-engine: xelatex
+pandoc_:
+  - output: .pdf
+  - toc: true
+  - toc-depth: 6
+header-includes:
+  - |
+    \usepackage[margins=raggedright]{floatrow}
 course: {{dir}}
 aliases:
   - {{date now 'timestamp'}}

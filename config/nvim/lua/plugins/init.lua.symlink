@@ -403,6 +403,7 @@ packer.startup({
                     "~/.local/share/nvim/site/pack/packer/start/friendly-snippets",
                   },
                 })
+                require("plugins.legendary").luasnip()
               end,
               requires = {
                 -- Snippet collections
@@ -465,6 +466,8 @@ packer.startup({
             { "hrsh7th/cmp-nvim-lsp-document-symbol" },
             -- ctags completion
             { "quangnguyen30192/cmp-nvim-tags" },
+            -- rust features
+            { "simrat39/rust-tools.nvim" },
             {
               "lvimuser/lsp-inlayhints.nvim",
               event = "LspAttach",
