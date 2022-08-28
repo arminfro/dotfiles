@@ -36,9 +36,9 @@ return function(client, bufnr)
             group = group,
             callback = w(function()
                 vim.lsp.buf.format({
-                    filter = function(client)
-                        return client.name ~= "solargraph"
-                    end,
+                    -- filter = function(client)
+                    --     return client.name ~= "solargraph"
+                    -- end,
                     bufnr = bufnr,
                 })
             end),

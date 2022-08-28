@@ -1121,7 +1121,6 @@ packer.startup({
     -- writing support
     use({
       "Pocco81/AbbrevMan.nvim",
-      -- event = "BufRead",
       config = function()
         local abbrev_man = require("abbrev-man")
 
@@ -1244,15 +1243,23 @@ packer.startup({
     })
 
     -- generate 'print' statements appropriate to the language being edited
-    -- try later, some issue breaks it currently
-    -- use({
-    --   "andrewferrier/debugprint.nvim",
-    --   -- event = "BufRead",
-    --   -- commit = "30a9fb4",
-    --   config = function()
-    --     require("debugprint").setup()
-    --   end,
-    -- })
+    use({
+      "andrewferrier/debugprint.nvim",
+      event = "BufRead",
+      config = function()
+        require("debugprint").setup({
+        })
+      end,
+    })
+
+    -- visualise and resolve gti conflicts
+    use({
+      'akinsho/git-conflict.nvim',
+      tag = "*",
+      config = function()
+        require('git-conflict').setup()
+      end
+    })
   end,
   config = {
     display = {
