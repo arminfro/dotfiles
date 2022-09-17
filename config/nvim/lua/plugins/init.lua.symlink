@@ -967,6 +967,14 @@ packer.startup({
     -- Latex autocompile
     use({ "donRaphaco/neotex", ft = "tex" })
 
+    use({
+      "lervag/vimtex",
+      ft = "tex",
+      config = function()
+        vim.g.vimtex_view_method = 'zathura'
+      end
+    })
+
     -- reveal the hidden message from Git under the cursor quickly
     use({
       "rhysd/git-messenger.vim",
