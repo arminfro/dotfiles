@@ -2,18 +2,6 @@
 
 local M = {}
 
--- label adjustments to guarantee max-width
-local ELLIPSIS_CHAR = "…"
-local MAX_LABEL_WIDTH = 36
-local truncating_label = function(label)
-  local truncated_label = vim.fn.strcharpart(label, 0, MAX_LABEL_WIDTH)
-  if truncated_label ~= label then
-    return truncated_label .. ELLIPSIS_CHAR
-  else
-    return label
-  end
-end
-
 function M.config()
   local cmp_status_ok, cmp = pcall(require, "cmp")
   if not cmp_status_ok then
@@ -42,7 +30,7 @@ function M.config()
     { name = "nvim_lsp_signature_help", priority_weight = 100 },
     {
       name = "buffer",
-      -- max_item_count = 12,
+      max_item_count = 8,
       priority_weight = 90,
       option = {
         get_bufnrs = function()
@@ -53,19 +41,19 @@ function M.config()
     { name = "nvim_lua", priority_weight = 80 },
     { name = "luasnip", priority_weight = 70 },
     { name = "path", priority_weight = 60 },
-    { name = "tags", priority_weight = 50, keyword_length = 4 },
-    {
-      name = "rg",
-      keyword_length = 5,
-      max_item_count = 5,
-      priority_weight = 40,
-      option = {
-        additional_arguments = "--smart-case --hidden",
-      },
-    },
-    { name = "emoji" },
-    { name = "calc" },
-    { name = "git" },
+    -- { name = "tags", priority_weight = 50, keyword_length = 4 },
+    -- {
+    --   name = "rg",
+    --   keyword_length = 5,
+    --   max_item_count = 5,
+    --   priority_weight = 40,
+    --   option = {
+    --     additional_arguments = "--smart-case --hidden",
+    --   },
+    -- },
+    -- { name = "emoji" },
+    -- { name = "calc" },
+    -- { name = "git" },
   }
 
   local writing_sources = cmp.config.sources(vim.tbl_extend("force", sources, {
@@ -188,7 +176,7 @@ function M.config()
           spell = "暈",
         })[entry.source.name]
 
-        vim_item.abbr = truncating_label(vim_item.abbr)
+        vim_item.abbr = truncating_label(vim_item.abbr, 36)
 
         return vim_item
       end,

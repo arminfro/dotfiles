@@ -33,7 +33,8 @@ function M.config()
       -- f.black,
       -- f.rubocop,
       f.rustfmt,
-      f.prettierd,
+      f.prettier_d_slim,
+      f.eslint_d,
       d.eslint_d,
       -- f.stylua.with({
       --   extra_args = {

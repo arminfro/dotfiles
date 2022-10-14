@@ -163,8 +163,11 @@ bar {
 }
 
 focus_follows_mouse no
-default_border pixel 2
-hide_edge_borders none
+
+#Hide window title bar, ref: https://gist.github.com/lirenlin/9892945?permalink_comment_id=4312849#gistcomment-4312849
+default_border pixel 1
+default_floating_border pixel 1
+for_window [class="^.*"] border pixel 1
 
 # Keyboard Bindings
 bindsym $mod+q exec --no-startup-id $CLIPBOARD_MANAGER
@@ -197,7 +200,16 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 15
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 15
 
 # Autostart
-# exec --no-startup-id redshift
-# # exec --no-startup-id unclutter -idle 2 -noevents
-# exec --no-startup-id gpaste-client start
-exec --no-startup-id ~/.dotfiles/bin/keyboard-layout --us=true
+# exec syndaemon -i 1 -K -d
+exec --no-startup-id redshift
+exec --no-startup-id unclutter -idle 2 -noevents
+exec --no-startup-id gpaste-client start
+exec --no-startup-id i3-resurrect restore -w 1 && sleep 1 && i3-resurrect restore -w 2
+# exec --no-startup-id ~/.dotfiles/bin/keyboard-layout --us=true
+
+for_window [class="Nextcloud" instance="nextcloud" title="Nextcloud"] floating disable
+
+exec --no-startup-id flameshot
+exec --no-startup-id set-wallpaper
+exec --no-startup-id sleep 1 && xrandr --output $mon2 --primary --right-of $mon1 && xrandr --output $mon2 --primary --right-of $mon1
+exec --no-startup-id sleep 1 && ~/.dotfiles/bin/keyboard-layout --us=true

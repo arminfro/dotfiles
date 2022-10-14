@@ -162,6 +162,10 @@ return function(client, bufnr)
         buf_autocmd_document_formatting(bufnr)
     end
 
+    if client.supports_method("textDocument/documentSymbol") then
+        require("nvim-navic").attach(client, bufnr)
+    end
+
     if client.supports_method("textDocument/documentHighlight") then
         buf_autocmd_document_highlight(bufnr)
     end

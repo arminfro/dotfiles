@@ -16,6 +16,16 @@ function _G.copy(obj, seen)
   return setmetatable(res, getmetatable(obj))
 end
 
+function _G.truncating_label(label, max_width)
+  local ELLIPSIS_CHAR = "…"
+  local truncated_label = vim.fn.strcharpart(label, 0, max_width)
+  if truncated_label ~= label then
+    return truncated_label .. ELLIPSIS_CHAR
+  else
+    return label
+  end
+end
+
 -- print tables
 function _G.P(...)
   local objects = vim.tbl_map(vim.inspect, { ... })

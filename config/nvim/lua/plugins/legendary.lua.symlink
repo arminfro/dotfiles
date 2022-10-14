@@ -521,11 +521,9 @@ function M.telescope()
     { "<C-O>", telescope_builtins.commands, mode = { "n" }, description = "Fuzzy search command", opts },
     {
       "<C-A>",
-      function()
-        telescope_builtins.grep_string({ shorten_path = true, word_match = "-w", only_sort_text = true, search = "" })
-      end,
+      telescope_builtins.live_grep,
       mode = { "n" },
-      description = "Fuzzy search word",
+      description = "Search word",
       opts,
     },
     { "<C-N>", telescope_builtins.buffers, mode = { "n" }, description = "Fuzzy search buffer", opts },
@@ -692,6 +690,13 @@ function M.telescope()
   })
   require("legendary").bind_commands({
     { ":SetFileType", telescope_builtins.filetypes, description = "Set Filetype" },
+    {
+      ":FuzzSearch",
+      function()
+        telescope_builtins.grep_string({ shorten_path = true, word_match = "-w", only_sort_text = true, search = "" })
+      end,
+      description = "Fuzzy search word",
+    }
   })
 end
 

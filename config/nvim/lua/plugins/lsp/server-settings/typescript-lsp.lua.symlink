@@ -9,6 +9,7 @@ function M.setup()
   end
 
   typescript.setup({
+    disable_commands = false,
     debug = false, -- enable debug logging for commands
     server = {
       cmd = { vim.fn.stdpath("data") .. "/mason/bin/typescript-language-server", "--stdio" },

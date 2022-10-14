@@ -9,8 +9,8 @@ function M.config()
     return
   end
 
-  local nvim_gps_status_ok, gps = pcall(require, "nvim-gps")
-  if not nvim_gps_status_ok then
+  local nvim_navic_status_ok, navic = pcall(require, "nvim-navic")
+  if not nvim_navic_status_ok then
     return
   end
 
@@ -72,10 +72,15 @@ function M.config()
       lualine_y = {},
       lualine_z = {},
       lualine_c = {
-        { gps.get_location, cond = gps.is_available, color = { fg = colors.blue } },
+        { navic.get_location, cond = navic.is_available },
       },
       lualine_x = {
-        { git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available },
+        {
+          function()
+            return truncating_label(git_blame.get_current_blame_text(), 48)
+          end,
+          cond = git_blame.is_blame_text_available
+        },
       },
     },
     inactive_sections = {

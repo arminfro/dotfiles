@@ -271,7 +271,7 @@ packer.startup({
     -- smoothly navigate between splits and panes
     use({
       "numToStr/Navigator.nvim",
-      tag = "v0.4.* ",
+      -- tag = "v0.4.* ",
       config = function()
         require("Navigator").setup({})
         require("plugins.legendary").navigator()
@@ -515,13 +515,15 @@ packer.startup({
               "simrat39/symbols-outline.nvim",
               event = "BufRead",
               setup = function()
+                require("symbols-outline").setup()
                 require("plugins.symbols-outline").setup()
               end,
             },
             {
               -- LSP enhancement
               "ray-x/navigator.lua",
-              -- event = "BufRead",
+              -- tag = "v0.4.*",
+              event = "BufRead",
               config = function()
                 require("plugins.lsp.navigator").config()
                 require("plugins.legendary").lsp_navigator()
@@ -531,6 +533,10 @@ packer.startup({
                 { "neovim/nvim-lspconfig" },
               },
             },
+            {
+              -- lsp bufferline component
+              "SmiteshP/nvim-navic",
+            }
             -- {
             --   "mfussenegger/nvim-dap",
             --   requires = {
@@ -814,7 +820,10 @@ packer.startup({
     -- adds indentation guides to all lines
     use({
       "lukas-reineke/indent-blankline.nvim",
-      event = "BufRead",
+      -- event = "BufRead",
+      -- config = function()
+      --   vim.g.indent_blankline_disable_warning_message = false
+      -- end
     })
 
     -- highlights which characters to target for f, F and family.
@@ -855,8 +864,6 @@ packer.startup({
     -- temporally deactivated
     -- use({
     --   "j-hui/fidget.nvim",
-    --   -- after = "rebelot/kanagawa.nvim",
-    --   -- requires = { "nvim-treesitter/nvim-treesitter" },
     --   config = function()
     --     require("fidget").setup({
     --       window = {
@@ -886,28 +893,20 @@ packer.startup({
       requires = {
         "kyazdani42/nvim-web-devicons",
         "rebelot/kanagawa.nvim",
-        {
-          -- lsp bufferline component
-          "SmiteshP/nvim-gps",
-          after = "nvim-treesitter",
-          config = function()
-            require("nvim-gps").setup()
-          end,
-        },
       },
     })
 
     -- Statusline
     use({
       "nvim-lualine/lualine.nvim",
-      after = "bufferline.nvim",
+      -- after = "bufferline.nvim",
       event = "BufRead",
       config = function()
         require("plugins.lualine").config()
       end,
       requires = {
         "rebelot/kanagawa.nvim",
-        "SmiteshP/nvim-gps",
+        "SmiteshP/nvim-navic",
         {
           -- Show commit info at current line on cursorhold as virtual-text
           "f-person/git-blame.nvim",
