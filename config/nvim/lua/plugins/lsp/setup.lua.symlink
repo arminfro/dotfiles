@@ -104,7 +104,16 @@ M.config = function()
       })
     end,
     ["sumneko_lua"] = function()
-      lspconfig.sumneko_lua.setup(require("lua-dev").setup(require("plugins.lsp.server-settings.sumneko_lua")))
+      require("neodev").setup({
+        -- add any options here, or leave empty to use the default settings
+      })
+      lspconfig.sumneko_lua.setup({ settings = {
+        Lua = {
+          completion = {
+            callSnippet = "Replace"
+          }
+        }
+      } })
     end,
     ["tsserver"] = function()
       require("plugins.lsp.server-settings.typescript-lsp").setup()

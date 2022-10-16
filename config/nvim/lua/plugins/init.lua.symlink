@@ -457,7 +457,7 @@ packer.startup({
             -- json,yml, schema definition
             { "b0o/schemastore.nvim" },
             -- nvim lua api type_definition
-            { "folke/lua-dev.nvim" }, -- lua vim api completion
+            { "folke/neodev.nvim" }, -- lua vim api completion
             -- completion plugin for lsp
             { "hrsh7th/cmp-nvim-lsp" },
             -- Show function signature when you type
