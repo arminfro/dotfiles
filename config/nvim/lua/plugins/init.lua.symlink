@@ -28,7 +28,7 @@ packer.startup({
       end,
     })
 
-    -- Optimiser
+    -- Boost startup time
     use({
       "lewis6991/impatient.nvim",
     })
@@ -52,20 +52,19 @@ packer.startup({
       "nvim-lua/popup.nvim",
     })
 
-    -- Boost startup time
     -- todo, set filetype on .symlink ending
     use({
       "nathom/filetype.nvim",
     })
 
     -- Cursorhold fix
-    use({
-      "antoinemadec/FixCursorHold.nvim",
-      event = "BufRead",
-      config = function()
-        vim.g.cursorhold_updatetime = 100
-      end,
-    })
+    -- use({
+    --   "antoinemadec/FixCursorHold.nvim",
+    --   event = "BufRead",
+    --   config = function()
+    --     vim.g.cursorhold_updatetime = 100
+    --   end,
+    -- })
 
     -- Icons
     use({
@@ -74,9 +73,6 @@ packer.startup({
         require("plugins.icons").config()
       end,
     })
-
-    -- sane config defaults
-    -- use("tpope/vim-sensible")
 
     -- Focus on code in floating window
     use({
@@ -189,7 +185,7 @@ packer.startup({
     })
 
     -- collection of language packs
-    use({ "sheerun/vim-polyglot", event = "BufEnter" })
+    -- use({ "sheerun/vim-polyglot", event = "BufEnter" })
 
     -- Search for what's visualized, by *
     use({ "nelstrom/vim-visual-star-search", event = "BufEnter" })
@@ -743,10 +739,10 @@ packer.startup({
     })
 
     -- extends vim's % key to language-specific words instead of just single characters.
-    use({
-      "andymass/vim-matchup",
-      event = "BufRead",
-    })
+    -- use({
+    --   "andymass/vim-matchup",
+    --   event = "BufRead",
+    -- })
 
     -- Terminal
     use({
@@ -818,13 +814,13 @@ packer.startup({
     })
 
     -- adds indentation guides to all lines
-    use({
-      "lukas-reineke/indent-blankline.nvim",
-      -- event = "BufRead",
-      -- config = function()
-      --   vim.g.indent_blankline_disable_warning_message = false
-      -- end
-    })
+    -- use({
+    --   "lukas-reineke/indent-blankline.nvim",
+    --   -- event = "BufRead",
+    --   -- config = function()
+    --   --   vim.g.indent_blankline_disable_warning_message = false
+    --   -- end
+    -- })
 
     -- highlights which characters to target for f, F and family.
     use({
