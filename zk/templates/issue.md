@@ -14,17 +14,17 @@ header-includes:
   - |
     \usepackage[margins=raggedright]{floatrow}
 title: {{title}}
-created: {{date now 'timestamp'}}
+created: {{format-date now 'timestamp'}}
 course: {{dir}}
 aliases:
   - {{title}}
-  - {{date now 'timestamp'}}
+  - {{format-date now 'timestamp'}}
 author: {{ extra.author }}
 tags:
   - {{ title }}
   - {{ dir }}
-  - {{ date now 'CW_%V/%y' }}
-  - {{ date now '%B/%y' }}
+  - {{ format-date now 'CW_%V/%y' }}
+  - {{ format-date now '%B/%y' }}
 ---
 
 # {{title}} {{extra.branch}}

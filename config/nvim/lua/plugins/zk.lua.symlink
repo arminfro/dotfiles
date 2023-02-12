@@ -26,13 +26,13 @@ function M.config()
 
   commands.add("ZkNewTask", function(options)
     options = options or {}
-    options = vim.tbl_extend("force", options, { dir = "tasks", title = vim.fn.input("Title: ") })
+    options = vim.tbl_extend("force", options, { dir = "tasks", title = vim.fn.input({prompt = "Title: "}) })
     zk.new(options)
   end)
 
   commands.add("ZkNewDefault", function(options)
     options = options or {}
-    options = vim.tbl_extend("force", options, { title = vim.fn.input("Title: ") })
+    options = vim.tbl_extend("force", options, { title = vim.fn.input({prompt = "Title: "}) })
     zk.new(options)
   end)
 

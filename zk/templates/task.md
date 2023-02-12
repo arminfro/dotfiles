@@ -14,20 +14,20 @@ pandoc_:
 header-includes:
   - |
     \usepackage[margins=raggedright]{floatrow}
-created: {{date now 'timestamp'}}
+created: {{format-date now 'timestamp'}}
 course: {{dir}}
 aliases:
   - {{title}}
-  - {{date now 'timestamp'}}
+  - {{format-date now 'timestamp'}}
 author: {{ extra.author }}
 tags:
   - {{ extra.tags }}
   - {{ dir }}
-  - {{ date now 'CW_%V/%y' }}
-  - {{ date now '%B/%y' }}
+  - {{ format-date now 'CW_%V/%y' }}
+  - {{ format-date now '%B/%y' }}
 ---
 
-# Task: {{ title }}
+# Task: {{title}}
 
 ## What needs to be done
 

@@ -37,7 +37,9 @@ packer.startup({
     use({
       "rcarriga/nvim-notify",
       config = function()
-        require("notify").setup({})
+        require("notify").setup({
+          background_colour = "#000000",
+        })
         vim.notify = require("notify")
       end,
     })
@@ -121,12 +123,35 @@ packer.startup({
     --   end,
     -- })
 
-    -- shows thin vertical lines for indentation
+    -- adds indentation guides to all lines
     use({
-      "Yggdroot/indentLine",
-      event = "BufRead",
+      "lukas-reineke/indent-blankline.nvim",
+      -- event = "BufRead",
       config = function()
-        vim.g.indentLine_color_term = 240
+        -- vim.g.indent_blankline_disable_warning_message = false
+        require("indent_blankline").setup({
+          space_char_blankline = " ",
+          show_current_context = true,
+          show_current_context_start = true,
+        })
+      end,
+    })
+
+    -- highlighting the whole area between matching delimiters ('{}' '[]' '()' '<>')
+    use({
+      "rareitems/hl_match_area.nvim",
+      config = function()
+        require("hl_match_area").setup()
+      end,
+    })
+
+    -- highlighting word under the cursor (only for visible lines)
+    use({
+      "tzachar/local-highlight.nvim",
+      config = function()
+        require("local-highlight").setup({
+          hlgroup = "TSDefinitionUsage",
+        })
       end,
     })
 
@@ -142,14 +167,21 @@ packer.startup({
       end,
     })
 
-    -- scrollbar on the right
     use({
-      "lewis6991/satellite.nvim",
+      "kevinhwang91/nvim-hlslens",
       config = function()
-        require("satellite").setup()
-        vim.api.nvim_set_hl(0, "ScrollView", { bg = require("kanagawa.colors").setup().dragonBlue })
+        -- require('hlslens').setup() is not required
+        require("scrollbar.handlers.search").setup({})
       end,
-      requires = "rebelot/kanagawa.nvim",
+      requires = { "petertriho/nvim-scrollbar" },
+    })
+
+    -- -- scrollbar on the right
+    use({
+      "petertriho/nvim-scrollbar",
+      config = function()
+        require("scrollbar").setup()
+      end,
     })
 
     -- reasonable defaults for most search-related vim features
@@ -185,7 +217,7 @@ packer.startup({
     })
 
     -- collection of language packs
-    -- use({ "sheerun/vim-polyglot", event = "BufEnter" })
+    use({ "sheerun/vim-polyglot", event = "BufEnter" })
 
     -- Search for what's visualized, by *
     use({ "nelstrom/vim-visual-star-search", event = "BufEnter" })
@@ -257,8 +289,13 @@ packer.startup({
     -- File explorer
     -- todo, may exchange with nvim-neo-tree/neo-tree.nvim
     use({
-      "kyazdani42/nvim-tree.lua",
-      event = "BufRead",
+      "nvim-neo-tree/neo-tree.nvim",
+      branch = "v2.x",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+        "MunifTanjim/nui.nvim",
+      },
       config = function()
         require("plugins.tree").config()
       end,
@@ -315,6 +352,7 @@ packer.startup({
 
     use({
       "nvim-telescope/telescope.nvim",
+      tag = "0.1.*",
       requires = {
         "gbprod/yanky.nvim",
         "kdheepak/lazygit.nvim",
@@ -332,6 +370,7 @@ packer.startup({
         "benfowler/telescope-luasnip.nvim",
         "LinArcX/telescope-changes.nvim",
         "olimorris/persisted.nvim",
+        "stevearc/aerial.nvim",
         -- "folke/trouble.nvim",
       },
       config = function()
@@ -345,6 +384,28 @@ packer.startup({
       requires = { "nvim-telescope/telescope.nvim" },
       run = "make",
     })
+
+    use({
+      "jackMort/ChatGPT.nvim",
+      config = function()
+        require("chatgpt").setup({
+          -- optional configuration
+        })
+      end,
+      requires = {
+        "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim",
+      },
+    })
+
+    -- animate cursors movements
+    -- use({
+    --   "echasnovski/mini.nvim",
+    --   config = function ()
+    --     require('mini.animate').setup()
+    --   end
+    -- })
 
     -- gives yank history
     use({
@@ -360,6 +421,7 @@ packer.startup({
       config = function()
         require("persisted").setup({
           use_git_branch = true,
+          branch_separator = "@@",
         })
       end,
     })
@@ -407,6 +469,15 @@ packer.startup({
               },
             },
           },
+        },
+        {
+          "roobert/tailwindcss-colorizer-cmp.nvim",
+          -- optionally, override the default options:
+          config = function()
+            require("tailwindcss-colorizer-cmp").setup({
+              color_square_width = 2,
+            })
+          end,
         },
         { "lukas-reineke/cmp-under-comparator" },
         -- completion for buffers
@@ -480,13 +551,13 @@ packer.startup({
               end,
             },
             {
-              -- typescript lsp utilities
-              "jose-elias-alvarez/typescript.nvim",
-            },
-            {
               -- linter which integrates into lsp
               "jose-elias-alvarez/null-ls.nvim",
-              requires = { "nvim-lua/plenary.nvim" },
+              requires = {
+                "nvim-lua/plenary.nvim",
+                -- typescript lsp utilities
+                "jose-elias-alvarez/typescript.nvim",
+              },
               config = require("plugins.null-ls").config,
             },
             {
@@ -507,19 +578,27 @@ packer.startup({
               end,
             },
             {
+              "stevearc/aerial.nvim",
+              config = function()
+                require("aerial").setup({
+                  layout = { min_width = 20 },
+                  manage_folds = true,
+                })
+              end,
+            },
+            {
               -- tree like view for symbols using lsp
               "simrat39/symbols-outline.nvim",
-              event = "BufRead",
-              setup = function()
-                require("symbols-outline").setup()
+              config = function()
                 require("plugins.symbols-outline").setup()
+                require("plugins.legendary").symbols_outline()
               end,
             },
             {
               -- LSP enhancement
               "ray-x/navigator.lua",
               -- tag = "v0.4.*",
-              event = "BufRead",
+              -- event = "BufRead",
               config = function()
                 require("plugins.lsp.navigator").config()
                 require("plugins.legendary").lsp_navigator()
@@ -527,12 +606,22 @@ packer.startup({
               requires = {
                 { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
                 { "neovim/nvim-lspconfig" },
+                { "nvim-treesitter/nvim-treesitter" },
               },
             },
             {
-              -- lsp bufferline component
+              -- lsp navigation component
               "SmiteshP/nvim-navic",
-            }
+              config = function()
+                require("nvim-navic").setup({
+                  icons = {
+                    Constant = " ",
+                  },
+                })
+                vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+              end,
+            },
+
             -- {
             --   "mfussenegger/nvim-dap",
             --   requires = {
@@ -557,6 +646,14 @@ packer.startup({
           },
         },
       },
+    })
+
+    use({
+      "luukvbaal/statuscol.nvim",
+      config = function()
+        require("statuscol").setup({ setopt = true })
+        -- vim.o.statuscolumn = "%@v:lua.ScFa@%C%T%@v:lua.ScLa@%s%T@v:lua.ScNa@%=%{v:lua.ScLn()}%T"
+      end,
     })
 
     -- window picker
@@ -594,13 +691,13 @@ packer.startup({
     use({
       "axelvc/template-string.nvim",
       config = function()
-        require('template-string').setup({
-          filetypes = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' },
+        require("template-string").setup({
+          filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
           jsx_brackets = true, -- must add brackets to jsx attributes
           remove_template_string = false, -- remove backticks when there are no template string
         })
       end,
-      requires = "nvim-treesitter/nvim-treesitter"
+      requires = "nvim-treesitter/nvim-treesitter",
     })
 
     -- use coverage log to display coverage
@@ -608,23 +705,23 @@ packer.startup({
       "andythigpen/nvim-coverage",
       requires = "nvim-lua/plenary.nvim",
       config = function()
-        require('coverage').setup({})
+        require("coverage").setup({})
       end,
     })
 
     use({
       "nvim-neotest/neotest",
       requires = {
-        'haydenmeade/neotest-jest',
+        "haydenmeade/neotest-jest",
       },
       config = function()
         require("neotest").setup({
           adapters = {
-            require('neotest-jest')({
+            require("neotest-jest")({
               jestCommand = "npm test --",
               -- jestConfigFile = "custom.jest.config.ts",
               env = { CI = true },
-              cwd = function(path)
+              cwd = function()
                 return vim.fn.getcwd()
               end,
             }),
@@ -683,16 +780,21 @@ packer.startup({
       end,
     })
 
+    -- Commands: TSContextEnable, TSContextDisable and TSContextToggle
+    use({
+      "nvim-treesitter/nvim-treesitter-context",
+      config = function()
+        vim.api.nvim_command("hi TreesitterContext gui=none guisp=Grey")
+        vim.api.nvim_command("hi TreesitterContextBottom gui=underline guisp=Grey")
+      end,
+    })
+
+    use({
+      "haringsrob/nvim_context_vt",
+    })
+
     -- editorconfig support
     use("editorconfig/editorconfig-vim")
-
-    -- stabilize buffer content on window open/close events
-    -- use({
-    --   "luukvbaal/stabilize.nvim",
-    --   config = function()
-    --     require("stabilize").setup()
-    --   end,
-    -- })
 
     -- nice ui elements like select and input
     use({
@@ -714,18 +816,11 @@ packer.startup({
       end,
     })
 
-    -- Tags generation
-    -- use({
-    --   "ludovicchabant/vim-gutentags",
-    --   disable = not if_exe_exists("ctags"),
-    --   event = "BufRead",
-    -- })
-
     -- AutoSave
     use({
       "pocco81/auto-save.nvim",
       event = "BufRead",
-      commit = '8df684b',
+      commit = "8df684b",
       config = function()
         require("autosave").setup({
           -- breaking change after locked commit, otherwise:
@@ -737,12 +832,6 @@ packer.startup({
         })
       end,
     })
-
-    -- extends vim's % key to language-specific words instead of just single characters.
-    -- use({
-    --   "andymass/vim-matchup",
-    --   event = "BufRead",
-    -- })
 
     -- Terminal
     use({
@@ -761,9 +850,6 @@ packer.startup({
         require("spellsitter").setup()
       end,
     })
-
-    -- filetype detection
-    -- use({ "spywhere/detect-language.nvim", event = "BufRead" })
 
     -- Syntax highlighting
     use({
@@ -813,15 +899,6 @@ packer.startup({
       },
     })
 
-    -- adds indentation guides to all lines
-    -- use({
-    --   "lukas-reineke/indent-blankline.nvim",
-    --   -- event = "BufRead",
-    --   -- config = function()
-    --   --   vim.g.indent_blankline_disable_warning_message = false
-    --   -- end
-    -- })
-
     -- highlights which characters to target for f, F and family.
     use({
       "kepbod/quick-scope",
@@ -858,17 +935,17 @@ packer.startup({
 
     -- standalone UI for nvim-lsp progress, currently issue with buffers,
     -- temporally deactivated
-    -- use({
-    --   "j-hui/fidget.nvim",
-    --   config = function()
-    --     require("fidget").setup({
-    --       window = {
-    --         relative = "editor",
-    --         blend = 10,
-    --       },
-    --     })
-    --   end,
-    -- })
+    use({
+      "j-hui/fidget.nvim",
+      config = function()
+        require("fidget").setup({
+          window = {
+            relative = "editor",
+            blend = 10,
+          },
+        })
+      end,
+    })
 
     -- highlights function arguments usage same as argument itself
     use({
@@ -879,10 +956,30 @@ packer.startup({
       end,
     })
 
+    -- ts node actions, like case swapping, boolean toggling, more...
+    -- seems buggy, not stable, look later
+    -- use({
+    --   'ckolkey/ts-node-action',
+    --   requires = { 'nvim-treesitter',
+    --     'jose-elias-alvarez/null-ls.nvim'
+    --   },
+    --   config = function()
+    --     require("ts-node-action").setup({})
+    --     require "null-ls".register({
+    --       name = "ts-node-actions",
+    --       method = { require "null-ls".methods.CODE_ACTION },
+    --       filetypes = { "_all" },
+    --       generator = {
+    --         fn = require("ts-node-action").available_actions
+    --       }
+    --     })
+    --   end
+    -- })
+
     -- Bufferline
     use({
       "akinsho/bufferline.nvim",
-      tag = "v2.*",
+      tag = "v3.*",
       config = function()
         require("plugins.bufferline").config()
       end,
@@ -904,14 +1001,14 @@ packer.startup({
         "rebelot/kanagawa.nvim",
         "SmiteshP/nvim-navic",
         {
-          -- Show commit info at current line on cursorhold as virtual-text
+          -- Show commit info at current line on cursorhold
           "f-person/git-blame.nvim",
           disable = not if_exe_exists("git"),
           config = function()
             vim.g.gitblame_display_virtual_text = 0
             vim.g.gitblame_date_format = "%r"
             vim.g.gitblame_highlight_group = "Question"
-            vim.g.gitblame_message_template = "<summary> • <date>"
+            vim.g.gitblame_message_template = "<date> • <summary>"
           end,
         },
       },
@@ -925,6 +1022,7 @@ packer.startup({
       event = "BufRead",
       config = function()
         require("plugins.gitsigns").config()
+        require("scrollbar.handlers.gitsigns").setup()
       end,
     })
 
@@ -966,8 +1064,8 @@ packer.startup({
       "lervag/vimtex",
       ft = "tex",
       config = function()
-        vim.g.vimtex_view_method = 'zathura'
-      end
+        vim.g.vimtex_view_method = "zathura"
+      end,
     })
 
     -- reveal the hidden message from Git under the cursor quickly
@@ -1017,30 +1115,45 @@ packer.startup({
       after = "legendary.nvim",
     })
 
-    -- highlights words under cursor
-    use({
-      "yamatsum/nvim-cursorline",
-      branch = "main",
-      config = function()
-        require("nvim-cursorline").setup({})
-      end,
-    })
-
     -- line joining and splitting
     use({
-      "AndrewRadev/splitjoin.vim",
-    })
-
-    use({
-      "gbprod/substitute.nvim",
+      "Wansmer/treesj",
+      requires = { "nvim-treesitter" },
       config = function()
-        require("substitute").setup({})
-        vim.keymap.set("n", "s", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
-        vim.keymap.set("n", "ss", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
-        vim.keymap.set("n", "S", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
-        vim.keymap.set("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
+        require("treesj").setup({ --[[ your config ]]
+          use_default_keymaps = false,
+          max_join_length = 200,
+        })
+        require("plugins.legendary").treesj()
       end,
     })
+
+    -- useless inspiration
+    use({
+      "eandrju/cellular-automaton.nvim",
+      config = function()
+        require("plugins.legendary").ceullular_automaton()
+      end,
+    })
+
+    -- bionic reading with FSToggle
+    use({
+      "nullchilly/fsread.nvim",
+      -- config = function()
+      -- vim.api.nvim_command('autocmd BufRead *.md FSToggle')
+      -- end,
+    })
+
+    -- use({
+    --   "gbprod/substitute.nvim",
+    --   config = function()
+    --     require("substitute").setup({})
+    --     vim.keymap.set("n", "s", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
+    --     vim.keymap.set("n", "ss", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
+    --     vim.keymap.set("n", "S", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
+    --     vim.keymap.set("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
+    --   end,
+    -- })
 
     -- motion plugin, uses s
     -- use({
@@ -1061,10 +1174,16 @@ packer.startup({
     })
 
     -- markdown helper
-    -- <C-Space> - create and toggle checkboxes
-    -- <C-k> - create link from selection
-    -- <C-b> - bold visual selection
-    use({ "walterl/downtools", ft = "markdown" })
+    -- <C-k> add link to visually selected text
+    -- <C-b> toggle visually selected text bold
+    -- <C-i> toggle visually selected text italic
+    -- <C-c> toggle visually selected text inline code
+    use({
+      "antonk52/markdowny.nvim",
+      config = function()
+        require("markdowny").setup({ filetypes = { "markdown", "txt" } })
+      end,
+    })
 
     -- markdown set of functions and and mappings to those functions
     -- which make it easy to navigate and manipulate markdown notebooks/journals/wikis
@@ -1129,9 +1248,21 @@ packer.startup({
 
         abbrev_man.setup({
           load_natural_dictionaries_at_startup = true,
+          load_programming_dictionaries_at_startup = true,
           natural_dictionaries = {
             ["nt_en"] = {},
             ["nt_de"] = require("plugins.abbrev").german_vowel_dict,
+          },
+          programming_dictionaries = {
+            ["pr_ts"] = {
+              ["cosnt"] = "const",
+              ["conts"] = "const",
+              ["esle"] = "else",
+              ["fi"] = "if",
+              ["ipmort"] = "import",
+              ["improt"] = "import",
+              ["impotr"] = "import",
+            },
           },
         })
       end,
@@ -1250,18 +1381,17 @@ packer.startup({
       "andrewferrier/debugprint.nvim",
       event = "BufRead",
       config = function()
-        require("debugprint").setup({
-        })
+        require("debugprint").setup({})
       end,
     })
 
     -- visualise and resolve gti conflicts
     use({
-      'akinsho/git-conflict.nvim',
+      "akinsho/git-conflict.nvim",
       tag = "*",
       config = function()
-        require('git-conflict').setup()
-      end
+        require("git-conflict").setup()
+      end,
     })
   end,
   config = {

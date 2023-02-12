@@ -33,19 +33,20 @@ function M.config()
       -- f.black,
       -- f.rubocop,
       f.rustfmt,
-      f.prettier_d_slim,
-      f.eslint_d,
-      d.eslint_d,
-      -- f.stylua.with({
-      --   extra_args = {
-      --     "--indent-type",
-      --     "Spaces",
-      --     "--indent-width",
-      --     "2",
-      --     "--quote-style",
-      --     "ForceDouble",
-      --   },
-      -- }),
+      f.prettierd,
+      -- f.eslint_d,
+      -- d.eslint_d,
+      f.stylua.with({
+        extra_args = {
+          "--indent-type",
+          "Spaces",
+          "--indent-width",
+          "2",
+          "--quote-style",
+          "ForceDouble",
+        },
+      }),
+      require("typescript.extensions.null-ls.code-actions"),
     },
   })
 end

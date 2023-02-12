@@ -26,7 +26,8 @@ function M.config()
   end
 
   local sources = {
-    { name = "nvim_lsp", max_item_count = 20, priority_weight = 110 },
+    { name = "nvim_lsp", max_item_count = 20, priority_weight = 120 },
+    { name = "luasnip", max_item_count = 7, priority_weight = 110 },
     { name = "nvim_lsp_signature_help", priority_weight = 100 },
     {
       name = "buffer",
@@ -39,7 +40,6 @@ function M.config()
       },
     },
     { name = "nvim_lua", priority_weight = 80 },
-    { name = "luasnip", priority_weight = 70 },
     { name = "path", priority_weight = 60 },
     -- { name = "tags", priority_weight = 50, keyword_length = 4 },
     -- {
@@ -53,7 +53,7 @@ function M.config()
     -- },
     -- { name = "emoji" },
     -- { name = "calc" },
-    -- { name = "git" },
+    { name = "git" },
   }
 
   local writing_sources = cmp.config.sources(vim.tbl_extend("force", sources, {
@@ -178,7 +178,7 @@ function M.config()
 
         vim_item.abbr = truncating_label(vim_item.abbr, 36)
 
-        return vim_item
+        return require("tailwindcss-colorizer-cmp").formatter(entry, vim_item)
       end,
     },
 
@@ -186,9 +186,6 @@ function M.config()
       documentation = {
         border = vim.g.floating_window_border_dark,
       },
-      -- completion = {
-      --   border = vim.g.floating_window_border_dark,
-      -- },
     },
   })
 

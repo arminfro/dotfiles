@@ -34,7 +34,8 @@ sudo dnf install -y gnome-tweaks keepassxc \
 sudo dnf install -y nemo nemo-audio-tab nemo-compare nemo-emblems nemo-extensions nemo-fileroller nemo-image-converter nemo-preview nemo-seahorse nemo-search-helpers
 xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.gnome.desktop.background show-desktop-icons false
-gsettings set org.nemo.desktop show-desktop-icons true
+# gsettings set org.nemo.desktop show-desktop-icons true
+gsettings set org.gnome.mutter overlay-key ''
 
 ## install vscode
 # sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc

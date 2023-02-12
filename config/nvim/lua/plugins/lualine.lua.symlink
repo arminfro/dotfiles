@@ -71,15 +71,13 @@ function M.config()
       lualine_b = {},
       lualine_y = {},
       lualine_z = {},
-      lualine_c = {
-        { navic.get_location, cond = navic.is_available },
-      },
+      lualine_c = {},
       lualine_x = {
         {
           function()
             return truncating_label(git_blame.get_current_blame_text(), 48)
           end,
-          cond = git_blame.is_blame_text_available
+          cond = git_blame.is_blame_text_available,
         },
       },
     },
@@ -106,12 +104,19 @@ function M.config()
   -- end
 
   ins_left({
+    "mode",
+    padding = { left = 2, right = 1 },
+  })
+
+  ins_left({
     "filename",
     cond = conditions.buffer_not_empty,
     color = { fg = colors.green },
     padding = { left = 2, right = 1 },
     path = 1,
   })
+
+  -- ins_left({ navic.get_location, cond = navic.is_available })
 
   ins_left({
     "diff",

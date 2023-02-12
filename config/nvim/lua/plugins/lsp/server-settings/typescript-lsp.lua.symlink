@@ -8,12 +8,13 @@ function M.setup()
     return
   end
 
+  require("plugins.legendary").typescript_lsp()
+
   typescript.setup({
     disable_commands = false,
     debug = false, -- enable debug logging for commands
     server = {
       cmd = { vim.fn.stdpath("data") .. "/mason/bin/typescript-language-server", "--stdio" },
-      on_attach = require("plugins.lsp.on_attach"),
       settings = {
         javascript = {
           inlayHints = {

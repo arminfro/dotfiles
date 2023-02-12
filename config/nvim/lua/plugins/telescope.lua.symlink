@@ -31,17 +31,18 @@ function M.config()
       layout_config = {
         prompt_position = "top",
         width = 0.95,
-        preview_cutoff = 120,
-        horizontal = {
-          preview_width = function(_, cols, _)
-            if cols < 120 then
-              return math.floor(cols * 0.5)
-            end
-            return math.floor(cols * 0.6)
-          end,
-          mirror = false,
-        },
-        vertical = { mirror = false },
+        -- preview_width = 0.4,
+        -- preview_cutoff = 120,
+        -- horizontal = {
+        --   preview_width = function(_, cols, _)
+        --     if cols < 120 then
+        --       return math.floor(cols * 0.5)
+        --     end
+        --     return math.floor(cols * 0.6)
+        --   end,
+        mirror = false,
+        -- },
+        -- vertical = { mirror = false },
       },
       vimgrep_arguments = {
         "rg",
@@ -52,7 +53,8 @@ function M.config()
         "--column",
         "--smart-case",
         "--hidden",
-        "--glob=!{.git,node_modules,vendor,lib,package-lock.json,yarn.lock}",
+        "--ignore",
+        "--glob=!{.git,node_modules,vendor,lib,package-lock.json,yarn.lock,data,**/*.tsx.snap,./data/parsed/**/*,./data/raw/**/*}",
       },
       mappings = {
         i = {
@@ -77,7 +79,7 @@ function M.config()
         },
       },
       file_ignore_patterns = {},
-      path_display = { shorten = 5 },
+      path_display = { "relative" },
       winblend = 0,
       border = {},
       borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
@@ -102,12 +104,12 @@ function M.config()
       },
 
       ["ui-select"] = {
-        require("telescope.themes").get_dropdown {}
+        require("telescope.themes").get_dropdown({}),
       },
 
       file_browser = {
         -- disables netrw and use telescope-file-browser in its place
-        hijack_netrw = true
+        hijack_netrw = true,
       },
 
       frecency = {
@@ -143,6 +145,7 @@ function M.config()
   telescope.load_extension("conventional_commits")
   telescope.load_extension("luasnip")
   telescope.load_extension("changes")
+  telescope.load_extension("aerial")
   -- no shortcuts yet
   telescope.load_extension("notify")
   telescope.load_extension("packer")

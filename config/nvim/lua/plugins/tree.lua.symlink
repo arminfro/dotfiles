@@ -3,107 +3,40 @@
 local M = {}
 
 function M.config()
-  local status_ok, nvimtree = pcall(require, "nvim-tree")
+  local status_ok, neotree = pcall(require, "neo-tree")
   if not status_ok then
     return
   end
 
-  nvimtree.setup({
-    -- ignore = { ".git", "node_modules", ".cache" },
-    ignore_ft_on_setup = {
-      "startify",
+  neotree.setup({
+    close_if_last_window = true,
+    enable_diagnostics = false,
+    source_selector = {
+      winbar = true,
+      content_layout = "center",
     },
-    -- indent_markers = 1,
-    -- git_hl = 1,
-    -- highlight_opened_files = 1,
-    -- root_folder_modifier = ":~",
-    -- group_empty = 1,
-    -- disable_window_picker = 1,
-    -- icon_padding = " ",
-    -- respect_buf_cwd = 1,
-    -- refresh_wait = 500,
-    -- window_picker_exclude = {
-    --   filetype = {
-    --     "notify",
-    --     "packer",
-    --     "qf",
-    --   },
-    --   buftype = {
-    --     "terminal",
-    --   },
-    -- },
-    -- icons = {
-    --   default = "",
-    --   symlink = "",
-    --   git = {
-    --     unstaged = "✗",
-    --     staged = "✓",
-    --     unmerged = "",
-    --     renamed = "➜",
-    --     untracked = "★",
-    --     deleted = "",
-    --     ignored = "◌",
-    --   },
-    --   folder = {
-    --     arrow_open = "",
-    --     arrow_closed = "",
-    --     default = "",
-    --     open = "",
-    --     empty = "",
-    --     empty_open = "",
-    --     symlink = "",
-    --     symlink_open = "",
-    --   },
-    --   lsp = {
-    --     hint = "",
-    --     info = "",
-    --     warning = "",
-    --     error = "",
-    --   },
-    -- },
-    filters = {
-      dotfiles = false,
-      custom = {
-        -- ".git",
-        -- "node_modules",
-        ".cache",
+    default_component_configs = {
+      indent = {
+        padding = 0,
       },
     },
-    disable_netrw = true,
-    hijack_netrw = true,
-    open_on_tab = true,
-    hijack_cursor = true,
-    -- hide_root_folder = true,
-    update_cwd = true,
-    update_focused_file = {
-      enable = true,
-      update_cwd = true,
-      ignore_list = {},
-    },
-    diagnostics = {
-      enable = true,
-      icons = {
-        hint = "",
-        info = "",
-        warning = "",
-        error = "",
+    window = {
+      width = 30,
+      mappings = {
+        ["o"] = "open",
       },
     },
-    view = {
-      width = 25,
-      side = "left",
-      number = false,
-      relativenumber = false,
-      signcolumn = "yes",
+    filesystem = {
+      follow_current_file = true,
+      hijack_netrw_behavior = "open_current",
+      use_libuv_file_watcher = true,
     },
-    git = {
-      enable = true,
-      ignore = false,
-      timeout = 500,
+    event_handlers = {
+      { event = "neo_tree_buffer_enter", handler = function(_) vim.opt_local.signcolumn = "auto" end },
     },
   })
 
-  require("plugins.legendary").nvim_tree()
+  require("plugins.legendary").neo_tree()
 end
 
 return M

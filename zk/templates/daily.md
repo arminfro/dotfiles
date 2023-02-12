@@ -1,6 +1,6 @@
 ---
 id: {{ id }}
-created: {{date now 'timestamp'}}
+created: {{format-date now 'timestamp'}}
 keywords: []
 abstract: |
 subtitle:
@@ -15,15 +15,15 @@ header-includes:
     \usepackage[margins=raggedright]{floatrow}
 course: {{dir}}
 aliases:
-  - {{date now 'timestamp'}}
+  - {{format-date now 'timestamp'}}
 author: {{ extra.author }}
 tags:
   - daily
-  - {{ date now 'CW_%V/%y' }}
-  - {{ date now '%B/%y' }}
+  - {{ format-date now 'CW_%V/%y' }}
+  - {{ format-date now '%B/%y' }}
 ---
 
-# {{ date now "full" }}
+# {{format-date now "full"}}
 
 ## Tickets
 

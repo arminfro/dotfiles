@@ -9,7 +9,7 @@ local open_and_restore_focus_cb = require("core.utils").open_and_restore_focus_c
 
 -- function M.tree_climber()
 --   local tc = require("tree-climber")
---   require("legendary").bind_keymaps({
+--   require("legendary").keymaps({
 --     -- { "H", tc.goto_parent, description = "TreeClimber TS AST jump to Parent", mode = { "n", "v", "o" }, opts },
 --     -- { "L", tc.goto_child, description = "TreeClimber TS AST jump to Child", mode = { "n", "v", "o" }, opts },
 --     { "J", tc.goto_next, description = "TreeClimber TS AST jump to Next", mode = { "n", "v", "o" }, opts },
@@ -18,14 +18,14 @@ local open_and_restore_focus_cb = require("core.utils").open_and_restore_focus_c
 -- end
 
 function M.maximize()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<leader>Z", require("maximize").toggle, description = "Toggle maximize window", mode = { "n", "v" }, opts },
   })
 end
 
 function M.toggleterm()
   local terminals = require("plugins.toggleterm").terminals()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<leader>th", terminals.htop, description = "Open Htop", mode = { "n", "v" }, opts },
     { "<leader>tj", terminals.node, description = "Open Node repl", mode = { "n", "v" }, opts },
     { "<leader>tt", terminals.ts_node, description = "Open TS-Node repl", mode = { "n", "v" }, opts },
@@ -36,25 +36,25 @@ function M.toggleterm()
 end
 
 function M.glow()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<leader>tg", ":Glow<CR>", description = "Open Glow Markdown renderer", mode = { "n", "v" }, opts },
   })
 end
 
-function M.which_key()
-  require("legendary").bind_keymaps({
-    { "<leader>k", ":WhichKey ''<CR>", description = "Open WhichKey", mode = { "n", "v" }, opts },
-  })
-end
+-- function M.which_key()
+--   require("legendary").keymaps({
+--     { "<leader>k", ":WhichKey ''<CR>", description = "Open WhichKey", mode = { "n", "v" }, opts },
+--   })
+-- end
 
 function M.lazygit()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<leader>gl", ":LazyGit<CR>", description = "Open LazyGit", mode = { "n", "v" }, opts },
   })
 end
 
 function M.git_messenger()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     {
       "<leader>gm",
       ":GitMessenger<CR>",
@@ -66,7 +66,7 @@ function M.git_messenger()
 end
 
 function M.gitlinker()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     -- leader gy is actual keymapping, just let it be set by plugin, works better
     -- {
     --   "<leader>gy",
@@ -93,21 +93,21 @@ function M.gitlinker()
 end
 
 function M.fugitive()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<leader>gs", ":Git<CR>", mode = { "n" }, description = "Git status", opts },
     { "<leader>gc", ":Git commit<CR>", mode = { "n" }, description = "Git commit", opts },
   })
 end
 
 function M.diffview()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<leader>gd", ":DiffviewOpen<CR>", description = "Open Diffview for project", mode = { "n" }, opts },
     -- { "<leader>dc", ":DiffviewClose<CR>", description = "Close Diffview", mode = { "n", "v" }, opts },
   })
 end
 
 function M.refactoring()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     {
       "<leader>re",
       ":lua require('refactoring').refactor('Extract Function')<CR>",
@@ -144,30 +144,30 @@ function M.neotest()
   local run_all_tests_in_file = function()
     neotest.run.run(vim.fn.expand("%"))
   end
-  require("legendary").bind_commands({
+  require("legendary").commands({
     { ":NeoTestRunAllInFile", run_all_tests_in_file, description = "Run all tests" },
     { ":NeoTestRunNearest", neotest.run.run, description = "Run nearest test" },
     { ":NeoTestAttachNearest", neotest.run.attach, description = "Attach to the nearest test" },
     { ":NeoTestOpenSummary", neotest.summary.open, description = "Open test run summary" },
     { ":NeoTestOpenOutput", neotest.output.open, description = "Open test run output" },
   })
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<leader>tn", neotest.run.run, description = "Run nearest test", mode = { "n", "v" }, opts },
     { "<leader>ta", run_all_tests_in_file, description = "Run all test", mode = { "n", "v" }, opts },
   })
 end
 
 function M.auto_pandoc()
-  require("legendary").bind_commands({
+  require("legendary").commands({
     { ":PandocMdConvert", "lua require('auto-pandoc').run_pandoc()", description = "Convert Md to Pdf" },
   })
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<leader>pm", ":PandocMdConvert<CR>", description = "Convert Md to Pdf", mode = { "n", "v" }, opts },
   })
 end
 
 function M.yode()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     {
       "<leader>f",
       ":YodeCreateSeditorFloating<CR>",
@@ -179,19 +179,19 @@ function M.yode()
 end
 
 function M.startify()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<F1>", ":Startify<CR>", description = "Open Startify", mode = { "n" }, opts },
   })
 end
 
 function M.symbols_outline()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<F9>", ":SymbolsOutline<CR>", description = "Toggle Symbols Outline", mode = { "n" }, opts },
   })
 end
 
 function M.bufferline()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<C-L>", ":BufferLineCycleNext<CR>", description = "Go to next buffer", mode = { "n" }, opts },
     { "<C-H>", ":BufferLineCyclePrev<CR>", description = "Go to prev buffer", mode = { "n" }, opts },
     { "[b", ":BufferLineMovePrev<CR>", description = "Move buffer to the right", mode = { "n" }, opts },
@@ -215,7 +215,7 @@ function M.bufferline()
 end
 
 function M.nvim_window()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     {
       "<leader>ww",
       require("nvim-window").pick,
@@ -227,7 +227,7 @@ function M.nvim_window()
 end
 
 function M.trouble()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     {
       "<F8>",
       open_and_restore_focus_cb(function()
@@ -241,7 +241,7 @@ function M.trouble()
 end
 
 function M.yanky()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     {
       "<leader>P",
       ":YankyRingHistory<CR>",
@@ -253,7 +253,7 @@ function M.yanky()
 end
 
 function M.docs_view()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<F11>", ":DocsViewToggle<CR>", description = "Show docs view Documentation", mode = { "n" }, opts },
   })
 end
@@ -261,10 +261,10 @@ end
 function M.lsp(bufnr)
   opts = { buffer = bufnr, noremap = true }
   local legendary = require("legendary")
-  legendary.bind_commands({
+  legendary.commands({
     { ":Format", "lua vim.lsp.buf.format()", description = "Format current buffer" },
   })
-  legendary.bind_keymaps({
+  legendary.keymaps({
     {
       "<space>d",
       "<cmd>lua vim.lsp.buf.definition()<CR>",
@@ -274,7 +274,7 @@ function M.lsp(bufnr)
     },
     {
       "<space>D",
-      "<cmd>lua vim.lsp.buf.declaration()<CR>",
+      "<cmd>lua vim.lsp.buf.type_definition()<CR>",
       description = "LSP, Go to declaration",
       mode = { "n" },
       opts,
@@ -298,7 +298,7 @@ function M.lsp(bufnr)
 end
 
 function M.typescript_lsp()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<space>ti", ":TypescriptAddMissingImports<CR>", description = "TS import all", mode = { "n" }, opts },
     {
       "<space>to",
@@ -312,7 +312,7 @@ function M.typescript_lsp()
 end
 
 function M.zk()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     {
       "<leader>zl",
       ":ZkNotes<CR>",
@@ -378,7 +378,7 @@ function M.zk()
       opts,
     },
   })
-  require("legendary").bind_commands({
+  require("legendary").commands({
     {
       ":ZkLastIssue",
       function()
@@ -402,28 +402,30 @@ function M.lsp_navigator()
   -- document_symbol = <function 8>,
   -- execute_command = <function 9>,
   -- format = <function 10>,
-  -- formatting = <function 11>,
-  -- formatting_seq_sync = <function 12>,
-  -- formatting_sync = <function 13>,
-  -- hover = <function 14>,
-  -- implementation = <function 15>,
-  -- incoming_calls = <function 16>,
-  -- list_workspace_folders = <function 17>,
-  -- outgoing_calls = <function 18>,
-  -- range_code_action = <function 19>,
-  -- range_formatting = <function 20>,
-  -- references = <function 21>,
-  -- remove_workspace_folder = <function 22>,
-  -- rename = <function 23>,
-  -- server_ready = <function 24>,
-  -- signature_help = <function 25>,
-  -- type_definition = <function 26>,
-  -- workspace_symbol = <function 27>
+  -- hover = <function 11>,
+  -- implementation = <function 12>,
+  -- incoming_calls = <function 13>,
+  -- list_workspace_folders = <function 14>,
+  -- outgoing_calls = <function 15>,
+  -- references = <function 16>,
+  -- remove_workspace_folder = <function 17>,
+  -- rename = <function 18>,
+  -- server_ready = <function 19>,
+  -- signature_help = <function 20>,
+  -- type_definition = <function 21>,
+  -- workspace_symbol = <function 22>
   -- }
   local buf = vim.lsp.buf
+
+  -- {
+  -- get_line_diagnostics = <function 1>,
+  -- get_namespace = <function 2>,
+  -- on_publish_diagnostics = <function 3>,
+  -- reset = <function 4>
+  -- }
   local diagnostic = vim.diagnostic
 
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     {
       "<space>h",
       buf.hover,
@@ -464,8 +466,8 @@ function M.lsp_navigator()
   })
 end
 
-function M.nvim_tree()
-  require("legendary").bind_keymaps({
+function M.neo_tree()
+  require("legendary").keymaps({
     {
       "<F7>",
       open_and_restore_focus_cb(function()
@@ -477,7 +479,7 @@ function M.nvim_tree()
     },
     {
       "<leader>f",
-      ":NvimTreeFindFile<CR>",
+      ":NeoTreeReveal<CR>",
       mode = { "n" },
       description = "Find current file in nvim-tree",
       opts,
@@ -486,7 +488,7 @@ function M.nvim_tree()
 end
 
 function M.http_rest()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     {
       "<leader>ar",
       "<Plug>RestNvim",
@@ -508,22 +510,31 @@ end
 function M.telescope()
   local telescope = require("telescope")
   local telescope_builtins = require("telescope.builtin")
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<F2>", telescope_builtins.builtin, mode = { "n", "v" }, description = "Fuzzy searches", opts },
     { "<F12>", telescope_builtins.help_tags, mode = { "n" }, description = "Fuzzy search helptags", opts },
-    {
-      "?",
-      telescope_builtins.current_buffer_fuzzy_find,
-      mode = { "n" },
-      description = "Fuzzy search current buffer",
-      opts,
-    },
+    -- {
+    --   "C-G",
+    --   function()
+    --     telescope_builtins.grep_string({ grep_open_files = true })
+    --   end,
+    --   mode = { "n" },
+    --   description = "Fuzzy search open buffers",
+    --   opts,
+    -- },
     { "<C-O>", telescope_builtins.commands, mode = { "n" }, description = "Fuzzy search command", opts },
     {
       "<C-A>",
-      telescope_builtins.live_grep,
+      "<cmd>FuzzySearch<CR>", -- telescope_builtins.live_grep,
       mode = { "n" },
-      description = "Search word",
+      description = "Fuzzy search word",
+      opts,
+    },
+    {
+      "<C-S>",
+      telescope_builtins.grep_string,
+      mode = { "n" },
+      description = "Search for word under the cursor",
       opts,
     },
     { "<C-N>", telescope_builtins.buffers, mode = { "n" }, description = "Fuzzy search buffer", opts },
@@ -551,9 +562,7 @@ function M.telescope()
     },
     {
       "<leader>p",
-      function()
-        telescope.extensions.yank_history.yank_history({})
-      end,
+      telescope.extensions.yank_history.yank_history,
       mode = { "n" },
       description = "Fuzzy git_status yank history",
       opts,
@@ -623,9 +632,7 @@ function M.telescope()
     },
     {
       "<leader>.p",
-      function()
-        telescope.extensions.project.project({})
-      end,
+      telescope.extensions.project.project,
       mode = { "n" },
       description = "Fuzzy search projects",
       opts,
@@ -649,6 +656,13 @@ function M.telescope()
       telescope_builtins.keymaps,
       mode = { "n" },
       description = "Fuzzy search keybindings",
+      opts,
+    },
+    {
+      "<leader>.t",
+      telescope.extensions.aerial.aerial,
+      mode = { "n" },
+      description = "Fuzzy search Types / Symbols in current buffer",
       opts,
     },
     {
@@ -688,15 +702,22 @@ function M.telescope()
       opts,
     },
   })
-  require("legendary").bind_commands({
+  require("legendary").commands({
     { ":SetFileType", telescope_builtins.filetypes, description = "Set Filetype" },
     {
-      ":FuzzSearch",
+      ":FuzzySearch",
       function()
         telescope_builtins.grep_string({ shorten_path = true, word_match = "-w", only_sort_text = true, search = "" })
       end,
       description = "Fuzzy search word",
-    }
+    },
+  })
+end
+
+function M.ceullular_automaton()
+  require("legendary").commands({
+    { ":MakeItRain", "CellularAutomaton make_it_rain", description = "Make it rain" },
+    { ":GameOfLife", "CellularAutomaton game_of_life", description = "Game of life" },
   })
 end
 
@@ -707,7 +728,7 @@ function M.luasnip()
 end
 
 function M.lsp_lines()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     {
       "<F6>",
       function()
@@ -725,7 +746,7 @@ end
 
 function M.fzf()
   -- todo, look for telescope replacement
-  -- require("legendary").bind_keymaps({
+  -- require("legendary").keymaps({
   --   {
   --     "<C-S>",
   --     "<ESC>:FzfLua lines<CR>",
@@ -737,7 +758,7 @@ function M.fzf()
 end
 
 function M.tabular()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<leader>t=", ":Tabularize /=<CR>", mode = { "v", "n" }, description = "Align text on '='", opts },
     { "<leader>t\"", ":Tabularize /\"<CR>", mode = { "v", "n" }, description = "Align text on '\"'", opts },
     { "<leader>t:", ":Tabularize /:\zs<CR>", mode = { "v", "n" }, description = "Align text on ':'", opts },
@@ -746,13 +767,13 @@ function M.tabular()
 end
 
 function M.undotree()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<F10>", ":UndotreeToggle<CR>", mode = { "v", "n" }, description = "Toggles Undo Tree", opts },
   })
 end
 
 function M.navigator()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     -- Window Movement
     { "<C-A-J>", ":NavigatorDown<CR>", mode = { "n" }, description = "Go a window down", opts },
     { "<C-A-K>", ":NavigatorUp<CR>", mode = { "n" }, description = "Go a window up", opts },
@@ -761,8 +782,16 @@ function M.navigator()
   })
 end
 
+function M.treesj()
+  require("legendary").keymaps({
+    -- Split and join functionality
+    { "gS", ":TSJSplit<CR>", mode = { "n" }, description = "Split current line", opts },
+    { "gJ", ":TSJJoin<CR>", mode = { "n" }, description = "Join current line", opts },
+  })
+end
+
 function M.packer()
-  require("legendary").bind_keymaps({
+  require("legendary").keymaps({
     { "<leader>ps", ":PackerSync<CR>", mode = { "n" }, description = "Packer sync config", opts },
     { "<leader>pc", ":PackerCompile<CR>", mode = { "n" }, description = "Packer compile conifg", opts },
     {
@@ -818,6 +847,14 @@ function M.config()
     -- Move selected line / block of text in visual mode
     { "K", ":move '<-2<CR>gv-gv", "x", mode = { "x" }, description = "", opts },
     { "J", ":move '>+1<CR>gv-gv", "x", mode = { "x" }, description = "", opts },
+
+    -- center cursor position on common jumping
+    { "n", "nzz", "n", mode = { "n" }, description = "", opts },
+    { "N", "Nzz", "n", mode = { "n" }, description = "", opts },
+    { "]h", "]hzz", "n", mode = { "n" }, description = "", opts },
+    { "[h", "[hzz", "n", mode = { "n" }, description = "", opts },
+    { "]j", "]jzz", "n", mode = { "n" }, description = "", opts },
+    { "[j", "[jzz", "n", mode = { "n" }, description = "", opts },
 
     -- Edit
     {

@@ -15,7 +15,8 @@ export SPACESHIP_VI_MODE_NORMAL="[]"
 export SPACESHIP_VI_MODE_INSERT="[]"
 
 # https://github.com/spaceship-prompt/spaceship-prompt/issues/1193
-# export SPACESHIP_PROMPT_ASYNC=false
+export SPACESHIP_PROMPT_ASYNC=false
+
 # export SPACESHIP_GIT_BRANCH_SHOW=true
 # export SPACESHIP_TIME_SHOW=true
 
