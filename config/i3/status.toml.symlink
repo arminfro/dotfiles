@@ -1,6 +1,9 @@
 # vim:filetype=toml
 
-icons = "awesome"
+icons_format = "{icon}"
+
+[icons]
+icons = "awesome4"
 
 # <<<<< Colors <<<<<
 # vi:syntax=toml
@@ -9,7 +12,7 @@ icons = "awesome"
 # Google Dark by Seth Wright (http://sethawright.com)
 
 [theme]
-name = "solarized-dark"
+theme = "solarized-dark"
 [theme.overrides]
 idle_bg = "#1d1f21"
 idle_fg = "#c5c8c6"
@@ -26,24 +29,25 @@ critical_fg = "#1d1f21"
 
 [[block]]
 block = "focused_window"
-max_width = 21
 
-[[block]]
-block = "custom"
-json = true
-command = ''' echo "{\"icon\":\"ping\",\"text\":\"`ping -c4 ping.archlinux.org | tail -n1 | cut -d'/' -f5`\"}" '''
-interval = 120
-on_click = "<command>"
+# todo, integrate those to new syntax:
 
-[[block]]
-block = "custom"
-command = "echo `uname` `uname -r | tr - . | cut -d. -f1-2`@`cat /etc/hostname`"
-interval = "once"
+# [[block]]
+# block = "custom"
+# json = true
+# command = ''' echo "{\"icon\":\"ping\",\"text\":\"`ping -c4 ping.archlinux.org | tail -n1 | cut -d'/' -f5`\"}" '''
+# interval = 120
+# click = "<command>"
 
-[[block]]
-block = "custom"
-command = "echo '\uf0ac' `sh ~/.dotfiles/bin/public-ip-info`"
-interval = 30
+# [[block]]
+# block = "custom"
+# command = "echo `uname` `uname -r | tr - . | cut -d. -f1-2`@`cat /etc/hostname`"
+# interval = "once"
+
+# [[block]]
+# block = "custom"
+# command = "echo '\uf0ac' `sh ~/.dotfiles/bin/public-ip-info`"
+# interval = 30
 
 # start docker daemon to use this block
 # [[block]]
@@ -51,10 +55,9 @@ interval = 30
 # interval = 2
 # format = "{running}/{total}"
 
-[[block]]
-block = "xrandr"
-icons = true
-interval = 2
+# [[block]]
+# block = "xrandr"
+# format = " $icon $brightness $resolution "
 
 [[block]]
 block = "sound"
@@ -67,37 +70,34 @@ block = "sound"
 
 [[block]]
 block = "disk_space"
-path = "/"
-alias = "/"
-format = "{icon} {used}/{total} ({available} free)"
-info_type = "used"
-interval = 20
-warning = 90
-alert = 98
+info_type = "available"
+alert_unit = "GB"
+alert = 10.0
+warning = 15.0
+format = " $icon $used/$total ($available free) "
 
 [[block]]
 block = "memory"
-format_mem = "{mem_used}/{mem_total}({mem_used_percents})"
-display_type = "memory"
-clickable = false
-interval = 5
-warning_mem = 80
-critical_mem = 95
+format = " $icon_swap $mem_used/$mem_total ($mem_total_used_percents) "
+interval = 30
+warning_mem = 70
+critical_mem = 90
 
 [[block]]
 block = "cpu"
 interval = 1
-format = "{barchart} {utilization} {frequency}"
+format = " $icon $barchart $utilization "
 
 [[block]]
 block = "load"
+format = " $icon 1m:$1m, 5m:$5m "
 interval = 1
-format = "{1m} {5m}"
 
 [[block]]
 block = "uptime"
 
 [[block]]
 block = "time"
-interval = 2
-format = "%a %d/%m %T"
+interval = 5
+format = " $timestamp.datetime(f:'%a %d/%m %T') "
+

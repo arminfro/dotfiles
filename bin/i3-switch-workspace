@@ -1,28 +1,28 @@
-#!/bin/ruby
-# frozen_string_literal: true
+#!/bin/bash
 
-require 'json'
+# Set the group size
+GROUP_SIZE=3
 
-DIVIDER = 3.0
+# Get the json from i3-msg
+I3_MSG=$(i3-msg -t get_workspaces)
 
-# Switch Workspace
-class SwitchWorkspace
-  def initialize(desired_workspace)
-    @workspace_area   = (find_focused_workspace / DIVIDER).ceil
-    @target_workspace = @workspace_area * DIVIDER - DIVIDER + desired_workspace
-    exec "i3-msg 'workspace #{Integer(@target_workspace)}'"
-  end
+# Find the object with "focused":true and get its "num" value
+CURRENT_DESKTOP=$(echo "$I3_MSG" | jq '.[] | select(.focused) | .num')
 
-  def find_focused_workspace
-    @workspaces = JSON.parse(`i3-msg -t get_workspaces`)
-    @workspaces.each do |ws|
-      return ws['num'] if ws['focused']
-    end
-  end
-end
+# Calculate the current group based on the current "num" value
+CURRENT_GROUP=$(( (CURRENT_DESKTOP - 1) / GROUP_SIZE + 1 ))
 
-if ARGV.length == 1 && (arg = ARGV.first.to_i)
-  SwitchWorkspace.new arg
-else
-  puts 'wrong arguments'
-end
+# Get the parameter passed to the script
+NEXT_RELATIVE_DESKTOP=$1
+
+# Check if the parameter is in range
+if (( NEXT_RELATIVE_DESKTOP < 1 || NEXT_RELATIVE_DESKTOP > GROUP_SIZE )); then
+  echo "Error: Parameter out of range (1-$GROUP_SIZE)" >&2
+  exit 1
+fi
+
+# Calculate the absolute index based on the current group and the parameter
+NEXT_ABSOLUTE_DESKTOP=$(( (CURRENT_GROUP - 1) * GROUP_SIZE + NEXT_RELATIVE_DESKTOP ))
+
+# Call the i3-msg command with the absolute index
+i3-msg "workspace $NEXT_ABSOLUTE_DESKTOP"

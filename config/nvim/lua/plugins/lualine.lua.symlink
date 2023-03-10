@@ -15,7 +15,7 @@ function M.config()
   end
 
   local git_blame = require("gitblame")
-  local kanagawa_colors = require("kanagawa.colors").setup()
+  local kanagawa_colors =  require("kanagawa.colors").setup({ theme = 'wave' }).palette
 
   local colors = {
     yellow = kanagawa_colors.autumnYellow,

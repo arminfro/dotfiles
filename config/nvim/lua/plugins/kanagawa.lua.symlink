@@ -21,10 +21,35 @@ function M.config()
     transparent = false, -- do not set background color
     dimInactive = false, -- dim inactive window `:h hl-NormalNC`
     globalStatus = false, -- adjust window separators highlight for laststatus=3
-    colors = { bg = "#282a2e" },
-    overrides = {
-      -- Visual = { bg = require("kanagawa.colors").setup().crystalBlue },
-    },
+    -- colors = {
+    --   theme = {
+    --     -- change specific usages for a certain theme, or for all of them
+    --     wave = {
+    --       ui = {
+    --         float = {
+    --           bg = "none",
+    --         },
+    --       },
+    --     },
+    --     all = {
+    --       ui = {
+    --         bg_gutter = "none"
+    --         bg = "none"
+    --       }
+    --     }
+    --   }
+    -- },
+    theme = "wave",
+    -- background = { -- map the value of 'background' option to a theme
+    --   dark = "wave", -- try "dragon" !
+    --   light = "lotus",
+    -- },
+    -- colors = { bg = "#282a2e" },
+    overrides = function(colors)
+      return {
+        Visual = { bg = colors.palette.waveBlue1 },
+      }
+    end,
   })
   vim.cmd("colorscheme kanagawa")
 end

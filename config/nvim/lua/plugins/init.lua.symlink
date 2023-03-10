@@ -169,9 +169,41 @@ packer.startup({
 
     use({
       "kevinhwang91/nvim-hlslens",
+      tag = "v1.*",
       config = function()
-        -- require('hlslens').setup() is not required
-        require("scrollbar.handlers.search").setup({})
+        require("hlslens").setup({
+          calm_down = true,
+          nearest_only = true,
+          nearest_float_when = "always",
+          override_lens = function(render, posList, nearest, idx, relIdx)
+            local sfw = vim.v.searchforward == 1
+            local indicator, text, chunks
+            local absRelIdx = math.abs(relIdx)
+            if absRelIdx > 1 then
+              indicator = ("%d%s"):format(absRelIdx, sfw ~= (relIdx > 1) and "▲" or "▼")
+            elseif absRelIdx == 1 then
+              indicator = sfw ~= (relIdx == 1) and "▲" or "▼"
+            else
+              indicator = ""
+            end
+
+            local lnum, col = unpack(posList[idx])
+            if nearest then
+              local cnt = #posList
+              if indicator ~= "" then
+                text = ("[%s %d/%d]"):format(indicator, idx, cnt)
+              else
+                text = ("[%d/%d]"):format(idx, cnt)
+              end
+              chunks = { { " ", "Ignore" }, { text, "HlSearchLensNear" } }
+            else
+              text = ("[%s %d]"):format(indicator, idx)
+              chunks = { { " ", "Ignore" }, { text, "HlSearchLens" } }
+            end
+            render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
+          end,
+        })
+        -- require("scrollbar.handlers.search").setup({})
       end,
       requires = { "petertriho/nvim-scrollbar" },
     })
@@ -189,23 +221,28 @@ packer.startup({
     -- use({ "wincent/loupe" })
 
     -- folding plugin
-    -- use({
-    --   "kevinhwang91/nvim-ufo",
-    --   requires = "kevinhwang91/promise-async",
-    --   config = function()
-    --     -- vim.wo.foldcolumn = "1"
-    --     vim.wo.foldlevel = 99 -- feel free to decrease the value
-    --     vim.wo.foldmethod = "manual"
-    --     vim.wo.foldenable = true
-    --     local capabilities = vim.lsp.protocol.make_client_capabilities()
-    --     capabilities.textDocument.foldingRange = {
-    --       dynamicRegistration = false,
-    --       lineFoldingOnly = true,
-    --     }
+    use({
+      "kevinhwang91/nvim-ufo",
+      requires = "kevinhwang91/promise-async",
+      config = function()
+        vim.o.foldcolumn = "1" -- '0' is not bad
+        vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+        vim.o.foldlevelstart = 99
+        vim.o.foldenable = true
+        vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+        -- vim.wo.foldcolumn = "1"
+        -- vim.wo.foldlevel = 99 -- feel free to decrease the value
+        -- vim.wo.foldmethod = "manual"
+        -- vim.wo.foldenable = true
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        capabilities.textDocument.foldingRange = {
+          dynamicRegistration = false,
+          lineFoldingOnly = true,
+        }
 
-    --     require("ufo").setup()
-    --   end,
-    -- })
+        require("ufo").setup()
+      end,
+    })
 
     -- lazygit vim frontend
     use({
@@ -651,9 +688,29 @@ packer.startup({
     use({
       "luukvbaal/statuscol.nvim",
       config = function()
-        require("statuscol").setup({ setopt = true })
-        -- vim.o.statuscolumn = "%@v:lua.ScFa@%C%T%@v:lua.ScLa@%s%T@v:lua.ScNa@%=%{v:lua.ScLn()}%T"
+        local builtin = require("statuscol.builtin")
+        require("statuscol").setup({
+          relculright = true,
+          segments = {
+            { text = { "%s" }, click = "v:lua.ScSa" },
+            { text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
+            { text = { " ", builtin.foldfunc, " " }, click = "v:lua.ScFa" },
+          },
+        })
       end,
+      requires = {
+        -- Git status left of line number
+        -- see :h gitsigns-mappings for default keybindings
+        {
+          "lewis6991/gitsigns.nvim",
+          disable = not if_exe_exists("git"),
+          event = "BufRead",
+          config = function()
+            require("plugins.gitsigns").config()
+            require("scrollbar.handlers.gitsigns").setup()
+          end,
+        },
+      },
     })
 
     -- window picker
@@ -784,7 +841,7 @@ packer.startup({
     use({
       "nvim-treesitter/nvim-treesitter-context",
       config = function()
-        vim.api.nvim_command("hi TreesitterContext gui=none guisp=Grey")
+        vim.api.nvim_command("hi TreesitterContext guisp=Grey")
         vim.api.nvim_command("hi TreesitterContextBottom gui=underline guisp=Grey")
       end,
     })
@@ -899,6 +956,45 @@ packer.startup({
       },
     })
 
+    use({
+      "utilyre/barbecue.nvim",
+      tag = "*",
+      requires = {
+        "SmiteshP/nvim-navic",
+        "nvim-tree/nvim-web-devicons", -- optional dependency
+      },
+      config = function()
+        -- triggers CursorHold event faster
+        vim.opt.updatetime = 200
+        require("barbecue").setup({
+          attach_navic = false, -- prevent barbecue from automatically attaching nvim-navic
+          create_autocmd = false, -- prevent barbecue from updating itself automatically
+        })
+
+        vim.api.nvim_create_autocmd({
+          "WinResized",
+          "BufWinEnter",
+          "CursorHold",
+          "InsertLeave",
+
+          -- include these if you have set `show_modified` to `true`
+          "BufWritePost",
+          "TextChanged",
+          "TextChangedI",
+        }, {
+          group = vim.api.nvim_create_augroup("barbecue.updater", {}),
+          callback = function()
+            require("barbecue.ui").update()
+          end,
+        })
+      end,
+    })
+
+    use({
+      "gennaro-tedesco/nvim-jqx",
+      ft = { "json", "yaml" },
+    })
+
     -- highlights which characters to target for f, F and family.
     use({
       "kepbod/quick-scope",
@@ -952,7 +1048,7 @@ packer.startup({
       "m-demare/hlargs.nvim",
       requires = { "nvim-treesitter/nvim-treesitter", "rebelot/kanagawa.nvim" },
       config = function()
-        require("hlargs").setup({ color = require("kanagawa.colors").setup().surimiOrange })
+        require("hlargs").setup({ color = require("kanagawa.colors").setup({ theme = "wave" }).palette.surimiOrange })
       end,
     })
 
@@ -985,7 +1081,6 @@ packer.startup({
       end,
       requires = {
         "kyazdani42/nvim-web-devicons",
-        "rebelot/kanagawa.nvim",
       },
     })
 
@@ -1012,18 +1107,6 @@ packer.startup({
           end,
         },
       },
-    })
-
-    -- Git status left of line number
-    -- see :h gitsigns-mappings for default keybindings
-    use({
-      "lewis6991/gitsigns.nvim",
-      disable = not if_exe_exists("git"),
-      event = "BufRead",
-      config = function()
-        require("plugins.gitsigns").config()
-        require("scrollbar.handlers.gitsigns").setup()
-      end,
     })
 
     -- git wrapper
