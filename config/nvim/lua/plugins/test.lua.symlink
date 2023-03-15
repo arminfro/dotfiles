@@ -1,0 +1,69 @@
+-- vi: ft=lua
+
+return {
+  {
+    "andythigpen/nvim-coverage",
+    dependencies = "nvim-lua/plenary.nvim",
+    config = function()
+      require("coverage").setup({})
+    end,
+  },
+
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "haydenmeade/neotest-jest",
+    },
+    keys = {
+      {
+        "<leader>cta",
+        function()
+          require("neotest").run.run(vim.fn.expand("%"))
+        end,
+        desc = "Run all tests in file",
+      },
+      {
+        "<leader>ctn",
+        function()
+          require("neotest").run.run()
+        end,
+        desc = "Run nearest test in file",
+      },
+      {
+        "<leader>ctA",
+        function()
+          require("neotest").run.attach()
+        end,
+        desc = "Attach to running test",
+      },
+      {
+        "<leader>cts",
+        function()
+          require("neotest").summary.open()
+        end,
+        desc = "Test summary",
+      },
+      {
+        "<leader>cto",
+        function()
+          require("neotest").output.open()
+        end,
+        desc = "Test output",
+      },
+    },
+    config = function()
+      require("neotest").setup({
+        adapters = {
+          require("neotest-jest")({
+            jestCommand = "npm test --",
+            -- jestConfigFile = "custom.jest.config.ts",
+            env = { CI = true },
+            cwd = function()
+              return vim.fn.getcwd()
+            end,
+          }),
+        },
+      })
+    end,
+  },
+}

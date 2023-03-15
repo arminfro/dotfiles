@@ -1,0 +1,125 @@
+-- vi: ft=lua
+
+return {
+  --  archived by the owner on Mar 25, 2019
+  -- { "donRaphaco/neotex", ft = "tex" },
+  {
+    "lervag/vimtex",
+    ft = "tex",
+    cmd = "VimtexCompile",
+    keys = {
+      { "<leader>rl", "<cmd>VimtexCompile<CR>", desc = "compile Latex" },
+    },
+    config = function()
+      vim.g.vimtex_compiler_latexmk = {
+        build_dir = ".out",
+        options = {
+          "-shell-escape",
+          "-verbose",
+          "-file-line-error",
+          "-interaction=nonstopmode",
+          "-synctex=1",
+        },
+      }
+      vim.g.vimtex_view_method = "zathura"
+    end,
+  },
+
+  {
+    -- markdown helper
+    -- <C-k> add link to visually selected text
+    -- <C-b> toggle visually selected text bold
+    -- <C-i> toggle visually selected text italic
+    -- <C-c> toggle visually selected text inline code
+
+    "antonk52/markdowny.nvim",
+    config = function()
+      require("markdowny").setup({ filetypes = { "markdown", "txt" } })
+    end,
+  },
+
+  -- convert markdown using pandoc
+  {
+    "jghauser/auto-pandoc.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    keys = {
+      {
+        "<leader>rm",
+        function()
+          require("auto-pandoc").run_pandoc()
+        end,
+        desc = "Compile Markdown with Pandoc",
+      },
+    },
+    event = "BufRead",
+    config = function()
+      require("auto-pandoc")
+    end,
+  },
+
+  -- paste image from clipboard in markdown
+  {
+    "ekickx/clipboard-image.nvim",
+    event = "BufRead",
+    config = function()
+      require("clipboard-image").setup({
+        default = {
+          img_dir = os.getenv("ZK_NOTEBOOK_DIR") .. "/media/imgs",
+          img_name = function()
+            return os.date("%Y-%m-%d-%H-%M-%S")
+          end,
+        },
+      })
+    end,
+  },
+
+  -- markdown in vim float window rendering
+  -- todo, set keymap
+  {
+    "ellisonleao/glow.nvim",
+    ft = { "markdown", "txt" },
+    cmd = "Glow",
+    event = "BufRead",
+    config = true,
+  },
+
+  -- markdown in browser rendering
+  {
+    "iamcco/markdown-preview.nvim",
+    ft = { "markdown", "txt" },
+    event = "BufRead",
+    build = "cd app && yarn install",
+    keys = {
+      { "<leader>rp", "<Plug>MarkdownPreviewToggle", desc = "Compile Markdown Preview" },
+    },
+  },
+
+  -- writing support, todo, does not work yet
+  -- {
+  --   "Pocco81/AbbrevMan.nvim",
+  --   ft = { "markdown", "txt" },
+  --   config = function()
+  --     local abbrev_man = require("abbrev-man")
+  --
+  --     abbrev_man.setup({
+  --       load_natural_dictionaries_at_startup = true,
+  --       load_programming_dictionaries_at_startup = true,
+  --       natural_dictionaries = {
+  --         ["nt_en"] = {},
+  --         ["nt_de"] = require("config.abbrev").german_vowel_dict,
+  --       },
+  --       programming_dictionaries = {
+  --         ["pr_ts"] = {
+  --           ["cosnt"] = "const",
+  --           ["conts"] = "const",
+  --           ["esle"] = "else",
+  --           ["fi"] = "if",
+  --           ["ipmort"] = "import",
+  --           ["improt"] = "import",
+  --           ["impotr"] = "import",
+  --         },
+  --       },
+  --     })
+  --   end,
+  -- },
+}

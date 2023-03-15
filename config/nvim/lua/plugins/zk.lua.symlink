@@ -1,47 +1,91 @@
 -- vi: ft=lua
 
-local M = {}
+return {
+  "mickael-menu/zk-nvim",
+  keys = {
+    { "<leader>zl", ":ZkNotes<CR>", desc = "List notes" },
+    { "<leader>zt", ":ZkTags<CR>", desc = "List note tags" },
+    {
+      "<leader>zi",
+      function()
+        require("zk.commands").get("ZkNewFromTitleSelection")({
+          extra = { branch = vim.fn.input("Branch: ") },
+          group = "issues",
+          dir = "issues",
+        })
+      end,
+      desc = "New issue note",
+      mode = { "v" },
+    },
+    {
+      "<leader>zi",
+      ":ZkLastIssue<CR>",
+      desc = "Open last modified issue note",
+    },
+    {
+      "<leader>zI",
+      ":ZkIssuesToday<CR>",
+      desc = "List issue notes modified today",
+      mode = { "n" },
+    },
+    {
+      "<leader>zn",
+      ":ZkNewDefault<CR>",
+      desc = "New note",
+      mode = { "n" },
+    },
+    {
+      "<leader>zd",
+      ":ZkNewDaily<CR>",
+      desc = "Create or edit daily note",
+      mode = { "n" },
+    },
+  },
+  config = function()
+    local zk = require("zk")
+    local commands = require("zk.commands")
 
-function M.config()
-  local status_ok, zk = pcall(require, "zk")
-  if not status_ok then
-    return
-  end
+    -- local function make_new_fn(defaults, picker_options)
+    --   return function(options)
+    --     options = vim.tbl_extend("force", defaults, options or {})
+    --     zk.new(options, picker_options)
+    --   end
+    -- end
+    -- commands.add("ZkDaily", make_new_fn({ orphan = true }, { dir = "dailies" }))
 
-  local commands = require("zk.commands")
+    commands.add("ZkNewDaily", function(options)
+      options = options or {}
+      options = vim.tbl_extend("force", options, { dir = "dailies" })
+      zk.new(options)
+    end)
 
-  -- local function make_new_fn(defaults, picker_options)
-  --   return function(options)
-  --     options = vim.tbl_extend("force", defaults, options or {})
-  --     zk.new(options, picker_options)
-  --   end
-  -- end
-  -- commands.add("ZkDaily", make_new_fn({ orphan = true }, { dir = "dailies" }))
+    commands.add("ZkNewTask", function(options)
+      options = options or {}
+      options = vim.tbl_extend("force", options, { dir = "tasks", title = vim.fn.input({ prompt = "Title: " }) })
+      if #options.title > 0 then
+        zk.new(options)
+      end
+    end)
 
-  commands.add("ZkNewDaily", function(options)
-    options = options or {}
-    options = vim.tbl_extend("force", options, { dir = "dailies" })
-    zk.new(options)
-  end)
+    commands.add("ZkNewDefault", function(options)
+      options = options or {}
+      options = vim.tbl_extend("force", options, { title = vim.fn.input({ prompt = "Title: " }) })
+      if #options.title > 0 then
+        zk.new(options)
+      end
+    end)
 
-  commands.add("ZkNewTask", function(options)
-    options = options or {}
-    options = vim.tbl_extend("force", options, { dir = "tasks", title = vim.fn.input({prompt = "Title: "}) })
-    zk.new(options)
-  end)
+    commands.add("ZkIssuesToday", function(options)
+      options = options or {}
+      options = vim.tbl_extend("force", options, { dir = "issues", modified = "today" })
+      zk.pick_notes(options)
+    end)
 
-  commands.add("ZkNewDefault", function(options)
-    options = options or {}
-    options = vim.tbl_extend("force", options, { title = vim.fn.input({prompt = "Title: "}) })
-    zk.new(options)
-  end)
+    vim.api.nvim_create_user_command("ZkLastIssue", function()
+      local last_issue = os.capture("find $ZK_NOTEBOOK_DIR/issues -mtime 0 -type f | tail -1")
+      vim.cmd("edit " .. last_issue)
+    end, { desc = "Open last modified issue note" })
 
-  commands.add("ZkIssuesToday", function(options)
-    options = options or {}
-    options = vim.tbl_extend("force", options, { dir = "issues", modified = "today" })
-    zk.pick_notes(options)
-  end)
-  zk.setup({})
-end
-
-return M
+    zk.setup({})
+  end,
+}

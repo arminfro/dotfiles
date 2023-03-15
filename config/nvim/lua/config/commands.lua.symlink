@@ -1,0 +1,22 @@
+-- vi: ft=lua
+
+vim.api.nvim_create_user_command(
+  "CopyFilePath",
+  "let @+ = expand('%:p')",
+  { desc = "Copy's current file path to clipboard" }
+)
+
+vim.api.nvim_create_user_command("PasteGitStatus", ":r! git status -s", { desc = "Paste git status short output" })
+vim.api.nvim_create_user_command(
+  "SetGermanSpellFeature",
+  ":setlocal spell spelllang=de",
+  { desc = "Activate german spelling features" }
+)
+vim.api.nvim_create_user_command(
+  "SetEnglishSpellFeatureSpellFeature",
+  ":setlocal spell spelllang=en",
+  { desc = "Activate english spelling features" }
+)
+vim.api.nvim_create_user_command("PrintCurrentFiletype", function()
+  print(vim.bo.filetype)
+end, { desc = "Print current filetype" })

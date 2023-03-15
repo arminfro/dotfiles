@@ -1,0 +1,52 @@
+-- vi: ft=lua
+
+-- Autocmds are automatically loaded on the VeryLazy event
+-- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
+-- Add any additional autocmds here
+local function augroup(name)
+  return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
+end
+
+vim.api.nvim_create_autocmd({ "FocusLost" }, {
+  callback = function()
+    local curbuf = vim.api.nvim_get_current_buf()
+    if not vim.api.nvim_buf_get_option(curbuf, "modified") or vim.fn.getbufvar(curbuf, "&modifiable") == 0 then
+      return
+    end
+
+    vim.cmd([[silent! update]])
+  end,
+  pattern = "*",
+  group = augroup("autosave"),
+})
+
+-- windows to close with "q"
+vim.api.nvim_create_autocmd(
+  "FileType",
+  { pattern = { "help", "startuptime", "qf", "lspinfo" }, command = [[nnoremap <buffer><silent> q :close<CR>]] }
+)
+
+vim.api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
+
+vim.api.nvim_create_autocmd("FileType", { pattern = "git", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
+
+vim.api.nvim_create_autocmd(
+  "FileType",
+  { pattern = "nvim-docs-view", command = [[nnoremap <buffer><silent> q :close<CR>]] }
+)
+
+vim.api.nvim_create_autocmd("FileType", { pattern = "fugitive", command = [[nnoremap <buffer><silent> q :close<CR>]] })
+vim.api.nvim_create_autocmd(
+  "FileType",
+  { pattern = "neotest-output", command = [[nnoremap <buffer><silent> q :close<CR>]] }
+)
+
+vim.api.nvim_create_autocmd(
+  "FileType",
+  { pattern = "DiffviewFiles", command = [[nnoremap <buffer><silent> q :DiffviewClose<CR>]] }
+)
+
+vim.api.nvim_create_autocmd(
+  "FileType",
+  { pattern = "DiffviewFileHistory", command = [[nnoremap <buffer><silent> q :DiffviewClose<CR>]] }
+)

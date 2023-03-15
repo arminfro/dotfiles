@@ -1,40 +1,65 @@
 -- vi: ft=lua
 
+local Util = require("lazy.core.util")
+
 local M = {}
 
-function M.config()
-  local status_ok, lsp_format = pcall(require, "lsp-format")
-  if not status_ok then
+M.autoformat = true
+
+function M.toggle()
+  if vim.b.autoformat == false then
+    vim.b.autoformat = nil
+    M.autoformat = true
+  else
+    M.autoformat = not M.autoformat
+  end
+  if M.autoformat then
+    Util.info("Enabled format on save", { title = "Format" })
+  else
+    Util.warn("Disabled format on save", { title = "Format" })
+  end
+end
+
+function M.format()
+  local buf = vim.api.nvim_get_current_buf()
+  if vim.b.autoformat == false then
+    return
+  end
+  local ft = vim.bo[buf].filetype
+  local have_nls = #require("null-ls.sources").get_available(ft, "NULL_LS_FORMATTING") > 0
+
+  vim.lsp.buf.format(vim.tbl_deep_extend("force", {
+    bufnr = buf,
+    filter = function(client)
+      if have_nls then
+        return client.name == "null-ls"
+      end
+      return client.name ~= "null-ls"
+    end,
+  }, require("lazyvim.util").opts("nvim-lspconfig").format or {}))
+end
+
+function M.on_attach(client, buf)
+  -- dont format if client disabled it
+  if
+    client.config
+    and client.config.capabilities
+    and client.config.capabilities.documentFormattingProvider == false
+  then
     return
   end
 
-  local prettier = {
-    singleQuote = true,
-    trailingComma = "all",
-    -- tabWidth = 2,
-    -- configPrecedence = "prefer-file",
-  }
-
-  lsp_format.setup({
-    typescript = prettier,
-    javascript = prettier,
-    typescriptreact = prettier,
-    javascriptreact = prettier,
-    json = prettier,
-    css = prettier,
-    scss = prettier,
-    html = prettier,
-    yaml = {
-      tabWidth = 2,
-      singleQuote = true,
-      trailingComma = "all",
-      configPrecedence = "prefer-file",
-    },
-    markdown = prettier,
-    sh = {
-      tabWidth = 4,
-    },
-  })
+  if client.supports_method("textDocument/formatting") then
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = vim.api.nvim_create_augroup("LspFormat." .. buf, {}),
+      buffer = buf,
+      callback = function()
+        if M.autoformat then
+          M.format()
+        end
+      end,
+    })
+  end
 end
 
 return M

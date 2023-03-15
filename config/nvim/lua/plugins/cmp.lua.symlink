@@ -1,214 +1,238 @@
 -- vi: ft=lua
 
-local M = {}
+return {
+  "hrsh7th/nvim-cmp",
+  event = "InsertEnter",
+  ---@param opts cmp.ConfigSchema
+  opts = function()
+    local cmp = require("cmp")
+    local luasnip = require("luasnip")
 
-function M.config()
-  local cmp_status_ok, cmp = pcall(require, "cmp")
-  if not cmp_status_ok then
-    return
-  end
+    -- gray
+    vim.cmd("highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080")
+    -- blue
+    vim.cmd("highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6")
+    vim.cmd("highlight! link CmpItemAbbrMatchFuzzy CmpItemAbbrMatch")
+    -- light blue
+    vim.cmd("highlight! CmpItemKindVariable guibg=NONE guifg=#9CDCFE")
+    vim.cmd("highlight! link CmpItemKindInterface CmpItemKindVariable")
+    vim.cmd("highlight! link CmpItemKindText CmpItemKindVariable")
+    -- pink
+    vim.cmd("highlight! CmpItemKindFunction guibg=NONE guifg=#C586C0")
+    vim.cmd("highlight! link CmpItemKindMethod CmpItemKindFunction")
+    -- front
+    vim.cmd("highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4")
+    vim.cmd("highlight! link CmpItemKindProperty CmpItemKindKeyword")
+    vim.cmd("highlight! link CmpItemKindUnit CmpItemKindKeyword")
 
-  local luasnip_status_ok, luasnip = pcall(require, "luasnip")
-  if not luasnip_status_ok then
-    return
-  end
+    local has_words_before = function()
+      local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+      return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+    end
 
-  luasnip.config.set_config({
-    history = true,
-    updateevents = "TextChanged,TextChangedI",
-  })
+    local sources = {
+      { name = "nvim_lsp" },
+      { name = "luasnip" },
+      {
+        name = "buffer",
+        option = {
+          get_bufnrs = function()
+            local bufs = {}
+            for _, win in ipairs(vim.api.nvim_list_wins()) do
+              local buf = vim.api.nvim_win_get_buf(win)
+              local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+              if byte_size > 1024 * 1024 then -- 1 Megabyte max
+                bufs[buf] = false
+              else
+                bufs[buf] = true
+              end
+            end
+            return vim.tbl_keys(bufs)
+          end,
+        },
+      },
+      { name = "path" },
+      { name = "nvim_lsp_signature_help" },
+      {
+        option = {
+          get_bufnrs = function()
+            return vim.api.nvim_list_bufs()
+          end,
+        },
+      },
+      { name = "nvim_lua" },
+      { name = "emoji" },
+      { name = "calc" },
+      { name = "git" },
+    }
 
-  vim.o.completeopt = "menuone,noselect"
+    local writing_sources = {
+      { name = "dictionary" },
+      { name = "buffer" },
+      { name = "nvim_lsp" },
+      { name = "emoji" },
+      { name = "calc" },
+      { name = "git" },
+    }
+    cmp.setup.filetype("gitcommit", {
+      sources = writing_sources,
+    })
 
-  local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-  end
+    cmp.setup.filetype("markdown", {
+      sources = writing_sources,
+    })
 
-  local sources = {
-    { name = "nvim_lsp", priority_weight = 120 },
-    { name = "luasnip", max_item_count = 7, priority_weight = 110 },
-    { name = "nvim_lsp_signature_help", priority_weight = 100 },
-    {
-      name = "buffer",
-      max_item_count = 8,
-      priority_weight = 90,
-      option = {
-        get_bufnrs = function()
-          return vim.api.nvim_list_bufs()
+    cmp.setup.cmdline("/", {
+      sources = cmp.config.sources({
+        { name = "nvim_lsp_document_symbol" },
+        { name = "buffer", keyword_length = 0 },
+      }),
+    })
+
+    cmp.setup.cmdline(":", {
+      sources = {
+        { name = "cmdline", keyword_length = 0 },
+      },
+    })
+
+    return {
+      completion = {
+        completeopt = "menu,menuone,noinsert",
+      },
+      snippet = {
+        expand = function(args)
+          require("luasnip").lsp_expand(args.body)
         end,
       },
-    },
-    { name = "nvim_lua", priority_weight = 80 },
-    { name = "path", priority_weight = 60 },
-    -- { name = "tags", priority_weight = 50, keyword_length = 4 },
-    -- {
-    --   name = "rg",
-    --   keyword_length = 5,
-    --   max_item_count = 5,
-    --   priority_weight = 40,
-    --   option = {
-    --     additional_arguments = "--smart-case --hidden",
-    --   },
-    -- },
-    -- { name = "emoji" },
-    -- { name = "calc" },
-    { name = "git" },
-  }
-
-  local writing_sources = cmp.config.sources(vim.tbl_extend("force", sources, {
-    { name = "dictionary", priority_weight = 65 },
-  }))
-
-  local kind_icons = {
-    Text = "",
-    Method = "",
-    Function = "",
-    Constructor = "",
-    Field = "ﰠ",
-    Variable = "",
-    Class = "",
-    Interface = "",
-    Module = "",
-    Property = "",
-    Unit = "",
-    Value = "",
-    Enum = "",
-    Keyword = "",
-    Snippet = "",
-    Color = "",
-    File = "",
-    Reference = "",
-    Folder = "",
-    EnumMember = "",
-    Constant = "",
-    Struct = "פּ",
-    Event = "",
-    Operator = "",
-    TypeParameter = "",
-  }
-
-  -- nvim-cmp setup
-  cmp.setup({
-    snippet = {
-      expand = function(args)
-        luasnip.lsp_expand(args.body)
-      end,
-    },
-    -- experimental = {
-    --   ghost_text = false,
-    -- },
-    -- view = {
-    --   entries = "native",
-    -- },
-    completion = {
-      keyword_length = 1,
-    },
-    duplicates = {
-      nvim_lsp = 1,
-      luasnip = 1,
-      cmp_tabnine = 1,
-      buffer = 1,
-      path = 1,
-    },
-    mapping = {
-      ["<C-k>"] = cmp.mapping.select_prev_item(),
-      ["<C-j>"] = cmp.mapping.select_next_item(),
-      ["<C-f>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-b>"] = cmp.mapping.scroll_docs(4),
-      ["<C-Space>"] = cmp.mapping.complete(),
-      -- ['<ESC>'] = cmp.mapping.abort(),
-      ["<CR>"] = cmp.mapping.confirm({
-        behavior = cmp.ConfirmBehavior.Replace,
-        -- select = true,
-      }),
-      ["<Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif has_words_before() then
-          if luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
+      mapping = {
+        ["<C-k>"] = cmp.mapping.select_prev_item(),
+        ["<C-j>"] = cmp.mapping.select_next_item(),
+        ["<C-f>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-b>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        -- ['<ESC>'] = cmp.mapping.abort(),
+        ["<CR>"] = cmp.mapping.confirm({
+          behavior = cmp.ConfirmBehavior.Replace,
+          -- select = true,
+        }),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif has_words_before() then
+            if luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              cmp.complete()
+            end
           else
-            cmp.complete()
+            fallback()
           end
-        else
-          fallback()
-        end
-      end, { "i", "c" }),
+        end, { "i", "c" }),
 
-      ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { "i", "c" }),
-    },
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "c" }),
+      },
+      sources = cmp.config.sources(sources),
+      formatting = {
+        format = function(entry, item)
+          -- local icons = require("lazyvim.config").icons.kinds
+          -- if icons[item.kind] then
+          --   item.kind = icons[item.kind] .. item.kind
+          -- end
 
-    sources = sources,
-
-    -- sorting = {
-    --  priority_weight = 100,
-    --  comparators = {
-    --    cmp.config.compare.offset,
-    --    cmp.config.compare.exact,
-    --    cmp.config.compare.score,
-    --    require("cmp-under-comparator").under,
-    --    cmp.config.compare.sort_text,
-    --    cmp.config.compare.length,
-    --    cmp.config.compare.order,
-    --  },
-    -- },
-
-    formatting = {
-      format = function(entry, vim_item)
-        vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-        vim_item.menu = ({
-          nvim_lsp = "ﲳ",
-          nvim_lua = "",
-          treesitter = "",
-          path = "ﱮ",
-          buffer = "﬘",
-          zsh = "",
-          vsnip = "",
-          spell = "暈",
-        })[entry.source.name]
-
-        vim_item.abbr = truncating_label(vim_item.abbr, 36)
-
-        return require("tailwindcss-colorizer-cmp").formatter(entry, vim_item)
+          return require("tailwindcss-colorizer-cmp").formatter(entry, item)
+        end,
+      },
+      experimental = {
+        ghost_text = {
+          hl_group = "LspCodeLens",
+        },
+      },
+    }
+  end,
+  dependencies = {
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    -- "hrsh7th/cmp-nvim-lsp-signature-help",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    -- Completions for command mode
+    "hrsh7th/cmp-cmdline",
+    "hrsh7th/cmp-emoji",
+    -- completion for calculations
+    "hrsh7th/cmp-calc",
+    -- completion for neovim lua api
+    "hrsh7th/cmp-nvim-lua",
+    -- better sort completion items that start with one or more underlines
+    "lukas-reineke/cmp-rg",
+    "petertriho/cmp-git",
+    {
+      "uga-rosa/cmp-dictionary",
+      config = function()
+        local dict = require("cmp_dictionary")
+        dict.setup({
+          first_case_insensitive = true,
+        })
+        dict.switcher({
+          filetype = {
+            lua = "~/.config/nvim/spell/lua.dict",
+            typescript = { "~/.config/nvim/spell/typescript.dict", "~/.config/nvim/spell/javascript.dict" },
+            javascript = "~/.config/nvim/spell/javascript.dict",
+            ruby = "~/.config/nvim/spell/ruby.dict",
+          },
+          spelllang = {
+            en = "~/.config/nvim/spell/english.dict",
+            de = "~/.config/nvim/spell/german.dict",
+          },
+        })
       end,
     },
-
-    window = {
-      documentation = {
-        border = vim.g.floating_window_border_dark,
+    {
+      "roobert/tailwindcss-colorizer-cmp.nvim",
+      opts = {
+        color_square_width = 3,
       },
     },
-  })
 
-  cmp.setup.filetype("gitcommit", {
-    sources = writing_sources,
-  })
+    {
+      "saadparwaiz1/cmp_luasnip",
+      dependencies = {
+        -- Snippet engine
+        {
+          "L3MON4D3/LuaSnip",
+          opts = {
+            history = true,
+            delete_check_events = "TextChanged",
+          },
+          config = function()
+            require("luasnip").config.set_config({
+              history = true,
+              updateevents = "TextChanged,TextChangedI",
+            })
 
-  cmp.setup.filetype("markdown", {
-    sources = writing_sources,
-  })
-
-  cmp.setup.cmdline("/", {
-    sources = cmp.config.sources({
-      { name = "nvim_lsp_document_symbol" },
-      { name = "buffer", keyword_length = 0 },
-    }),
-  })
-
-  cmp.setup.cmdline(":", {
-    sources = {
-      { name = "cmdline", keyword_length = 0 },
+            require("luasnip/loaders/from_vscode").lazy_load({
+              -- todo, check if paths exist
+              paths = {
+                "~/.config/nvim/snippets",
+                "~/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+              },
+            })
+            -- todo keys: require("plugins.legendary").luasnip()
+          end,
+          dependencies = {
+            -- Snippet collections
+            "rafamadriz/friendly-snippets",
+          },
+        },
+      },
     },
-  })
-end
-
-return M
+  },
+}

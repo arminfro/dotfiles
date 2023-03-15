@@ -1,21 +1,6 @@
 -- vi: ft=lua
 
-local utils = require("core.utils")
-
-utils.disable_builtins()
-utils.bootstrap()
-utils.impatient()
-
-local sources = {
-  "core.globals",
-  "config",
-  "core.autocmds",
-  "plugins",
-}
-
-for _, source in ipairs(sources) do
-  local status_ok, fault = pcall(require, source)
-  if not status_ok then
-    error("Failed to load " .. source .. "\n\n" .. fault)
-  end
-end
+-- bootstrap lazy.nvim, LazyVim and your plugins
+require("config.globals")
+require("config.commands")
+require("config.lazy")

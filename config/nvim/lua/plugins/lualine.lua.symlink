@@ -1,239 +1,131 @@
----@diagnostic disable: missing-parameter
 -- vi: ft=lua
 
-local M = {}
-
-function M.config()
-  local lualine_status_ok, lualine = pcall(require, "lualine")
-  if not lualine_status_ok then
-    return
-  end
-
-  local nvim_navic_status_ok, navic = pcall(require, "nvim-navic")
-  if not nvim_navic_status_ok then
-    return
-  end
-
-  local git_blame = require("gitblame")
-  local kanagawa_colors =  require("kanagawa.colors").setup({ theme = 'wave' }).palette
-
-  local colors = {
-    yellow = kanagawa_colors.autumnYellow,
-    yellow_1 = kanagawa_colors.roninYellow,
-    grey = kanagawa_colors.sumiInk3,
-    white = kanagawa_colors.fujiWhite,
-    cyan = kanagawa_colors.crystalBlue,
-    darkblue = kanagawa_colors.dragonBlue,
-    green = kanagawa_colors.autumnGreen,
-    orange = kanagawa_colors.roninYellow,
-    violet = kanagawa_colors.springViolet1,
-    magenta = kanagawa_colors.springViolet2,
-    blue = kanagawa_colors.crystalBlue,
-    red = kanagawa_colors.samuraiRed,
-  }
-
-  local conditions = {
-    buffer_not_empty = function()
-      return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
-    end,
-    hide_in_width = function()
-      return vim.fn.winwidth(0) > 80
-    end,
-    check_git_workspace = function()
-      local filepath = vim.fn.expand("%:p:h")
-      local gitdir = vim.fn.finddir(".git", filepath .. ";")
-      return gitdir and #gitdir > 0 and #gitdir < #filepath
-    end,
-  }
-
-  local config = {
-    extensions = { "quickfix", "toggleterm", "fugitive" },
-    options = {
-      disabled_filetypes = {
-        "NvimTree",
-        "dashboard",
-        "Outline",
-        "TelescopePrompt",
-        "guihua",
-        "guihua_rust",
-        "clap_input",
-        "fidget",
-      },
-      component_separators = "",
-      section_separators = "",
-      theme = {
-        normal = { c = { fg = colors.white, bg = colors.grey } },
-        inactive = { c = { fg = colors.white, bg = colors.grey } },
-      },
+return {
+  "nvim-lualine/lualine.nvim",
+  event = "VeryLazy",
+  dependencies = {
+    -- wait for issue resolving: roobert statusline-action-hints.nvim issues 3
+    -- {
+    --   "roobert/statusline-action-hints.nvim",
+    --   config = function()
+    --     require("statusline-action-hints").setup({
+    --       definition_identifier = "gd",
+    --       template = "%s ref:%s",
+    --     })
+    --   end,
+    -- },
+    {
+      -- Show commit info at current line on cursorhold
+      "f-person/git-blame.nvim",
+      config = function()
+        vim.g.gitblame_display_virtual_text = 0
+        vim.g.gitblame_date_format = "%r"
+        vim.g.gitblame_highlight_group = "Question"
+        vim.g.gitblame_message_template = "<date> • <summary>"
+      end,
     },
-    sections = {
-      lualine_a = {},
-      lualine_b = {},
-      lualine_y = {},
-      lualine_z = {},
-      lualine_c = {},
-      lualine_x = {
-        {
+  },
+  opts = function()
+    local icons = require("lazyvim.config").icons
+
+    local function fg(name)
+      return function()
+        ---@type {foreground?:number}?
+        local hl = vim.api.nvim_get_hl_by_name(name, true)
+        return hl and hl.foreground and { fg = string.format("#%06x", hl.foreground) }
+      end
+    end
+
+    local git_blame = require("gitblame")
+
+    return {
+      options = {
+        theme = "auto",
+        globalstatus = true,
+        disabled_filetypes = { statusline = { "dashboard", "lazy", "alpha", "undotree" } },
+      },
+      sections = {
+        lualine_a = { "mode" },
+        lualine_b = { "branch" },
+        lualine_c = {
+          {
+            "diagnostics",
+            symbols = {
+              error = icons.diagnostics.Error,
+              warn = icons.diagnostics.Warn,
+              info = icons.diagnostics.Info,
+              hint = icons.diagnostics.Hint,
+            },
+          },
+          { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+          { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
+          -- stylua: ignore
+          {
+            function()
+            if not pcall(require, 'lsp_signature') then return end
+              local sig = require("lsp_signature").status_line(128)
+              if #sig.label > 0 then
+                return sig.label
+              end
+            end,
+            cond = function() return package.loaded["lsp_signature"] and #(require("lsp_signature").status_line(128)).label > 0 end,
+          },
+        },
+        lualine_x = {
+          -- { require("statusline-action-hints").statusline, color = fg("Special") },
+          {
+            git_blame.get_current_blame_text,
+            color = fg("Statement"),
+          },
+
+          -- stylua: ignore
+          {
+            function() return require("noice").api.status.command.get() end,
+            cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+            color = fg("Statement")
+          },
+          -- stylua: ignore
+          {
+            function() return require("noice").api.status.mode.get() end,
+            cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+            color = fg("Constant") ,
+          },
+          {
+            require("lazy.status").updates,
+            cond = require("lazy.status").has_updates,
+            color = fg("Special"),
+          },
+          {
+            "diff",
+            symbols = {
+              added = icons.git.added,
+              modified = icons.git.modified,
+              removed = icons.git.removed,
+            },
+          },
+        },
+        lualine_y = {
+          { "progress", separator = " ", padding = { left = 1, right = 0 } },
+          { "location", padding = { left = 0, right = 1 } },
+          {
+            function()
+              local current_line = vim.fn.line(".")
+              local total_lines = vim.fn.line("$")
+              local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
+              local line_ratio = current_line / total_lines
+              local index = math.ceil(line_ratio * #chars)
+              return chars[index]
+            end,
+            padding = { left = 0, right = 1 },
+          },
+        },
+        lualine_z = {
           function()
-            return truncating_label(git_blame.get_current_blame_text(), 48)
+            return " " .. os.date("%R")
           end,
-          cond = git_blame.is_blame_text_available,
         },
       },
-    },
-    inactive_sections = {
-      lualine_a = {},
-      lualine_b = {},
-      lualine_y = {},
-      lualine_z = {},
-      lualine_c = {},
-      lualine_x = {},
-    },
-  }
-
-  local function ins_left(component)
-    table.insert(config.sections.lualine_c, component)
-  end
-
-  local function ins_right(component)
-    table.insert(config.sections.lualine_x, component)
-  end
-
-  -- local function attached_clients()
-  --   return "(" .. vim.tbl_count(vim.lsp.get_active_clients(0)) .. ")"
-  -- end
-
-  ins_left({
-    "mode",
-    padding = { left = 2, right = 1 },
-  })
-
-  ins_left({
-    "filename",
-    cond = conditions.buffer_not_empty,
-    color = { fg = colors.green },
-    padding = { left = 2, right = 1 },
-    path = 1,
-  })
-
-  -- ins_left({ navic.get_location, cond = navic.is_available })
-
-  ins_left({
-    "diff",
-    symbols = { added = " ", modified = "柳", removed = " " },
-    cond = conditions.hide_in_width,
-    padding = { left = 2, right = 1 },
-  })
-
-  ins_left({
-    "diagnostics",
-    sources = { "nvim_diagnostic" },
-    symbols = { error = " ", warn = " ", info = " ", hint = " " },
-    diagnostics_color = {},
-    padding = { left = 2, right = 1 },
-  })
-
-  -- ins_left({
-  --   function()
-  --     return "%="
-  --   end,
-  -- })
-
-  -- ins_right({
-  --   attached_clients,
-  --   color = { fg = colors.violet, gui = "bold" },
-  --   padding = { left = 2, right = 1 },
-  -- })
-
-  ins_right({
-    "branch",
-    icon = "",
-    color = { fg = colors.violet, gui = "bold" },
-    padding = { left = 2, right = 1 },
-  })
-
-  ins_right({
-    "filetype",
-    cond = conditions.buffer_not_empty,
-    color = { fg = colors.magenta, gui = "bold" },
-    padding = { left = 2, right = 1 },
-  })
-
-  -- ins_right({
-  --   function(msg)
-  --     msg = msg or "Inactive"
-  --     local buf_clients = vim.lsp.buf_get_clients()
-  --     if next(buf_clients) == nil then
-  --       if type(msg) == "boolean" or #msg == 0 then
-  --         return "Inactive"
-  --       end
-  --       return msg
-  --     end
-  --     local buf_ft = vim.bo.filetype
-  --     local buf_client_names = {}
-
-  --     for _, client in pairs(buf_clients) do
-  --       if client.name ~= "null-ls" then
-  --         table.insert(buf_client_names, client.name)
-  --       end
-  --     end
-
-  --     local formatters = require("core.utils")
-  --     local supported_formatters = formatters.list_registered_formatters(buf_ft)
-  --     vim.list_extend(buf_client_names, supported_formatters)
-
-  --     local linters = require("core.utils")
-  --     local supported_linters = linters.list_registered_linters(buf_ft)
-  --     vim.list_extend(buf_client_names, supported_linters)
-
-  --     return table.concat(buf_client_names, ", ")
-  --   end,
-  --   icon = " ",
-  --   color = { gui = "none" },
-  --   padding = { left = 0, right = 1 },
-  --   cond = conditions.hide_in_width,
-  -- })
-
-  -- ins_right({
-  --   function()
-  --     local b = vim.api.nvim_get_current_buf()
-  --     if next(vim.treesitter.highlighter.active[b]) then
-  --       return " 綠TS"
-  --     end
-  --     return ""
-  --   end,
-  --   color = { fg = colors.green },
-  --   padding = { left = 1, right = 0 },
-  --   cond = conditions.hide_in_width,
-  -- })
-
-  ins_right({
-    "location",
-    padding = { left = 1, right = 1 },
-    color = { fg = colors.yellow, bg = colors.grey },
-  })
-
-  ins_right({
-    "progress",
-    color = { fg = colors.yellow, bg = colors.grey },
-    padding = { left = 0, right = 0 },
-  })
-
-  ins_right({
-    function()
-      local current_line = vim.fn.line(".")
-      local total_lines = vim.fn.line("$")
-      local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
-      local line_ratio = current_line / total_lines
-      local index = math.ceil(line_ratio * #chars)
-      return chars[index]
-    end,
-    padding = { left = 1, right = 1 },
-    color = { fg = colors.yellow, bg = colors.grey },
-    cond = nil,
-  })
-
-  lualine.setup(config)
-end
-
-return M
+      extensions = { "neo-tree" },
+    }
+  end,
+}
