@@ -39,7 +39,7 @@ install_packages() {
     done
   done
   echo $system_packages
-  sudo dnf install -y ${system_packages[@]}
+  sudo dnf install -y ${system_packages[@]} --allowerasing
   run_installers
   echo $ruby_packages
   gem install --user ${ruby_packages[@]}
