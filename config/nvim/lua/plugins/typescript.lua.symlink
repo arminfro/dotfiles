@@ -39,7 +39,7 @@ return {
               vim.keymap.set("n", "<leader>cF", function()
                 require("typescript").actions.fixAll()
               end, { buffer = buffer, desc = "Fix all autofixables" })
-              vim.keymap.set("n", "<leader>ct", function()
+              vim.keymap.set("n", "<leader>cu", function()
                 require("typescript").actions.removeUnused()
               end, { buffer = buffer, desc = "Remove unused Imports" })
               vim.keymap.set("n", "<leader>co", function()

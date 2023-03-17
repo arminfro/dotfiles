@@ -64,14 +64,17 @@ return {
         ["<leader>b"] = { name = "+buffer" },
         ["<leader>c"] = { name = "+code" },
         ["<leader>f"] = { name = "+file/find" },
+        ["<leader>ct"] = { name = "+test" },
         ["<leader>g"] = { name = "+git" },
         ["<leader>gh"] = { name = "+hunks" },
         ["<leader>q"] = { name = "+quit/session" },
         ["<leader>s"] = { name = "+search" },
+        ["<leader>n"] = { name = "+notes" },
         ["<leader>u"] = { name = "+ui" },
         ["<leader>r"] = { name = "+run" },
         ["<leader>w"] = { name = "+windows" },
         ["<leader>x"] = { name = "+diagnostics/quickfix" },
+        ["<leader>z"] = { name = "+spelling" },
       }
       if Util.has("noice.nvim") then
         keymaps["<leader>sn"] = { name = "+noice" }
@@ -191,7 +194,7 @@ return {
         function()
           require("maximize").toggle()
         end,
-        desc = "Toggle maximize window",
+        desc = "Zoom in/out",
       },
     },
     config = function()
@@ -209,7 +212,7 @@ return {
         function()
           require("ts-node-action").node_action()
         end,
-        desc = "Treesitter node action",
+        desc = "TS-node action",
       },
     },
     config = function()

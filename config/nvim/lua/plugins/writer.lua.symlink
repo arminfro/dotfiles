@@ -31,7 +31,6 @@ return {
     -- <C-b> toggle visually selected text bold
     -- <C-i> toggle visually selected text italic
     -- <C-c> toggle visually selected text inline code
-
     "antonk52/markdowny.nvim",
     config = function()
       require("markdowny").setup({ filetypes = { "markdown", "txt" } })
@@ -41,7 +40,7 @@ return {
   -- convert markdown using pandoc
   {
     "jghauser/auto-pandoc.nvim",
-    requires = "nvim-lua/plenary.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
     keys = {
       {
         "<leader>rm",
@@ -96,30 +95,28 @@ return {
 
   -- writing support, todo, does not work yet
   -- {
-  --   "Pocco81/AbbrevMan.nvim",
-  --   ft = { "markdown", "txt" },
-  --   config = function()
-  --     local abbrev_man = require("abbrev-man")
-  --
-  --     abbrev_man.setup({
-  --       load_natural_dictionaries_at_startup = true,
-  --       load_programming_dictionaries_at_startup = true,
-  --       natural_dictionaries = {
-  --         ["nt_en"] = {},
-  --         ["nt_de"] = require("config.abbrev").german_vowel_dict,
-  --       },
-  --       programming_dictionaries = {
-  --         ["pr_ts"] = {
-  --           ["cosnt"] = "const",
-  --           ["conts"] = "const",
-  --           ["esle"] = "else",
-  --           ["fi"] = "if",
-  --           ["ipmort"] = "import",
-  --           ["improt"] = "import",
-  --           ["impotr"] = "import",
-  --         },
-  --       },
-  --     })
-  --   end,
+  -- 	"Pocco81/AbbrevMan.nvim",
+  -- 	-- ft = { "markdown", "txt" },
+  -- 	config = function()
+  -- 		require("abbrev-man").setup({
+  -- 			load_natural_dictionaries_at_startup = true,
+  -- 			load_programming_dictionaries_at_startup = true,
+  -- 			natural_dictionaries = {
+  -- 				["nt_en"] = {},
+  -- 				["nt_de"] = require("config.abbrev").german_vowel_dict,
+  -- 			},
+  -- 			programming_dictionaries = {
+  -- 				["pr_ts"] = {
+  -- 					["cosnt"] = "const",
+  -- 					["conts"] = "const",
+  -- 					["esle"] = "else",
+  -- 					["fi"] = "if",
+  -- 					["ipmort"] = "import",
+  -- 					["improt"] = "import",
+  -- 					["impotr"] = "import",
+  -- 				},
+  -- 			},
+  -- 		})
+  -- 	end,
   -- },
 }

@@ -3,10 +3,10 @@
 return {
   "mickael-menu/zk-nvim",
   keys = {
-    { "<leader>zl", ":ZkNotes<CR>", desc = "List notes" },
-    { "<leader>zt", ":ZkTags<CR>", desc = "List note tags" },
+    { "<leader>nl", ":ZkNotes<CR>", desc = "List notes" },
+    { "<leader>nt", ":ZkTags<CR>", desc = "List note tags" },
     {
-      "<leader>zi",
+      "<leader>ni",
       function()
         require("zk.commands").get("ZkNewFromTitleSelection")({
           extra = { branch = vim.fn.input("Branch: ") },
@@ -18,24 +18,24 @@ return {
       mode = { "v" },
     },
     {
-      "<leader>zi",
+      "<leader>ni",
       ":ZkLastIssue<CR>",
       desc = "Open last modified issue note",
     },
     {
-      "<leader>zI",
+      "<leader>nI",
       ":ZkIssuesToday<CR>",
       desc = "List issue notes modified today",
       mode = { "n" },
     },
     {
-      "<leader>zn",
+      "<leader>nn",
       ":ZkNewDefault<CR>",
       desc = "New note",
       mode = { "n" },
     },
     {
-      "<leader>zd",
+      "<leader>nd",
       ":ZkNewDaily<CR>",
       desc = "Create or edit daily note",
       mode = { "n" },

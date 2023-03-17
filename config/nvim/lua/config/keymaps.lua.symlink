@@ -33,8 +33,8 @@ map("n", "<leader>wD", ":window diffthis<CR>", { noremap = true, silent = true, 
 map("n", "<leader>wt", ":window diffoff<CR>", { noremap = true, silent = true, desc = "Diff off" })
 
 -- Copy to clipboard
-map({ "n", "v" }, "<leader>y", '"+y', { noremap = true, silent = true, desc = "Copy to clipboard" })
-map({ "n", "v" }, "<leader>Y", '"+yg_', { noremap = true, silent = true, desc = "Copy to clipboard until EOL" })
+map({ "n", "v" }, "<leader>y", "\"+y", { noremap = true, silent = true, desc = "Copy to clipboard" })
+map({ "n", "v" }, "<leader>Y", "\"+yg_", { noremap = true, silent = true, desc = "Copy to clipboard until EOL" })
 
 -- better up/down
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -61,18 +61,10 @@ map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 -- buffers
-if Util.has("bufferline.nvim") then
-  map("n", "<C-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
-  map("n", "<C-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
-  map("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
-  map("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
-else
-  map("n", "<C-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
-  map("n", "<C-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
+if not Util.has("bufferline.nvim") then
   map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
   map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 end
-map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 
 -- Clear search with <esc>
@@ -87,7 +79,7 @@ map(
   { desc = "Redraw / clear hlsearch / diff update" }
 )
 
-map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
+map({ "n", "x" }, "se", "*N", { desc = "Search word under cursor" })
 
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 map("n", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
@@ -139,7 +131,7 @@ map("n", "<leader>gg", function() Util.float_term({ "lazygit" }, { cwd = Util.ge
 map("n", "<leader>gG", function() Util.float_term({ "lazygit" }) end, { desc = "Lazygit (cwd)" })
 
 -- quit
-map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
+map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit" })
 
 -- highlights under cursor
 if vim.fn.has("nvim-0.9.0") == 1 then

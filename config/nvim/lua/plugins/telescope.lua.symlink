@@ -41,7 +41,7 @@ return {
         "--smart-case",
         "--hidden",
         "--ignore",
-        "--glob=!{.git,node_modules,vendor,lib,package-lock.json,yarn.lock,data,**/*.tsx.snap,./data/parsed/**/*,./data/raw/**/*}",
+        "--glob=!{.git,node_modules,vendor,lib,package-lock.json,yarn.lock,data,**/*.tsx.snap,./data/parsed/**/*,./data/raw/**/*,config/nvim/spell/*.dict.symlink}",
       },
       mappings = {
         i = {
@@ -219,6 +219,16 @@ return {
         })
       end,
       desc = "Grep String Fuzzy",
+    },
+    {
+      "<leader>sj",
+      function()
+        require("telescope.builtin").grep_string({
+          search = vim.fn.expand("<cword>"),
+        })
+      end,
+      desc = "Grep cword",
+      mode = { "n", "v" },
     },
     {
       "<C-S>",

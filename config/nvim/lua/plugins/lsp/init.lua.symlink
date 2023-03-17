@@ -6,7 +6,7 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-              "mickael-menu/zk-nvim",
+      "mickael-menu/zk-nvim",
       {
         "Maan2003/lsp_lines.nvim",
         config = function()
@@ -176,7 +176,16 @@ return {
         sources = {
           nls.builtins.formatting.fish_indent,
           nls.builtins.diagnostics.fish,
-          nls.builtins.formatting.stylua,
+          nls.builtins.formatting.stylua.with({
+            extra_args = {
+              "--indent-type",
+              "Spaces",
+              "--indent-width",
+              "2",
+              "--quote-style",
+              "ForceDouble",
+            },
+          }),
           nls.builtins.formatting.shfmt,
           nls.builtins.diagnostics.flake8,
         },
