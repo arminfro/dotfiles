@@ -21,14 +21,14 @@ sudo dnf groupupdate sound-and-video
 # install patched font
 mkdir /tmp/Inconsolata
 cd /tmp/Inconsolata/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Inconsolata.zip
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Inconsolata.zip
 unzip Inconsolata.zip
 rm Inconsolata.zip
 rm -vrf -- *Compatible*
 mv /tmp/Inconsolata ~/.local/share/fonts/
 
 sudo dnf install -y gnome-tweaks keepassxc \
-  ncurses-devel automake autoconf gcc # deps for htop-vim
+	ncurses-devel automake autoconf gcc # deps for htop-vim
 
 # install nemo
 sudo dnf install -y nemo nemo-audio-tab nemo-compare nemo-emblems nemo-extensions nemo-fileroller nemo-image-converter nemo-preview nemo-seahorse nemo-search-helpers
