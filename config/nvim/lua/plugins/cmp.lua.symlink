@@ -30,27 +30,29 @@ return {
       return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
     end
 
+    local bufferCmpConfig = {
+      name = "buffer",
+      option = {
+        get_bufnrs = function()
+          local bufs = {}
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+            if byte_size > 1024 * 1024 then -- 1 Megabyte max
+              bufs[buf] = false
+            else
+              bufs[buf] = true
+            end
+          end
+          return vim.tbl_keys(bufs)
+        end,
+      },
+    }
+
     local sources = {
       { name = "nvim_lsp" },
       { name = "luasnip" },
-      {
-        name = "buffer",
-        option = {
-          get_bufnrs = function()
-            local bufs = {}
-            for _, win in ipairs(vim.api.nvim_list_wins()) do
-              local buf = vim.api.nvim_win_get_buf(win)
-              local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
-              if byte_size > 1024 * 1024 then -- 1 Megabyte max
-                bufs[buf] = false
-              else
-                bufs[buf] = true
-              end
-            end
-            return vim.tbl_keys(bufs)
-          end,
-        },
-      },
+      bufferCmpConfig,
       { name = "path" },
       { name = "nvim_lsp_signature_help" },
       {
@@ -67,8 +69,8 @@ return {
     }
 
     local writing_sources = {
-      { name = "dictionary" },
-      { name = "buffer" },
+      { name = "dictionary", keyword_length = 3 },
+      bufferCmpConfig,
       { name = "nvim_lsp" },
       { name = "emoji" },
       { name = "calc" },
@@ -222,7 +224,7 @@ return {
               -- todo, check if paths exist
               paths = {
                 "~/.config/nvim/snippets",
-                "~/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+                "~/.local/share/nvim/lazy/friendly-snippets",
               },
             })
             -- todo keys: require("plugins.legendary").luasnip()

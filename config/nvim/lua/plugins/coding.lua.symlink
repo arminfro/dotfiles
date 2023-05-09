@@ -312,7 +312,7 @@ return {
         ---@type table<string, string|table>
         local i = {
           [" "] = "Whitespace",
-          ['"'] = 'Balanced "',
+          ["\""] = "Balanced \"",
           ["'"] = "Balanced '",
           ["`"] = "Balanced `",
           ["("] = "Balanced (",
@@ -406,8 +406,17 @@ return {
         desc = "Git Status in fugitive",
       },
       {
-        -- todo, does not work, opens read-only scratchpad
-        "<leader>gc",
+        "<leader>gS",
+        ":Git status<CR>",
+        desc = "Git status",
+      },
+      {
+        "<leader>gW",
+        ":Git write<CR>",
+        desc = "Git Stage file",
+      },
+      {
+        "<leader>gC",
         ":Git commit<CR>",
         desc = "Git Commit",
       },

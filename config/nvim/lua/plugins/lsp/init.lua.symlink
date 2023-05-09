@@ -49,6 +49,23 @@ return {
           return require("lazyvim.util").has("nvim-cmp")
         end,
       },
+
+      {
+        "Fildo7525/pretty_hover",
+        config = function()
+          require("pretty_hover").setup()
+        end,
+        keys = {
+          {
+            "<localleader>h",
+            function()
+              require("pretty_hover").hover({})
+            end,
+            desc = "LSP, Show hover of current symbol",
+            mode = { "n" },
+          },
+        },
+      },
     },
     ---@class PluginLspOpts
     opts = {

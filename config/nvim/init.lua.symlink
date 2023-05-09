@@ -4,3 +4,4 @@
 require("config.globals")
 require("config.commands")
 require("config.lazy")
+require("config.close-unused-buffers")

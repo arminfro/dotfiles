@@ -1,20 +1,21 @@
 #!/bin/bash
 
 set_lang() {
-  setxkbmap "$1"
-  setxkbmap -option caps:swapescape
+	if [[ "$1" == "us" ]]; then
+		setxkbmap -layout "$1" -variant "altgr-intl" -option "caps:swapescape"
+	else
+		setxkbmap -layout "$1" -option "caps:swapescape"
+	fi
 
-  notify-send "$(echo "$1" | tr '[:lower:]' '[:upper:]') Keyboard" --icon=dialog-information
-  # xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-  # setxkbmap -layout us -variant altgr-intl -option nodeadkeys
+	notify-send "$(echo "$1" | tr '[:lower:]' '[:upper:]') Keyboard" --icon=dialog-information
+	# xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+	# setxkbmap -layout us -variant altgr-intl -option nodeadkeys
 }
 
-while getopts u:d: option
-do
-  case "${option}"
-    in
-    u) set_lang "us";;
-    d) set_lang "de";;
-    *) ;;
-  esac
+while getopts u:d: option; do
+	case "${option}" in
+	u) set_lang "us" ;;
+	d) set_lang "de" ;;
+	*) ;;
+	esac
 done
