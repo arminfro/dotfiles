@@ -37,6 +37,10 @@ gsettings set org.gnome.desktop.background show-desktop-icons false
 # gsettings set org.nemo.desktop show-desktop-icons true
 gsettings set org.gnome.mutter overlay-key ''
 
+# us keyboard with international layout variant, esc is swapped with caps-lock
+gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us+altgr-intl')]"
+gsettings set org.gnome.desktop.input-sources xkb-options "['caps:swapescape']"
+
 ## install vscode
 # sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 # cat <<EOF | sudo tee /etc/yum.repos.d/vscode.repo
