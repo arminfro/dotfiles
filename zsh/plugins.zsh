@@ -10,6 +10,7 @@ export SPACESHIP_DOCKER_COLOR="$ORANGE"
 export SPACESHIP_DIR_COLOR="$ORANGE_LIGHT"
 export SPACESHIP_GIT_STATUS_COLOR="$GRAY"
 export SPACESHIP_PACKAGE_COLOR="161"
+export STARSHIP_CONFIG="~/.starship.toml"
 
 export SPACESHIP_VI_MODE_NORMAL="[]"
 export SPACESHIP_VI_MODE_INSERT="[]"
@@ -31,7 +32,11 @@ if_exist() {
     fi
 }
 
+# Use modern completion system. Other than enabling globdots for showing
+# hidden files, these ares values in the default generated zsh config.
+autoload -U compinit
 compinit
+_comp_options+=(globdots)
 
 # if the init script doesn't exist
 if ! zgenom saved; then
@@ -68,10 +73,6 @@ if ! zgenom saved; then
   # if_exist cargo && zgenom load MenkeTechnologies/zsh-cargo-completion
   # if_exist rustc && zgenom ohmyzsh plugins/rust
   if_exist ssh && zgenom load zpm-zsh/ssh
-  if_exist rake && zgenom load unixorn/rake-completion.zshplugin
-  if_exist gem && zgenom ohmyzsh plugins/gem
-  if_exist ruby && genome ohmyzsh plugins/ruby
-  # if_exist rails && zgenom ohmyzsh plugins/rails
   if_exist docker && zgenom ohmyzsh plugins/docker
   if_exist docker-compose && zgenom ohmyzsh plugins/docker-compose
   if_exist rg && zgenom ohmyzsh plugins/ripgrep
@@ -96,10 +97,10 @@ if ! zgenom saved; then
   zgenom load olets/zsh-window-title
   zgenom load zdharma-continuum/fast-syntax-highlighting
   zgenom load zsh-users/zsh-history-substring-search
-  zgenom load chrissicool/zsh-256color
+  # zgenom load chrissicool/zsh-256color
   zgenom load MichaelAquilina/zsh-you-should-use
   zgenom load hlissner/zsh-autopair
-  zgenom load zpm-zsh/colors
+  # zgenom load zpm-zsh/colors
   zgenom load brymck/print-alias
   # zgenom load marzocchi/zsh-notify todo, failed to load
   # adds more vim motions to the built-in
@@ -107,7 +108,7 @@ if ! zgenom saved; then
   # supports vim with line number command, e.g.: package.json:12
   zgenom load nviennot/zsh-vim-plugin
   # runs ls and git status after chpwd, compatible with exa
-  zgenom load binury/smart-cd
+  # zgenom load binury/smart-cd
   # rm commands deletes into trash directory
   zgenom load mattmc3/zsh-safe-rm
   # filter commands for sensitive information before storing in history
@@ -116,18 +117,16 @@ if ! zgenom saved; then
   # integration with zsh-autosuggestions not working as I wish, that's why HISTFILE is still defined
   zgenom load larkery/zsh-histdb
   # jira wrapper
-  zgenom load unixorn/jira-commands
+  # zgenom load unixorn/jira-commands
 
   # commands
   zgenom load knu/zsh-manydots-magic
   zgenom load skywind3000/z.lua
-  # fuzzy search to tab completion of z
-  zgenom load changyuheng/fz
   zgenom load arzzen/calc.plugin.zsh
   if_exist git && zgenom load LucasLarson/gunstage # git unstage command
-  zgenom ohmyzsh plugins/genpass
-  zgenom ohmyzsh plugins/urltools
-  zgenom ohmyzsh plugins/extract
+  # zgenom ohmyzsh plugins/genpass
+  # zgenom ohmyzsh plugins/urltools
+  # zgenom ohmyzsh plugins/extract
   # generate .gitignore with templates from gitignore.io offline
   if_exist git && zgenom ohmyzsh plugins/gitignore
 
