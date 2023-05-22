@@ -73,13 +73,15 @@ return {
   },
 
   -- markdown in vim float window rendering
-  -- todo, set keymap
   {
     "ellisonleao/glow.nvim",
     ft = { "markdown", "txt" },
     cmd = "Glow",
     event = "BufRead",
     config = true,
+    keys = {
+      { "<leader>ttg", "<cmd>Glow<CR>", desc = "Glow Markdown render" },
+    },
   },
 
   -- markdown in browser rendering
