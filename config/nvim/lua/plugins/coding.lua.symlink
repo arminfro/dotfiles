@@ -412,7 +412,7 @@ return {
       },
       {
         "<leader>gW",
-        ":Git write<CR>",
+        ":Gwrite<CR>",
         desc = "Git Stage file",
       },
       {
