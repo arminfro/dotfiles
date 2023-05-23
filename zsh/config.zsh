@@ -105,9 +105,7 @@ group by commands.argv order by count(*) desc limit 1"
     suggestion=$(_histdb_query "$query")
 }
 
-# quickfixing bug "sql_escape: command not found"
-# ZSH_AUTOSUGGEST_STRATEGY=histdb_top_here
-ZSH_AUTOSUGGEST_STRATEGY=history
+ZSH_AUTOSUGGEST_STRATEGY=histdb_top_here
 
 # source histdb-interactive.zsh
 # bindkey '^r' _histdb-isearch

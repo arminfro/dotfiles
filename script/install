@@ -16,16 +16,13 @@ run_installers() {
 }
 
 install_packages() {
-	local installers=(system ruby node python) system_packages='' rust_packages='' ruby_packages='' npm_packages='' python_packages='' postfix=_packages
+	local installers=(system ruby node python) system_packages='' ruby_packages='' npm_packages='' python_packages='' postfix=_packages
 	for installer in "${installers[@]}"; do
 		for packages in $(find -H "$DOTFILES_ROOT" -name $installer$postfix); do
 			for package in "$(cat $packages)"; do
 				case $installer in
 				system)
 					system_packages+=" $package"
-					;;
-				rust)
-					rust_packages+=" $package"
 					;;
 				ruby)
 					ruby_packages+=" $package"
@@ -43,8 +40,6 @@ install_packages() {
 	echo $system_packages
 	sudo dnf install -y ${system_packages[@]} --allowerasing
 	run_installers
-	echo $rust_packages
-	cargo install ${rust_packages[@]}
 	echo $ruby_packages
 	gem install --user ${ruby_packages[@]}
 	echo $npm_packages
