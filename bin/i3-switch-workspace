@@ -10,19 +10,19 @@ I3_MSG=$(i3-msg -t get_workspaces)
 CURRENT_DESKTOP=$(echo "$I3_MSG" | jq '.[] | select(.focused) | .num')
 
 # Calculate the current group based on the current "num" value
-CURRENT_GROUP=$(( (CURRENT_DESKTOP - 1) / GROUP_SIZE + 1 ))
+CURRENT_GROUP=$(((CURRENT_DESKTOP - 1) / GROUP_SIZE + 1))
 
 # Get the parameter passed to the script
 NEXT_RELATIVE_DESKTOP=$1
 
 # Check if the parameter is in range
-if (( NEXT_RELATIVE_DESKTOP < 1 || NEXT_RELATIVE_DESKTOP > GROUP_SIZE )); then
-  echo "Error: Parameter out of range (1-$GROUP_SIZE)" >&2
-  exit 1
+if ((NEXT_RELATIVE_DESKTOP < 1 || NEXT_RELATIVE_DESKTOP > GROUP_SIZE)); then
+	echo "Error: Parameter out of range (1-$GROUP_SIZE)" >&2
+	exit 1
 fi
 
 # Calculate the absolute index based on the current group and the parameter
-NEXT_ABSOLUTE_DESKTOP=$(( (CURRENT_GROUP - 1) * GROUP_SIZE + NEXT_RELATIVE_DESKTOP ))
+NEXT_ABSOLUTE_DESKTOP=$(((CURRENT_GROUP - 1) * GROUP_SIZE + NEXT_RELATIVE_DESKTOP))
 
 # Call the i3-msg command with the absolute index
 i3-msg "workspace $NEXT_ABSOLUTE_DESKTOP"

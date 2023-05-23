@@ -94,6 +94,7 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
 
+# https://github.com/larkery/zsh-histdb#integration-with-zsh-autosuggestions
 _zsh_autosuggest_strategy_histdb_top_here() {
     local query="select commands.argv from
 history left join commands on history.command_id = commands.rowid
@@ -104,7 +105,9 @@ group by commands.argv order by count(*) desc limit 1"
     suggestion=$(_histdb_query "$query")
 }
 
-ZSH_AUTOSUGGEST_STRATEGY=histdb_top_here
+# quickfixing bug "sql_escape: command not found"
+# ZSH_AUTOSUGGEST_STRATEGY=histdb_top_here
+ZSH_AUTOSUGGEST_STRATEGY=history
 
 # source histdb-interactive.zsh
 # bindkey '^r' _histdb-isearch
