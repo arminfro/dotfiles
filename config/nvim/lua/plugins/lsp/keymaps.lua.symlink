@@ -7,7 +7,9 @@ M._keys = nil
 
 ---@return (LazyKeys|{has?:string})[]
 function M.get()
-  local format = require("plugins.lsp.format").format
+  local format = function()
+    require("lazyvim.plugins.lsp.format").format({ force = true })
+  end
   if not M._keys then
     ---@class PluginLspKeys
     -- stylua: ignore
@@ -32,12 +34,12 @@ function M.get()
       { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
       { "<leader>cf", format, desc = "Format Document", has = "documentFormatting" },
       { "<leader>cf", format, desc = "Format Range", mode = "v", has = "documentRangeFormatting" },
-      -- {
-      --   "<localleader>h",
-      --   vim.lsp.buf.hover,
-      --   desc = "LSP, Show hover of current symbol",
-      --   mode = { "n" },
-      -- },
+      {
+        "<localleader>h",
+        vim.lsp.buf.hover,
+        desc = "LSP, Show hover of current symbol",
+        mode = { "n" },
+      },
       { "<localleader>a", vim.lsp.buf.code_action, desc = "LSP, Code Actions by Lsp", mode = { "n" } },
       {
         "<localleader>a",
@@ -106,7 +108,7 @@ function M.on_attach(client, buffer)
       local opts = Keys.opts(keys)
       ---@diagnostic disable-next-line: no-unknown
       opts.has = nil
-      opts.silent = true
+      opts.silent = opts.silent ~= false
       opts.buffer = buffer
       if keys[2] then
         vim.keymap.set(keys.mode or "n", keys[1], keys[2], opts)

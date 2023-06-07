@@ -406,9 +406,9 @@ return {
         desc = "Git Status in fugitive",
       },
       {
-        "<leader>gS",
-        ":Git status<CR>",
-        desc = "Git status",
+        "<leader>gR",
+        ":Gread<CR>",
+        desc = "Git Read file",
       },
       {
         "<leader>gW",

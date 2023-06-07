@@ -85,7 +85,7 @@ if ! zgenom saved; then
   # utility
   zgenom load spaceship-prompt/spaceship-prompt
   #  automatically sources (known/whitelisted)
-  zgenom load Tarrasch/zsh-autoenv; AUTOENV_FILE_ENTER=.env
+  # zgenom load Tarrasch/zsh-autoenv; AUTOENV_FILE_ENTER=.env
   zgenom load Aloxaf/fzf-tab # todo, does not seem to work: if_exist fzf && ...
   # zgenom ohmyzsh plugins/fancy-ctrl-z
   # double tab escape to prefix command with sudo
@@ -136,8 +136,11 @@ if ! zgenom saved; then
   # zplug "plugins/web-search", from:oh-my-zsh
   # zplug "plugins/copyfile", from:oh-my-zsh #, as:command, use:"copyfile.plugin.zsh", rename-to:copyfile
 
-  # generate the init script from plugins above
+  # save all to init script
   zgenom save
+
+  # Compile your zsh files
+  zgenom compile "$HOME/.zshrc"
 fi
 
 FZ_HISTORY_CD_CMD=_zlua

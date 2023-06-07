@@ -13,6 +13,10 @@ local function map(mode, lhs, rhs, opts)
   end
 end
 
+-- better up/down
+map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+
 -- easier save, new and exit
 map("n", "<leader>,", ":wa<CR>", { noremap = true, silent = true, desc = "Save file" })
 map("n", "<leader>Q", ":qa<CR>", { noremap = true, silent = true, desc = "Quit" })
@@ -62,10 +66,13 @@ map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 -- buffers
 if not Util.has("bufferline.nvim") then
+  map("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+  map("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+else
   map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
   map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 end
-map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+-- map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 
 -- Clear search with <esc>
 map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })

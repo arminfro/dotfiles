@@ -48,12 +48,8 @@ ginit () {
     git commit -m "Initialize repository"
 }
 
-# glog () {
-#   git log --pretty=format:"%h %ad %Cgreen %s %Creset  [%an]" --graph --date=short
-# }
-
 last_installed () {
-  echo "$(expac --timefmt='%Y-%m-%d %T' '%l\\t%n' | sort | tail -n $1)"
+  echo "$(rpm -qa --last)"
 }
 
 make_world_readable () {
@@ -100,10 +96,6 @@ swirl () {
 
 V () {
   vim $(ls -p | grep -v /)
-}
-
-vimCommit () {
-  vim $(git diff-tree --no-commit-id --name-only -r $1)
 }
 
 weather () {
