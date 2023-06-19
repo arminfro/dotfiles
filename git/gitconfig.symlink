@@ -36,3 +36,6 @@
 	browser = firefox
 [credential]
 	helper = /usr/libexec/git-core/git-credential-libsecret
+[user]
+	email = mail@arminfroehlich.de
+	name = Armin Fröhlich

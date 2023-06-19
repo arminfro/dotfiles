@@ -262,6 +262,29 @@ return {
   },
 
   {
+    "tzachar/highlight-undo.nvim",
+    config = function()
+      require("highlight-undo").setup({})
+    end,
+  },
+
+  {
+    "stevearc/overseer.nvim",
+    keys = {
+      {
+        "<leader>rr",
+        "<CMD>OverseerRun<CR>",
+        desc = "Run Overseer",
+      },
+    },
+    config = function()
+      require("overseer").setup({
+        strategy = "toggleterm",
+      })
+    end,
+  },
+
+  {
     "pbrisbin/vim-mkdir",
   },
 }

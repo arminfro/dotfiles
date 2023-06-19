@@ -7,14 +7,17 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "mickael-menu/zk-nvim",
-      -- "simrat39/rust-tools.nvim",
-      { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
+      -- { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
       { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
-      { "j-hui/fidget.nvim", opts = {
-        window = {
-          blend = 0,
+      {
+        "j-hui/fidget.nvim",
+        tag = "legacy",
+        opts = {
+          window = {
+            blend = 0,
+          },
         },
-      } },
+      },
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       {

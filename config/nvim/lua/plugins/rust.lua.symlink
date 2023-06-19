@@ -66,11 +66,10 @@ return {
                 ["rust-analyzer"] = {
                   checkOnSave = {
                     enable = true,
-                    command = "clippy",
+                    -- command = "clippy",
                   },
-                  cargo = {
-                    allFeatures = true,
-                  },
+                  cargo = { allFeatures = true },
+                  procMacro = { enable = true },
                 },
               },
             },

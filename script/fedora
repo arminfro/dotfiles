@@ -12,7 +12,10 @@ sudo dnf copr -y enable atim/i3status-rust
 sudo dnf copr -y enable agriffis/neovim-nightly
 
 # install lazygit repo
-sudo dnf copr -y enable atim/lazygit -y
+sudo dnf copr -y enable atim/lazygit
+
+# install starship repo
+sudo dnf copr -y enable atim/starship
 
 # install rpm fusion free repo and sound-and-video group
 sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm

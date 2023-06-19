@@ -10,7 +10,6 @@ export SPACESHIP_DOCKER_COLOR="$ORANGE"
 export SPACESHIP_DIR_COLOR="$ORANGE_LIGHT"
 export SPACESHIP_GIT_STATUS_COLOR="$GRAY"
 export SPACESHIP_PACKAGE_COLOR="161"
-export STARSHIP_CONFIG="~/.starship.toml"
 
 export SPACESHIP_VI_MODE_NORMAL="[]"
 export SPACESHIP_VI_MODE_INSERT="[]"
@@ -83,7 +82,7 @@ if ! zgenom saved; then
   # zplug "alexiszamanidis/zsh-git-fzf", if:"[ -x $(which fzf 2> /dev/null) ]"
 
   # utility
-  zgenom load spaceship-prompt/spaceship-prompt
+  # zgenom load spaceship-prompt/spaceship-prompt
   #  automatically sources (known/whitelisted)
   # zgenom load Tarrasch/zsh-autoenv; AUTOENV_FILE_ENTER=.env
   zgenom load Aloxaf/fzf-tab # todo, does not seem to work: if_exist fzf && ...
@@ -151,6 +150,10 @@ ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 
 # https://github.com/skywind3000/z.lua#options
 _ZL_MATCH_MODE=1
+
+eval "$(starship init zsh)"
+
+# spaceship remove hg package node bun deno ruby python elm elixir xcode swift golang perl php rust haskell scala kotlin java lua dart julia crystal docker docker_compose aws gcloud azure venv conda dotnet ocaml vlang zig purescript erlang kubectl ansible terraform pulumi ibmcloud battery
 
 # # load aliases
 # typeset -U config_files
