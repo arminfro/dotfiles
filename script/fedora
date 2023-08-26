@@ -9,7 +9,7 @@ sudo curl -sL https://dl.yarnpkg.com/rpm/yarn.repo -o /etc/yum.repos.d/yarn.repo
 sudo dnf copr -y enable atim/i3status-rust
 
 # install neovim-nightly repo
-sudo dnf copr -y enable agriffis/neovim-nightly
+# sudo dnf copr -y enable agriffis/neovim-nightly
 
 # install lazygit repo
 sudo dnf copr -y enable atim/lazygit
@@ -24,18 +24,12 @@ sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-rel
 # sudo dnf groupupdate -y sound-and-video
 
 # install patched font
-mkdir /tmp/Inconsolata
-cd /tmp/Inconsolata/
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Inconsolata.zip
-unzip Inconsolata.zip
-rm Inconsolata.zip
-rm -vrf -- *Compatible*
-mv /tmp/Inconsolata ~/.local/share/fonts/
+~/.dotfiles/bin/install-inconsolata-font
 
 sudo dnf install -y gnome-tweaks keepassxc \
 	ncurses-devel automake autoconf gcc # deps for htop-vim
 
-# install nemo
+# install nemo and set default
 sudo dnf install -y nemo nemo-audio-tab nemo-compare nemo-emblems nemo-extensions nemo-fileroller nemo-image-converter nemo-preview nemo-seahorse nemo-search-helpers
 xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.gnome.desktop.background show-desktop-icons false
@@ -44,11 +38,14 @@ gsettings set org.gnome.desktop.background show-desktop-icons false
 gsettings set org.gnome.mutter overlay-key ''
 
 # us keyboard with international layout variant, esc is swapped with caps-lock
-gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us+altgr-intl')]"
+gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'de-us+altgr-intl')]"
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:swapescape']"
 
 # use dark theme
 gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+
+# install gnome-flashback
+~/.dotfiles/bin/install-i3-gnome-flashback
 
 ## install vscode
 # sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc

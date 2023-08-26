@@ -1,16 +1,16 @@
 #!/bin/bash
 
 if ! [[ -d /tmp/i3-gnome-flashback ]]; then
-  cd /tmp
-  git clone https://github.com/deuill/i3-gnome-flashback.git
-  cd i3-gnome-flashback
-  sudo make install
-  gsettings set org.gnome.desktop.background show-desktop-icons false
+	cd /tmp || exit
+	git clone https://github.com/deuill/i3-gnome-flashback.git
+	cd i3-gnome-flashback || exit
+	sudo make install
+	gsettings set org.gnome.desktop.background show-desktop-icons false
 fi
 
 sudo dnf install -y gnome-tweak-tool gnome-tweaks gnome-flashback.x86_64
 
-echo 'exec --no-startup-id gnome-panel' >> ~/.dotfiles/config/i3/config.symlink
+echo 'exec --no-startup-id gnome-panel' >>~/.dotfiles/config/i3/config.symlink
 
 # prevent overwriting of caps:esc switch, https://askubuntu.com/a/582498
 # gsettings set org.gnome.settings-daemon.plugins.keyboard active false

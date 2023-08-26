@@ -1,0 +1,16 @@
+#!/bin/bash
+
+commit_id=$1
+
+# Check if commit ID is provided
+if [ -z "$commit_id" ]; then
+	echo "Please provide a commit ID."
+	exit 1
+fi
+
+# Get the list of changed files
+files_changed=$(git diff --name-only "$commit_id" HEAD)
+
+# Print the list of changed files
+echo "Files changed between $commit_id and current HEAD:"
+echo "$files_changed"

@@ -1,0 +1,81 @@
+-- vi: ft=lua
+
+return {
+
+  -- add json to treesitter
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        vim.list_extend(opts.ensure_installed, { "c_sharp", "dot" })
+      end
+    end,
+  },
+
+  {
+    "mason.nvim",
+    opts = function(_, opts)
+      opts.ensure_installed = opts.ensure_installed or {}
+      vim.list_extend(opts.ensure_installed, { "csharp-language-server" })
+    end,
+  },
+
+  { "arkaragian/Solution.nvim" },
+
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      -- Extended textDocument/definition handler that handles assembly/decompilation loading for $metadata$ documents
+      "Decodetalkers/csharpls-extended-lsp.nvim",
+    },
+    init = function()
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      -- unset default gd binding to use csharpls-extended-lsp instead in setup field
+      keys[#keys + 1] = { "gd", false }
+    end,
+    opts = {
+      servers = {
+        csharp_ls = {
+          handlers = {
+            ["textDocument/definition"] = function(err, method, params, client_id)
+              require("csharpls_extended").handler(err, method, params, client_id)
+            end,
+          },
+          cmd = { vim.env["HOME"] .. "/.dotnet/tools/csharp-ls" },
+          root_dir = function(startpath)
+            local lspconfig = require("lspconfig")
+            return lspconfig.util.root_pattern("*.sln")(startpath)
+              or lspconfig.util.root_pattern("*.csproj")(startpath)
+              or lspconfig.util.root_pattern("*.fsproj")(startpath)
+              or lspconfig.util.root_pattern(".git")(startpath)
+          end,
+        },
+      },
+      setup = {
+        csharp_ls = function(_, opts)
+          require("lazyvim.util").on_attach(function(client, buffer)
+            if client.name == "csharp_ls" then
+              vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = buffer, desc = "Goto definition" })
+            end
+          end)
+        end,
+        -- ["*"] = function(server, opts)
+        --   require("lazyvim.util").on_attach(function(client, buffer)
+        --     if client.name ~= "csharp_ls" then
+        --       vim.keymap.set("n", "gd", function()
+        --         require("telescope.builtin").lsp_definitions({ reuse_win = true })
+        --       end, { buffer = buffer, desc = "Goto definition" })
+        --     end
+        --   end)
+        -- end,
+      },
+    },
+  },
+
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    opts = function(_, opts)
+      table.insert(opts.sources, require("null-ls").builtins.formatting.csharpier)
+    end,
+  },
+}

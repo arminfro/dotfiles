@@ -6,6 +6,8 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
+AUTOENV_FILE_ENTER=.env
+
 # no c-s/c-q output freezing
 setopt noflowcontrol
 # allow expansion in prompts
@@ -133,3 +135,22 @@ fi
 #     "$@"
 # set --
 # fi
+
+# Set keybindings for zsh-vi-mode insert mode
+function zvm_after_init() {
+    zvm_bindkey viins "^P" up-line-or-beginning-search
+    zvm_bindkey viins "^N" down-line-or-beginning-search
+    for o in files branches tags remotes hashes stashes each_ref; do
+        eval "zvm_bindkey viins '^g^${o[1]}' fzf-git-$o-widget"
+        eval "zvm_bindkey viins '^g${o[1]}' fzf-git-$o-widget"
+    done
+}
+# Set keybindings for zsh-vi-mode normal and visual modes
+function zvm_after_lazy_keybindings() {
+    for o in files branches tags remotes hashes stashes each_ref; do
+        eval "zvm_bindkey vicmd '^g^${o[1]}' fzf-git-$o-widget"
+        eval "zvm_bindkey vicmd '^g${o[1]}' fzf-git-$o-widget"
+        eval "zvm_bindkey visual '^g^${o[1]}' fzf-git-$o-widget"
+        eval "zvm_bindkey visual '^g${o[1]}' fzf-git-$o-widget"
+    done
+}

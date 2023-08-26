@@ -9,7 +9,7 @@
         mylog             = log --pretty=format:'%h %ad %Cgreen %s %Creset  [%an]' --graph --date = short
         st                = status
         graph             = log --graph --oneline --decorate
-        edit              = !$EDITOR $(git status --short | awk '$1 ~ /^M|A|U/ {print $2}' )
+        edit              = !$EDITOR $(git status --short | awk '$1 ~ /^M|A|U/ {print $2}' | grep -v data/.*json)
 [color]
         diff = auto
         status = auto
@@ -36,6 +36,3 @@
 	browser = firefox
 [credential]
 	helper = /usr/libexec/git-core/git-credential-libsecret
-[user]
-	email = mail@arminfroehlich.de
-	name = Armin Fröhlich

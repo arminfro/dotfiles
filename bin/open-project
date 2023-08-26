@@ -1,0 +1,59 @@
+#!/bin/bash
+
+handle_arguments() {
+	path=$1
+	# chosen_tech=$1
+	# chosen_project=$2
+	chosen_desktop=$2
+
+	# adapt for andreaconti/auto-cd
+	echo "$path" >"$HOME"/.last_cd
+	# Read the original JSON config file
+	config_file="$HOME/.i3/i3-resurrect/workspace_simple-layout_layout.json"
+
+	[[ -z "$config_file" ]] && exit 1
+
+	# Read and modify the JSON using jq
+	updated_json=$(jq --arg dynamicValue "$chosen_desktop" '.name = $dynamicValue' "$config_file")
+
+	# Save the updated JSON back to the file
+	echo "$updated_json" >"$config_file"
+
+	i3-resurrect restore -w simple-layout
+
+	i3-msg "workspace $chosen_desktop"
+	# Add your code here to process the arguments
+}
+
+no_arguments() {
+	workspace_dir="$HOME/Workspace"
+
+	cd "$workspace_dir" || exit 1
+
+	chosen_tech=$(fd -t d -d 1 | rofi -dmenu -i -p "Choose Technology")
+
+	[[ -z "$chosen_tech" ]] && exit 1
+
+	cd "$chosen_tech" || exit
+
+	chosen_project=$(fd -t d -d 1 | rofi -dmenu -i -p "Choose Project")
+
+	[[ -z "$chosen_project" ]] && exit 1
+
+	cd "$chosen_project" || exit
+
+	options=("2" "5" "8")
+	chosen_desktop=$(printf '%s\n' "${options[@]}" | rofi -dmenu -p "Choose a Desktop:")
+
+	[[ -z "$chosen_desktop" ]] && exit 1
+
+	handle_arguments "$workspace_dir/$chosen_tech$chosen_project" "$chosen_desktop"
+}
+
+if [ $# -eq 2 ]; then
+	handle_arguments "$1" "$2"
+else
+	no_arguments
+fi
+
+exit 0

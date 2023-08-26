@@ -110,12 +110,6 @@ applications:
             default:
                 path: ~/.config/luakit/color.lua
                 mode: rewrite
-    hexchat:
-        enabled: true
-        files:
-            default:
-                path: ~/.config/hexchat/colors.conf
-                mode: rewrite
     amfora:
         enabled: true
         files:

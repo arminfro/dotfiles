@@ -2,3 +2,5 @@ zsh
 exa
 util-linux-user
 starship
+git-delta
+procs

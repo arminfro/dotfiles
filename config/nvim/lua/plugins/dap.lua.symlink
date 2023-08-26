@@ -1,5 +1,7 @@
 -- vi: ft=lua
 
+-- todo, use https://github.com/niuiic/dap-utils.nvim
+
 return {
   {
     -- "MunifTanjim/nui.nvim",

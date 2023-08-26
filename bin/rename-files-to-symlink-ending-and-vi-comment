@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# find $1 -type f -exec sh -c 'for file do \
+#     ext="${file##*.}" && \
+#     sed -i "1i-- vi: ft=$ext\\n" "$file" && \
+#     sed -i "2i\\" "$file" && \
+#      mv "$file" "$(dirname "$file")/$(basename "$file").symlink" ; done' sh {} +

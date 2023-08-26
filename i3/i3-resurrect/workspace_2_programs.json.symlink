@@ -1,0 +1,26 @@
+[
+  {
+    "command": ["/usr/bin/alacritty", "-e", "/usr/bin/btm"],
+    "working_directory": "/home/user"
+  },
+  {
+    "command": ["/usr/bin/nemo"],
+    "working_directory": "/home/user"
+  },
+  {
+    "command": ["/usr/bin/alacritty"],
+    "working_directory": "/home/user"
+  },
+  {
+    "command": ["/usr/bin/alacritty"],
+    "working_directory": "/home/user"
+  },
+  {
+    "command": [
+      "/usr/bin/alacritty",
+      "-e",
+      "/home/user/.dotfiles/bin/follow-journal"
+    ],
+    "working_directory": "/home/user"
+  }
+]

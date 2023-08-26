@@ -1,0 +1,18 @@
+-- vi: ft=lua
+
+local g = vim.g
+-- local o = vim.opt
+
+if g.neovide then
+  -- o.guifont = "JetBrainsMono Nerd Font:h9"
+
+  -- todo, fix pasting issues
+  vim.opt.clipboard = "unnamedplus"
+
+  g.neovide_cursor_animation_length = 0.13
+  g.neovide_background_color = "#242631"
+  g.transparency = 0.8
+  g.neovide_transparency = 0.8
+  g.neovide_remember_window_size = true
+  g.neovide_fullscreen = false
+end

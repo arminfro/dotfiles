@@ -1,9 +1,7 @@
 -- vi: ft=lua
 
--- vi: ft=lua
-
-return -- dashboard
-{
+return {
+  -- dashboard start screen
   "goolord/alpha-nvim",
   event = "VimEnter",
   opts = function()
@@ -24,9 +22,11 @@ return -- dashboard
       dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
       dashboard.button("g", " " .. " Find text", ":Telescope live_grep <CR>"),
       -- dashboard.button("c", " " .. " Config", ":e $MYVIMRC <CR>"),
+      dashboard.button("d", "󰽘 " .. " Frecent Dirs", "<cmd>FrecentDirs<CR>"),
       dashboard.button("s", " " .. " Restore Session", [[:lua require("persistence").load() <cr>]]),
       dashboard.button("l", "󰒲 " .. " Lazy", ":Lazy<CR>"),
-      dashboard.button("n", " " .. " New Note", ":ZkNewDefault<CR>"),
+      dashboard.button("m", " " .. " Mason", ":Mason<CR>"),
+      dashboard.button("n", " " .. " New Note", ":ZkNewDefault<CR>"), -- todo, needs loading module since it's lazy
       dashboard.button("h", "✔ " .. " Check Health", ":checkhealth<CR>"),
       dashboard.button("q", " " .. " Quit", ":qa<CR>"),
     }

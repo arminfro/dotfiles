@@ -24,9 +24,20 @@ return {
         vim.g.gitblame_message_template = "<date> • <summary>"
       end,
     },
+    "Isrothy/lualine-diagnostic-message",
+    "nvim-tree/nvim-web-devicons",
+    "meuter/lualine-so-fancy.nvim",
+    "sherlock5512/lualine-spell-status",
+    -- "chrisgrieser/nvim-dr-lsp", -- try later
   },
   opts = function()
     local icons = require("lazyvim.config").icons
+    local diagnosticsIcons = {
+      error = icons.diagnostics.Error,
+      warn = icons.diagnostics.Warn,
+      info = icons.diagnostics.Info,
+      hint = icons.diagnostics.Hint,
+    }
 
     local function fg(name)
       return function()
@@ -45,31 +56,35 @@ return {
         disabled_filetypes = { statusline = { "dashboard", "lazy", "alpha", "undotree" } },
       },
       sections = {
-        lualine_a = { "mode" },
+        lualine_a = { "fancy_mode" },
         lualine_b = { "branch" },
         lualine_c = {
           {
             "diagnostics",
-            symbols = {
-              error = icons.diagnostics.Error,
-              warn = icons.diagnostics.Warn,
-              info = icons.diagnostics.Info,
-              hint = icons.diagnostics.Hint,
-            },
+            symbols = diagnosticsIcons,
           },
           { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-          { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
+          { "diagnostic-message", icons = diagnosticsIcons },
+          -- due to barbecue, not needed anymore
+          -- { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
           -- stylua: ignore
+          {'spell_status'},
           {
             function()
-            if not pcall(require, 'lsp_signature') then return end
+              if not pcall(require, "lsp_signature") then
+                return
+              end
               local sig = require("lsp_signature").status_line(128)
               if #sig.label > 0 then
                 return sig.label
               end
             end,
-            cond = function() return package.loaded["lsp_signature"] and #(require("lsp_signature").status_line(128)).label > 0 end,
+            cond = function()
+              return package.loaded["lsp_signature"] and #(require("lsp_signature").status_line(128)).label > 0
+            end,
           },
+          -- { require("dr-lsp").lspCount },
+          -- { require("dr-lsp").lspProgress },
         },
         lualine_x = {
           -- { require("statusline-action-hints").statusline, color = fg("Special") },
@@ -78,6 +93,10 @@ return {
             color = fg("Statement"),
           },
 
+          { "overseer" },
+
+          { "fancy_macro" },
+          { "fancy_searchcount" },
           -- stylua: ignore
           {
             function() return require("noice").api.status.command.get() end,
@@ -96,12 +115,8 @@ return {
             color = fg("Special"),
           },
           {
-            "diff",
-            symbols = {
-              added = icons.git.added,
-              modified = icons.git.modified,
-              removed = icons.git.removed,
-            },
+            "fancy_diff",
+            symbols = icons.git,
           },
         },
         lualine_y = {

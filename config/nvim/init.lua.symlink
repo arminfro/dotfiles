@@ -3,5 +3,6 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.globals")
 require("config.commands")
+require("config.gui")
 require("config.lazy")
 require("config.close-unused-buffers")

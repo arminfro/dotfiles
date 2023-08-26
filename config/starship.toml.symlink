@@ -1,0 +1,26 @@
+# vi: ft=toml
+
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+# Set 'custom' as custom color palette
+palette = 'custom'
+
+# Define custom colors
+[palettes.custom]
+# Overwrite existing color
+green = '#198844'
+gray = '248'
+red = '#CC342B'
+blue = '#3971ED'
+black = '#282a36'
+yellow = '#FBA922'
+purple = '#A36AC7'
+
+# Replace the '❯' symbol in the prompt with '➜'
+[character] # The name of the module we are configuring is 'character'
+success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+

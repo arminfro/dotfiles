@@ -1,0 +1,16 @@
+#!/bin/bash
+
+gnome-flashback &
+gnome-panel &
+redshift &
+unclutter -idle 2 -noevents &
+gpaste-client start &
+
+echo "$HOME" >"$HOME"/.last_cd &
+i3-resurrect restore -w 1 && sleep 1 && i3-resurrect restore -w 2 &
+
+nm-applet &
+
+picom -b #--transparent-clipping
+
+~/.dotfiles/bin/set-wallpaper &

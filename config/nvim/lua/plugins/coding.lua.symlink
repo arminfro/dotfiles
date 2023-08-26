@@ -2,47 +2,6 @@
 
 return {
 
-  -- git signs
-  {
-    "lewis6991/gitsigns.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "petertriho/nvim-scrollbar" },
-    config = function()
-      require("gitsigns").setup({
-        signs = {
-          add = { text = "▎" },
-          change = { text = "▎" },
-          delete = { text = "" },
-          topdelete = { text = "" },
-          changedelete = { text = "▎" },
-          untracked = { text = "▎" },
-        },
-        on_attach = function(buffer)
-          local gs = package.loaded.gitsigns
-
-          local function map(mode, l, r, desc)
-            vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
-          end
-
-        -- stylua: ignore start
-        map("n", "]h", gs.next_hunk, "Next Hunk")
-        map("n", "[h", gs.prev_hunk, "Prev Hunk")
-        map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-        map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
-        map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
-        map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
-        map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
-        map("n", "<leader>ghp", gs.preview_hunk, "Preview Hunk")
-        map("n", "<leader>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
-        map("n", "<leader>ghd", gs.diffthis, "Diff This")
-        map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
-        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
-        end,
-      })
-      require("scrollbar.handlers.gitsigns").setup()
-    end,
-  },
-
   {
     -- documentation generator
     "danymat/neogen",
@@ -89,31 +48,6 @@ return {
     },
     event = "BufRead",
     config = true,
-  },
-
-  -- visualise and resolve git conflicts
-  {
-    "akinsho/git-conflict.nvim",
-    cmd = {
-
-      "GitConflictChooseOurs",
-      "GitConflictChooseTheirs",
-      "GitConflictChooseBoth",
-      "GitConflictChooseNone",
-      "GitConflictNextConflict",
-      "GitConflictPrevConflict",
-      "GitConflictListQf",
-    },
-    version = "*",
-    config = function()
-      require("git-conflict").setup()
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "GitConflictDetected",
-        callback = function()
-          vim.notify("Conflict detected in " .. vim.fn.expand("<afile>"))
-        end,
-      })
-    end,
   },
 
   {
@@ -163,7 +97,10 @@ return {
           if require("trouble").is_open() then
             require("trouble").previous({ skip_groups = true, jump = true })
           else
-            vim.cmd.cprev()
+            local ok, err = pcall(vim.cmd.cprev)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
           end
         end,
         desc = "Previous trouble/quickfix item",
@@ -174,7 +111,10 @@ return {
           if require("trouble").is_open() then
             require("trouble").next({ skip_groups = true, jump = true })
           else
-            vim.cmd.cnext()
+            local ok, err = pcall(vim.cmd.cnext)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
           end
         end,
         desc = "Next trouble/quickfix item",
@@ -195,6 +135,7 @@ return {
       { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
       { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
       { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
     },
   },
 
@@ -354,18 +295,30 @@ return {
   },
 
   {
-    "HiPhish/nvim-ts-rainbow2",
+    "HiPhish/rainbow-delimiters.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
-      require("nvim-treesitter.configs").setup({
-        rainbow = {
-          enable = true,
-          -- Which query to use for finding delimiters
-          query = "rainbow-parens",
-          -- Highlight the entire buffer all at once
-          strategy = require("ts-rainbow.strategy.global"),
+      local rainbow_delimiters = require("rainbow-delimiters")
+
+      vim.g.rainbow_delimiters = {
+        strategy = {
+          [""] = rainbow_delimiters.strategy["global"],
+          vim = rainbow_delimiters.strategy["local"],
         },
-      })
+        query = {
+          [""] = "rainbow-delimiters",
+          lua = "rainbow-blocks",
+        },
+        highlight = {
+          "RainbowDelimiterRed",
+          "RainbowDelimiterYellow",
+          "RainbowDelimiterBlue",
+          "RainbowDelimiterOrange",
+          "RainbowDelimiterGreen",
+          "RainbowDelimiterViolet",
+          "RainbowDelimiterCyan",
+        },
+      }
     end,
   },
 
@@ -377,65 +330,6 @@ return {
     end,
   },
 
-  {
-    "sindrets/diffview.nvim",
-    lazy = true,
-    keys = {
-      {
-        "<leader>gD",
-        ":DiffviewOpen -uno<CR>",
-        desc = "Git diff workspace",
-        mode = "n",
-      },
-      {
-        "<leader>gd",
-        ":DiffviewFileHistory<CR>",
-        desc = "Git diff file",
-        mode = { "n", "v" },
-      },
-    },
-  },
-
-  {
-    "tpope/vim-fugitive",
-    cmd = { "Git", "Gdiffsplit", "Gread", "Gwrite", "Ggrep", "GMove", "GRename", "GDelete", "GRemove", "GBrowse" },
-    keys = {
-      {
-        "<leader>gS",
-        ":Git<CR>",
-        desc = "Git Status in fugitive",
-      },
-      {
-        "<leader>gR",
-        ":Gread<CR>",
-        desc = "Git Read file",
-      },
-      {
-        "<leader>gW",
-        ":Gwrite<CR>",
-        desc = "Git Stage file",
-      },
-      {
-        "<leader>gC",
-        ":Git commit<CR>",
-        desc = "Git Commit",
-      },
-    },
-    opts = {},
-  },
-
-  {
-    "ruifm/gitlinker.nvim",
-    lazy = true,
-    keys = {
-      {
-        "<leader>gy",
-        ":lua require'gitlinker'.get_repo_url()<CR>",
-        desc = "Git yank git url",
-      },
-    },
-    opts = {},
-  },
   {
     "rareitems/hl_match_area.nvim",
     dependencies = "rebelot/kanagawa.nvim",
@@ -509,6 +403,7 @@ return {
   },
 
   {
+    -- Use treesitter to autoclose and autorename html tag
     "windwp/nvim-ts-autotag",
     init = function()
       require("nvim-ts-autotag").setup()
@@ -516,6 +411,41 @@ return {
   },
 
   {
+    -- Index, Fetch and Search devdocs.io
+    "luckasRanarison/nvim-devdocs",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = {},
+    keys = {
+      { "<leader>sD", "<cmd>DevdocsOpen<CR>", desc = "Devdocs" },
+    },
+  },
+
+  {
+    -- Shows virtual text of the current context after functions, methods, statements
     "haringsrob/nvim_context_vt",
+  },
+
+  {
+    "kndndrj/nvim-dbee",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    build = function()
+      -- Install tries to automatically detect the install method.
+      -- if it fails, try calling it with one of these parameters:
+      --    "curl", "wget", "bitsadmin", "go"
+      require("dbee").install()
+    end,
+    config = function()
+      require("dbee").setup({
+        sources = {
+          require("dbee.sources").EnvSource:new("DBEE_CONNECTIONS"),
+        },
+      })
+    end,
   },
 }

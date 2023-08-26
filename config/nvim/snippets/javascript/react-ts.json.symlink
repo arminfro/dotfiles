@@ -1,12 +1,12 @@
 {
   "reactFunctionComponent": {
-    "prefix": "own-rfc",
-    "body": "export default function ${TM_FILENAME_BASE}() {\n\treturn (\n\t\t<div>\n\t\t\t$0\n\t\t</div>\n\t)\n}",
+    "prefix": "rfc",
+    "body": "import React from 'react'\n\nexport const ${TM_FILENAME_BASE}: React.FC = () => {\n\treturn (\n\t\t<>\n\t\t\t$0\n\t\t</>\n\t)\n}",
     "description": "Creates a React functional component without PropTypes"
   },
   "reactFunctionComponentWithProps": {
-    "prefix": "own-rfc-wp",
-    "body": "import React from 'react'\n\ninterface Props{\n\n}\n\nexport default function ${TM_FILENAME_BASE}(props: Props) {\n\treturn (\n\t\t<div>\n\t\t\t$0\n\t\t</div>\n\t)\n}",
+    "prefix": "rfcwp",
+    "body": "import React from 'react'\n\ninterface ${TM_FILENAME_BASE}Props {\n\n}\nexport const ${TM_FILENAME_BASE}: React.FC<${TM_FILENAME_BASE}Props> = ({\n}) => {\n\treturn (\n\t\t<>\n\t\t\t$0\n\t\t</>\n\t)\n}",
     "description": "Creates a React functional component without PropTypes"
   },
   "console.log": {

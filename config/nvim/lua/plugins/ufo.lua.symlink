@@ -76,6 +76,5 @@ return {
     vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
     vim.keymap.set("n", "]z", goNextClosedAndPeek, { desc = "Next Fold And Peek" }) -- closeAllFolds == closeFoldsWith(0)
     vim.keymap.set("n", "[z", goPreviousClosedAndPeek, { desc = "Open all folds" }) -- closeAllFolds == closeFoldsWith(0)
-    -- vim.keymap.set("n", "<localleader>h", peekOrHover)
   end,
 }

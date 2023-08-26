@@ -35,8 +35,7 @@ return {
       option = {
         get_bufnrs = function()
           local bufs = {}
-          for _, win in ipairs(vim.api.nvim_list_wins()) do
-            local buf = vim.api.nvim_win_get_buf(win)
+          for _, buf in ipairs(vim.api.nvim_list_bufs()) do
             local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
             if byte_size > 1024 * 1024 then -- 1 Megabyte max
               bufs[buf] = false
@@ -164,12 +163,10 @@ return {
       sorting = sorting,
       formatting = {
         format = function(entry, item)
-          -- local icons = require("lazyvim.config").icons.kinds
-          -- if icons[item.kind] then
-          --   item.kind = icons[item.kind] .. item.kind
-          -- end
-
-          return require("tailwindcss-colorizer-cmp").formatter(entry, item)
+          local icons = require("lazyvim.config").icons.kinds
+          if icons[item.kind] then
+            item.kind = icons[item.kind] .. item.kind
+          end
         end,
       },
       experimental = {
@@ -217,13 +214,6 @@ return {
         })
       end,
     },
-    {
-      "roobert/tailwindcss-colorizer-cmp.nvim",
-      opts = {
-        color_square_width = 3,
-      },
-    },
-
     {
       "saadparwaiz1/cmp_luasnip",
       dependencies = {

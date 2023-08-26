@@ -49,13 +49,13 @@ return {
     end, { desc = "Ruby repl" })
     vim.keymap.set("n", "<leader>ttl", function(...)
       lua:toggle(...)
-    end, { desc = "Node repl" })
+    end, { desc = "Lua repl" })
     vim.keymap.set("n", "<leader>ttn", function(...)
       node:toggle(...)
     end, { desc = "Node repl" })
     vim.keymap.set("n", "<leader>ttp", function(...)
       python:toggle(...)
-    end, { desc = "Node repl" })
+    end, { desc = "Python repl" })
 
     return {
       node = function(...)

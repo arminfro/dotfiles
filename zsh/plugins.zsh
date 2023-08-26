@@ -23,6 +23,8 @@ export SPACESHIP_PROMPT_ASYNC=false
 # load zgenom
 source "${HOME}/.zgenom/zgenom.zsh"
 
+zgenom autoupdate
+
 if_exist() {
     if hash $1 &>/dev/null; then
         return 0 # true
@@ -82,10 +84,8 @@ if ! zgenom saved; then
   # zplug "alexiszamanidis/zsh-git-fzf", if:"[ -x $(which fzf 2> /dev/null) ]"
 
   # utility
-  # zgenom load spaceship-prompt/spaceship-prompt
-  #  automatically sources (known/whitelisted)
-  # zgenom load Tarrasch/zsh-autoenv; AUTOENV_FILE_ENTER=.env
   zgenom load Aloxaf/fzf-tab # todo, does not seem to work: if_exist fzf && ...
+  # zgenom load spaceship-prompt/spaceship-prompt
   # zgenom ohmyzsh plugins/fancy-ctrl-z
   # double tab escape to prefix command with sudo
   zgenom ohmyzsh plugins/sudo
@@ -115,8 +115,8 @@ if ! zgenom saved; then
   # tracks metadata to zsh history
   # integration with zsh-autosuggestions not working as I wish, that's why HISTFILE is still defined
   zgenom load larkery/zsh-histdb
-  # jira wrapper
-  # zgenom load unixorn/jira-commands
+  # automatically sources env files (known/whitelisted)
+  zgenom load Tarrasch/zsh-autoenv; AUTOENV_FILE_ENTER=.env
 
   # commands
   zgenom load knu/zsh-manydots-magic
@@ -141,6 +141,8 @@ if ! zgenom saved; then
   # Compile your zsh files
   zgenom compile "$HOME/.zshrc"
 fi
+
+export FZF_DEFAULT_OPTS="--layout=reverse --info=inline --margin=1 --padding=1"
 
 FZ_HISTORY_CD_CMD=_zlua
 

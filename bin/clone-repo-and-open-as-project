@@ -1,0 +1,13 @@
+#!/bin/bash
+
+base_dir="$HOME/tempy"
+
+git_repo_url=$(rofi -dmenu -i -p "Git Repo URL:")
+repo_dir_name=$(basename "$git_repo_url" .git)
+full_dir="$base_dir/$repo_dir_name"
+
+cd "$base_dir" || exit 1
+
+
+notify-send 'Going to clone' "$git_repo_url into $full_dir" --icon=dialog-information
+git clone "$git_repo_url" && open-project $full_dir 8

@@ -8,7 +8,7 @@ export PAGER=nvimpager # && alias less=$PAGER
 
 export FILE_MANAGER=nemo
 export PASSWORD_MANAGER=keepassxc
-export ALTERNATIVE_BROWSER="chromium"
+export ALTERNATIVE_BROWSER="chromium-browser"
 export EMAIL_CLIENT=thunderbird
 export BROWSER=firefox
 export CLIPBOARD_MANAGER="gpaste-client ui"
@@ -21,6 +21,9 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 export XDG_CONFIG_HOME="$HOME/.config"
+
+# configure pip to always use the --user flag
+export PIP_USER=1
 
 if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
   exec startx

@@ -1,24 +1,27 @@
 #!/bin/bash
 
-mount_bu () {
-	sudo cryptsetup luksOpen /dev/sdb1 hdd
-	sudo mkdir /mnt/hdd
-	sudo mount /dev/mapper/hdd /mnt/hdd
-	sudo losetup -P /dev/loop0 /mnt/hdd/19_02.img
-	sudo cryptsetup luksOpen /dev/loop0p3 img
-	sudo btrfs filesystem label /dev/mapper/img 'Arch Linux BU'
-	sudo btrfs check --readonly /dev/mapper/img # recommended but slow
-	sudo btrfstune -u /dev/mapper/img # new UUID
-	sudo mkdir /mnt/img
-	sudo mount /dev/mapper/img /mnt/img
+mount_bu() {
+	sudo losetup -P /dev/loop11 /run/media/user/83d1b338-d7c8-48cd-a081-c4eb10948414/03_22_desktop.img
+	sudo cryptsetup luksOpen /dev/loop11p3 img
+	sudo mount /dev/mapper/img /mnt
+	# sudo cryptsetup luksOpen /dev/sdb1 hdd
+	# sudo mkdir /mnt/hdd
+	# sudo mount /dev/mapper/hdd /mnt/hdd
+	# sudo losetup -P /dev/loop0 /mnt/hdd/19_02.img
+	# sudo cryptsetup luksOpen /dev/loop0p3 img
+	# sudo btrfs filesystem label /dev/mapper/img 'Arch Linux BU'
+	# sudo btrfs check --readonly /dev/mapper/img # recommended but slow
+	# sudo btrfstune -u /dev/mapper/img # new UUID
+	# sudo mkdir /mnt/img
+	# sudo mount /dev/mapper/img /mnt/img
 }
 
-unmount_bu () {
-	sudo umount /mnt/img
+unmount_bu() {
+	sudo umount /mnt
 	sudo cryptsetup luksClose /dev/mapper/img
-	sudo losetup -d /dev/loop0
-	sudo umount /mnt/hdd
-	sudo cryptsetup luksClose /dev/mapper/hdd
+	sudo losetup -d /dev/loop11
+	# sudo umount /mnt/hdd
+	# sudo cryptsetup luksClose /dev/mapper/hdd
 }
 
 # eval "$1"
