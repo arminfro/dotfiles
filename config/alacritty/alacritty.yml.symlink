@@ -110,38 +110,24 @@ tabspaces: 2
 font:
   # Normal (roman) font face
   normal:
-    # Font family
-    #
-    # Default:
-    #   - (macOS) Menlo
-    #   - (Linux) monospace
-    #   - (Windows) Consolas
-    family: Inconsolata Nerd Font
-
-    # The `style` can be specified to pick a specific face.
-    #style: Regular
+    family: "Inconsolata Nerd Font Mono"
+    style: Regular
 
   # Bold font face
   bold:
-    # Font family
-    #
-    # If the bold family is not specified, it will fall back to the
-    # value specified for the normal font.
-    #family: monospace
-
-    # The `style` can be specified to pick a specific face.
-    #style: Bold
+    family: "Inconsolata Nerd Font Mono"
+    style: Bold
 
   # Italic font face
-  #italic:
-    # Font family
-    #
-    # If the italic family is not specified, it will fall back to the
-    # value specified for the normal font.
-    family: inconsolata
+  italic:
+    family: "Inconsolata Nerd Font Mono"
+    style: Italic
 
-    # The `style` can be specified to pick a specific face.
-    #style: Italic
+  # Bold italic font face
+  bold_italic:
+    family: "Inconsolata Nerd Font Mono"
+    style: Bold Italic
+
 
   # Point size
   size: 16.0
@@ -505,9 +491,9 @@ key_bindings:
 # Seth Wright (http://sethawright.com)
 colors:
   # Default colors
-  # primary:
-  #   background: '0x282a36'
-  #   foreground: '0xc5c8c6'
+  primary:
+    background: '0x282a36'
+    foreground: '0xc5c8c6'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:

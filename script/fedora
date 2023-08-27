@@ -11,6 +11,9 @@ sudo dnf copr -y enable atim/i3status-rust
 # install neovim-nightly repo
 # sudo dnf copr -y enable agriffis/neovim-nightly
 
+# install atim/bottom repo
+sudo dnf copr enable atim/bottom -y
+
 # install lazygit repo
 sudo dnf copr -y enable atim/lazygit
 
