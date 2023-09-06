@@ -9,6 +9,7 @@ vim.g.maplocalleader = ","
 
 local opt = vim.opt
 
+-- opt.fileencoding = 'utf-16'
 opt.winbar = "%=%m %f"
 opt.listchars = {
   -- space = "⋅",

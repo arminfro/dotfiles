@@ -2,7 +2,7 @@
 
 return {
 
-  -- add json to treesitter
+  -- add c_sharp and dot to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
@@ -20,7 +20,16 @@ return {
     end,
   },
 
-  { "arkaragian/Solution.nvim" },
+  {
+    "arkaragian/Solution.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("solution").setup()
+    end,
+  },
 
   {
     "neovim/nvim-lspconfig",
@@ -41,6 +50,7 @@ return {
               require("csharpls_extended").handler(err, method, params, client_id)
             end,
           },
+          -- run to install: dotnet tool install --global csharp-ls
           cmd = { vim.env["HOME"] .. "/.dotnet/tools/csharp-ls" },
           root_dir = function(startpath)
             local lspconfig = require("lspconfig")
@@ -72,10 +82,23 @@ return {
     },
   },
 
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    opts = function(_, opts)
-      table.insert(opts.sources, require("null-ls").builtins.formatting.csharpier)
-    end,
-  },
+  -- {
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   opts = function(_, opts)
+  --     table.insert(opts.sources, require("null-ls").builtins.formatting.csharpier)
+  --   end,
+  -- },
+
+  -- {
+  --   "nvim-neotest/neotest",
+  --   optional = true,
+  --   dependencies = {
+  --     "Issafalcon/neotest-dotnet",
+  --   },
+  --   opts = {
+  --     adapters = {
+  --       ["neotest-dotnet"] = {},
+  --     },
+  --   },
+  -- },
 }
