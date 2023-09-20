@@ -30,6 +30,9 @@ return {
       {
         "hrsh7th/cmp-nvim-lsp",
         cond = function()
+          if not pcall(require, "lazyvim.util") then
+            return false
+          end
           return require("lazyvim.util").has("nvim-cmp")
         end,
       },

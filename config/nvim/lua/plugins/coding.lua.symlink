@@ -296,6 +296,7 @@ return {
 
   {
     "HiPhish/rainbow-delimiters.nvim",
+    branch = "use-children", -- temp, until fix gets merged
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
       local rainbow_delimiters = require("rainbow-delimiters")
