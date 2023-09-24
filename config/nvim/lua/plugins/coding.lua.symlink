@@ -30,22 +30,6 @@ return {
   {
     "andrewferrier/debugprint.nvim",
     cmd = "DeleteDebugPrints",
-    keys = {
-      {
-        "g?p",
-        function()
-          require("debugprint").debugprint()
-        end,
-        "Insert a plain debug line",
-      },
-      {
-        "g?v",
-        function()
-          require("debugprint").debugprint({ variable = true })
-        end,
-        "Insert a variable debugging line",
-      },
-    },
     event = "BufRead",
     config = true,
   },

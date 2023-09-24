@@ -12,16 +12,6 @@ return {
         "folke/neodev.nvim",
         opts = { experimental = { pathStrict = true }, library = { plugins = { "neotest" }, types = true } },
       },
-      {
-        "j-hui/fidget.nvim",
-        tag = "legacy",
-        opts = {
-          window = {
-            blend = 0,
-          },
-        },
-      },
-      "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       {
         "ray-x/lsp_signature.nvim",
@@ -74,9 +64,6 @@ return {
           spacing = 4,
           source = "if_many",
           prefix = "●",
-          -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
-          -- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
-          -- prefix = "icons",
         },
         severity_sort = true,
       },
@@ -84,7 +71,7 @@ return {
       -- Be aware that you also will need to properly configure your LSP server to
       -- provide the inlay hints.
       inlay_hints = {
-        enabled = false,
+        enabled = true,
       },
       -- add any global capabilities here
       capabilities = {},
@@ -110,6 +97,8 @@ return {
               workspace = {
                 checkThirdParty = false,
               },
+              telemetry = { enable = false },
+              hint = { enable = true },
               completion = {
                 callSnippet = "Replace",
               },
@@ -138,9 +127,10 @@ return {
         local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
         require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
       end
+
       -- setup autoformat
-      require("lazyvim.plugins.lsp.format").setup(opts)
-      -- setup formatting and keymaps
+      require("plugins.lsp.format").setup(opts)
+
       Util.on_attach(function(client, buffer)
         require("plugins.lsp.keymaps").on_attach(client, buffer)
       end)
@@ -153,7 +143,7 @@ return {
         ---@type lsp.Client
         local client = vim.lsp.get_client_by_id(client_id)
         local buffer = vim.api.nvim_get_current_buf()
-        require("lazyvim.plugins.lsp.keymaps").on_attach(client, buffer)
+        require("plugins.lsp.keymaps").on_attach(client, buffer)
         return ret
       end
 
@@ -169,6 +159,10 @@ return {
         Util.on_attach(function(client, buffer)
           if client.supports_method("textDocument/inlayHint") then
             inlay_hint(buffer, true)
+
+            vim.keymap.set("n", "<leader>uh", function()
+              vim.lsp.inlay_hint(0, nil)
+            end, { desc = "Toggle Inlay Hints" })
           end
         end)
       end
@@ -319,7 +313,7 @@ return {
   --   --   {
   --   --     "neovim/nvim-lspconfig",
   --   --     init = function()
-  --   --       local keys = require("lazyvim.plugins.lsp.keymaps").get()
+  --   --       local keys = require("plugins.lsp.keymaps").get()
   --   --       keys[#keys + 1] = { "<leader>ca", false }
   --   --     end,
   --   --   },

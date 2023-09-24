@@ -84,4 +84,22 @@ return {
       },
     },
   },
+
+  {
+    "jubnzv/mdeval.nvim",
+    ft = { "markdown" },
+    config = function()
+      vim.g.markdown_fenced_languages = { "bash", "sh" }
+      require("mdeval").setup({
+        eval_options = {}, -- temp, errors if not passed
+      })
+    end,
+    keys = {
+      {
+        "<leader>re",
+        "<cmd>lua require 'mdeval'.eval_code_block()<CR>",
+        desc = "Evaluate Codeblock in md",
+      },
+    },
+  },
 }

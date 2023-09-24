@@ -118,6 +118,9 @@ if ! zgenom saved; then
   # automatically sources env files (known/whitelisted)
   zgenom load Tarrasch/zsh-autoenv; AUTOENV_FILE_ENTER=.env
 
+  # expand aliases
+  zgenom load MenkeTechnologies/zsh-expand
+
   # commands
   zgenom load knu/zsh-manydots-magic
   zgenom load skywind3000/z.lua
@@ -142,11 +145,15 @@ if ! zgenom saved; then
   zgenom compile "$HOME/.zshrc"
 fi
 
-export FZF_DEFAULT_OPTS="--layout=reverse --info=inline --margin=1 --padding=1"
+export FZF_DEFAULT_OPTS="--height 100% --layout=reverse --info=inline --border --margin=1 --padding=1"
 
 FZ_HISTORY_CD_CMD=_zlua
 
 autoload -Uz manydots-magic; manydots-magic; setopt autocd
+
+source $ZGEN_DIR/MenkeTechnologies/zsh-expand/___/zsh-expand.plugin.zsh
+export ZPWR_EXPAND_TO_HISTORY=true
+export ZPWR_EXPAND_BLACKLIST=(ls l cat rm mv cp)
 
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 

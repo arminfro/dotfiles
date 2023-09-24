@@ -28,7 +28,7 @@ return {
     "nvim-tree/nvim-web-devicons",
     "meuter/lualine-so-fancy.nvim",
     "sherlock5512/lualine-spell-status",
-    -- "chrisgrieser/nvim-dr-lsp", -- try later
+    "chrisgrieser/nvim-dr-lsp",
   },
   opts = function()
     local icons = require("lazyvim.config").icons
@@ -47,8 +47,6 @@ return {
       end
     end
 
-    local git_blame = require("gitblame")
-
     return {
       options = {
         theme = "auto",
@@ -57,7 +55,7 @@ return {
       },
       sections = {
         lualine_a = { "fancy_mode" },
-        lualine_b = { "branch" },
+        lualine_b = { "fancy_branch" },
         lualine_c = {
           {
             "diagnostics",
@@ -83,13 +81,13 @@ return {
               return package.loaded["lsp_signature"] and #(require("lsp_signature").status_line(128)).label > 0
             end,
           },
-          -- { require("dr-lsp").lspCount },
-          -- { require("dr-lsp").lspProgress },
+          { require("dr-lsp").lspCount, color = fg("Special") },
+          { require("dr-lsp").lspProgress, color = fg("Special") },
         },
         lualine_x = {
           -- { require("statusline-action-hints").statusline, color = fg("Special") },
           {
-            git_blame.get_current_blame_text,
+            require("gitblame").get_current_blame_text,
             color = fg("Statement"),
           },
 

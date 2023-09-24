@@ -37,7 +37,7 @@ function M.format(opts)
     return
   end
 
-  if M.opts.format_notify then
+  if M.opts and M.opts.format_notify then
     M.notify(formatters)
   end
 
@@ -145,6 +145,10 @@ function M.setup(opts)
       end
     end,
   })
+
+  vim.keymap.set("n", "<leader>cp", function()
+    M.toggle()
+  end, { desc = "Toogle Format on Save" })
 end
 
 return M

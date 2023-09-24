@@ -150,6 +150,7 @@ return {
     -- find
     { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
     { "<leader>ff", Util.telescope("files"), desc = "Find Files (root dir)" },
+    { "<leader>fd", Util.telescope("files", { cwd = "~/.dotfiles" }), desc = "Find Dotfile" },
     { "<leader>fF", Util.telescope("files", { cwd = false }), desc = "Find Files (cwd)" },
     { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
     { "<leader>/", Util.telescope("live_grep"), desc = "Find in Files (Grep)" },
@@ -417,6 +418,30 @@ return {
       build = "make",
       config = function()
         require("telescope").load_extension("fzf")
+      end,
+    },
+
+    {
+      "ThePrimeagen/harpoon",
+      opts = {},
+      keys = {
+        { "<leader>A", ":lua require('harpoon.mark').add_file()<CR>", desc = "Harpoon File add" },
+        { "<leader>fh", "<cmd>Telescope harpoon marks<CR>", desc = "Harpoon Files" },
+        { "<leader>1", ":lua require('harpoon.ui').nav_file(1)<CR>", desc = "Harpoon File 1" },
+        { "<leader>2", ":lua require('harpoon.ui').nav_file(2)<CR>", desc = "Harpoon File 2" },
+        { "<leader>3", ":lua require('harpoon.ui').nav_file(3)<CR>", desc = "Harpoon File 3" },
+        { "<leader>4", ":lua require('harpoon.ui').nav_file(4)<CR>", desc = "Harpoon File 4" },
+        { "<leader>5", ":lua require('harpoon.ui').nav_file(5)<CR>", desc = "Harpoon File 5" },
+        { "<leader>6", ":lua require('harpoon.ui').nav_file(6)<CR>", desc = "Harpoon File 6" },
+        -- { "<leader>7", ":lua require('harpoon.ui').nav_file(7)<CR>", desc = "Harpoon File 7" },
+        -- { "<leader>8", ":lua require('harpoon.ui').nav_file(8)<CR>", desc = "Harpoon File 8" },
+        -- { "<leader>9", ":lua require('harpoon.ui').nav_file(9)<CR>", desc = "Harpoon File 9" },
+        -- { "<leader>0", ":lua require('harpoon.ui').nav_file(10)<CR>", desc = "Harpoon File 10" },
+        { "[f", ":lua require('harpoon.ui').nav_prev()<CR>", desc = "Prev Harpoon File" },
+        { "]f", ":lua require('harpoon.ui').nav_next()<CR>", desc = "Next Harpoon File" },
+      },
+      config = function()
+        require("telescope").load_extension("harpoon")
       end,
     },
 

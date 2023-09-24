@@ -1,5 +1,6 @@
-alias vim='nvim'
-alias v='nvim'
+alias nvim='SHELL=/bin/sh nvim'
+alias vim='SHELL=/bin/sh nvim'
+alias v='SHELL=/bin/sh nvim'
 
 alias vim-logs='vim ~/.cache/nvim/*.log'
 

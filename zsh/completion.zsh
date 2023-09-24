@@ -22,6 +22,8 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 
 zstyle ':fzf-tab:*' fzf-bindings 'ctrl-a:toggle-all'
 
+zstyle ':fzf-tab:*' fzf-min-height 99
+
 # give a preview of commandline arguments when completing `kill`
 # zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
 

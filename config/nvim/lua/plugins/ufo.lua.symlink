@@ -1,7 +1,5 @@
 -- vi: ft=lua
 
--- vi: ft=lua
-
 return {
   -- folding plugin
   "kevinhwang91/nvim-ufo",

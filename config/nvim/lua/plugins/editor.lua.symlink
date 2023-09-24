@@ -86,6 +86,7 @@ return {
         ["]"] = { name = "+next" },
         ["["] = { name = "+prev" },
         ["<leader><tab>"] = { name = "+tabs" },
+        ["<leader>a"] = { name = "+ai" },
         ["<leader>b"] = { name = "+buffer" },
         ["<leader>c"] = { name = "+code" },
         ["<leader>f"] = { name = "+file/find" },
@@ -102,6 +103,7 @@ return {
         ["<leader>r"] = { name = "+run" },
         ["<leader>w"] = { name = "+windows" },
         ["<leader>x"] = { name = "+diagnostics/quickfix" },
+        ["<leader>xn"] = { name = "+noice" },
         ["<leader>z"] = { name = "+spelling" },
       },
     },
@@ -176,81 +178,13 @@ return {
 
   { "nelstrom/vim-visual-star-search", event = "BufEnter" },
 
-  -- {
-  --   -- :Chat with text selection will trigger the completion command
-  --   -- :Chat some instructions with text selection and command args will invoke the code_edit command
-  --   "dpayne/CodeGPT.nvim",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "MunifTanjim/nui.nvim",
-  --   },
-  --   config = function()
-  --     require("codegpt.config")
-  --   end,
-  --   keys = {
-  --     {
-  --       "<leader>ac",
-  --       ":Chat completion<CR>",
-  --       desc = "complete selected code",
-  --       mode = "v",
-  --     },
-  --     {
-  --       "<leader>ae",
-  --       ":Chat code_edit ",
-  --       desc = "give instructions to work on selected code",
-  --       mode = "v",
-  --     },
-  --     {
-  --       "<leader>aD",
-  --       ":Chat explain ",
-  --       desc = "describe/explain code",
-  --       mode = "v",
-  --     },
-  --     {
-  --       "<leader>aq",
-  --       ":Chat question ",
-  --       desc = "ask question about code",
-  --       mode = "v",
-  --     },
-  --     {
-  --       "<leader>ab",
-  --       ":Chat debug ",
-  --       desc = "analyse for bugs",
-  --       mode = "v",
-  --     },
-  --     {
-  --       "<leader>ad",
-  --       ":Chat doc<CR>",
-  --       desc = "document code",
-  --       mode = "v",
-  --     },
-  --     {
-  --       "<leader>ao",
-  --       ":Chat opt<CR>",
-  --       desc = "optimize code",
-  --       mode = "v",
-  --     },
-  --     {
-  --       "<leader>at",
-  --       ":Chat tests<CR>",
-  --       desc = "write tests",
-  --       mode = "v",
-  --     },
-  --     {
-  --       "<leader>ac",
-  --       ":Chat chat",
-  --       desc = "chat",
-  --       mode = "n",
-  --     },
-  --   },
-  -- },
-
   -- set OPEN_AI_KEY env variable
   {
     "jackMort/ChatGPT.nvim",
     event = "VeryLazy",
     config = function()
       require("chatgpt").setup({
+           yank_register = "c",
         -- optional configuration
       })
     end,
@@ -261,19 +195,18 @@ return {
     },
     keys = {
       { "<leader>ac", "<cmd>ChatGPT<CR>", desc = "Chat" },
-      { "<leader>ae", "<cmd>ChatGPTEditWithInstruction<CR>", desc = "Edit with instructions" },
-      { "<leader>ag", "<cmd>ChatGPTRun grammar_correction<CR>", desc = "Grammer correction" },
-      { "<leader>at", "<cmd>ChatGPTRun translate<CR>", desc = "Translate" },
-      { "<leader>ak", "<cmd>ChatGPTRun keywords<CR>", desc = "Keywords" },
-      { "<leader>ad", "<cmd>ChatGPTRun docstring<CR>", desc = "Docstring" },
-      { "<leader>at", "<cmd>ChatGPTRun add_tests<CR>", desc = "Tests" },
-      { "<leader>ao", "<cmd>ChatGPTRun optimize_code<CR>", desc = "Optimize code" },
-      { "<leader>as", "<cmd>ChatGPTRun summarize<CR>", desc = "Summarize" },
-      { "<leader>ab", "<cmd>ChatGPTRun fix_bugs<CR>", desc = "Fix Bugs" },
-      { "<leader>ax", "<cmd>ChatGPTRun explain_code<CR>", desc = "Explain" },
-      { "<leader>aR", "<cmd>ChatGPTRun roxygen_edit<CR>", desc = "Roxygen Edit" },
-      { "<leader>ar", "<cmd>ChatGPTRun code_readability_analysis<CR>", desc = "Readability Analysis" },
-      { "<leader>aC", "<cmd>ChatGPTRun code_readability_analysis<CR>", desc = "Readability Analysis" },
+      { "<leader>ae", "<cmd>ChatGPTEditWithInstruction<CR>", desc = "Edit with instructions", mode = {'x','n'} },
+      { "<leader>ag", "<cmd>ChatGPTRun grammar_correction<CR>", desc = "Grammer correction", mode = {'x','n'} },
+      { "<leader>at", "<cmd>ChatGPTRun translate<CR>", desc = "Translate", mode = {'x','n'} },
+      { "<leader>ak", "<cmd>ChatGPTRun keywords<CR>", desc = "Keywords", mode = {'x','n'} },
+      { "<leader>ad", "<cmd>ChatGPTRun docstring<CR>", desc = "Docstring", mode = {'x','n'} },
+      { "<leader>at", "<cmd>ChatGPTRun add_tests<CR>", desc = "Tests", mode = {'x','n'} },
+      { "<leader>ao", "<cmd>ChatGPTRun optimize_code<CR>", desc = "Optimize code", mode = {'x','n'} },
+      { "<leader>as", "<cmd>ChatGPTRun summarize<CR>", desc = "Summarize", mode = {'x','n'} },
+      { "<leader>ab", "<cmd>ChatGPTRun fix_bugs<CR>", desc = "Fix Bugs", mode = {'x','n'} },
+      { "<leader>ax", "<cmd>ChatGPTRun explain_code<CR>", desc = "Explain", mode = {'x','n'} },
+      { "<leader>aR", "<cmd>ChatGPTRun roxygen_edit<CR>", desc = "Roxygen Edit", mode = {'x','n'} },
+      { "<leader>ar", "<cmd>ChatGPTRun code_readability_analysis<CR>", desc = "Readability Analysis", mode = {'x','n'} },
       { "<leader>ar", "<cmd>ChatGPTCompleteCode<CR>", desc = "Complete Code" },
       { "<leader>aa", "<cmd>ChatGPTActAs<CR>", desc = "Act As" },
     },
