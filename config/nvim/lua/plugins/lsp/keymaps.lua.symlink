@@ -18,12 +18,12 @@ function M.get()
       { "<leader>xs", "<cmd>LspInfo<cr>", desc = "Lsp Info" },
       { "<leader>xS", "<cmd>LspRestart<cr>", desc = "Lsp Restart" },
       -- { "gd", vim.lsp.buf.definition, desc = "Goto Definition", has = "definition" },
-      { "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, desc = "Goto Definition", has = "definition" },
+      { "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, desc = "Goto Definition", has = "definition" }, -- is set by dnlhc/glance.nvim
       { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
-      { "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, desc = "Goto Implementation" },
-      { "gt", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, desc = "Goto T[y]pe Definition" },
-      { "gr", "<cmd>Telescope lsp_references<cr>", desc = "References" },
-      { "R", "<cmd>Telescope lsp_references<cr>", desc = "LSP references" },
+      -- { "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, desc = "Goto Implementation" }, -- is set by dnlhc/glance.nvim
+      -- { "gt", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, desc = "Goto T[y]pe Definition" }, -- is set by dnlhc/glance.nvim
+      -- { "gr", "<cmd>Telescope lsp_references<cr>", desc = "References" }, -- is set by dnlhc/glance.nvim
+      -- { "R", "<cmd>Telescope lsp_references<cr>", desc = "LSP references" }, -- is set by dnlhc/glance.nvim
       { "K", vim.lsp.buf.hover, desc = "Hover" },
       { "gK", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
       { "<c-k>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },

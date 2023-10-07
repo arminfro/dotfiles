@@ -348,7 +348,7 @@ return {
   },
 
   {
-    -- todo, set keys
+    -- todo, set keys for references type_definitions
     "dnlhc/glance.nvim",
     config = function()
       require("glance").setup({
@@ -356,5 +356,12 @@ return {
         detached = true,
       })
     end,
+    keys = {
+      { "R", "<cmd>Glance references<cr>", desc = "LSP References" },
+      { "gr", "<cmd>Glance references<cr>", desc = "LSP References" },
+      { "gd", "<cmd>Glance definitions<cr>", desc = "Goto Definition", has = "definition" },
+      { "gt", "<cmd>Glance type_definitions<cr>", desc = "Goto Type Definition" },
+      { "gI", "<cmd>Glance Implementations<cr>", desc = "Goto Implementation" },
+    },
   },
 }
