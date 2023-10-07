@@ -13,3 +13,6 @@ nm-applet &
 picom -b --transparent-clipping
 
 ~/.dotfiles/bin/set-wallpaper &
+
+# fix zsh docker plugin
+mkdir -p /tmp/zsh-1000/completions

@@ -176,6 +176,15 @@ return {
     },
   },
 
+  {
+    "kevinhwang91/nvim-fundo",
+    dependencies = "kevinhwang91/promise-async",
+    build = function()
+      require("fundo").install()
+    end,
+    opts = {},
+  },
+
   { "nelstrom/vim-visual-star-search", event = "BufEnter" },
 
   -- set OPEN_AI_KEY env variable
@@ -184,7 +193,7 @@ return {
     event = "VeryLazy",
     config = function()
       require("chatgpt").setup({
-           yank_register = "c",
+        yank_register = "c",
         -- optional configuration
       })
     end,
@@ -195,18 +204,23 @@ return {
     },
     keys = {
       { "<leader>ac", "<cmd>ChatGPT<CR>", desc = "Chat" },
-      { "<leader>ae", "<cmd>ChatGPTEditWithInstruction<CR>", desc = "Edit with instructions", mode = {'x','n'} },
-      { "<leader>ag", "<cmd>ChatGPTRun grammar_correction<CR>", desc = "Grammer correction", mode = {'x','n'} },
-      { "<leader>at", "<cmd>ChatGPTRun translate<CR>", desc = "Translate", mode = {'x','n'} },
-      { "<leader>ak", "<cmd>ChatGPTRun keywords<CR>", desc = "Keywords", mode = {'x','n'} },
-      { "<leader>ad", "<cmd>ChatGPTRun docstring<CR>", desc = "Docstring", mode = {'x','n'} },
-      { "<leader>at", "<cmd>ChatGPTRun add_tests<CR>", desc = "Tests", mode = {'x','n'} },
-      { "<leader>ao", "<cmd>ChatGPTRun optimize_code<CR>", desc = "Optimize code", mode = {'x','n'} },
-      { "<leader>as", "<cmd>ChatGPTRun summarize<CR>", desc = "Summarize", mode = {'x','n'} },
-      { "<leader>ab", "<cmd>ChatGPTRun fix_bugs<CR>", desc = "Fix Bugs", mode = {'x','n'} },
-      { "<leader>ax", "<cmd>ChatGPTRun explain_code<CR>", desc = "Explain", mode = {'x','n'} },
-      { "<leader>aR", "<cmd>ChatGPTRun roxygen_edit<CR>", desc = "Roxygen Edit", mode = {'x','n'} },
-      { "<leader>ar", "<cmd>ChatGPTRun code_readability_analysis<CR>", desc = "Readability Analysis", mode = {'x','n'} },
+      { "<leader>ae", "<cmd>ChatGPTEditWithInstruction<CR>", desc = "Edit with instructions", mode = { "x", "n" } },
+      { "<leader>ag", "<cmd>ChatGPTRun grammar_correction<CR>", desc = "Grammer correction", mode = { "x", "n" } },
+      { "<leader>at", "<cmd>ChatGPTRun translate<CR>", desc = "Translate", mode = { "x", "n" } },
+      { "<leader>ak", "<cmd>ChatGPTRun keywords<CR>", desc = "Keywords", mode = { "x", "n" } },
+      { "<leader>ad", "<cmd>ChatGPTRun docstring<CR>", desc = "Docstring", mode = { "x", "n" } },
+      { "<leader>at", "<cmd>ChatGPTRun add_tests<CR>", desc = "Tests", mode = { "x", "n" } },
+      { "<leader>ao", "<cmd>ChatGPTRun optimize_code<CR>", desc = "Optimize code", mode = { "x", "n" } },
+      { "<leader>as", "<cmd>ChatGPTRun summarize<CR>", desc = "Summarize", mode = { "x", "n" } },
+      { "<leader>ab", "<cmd>ChatGPTRun fix_bugs<CR>", desc = "Fix Bugs", mode = { "x", "n" } },
+      { "<leader>ax", "<cmd>ChatGPTRun explain_code<CR>", desc = "Explain", mode = { "x", "n" } },
+      { "<leader>aR", "<cmd>ChatGPTRun roxygen_edit<CR>", desc = "Roxygen Edit", mode = { "x", "n" } },
+      {
+        "<leader>ar",
+        "<cmd>ChatGPTRun code_readability_analysis<CR>",
+        desc = "Readability Analysis",
+        mode = { "x", "n" },
+      },
       { "<leader>ar", "<cmd>ChatGPTCompleteCode<CR>", desc = "Complete Code" },
       { "<leader>aa", "<cmd>ChatGPTActAs<CR>", desc = "Act As" },
     },

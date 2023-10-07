@@ -359,9 +359,9 @@ return {
     keys = {
       { "R", "<cmd>Glance references<cr>", desc = "LSP References" },
       { "gr", "<cmd>Glance references<cr>", desc = "LSP References" },
-      { "gd", "<cmd>Glance definitions<cr>", desc = "Goto Definition", has = "definition" },
+      { "gd", "<cmd>Glance definitions<cr>", desc = "Goto Definition" },
       { "gt", "<cmd>Glance type_definitions<cr>", desc = "Goto Type Definition" },
-      { "gI", "<cmd>Glance Implementations<cr>", desc = "Goto Implementation" },
+      { "gI", "<cmd>Glance implementations<cr>", desc = "Goto Implementation" },
     },
   },
 }
