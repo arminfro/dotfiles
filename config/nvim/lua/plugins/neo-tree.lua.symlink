@@ -6,6 +6,10 @@ return {
   cmd = "Neotree",
   dependencies = {
     "ThePrimeagen/harpoon",
+    {
+      "mrbjarksen/neo-tree-diagnostics.nvim",
+      opts = {},
+    },
   },
   keys = {
     {
@@ -24,6 +28,7 @@ return {
     },
     { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (root dir)", remap = true },
     { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
+    { "<leader>xx", "<CMD>Neotree diagnostics reveal bottom<CR>", desc = "Workspace Diagnostics (Neotree)" },
   },
   deactivate = function()
     vim.cmd([[Neotree close]])
@@ -37,7 +42,7 @@ return {
     end
   end,
   opts = {
-    sources = { "filesystem", "buffers", "git_status", "document_symbols" },
+    sources = { "filesystem", "buffers", "git_status", "document_symbols", "diagnostics" },
     open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
     filesystem = {
       bind_to_cwd = false,
