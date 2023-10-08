@@ -244,7 +244,7 @@ return {
 
   -- formatters
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "williamboman/mason.nvim" },
     opts = function()
@@ -354,6 +354,9 @@ return {
       require("glance").setup({
         height = math.floor(vim.api.nvim_win_get_height(0) * 0.75),
         detached = true,
+        folds = {
+          folded = false, -- Automatically fold list on startup
+        },
       })
     end,
     keys = {

@@ -17,6 +17,7 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       "b0o/SchemaStore.nvim",
+      lazy = true,
       version = false, -- last release is way too old
     },
     opts = {

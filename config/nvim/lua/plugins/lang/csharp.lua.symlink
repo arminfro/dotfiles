@@ -63,11 +63,11 @@ return {
       },
       setup = {
         csharp_ls = function(_, opts)
-          require("lazyvim.util").on_attach(function(client, buffer)
-            if client.name == "csharp_ls" then
-              vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = buffer, desc = "Goto definition" })
-            end
-          end)
+          -- require("lazyvim.util").on_attach(function(client, buffer)
+          --   if client.name == "csharp_ls" then
+          --     vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = buffer, desc = "Goto definition" })
+          --   end
+          -- end)
         end,
         -- ["*"] = function(server, opts)
         --   require("lazyvim.util").on_attach(function(client, buffer)
@@ -83,7 +83,7 @@ return {
   },
 
   -- {
-  --   "jose-elias-alvarez/null-ls.nvim",
+  --   "nvimtools/none-ls.nvim",
   --   opts = function(_, opts)
   --     table.insert(opts.sources, require("null-ls").builtins.formatting.csharpier)
   --   end,
