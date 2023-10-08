@@ -1,0 +1,69 @@
+-- vi: ft=lua
+
+-- usage example in local .nvim.lua
+-- _G.handle_crlf_line_ending_blacklisted_filetypes = {
+--   "sh",
+--   "lua",
+-- }
+--
+-- _G.handle_crlf_line_ending_blacklisted_files = {
+--   ".env"
+-- }
+--
+-- _G.handle_crlf_line_ending_enabled = true
+
+_G.handle_crlf_line_ending_blacklisted_filetypes = {}
+_G.handle_crlf_line_ending_blacklisted_files = {}
+_G.handle_crlf_line_ending_enabled = false
+
+-- Check if the file path is blacklisted
+local function is_file_blacklisted(file_path)
+  for _, name in ipairs(handle_crlf_line_ending_blacklisted_files) do
+    if file_path == name then
+      return true
+    end
+  end
+  return false
+end
+
+-- Check if the file type is blacklisted
+local function is_filetype_blacklisted(file_type)
+  for _, ft in ipairs(handle_crlf_line_ending_blacklisted_filetypes) do
+    if file_type == ft then
+      return true
+    end
+  end
+  return false
+end
+
+-- Check if the file is ignored by git
+local function is_file_ignored(file_path)
+  local command = string.format("git check-ignore -q %s", file_path)
+  local result = vim.fn.system(command)
+  return result == 0
+end
+
+local function handle_crlf_line_ending()
+  if _G.handle_crlf_line_ending_enabled then
+    local file_type = vim.bo.filetype
+    local file_path = vim.fn.expand("%:f")
+
+    if is_filetype_blacklisted(file_type) or is_file_blacklisted(file_path) or is_file_ignored(file_path) then
+      -- print("FT unix")
+      vim.opt.fileformat = "unix"
+    else
+      -- print("FT dos")
+      vim.opt.fileformat = "dos"
+    end
+  end
+end
+
+vim.api.nvim_create_autocmd("BufRead", {
+  group = vim.api.nvim_create_augroup("set-dos-line-endings", { clear = true }),
+  -- pattern = "*.*",
+  callback = function()
+    if _G.handle_crlf_line_ending_enabled then
+      handle_crlf_line_ending()
+    end
+  end,
+})

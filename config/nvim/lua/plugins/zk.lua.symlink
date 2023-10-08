@@ -61,7 +61,11 @@ return {
 
     commands.add("ZkNewTask", function(options)
       options = options or {}
-      options = vim.tbl_extend("force", options, { dir = "tasks", title = vim.fn.input({ prompt = "Title: " }) })
+      options = vim.tbl_extend(
+        "force",
+        options,
+        { dir = "tasks", extra = { author = "My name", tags = "task" }, title = vim.fn.input({ prompt = "Title: " }) }
+      )
       if #options.title > 0 then
         zk.new(options)
       end

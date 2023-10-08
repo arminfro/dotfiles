@@ -1,7 +1,7 @@
 ---
-id: {{ id }}
-slug: {{ slug title }}
-title: {{title}}
+id: { { id } }
+slug: { { slug title } }
+title: { { title } }
 keywords: []
 abstract: |
 subtitle:
@@ -14,17 +14,17 @@ pandoc_:
 header-includes:
   - |
     \usepackage[margins=raggedright]{floatrow}
-created: {{format-date now 'timestamp'}}
-course: {{dir}}
+created: { { format-date now 'timestamp' } }
+course: { { dir } }
 aliases:
-  - {{title}}
-  - {{format-date now 'timestamp'}}
-author: {{ extra.author }}
+  - { { title } }
+  - { { format-date now 'timestamp' } }
+author: { { extra.author } }
 tags:
-  - {{ extra.tags }}
-  - {{ dir }}
-  - {{ format-date now 'CW_%V/%y' }}
-  - {{ format-date now '%B/%y' }}
+  - { { extra.tags } }
+  - { { dir } }
+  - { { format-date now 'CW_%V/%y' } }
+  - { { format-date now '%B/%y' } }
 ---
 
 # Task: {{title}}
@@ -39,8 +39,8 @@ tags:
 
 ## Acceptance Criteria
 
-- ## **Given** precondition
-- ## **When** action
-- ## **Then** result
+- Given precondition
+- When action
+- Then result
 
 ## Additional Information

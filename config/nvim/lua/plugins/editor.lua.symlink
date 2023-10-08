@@ -470,4 +470,9 @@ return {
       { "<leader>ut", "<cmd>Twilight<CR>", desc = "Twilight" },
     },
   },
+
+  {
+    "klen/nvim-config-local",
+    opts = {},
+  },
 }

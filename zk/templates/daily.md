@@ -1,6 +1,6 @@
 ---
-id: {{ id }}
-created: {{format-date now 'timestamp'}}
+id: { { id } }
+created: { { format-date now 'timestamp' } }
 keywords: []
 abstract: |
 subtitle:
@@ -13,14 +13,14 @@ pandoc_:
 header-includes:
   - |
     \usepackage[margins=raggedright]{floatrow}
-course: {{dir}}
+course: { { dir } }
 aliases:
-  - {{format-date now 'timestamp'}}
-author: {{ extra.author }}
+  - { { format-date now 'timestamp' } }
+author: { { extra.author } }
 tags:
   - daily
-  - {{ format-date now 'CW_%V/%y' }}
-  - {{ format-date now '%B/%y' }}
+  - { { format-date now 'CW_%V/%y' } }
+  - { { format-date now '%B/%y' } }
 ---
 
 # {{format-date now "full"}}
