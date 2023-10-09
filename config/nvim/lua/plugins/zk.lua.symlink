@@ -19,6 +19,19 @@ return {
     },
     {
       "<leader>ni",
+      function()
+        require("zk")
+        require("zk.commands").get("ZkNewIssue")({
+          -- extra = { branch = vim.fn.input("Branch: ") },
+          group = "issues",
+          dir = "issues",
+        })
+      end,
+      desc = "New issue note",
+      mode = { "n" },
+    },
+    {
+      "<leader>nl",
       ":ZkLastIssue<CR>",
       desc = "Open last modified issue note",
     },
@@ -68,6 +81,32 @@ return {
       )
       if #options.title > 0 then
         zk.new(options)
+      end
+    end)
+
+    commands.add("ZkNewIssue", function(options)
+      options = options or {}
+      options = vim.tbl_extend("force", options, {
+        group = "issues",
+        dir = "issues",
+        title = vim.fn.input({ prompt = "Ticket: PRO-" }),
+      })
+
+      if #options.title > 0 then
+        local ticket_id = "PRO-" .. options.title
+        options.title = ticket_id
+
+        local jira_api_output = os.capture(
+          "curl -X GET \"https://$ATLASSIAN_URL/rest/api/2/issue/" .. ticket_id .. "\" -H \"Cookie: $JIRA_COOKIE\""
+        ):gsub("'", "'\\''")
+
+        options.extra = {
+          ticket_id = ticket_id,
+          summary = os.capture("echo '" .. jira_api_output .. "' | jq '.fields.summary'"),
+          desc = test_desc,
+        }
+        zk.new(options)
+        -- end
       end
     end)
 

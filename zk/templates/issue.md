@@ -27,46 +27,70 @@ tags:
   - { { format-date now '%B/%y' } }
 ---
 
-# {{title}} {{extra.branch}}
+# {{extra.ticket_id}} {{extra.summary}}
+
+{{extra.desc}}
 
 ## Links
 
-- [Ticket](https://jira.sageinternal.de/browse/{{title}})
-- [Branch](https://tfs-de.sageinternal.de/SMB/SBC%20WebClient/_git/SBC-WebClient?fix%2F{{title}}_{{slug extra.branch}})
-- [Pull Request](https://tfs-de.sageinternal.de/SMB/SBC%20WebClient/_git/SBC-WebClient/pullrequest/)
+- [Ticket](https://myurl.atlassian.net/browse/{{extra.ticket_id}})
+- [Pull Request](https://myurl.visualstudio.com/Project/_git/Project/pullrequest/)
 
 ## Procedure
 
-- [] Assign Ticket
-- [] Start Progress
-- [] Find Problem
-  - Description:
-- [] Find Solution
-  - Description:
-- [] Commit & Push
-  - [] check if Ticket has version
-  - [] (optioal) run tests locally
-- [] create Pull Request
-  - [] (optioal) enter nr in link
-- [] wait for PR, set to 'Test'
+### [] Assign Ticket
 
-## Git status
-
-```sh
-# :r !git status --short
+```bash
+jira issue assign {{extra.ticket_id}} "my@email.com"
 ```
 
-## Git diff
+### [] Create Branch
 
-```sh
-# :r !git diff
+```bash
+git checkout -b feature/{{extra.ticket_id}}_{{slug extra.summary}}
 ```
+
+### [] Start Progress
+
+```bash
+jira issue move  {{extra.ticket_id}} "In Progress"
+```
+
+### [] Find Problem
+
+### [] Find Solution
+
+### [] Commit & Push
+
+```bash
+git push --set-upstream origin feature/{{extra.ticket_id}}_{{slug extra.summary}}
+```
+
+### [] Run tests locally
+
+### [] create Pull Request
+
+```bash
+az repos pr create \
+  --project Everest \
+  --auto-complete true \
+  --source-branch feature/{{extra.ticket_id}}_{{slug extra.summary}} \
+  --target-branch develop \
+  --title "{{extra.ticket_id}} {{extra.summary}}" \
+  --sqash true
+```
+
+### [] wait for PR, set to 'Test'
+
+```bash
+jira issue move  {{extra.ticket_id}} "In Test"
+```
+
+## Notes and Observation
 
 ## Scripts
 
 ```sh
-git checkout -b fix/{{title}}_{{slug extra.branch}}
-# git add .
-# git commit -m '' # -m ''
-git push origin fix/{{title}}_{{slug extra.branch}}
+:r !git status --short
+:r !git diff
 ```

@@ -153,7 +153,7 @@ autoload -Uz manydots-magic; manydots-magic; setopt autocd
 
 source $ZGEN_DIR/MenkeTechnologies/zsh-expand/___/zsh-expand.plugin.zsh
 export ZPWR_EXPAND_TO_HISTORY=true
-export ZPWR_EXPAND_BLACKLIST=(ls l cat rm mv cp)
+export ZPWR_EXPAND_BLACKLIST=(ls l cat rm mv cp which)
 
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 
