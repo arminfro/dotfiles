@@ -16,6 +16,11 @@
     "working_directory": "/home/armin"
   },
   {
-    "command": ["/usr/bin/gnome-software", "--mode=updates"],
-    "working_directory": "/home/armin/"  }
+    "command": [
+      "/usr/bin/gnome-software",
+      "--mode=updates", 
+      "--autoupdate"
+    ],
+    "working_directory": "/home/armin"
+  }
 ]
