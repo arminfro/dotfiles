@@ -20,6 +20,8 @@ export ZK_NOTEBOOK_DIR="$HOME/Documents/gitjournal"
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
+export WALLPAPER=~/Pictures/.wallpaper.png
+
 export XDG_CONFIG_HOME="$HOME/.config"
 
 # configure pip to always use the --user flag

@@ -1,9 +1,7 @@
 #!/bin/bash
 
-wallpaper_file=~/Pictures/.wallpaper.png
-
-if [ -f "$wallpaper_file" ]; then
-	DISPLAY=:0 feh --bg-scale $wallpaper_file
+if [ -f "$WALLPAPER" ]; then
+	DISPLAY=:0 feh --bg-scale $WALLPAPER
 else
-	notify-send "Wallpaper $wallpaper_file not found" --icon=dialog-error
+	notify-send "Wallpaper $WALLPAPER not found" --icon=dialog-error
 fi
