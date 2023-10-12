@@ -63,14 +63,14 @@ return {
       },
       setup = {
         csharp_ls = function(_, opts)
-          -- require("lazyvim.util").on_attach(function(client, buffer)
+          -- require("lazyvim.util").lsp.on_attach(function(client, buffer)
           --   if client.name == "csharp_ls" then
           --     vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = buffer, desc = "Goto definition" })
           --   end
           -- end)
         end,
         -- ["*"] = function(server, opts)
-        --   require("lazyvim.util").on_attach(function(client, buffer)
+        --   require("lazyvim.util").lsp.on_attach(function(client, buffer)
         --     if client.name ~= "csharp_ls" then
         --       vim.keymap.set("n", "gd", function()
         --         require("telescope.builtin").lsp_definitions({ reuse_win = true })

@@ -62,7 +62,7 @@ return {
       },
       setup = {
         tsserver = function(_, opts)
-          require("lazyvim.util").on_attach(function(client, buffer)
+          require("lazyvim.util").lsp.on_attach(function(client, buffer)
             if client.name == "tsserver" then
               -- stylua: ignore
               vim.keymap.set("n", "<leader>cF", function()
@@ -191,8 +191,8 @@ return {
   --         allowRenameOfImportPath = false,
   --       },
   --     },
-  --     on_attach = function()
-  --       require("lazyvim.util").on_attach(function(client, buffer)
+  --     lsp.on_attach = function()
+  --       require("lazyvim.util").lsp.on_attach(function(client, buffer)
   --         if client.name == "typescript-tools" then
   --             -- stylua: ignore
   --             vim.keymap.set("n", "<leader>cF", ":TSToolsFixAll<CR>", { buffer = buffer, desc = "Fix all autofixables" })
