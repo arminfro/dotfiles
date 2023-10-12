@@ -80,13 +80,12 @@ if ! zgenom saved; then
   if_exist yarn && zgenom ohmyzsh plugins/yarn
   if_exist npm && zgenom ohmyzsh plugins/npm
   if_exist ufw && zgenom ohmyzsh plugins/ufw
-  # errors: git-fzf:19: command not found: _status
-  # zplug "alexiszamanidis/zsh-git-fzf", if:"[ -x $(which fzf 2> /dev/null) ]"
+  if_exist dotnet && zgenom load memark/zsh-dotnet-completion
 
   # utility
   zgenom load Aloxaf/fzf-tab # todo, does not seem to work: if_exist fzf && ...
-  # zgenom load spaceship-prompt/spaceship-prompt
-  # zgenom ohmyzsh plugins/fancy-ctrl-z
+  # use ctrl-z to bg or fg
+  zgenom ohmyzsh plugins/fancy-ctrl-z
   # double tab escape to prefix command with sudo
   zgenom ohmyzsh plugins/sudo
   # preventing any code from actually running while pasting
@@ -113,13 +112,9 @@ if ! zgenom saved; then
   # filter commands for sensitive information before storing in history
   zgenom load jgogstad/passwordless-history
   # tracks metadata to zsh history
-  # integration with zsh-autosuggestions not working as I wish, that's why HISTFILE is still defined
   zgenom load larkery/zsh-histdb
   # automatically sources env files (known/whitelisted)
   zgenom load Tarrasch/zsh-autoenv; AUTOENV_FILE_ENTER=.env
-
-  # expand aliases
-  zgenom load MenkeTechnologies/zsh-expand
 
   # commands
   zgenom load knu/zsh-manydots-magic
@@ -150,10 +145,6 @@ export FZF_DEFAULT_OPTS="--height 100% --layout=reverse --info=inline --border -
 FZ_HISTORY_CD_CMD=_zlua
 
 autoload -Uz manydots-magic; manydots-magic; setopt autocd
-
-source $ZGEN_DIR/MenkeTechnologies/zsh-expand/___/zsh-expand.plugin.zsh
-export ZPWR_EXPAND_TO_HISTORY=true
-export ZPWR_EXPAND_BLACKLIST=(ls l cat rm mv cp which)
 
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 

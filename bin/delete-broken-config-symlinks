@@ -1,0 +1,25 @@
+#!/bin/bash
+
+directories=(
+	"$HOME/.config"
+	"$HOME/.i3"
+)
+
+for directory in "${directories[@]}"; do
+	echo "Searching for broken symlinks in: $directory"
+
+	broken_links=$(find -L "$directory" -type l ! -exec test -e {} \; -print)
+
+	for link in $broken_links; do
+		echo "Found broken symlink: $link"
+		read -p "Delete this symlink? [y/n]: " choice
+		if [[ $choice == "y" ]]; then
+			rm "$link"
+			echo "Deleted: $link"
+		else
+			echo "Skipped: $link"
+		fi
+	done
+
+	echo "Finished searching in: $directory"
+done

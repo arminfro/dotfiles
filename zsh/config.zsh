@@ -8,52 +8,42 @@ SAVEHIST=10000
 
 AUTOENV_FILE_ENTER=.env
 
-# no c-s/c-q output freezing
-setopt noflowcontrol
-# allow expansion in prompts
-setopt prompt_subst
-# this is default, but set for share_history
-setopt append_history
-# save each command's beginning timestamp and the duration to the history file
-setopt extended_history
-# display PID when suspending processes as well
-setopt longlistjobs
-# try to avoid the 'zsh: no matches found...'
-setopt nonomatch
-# report the status of backgrounds jobs immediately
-setopt notify
-# whenever a command completion is attempted, make sure the entire command path
-# is hashed first.
-setopt hash_list_all
-# not just at the end
-setopt completeinword
-# use zsh style word splitting
-setopt noshwordsplit
-# allow use of comments in interactive code
-setopt interactivecomments
+# General Options
+setopt noflowcontrol          # Prevent freezing when pressing Ctrl+S/Ctrl+Q
+setopt prompt_subst           # Allow expansion in prompts
+setopt append_history         # Append history instead of overwriting it
+setopt extended_history       # Save command timestamps and durations in history
+setopt longlistjobs           # Display PID when suspending processes
+setopt nonomatch              # Avoid 'zsh: no matches found...' error
+setopt notify                 # Report background job status immediately
+setopt hash_list_all          # Hash the entire command path before completion
+setopt completeinword         # Perform completion inside words
+setopt noshwordsplit          # Use zsh-style word splitting
+setopt interactivecomments    # Allow comments in interactive code
 
-setopt NO_BG_NICE # don't nice background tasks
-setopt NO_HUP
-setopt NO_LIST_BEEP
-setopt LOCAL_OPTIONS # allow functions to have local options
-setopt LOCAL_TRAPS # allow functions to have local traps
-setopt HIST_VERIFY
-setopt SHARE_HISTORY # share history between sessions ???
-setopt EXTENDED_HISTORY # add timestamps to history
-setopt PROMPT_SUBST
-setopt CORRECT
-setopt COMPLETE_IN_WORD
-setopt IGNORE_EOF
+# Background Task Options
+setopt NO_BG_NICE             # Don't lower priority of background tasks
+setopt NO_HUP                 # Don't send SIGHUP to background tasks
+setopt NO_LIST_BEEP           # Disable beep when listing tasks
+setopt LOCAL_OPTIONS          # Allow functions to have local options
+setopt LOCAL_TRAPS            # Allow functions to have local traps
 
-setopt APPEND_HISTORY # adds history
-setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
-setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
-setopt HIST_REDUCE_BLANKS
-setopt INTERACTIVECOMMENTS # bash style comment
+# History Options
+setopt HIST_VERIFY            # Verify commands before execution
+setopt SHARE_HISTORY          # Share history between sessions
+setopt INC_APPEND_HISTORY     # Add history incrementally and share across sessions
+setopt HIST_IGNORE_ALL_DUPS   # Don't record duplicate commands in history
+setopt HIST_REDUCE_BLANKS     # Reduce multiple consecutive blanks in history
 
-# don't expand aliases _before_ completion has finished
-#   like: git comm-[tab]
-setopt complete_aliases
+# Completion Options
+setopt PROMPT_SUBST           # Enable prompt substitution
+setopt CORRECT                # Enable command correction
+setopt COMPLETE_IN_WORD       # Perform completion inside words
+setopt IGNORE_EOF             # Ignore EOF (Ctrl+D) during interactive input
+
+# Alias Options
+setopt complete_aliases       # Don't expand aliases before completion
+
 
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
@@ -129,12 +119,6 @@ fi
 if [[ -a ~/.shell-base16.sh ]]; then
   source ~/.shell-base16.sh
 fi
-
-# if [[ $1 == eval ]]
-# then
-#     "$@"
-# set --
-# fi
 
 # Set keybindings for zsh-vi-mode insert mode
 function zvm_after_init() {

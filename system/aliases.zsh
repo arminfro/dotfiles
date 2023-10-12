@@ -4,3 +4,5 @@ alias pubkey="xclip -selection clipboard ~/.ssh/id_rsa.pub && echo '=> Public ke
 alias feh="feh -ZxF"
 
 alias cat="bat --color=always --number"
+
+alias clipboard="xclip -selection clipboard"
