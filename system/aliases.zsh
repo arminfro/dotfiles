@@ -6,3 +6,5 @@ alias feh="feh -ZxF"
 alias cat="bat --color=always --number"
 
 alias clipboard="xclip -selection clipboard"
+
+alias dots="cd $DOTFILES && nvim"

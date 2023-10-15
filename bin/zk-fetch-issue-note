@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+slugify () {
+  local string="${1// /_}"     # Replace spaces with underscores
+  string="${string//[^[:alnum:]_-]/}"  # Remove non-alphanumeric characters except dash and underscore
+  echo "$string"
+}
+
+days() {
+  local count=$(awk -F '.' '{print $1}' <<< "$1")
+  # local current_date=$(date -d "yesterday" +%Y-%m-%d)
+  local current_date=$(date +%Y-%m-%d)
+  local working_days=0
+
+  while [ $working_days -lt $count ]; do
+    current_date=$(date -d "$current_date + 1 day" +%Y-%m-%d)
+    local day_of_week=$(date -d "$current_date" +%A)
+
+    if [[ $day_of_week != "Saturday" && $day_of_week != "Sunday" ]]; then
+      echo "### $day_of_week $(date -d "$current_date" +"%d %B %Y")"
+      echo
+      ((working_days++))
+    fi
+  done
+}
+
+
+export ZK_TICKET_ID="PRO-$1"
+
+JIRA_OUTPUT=$(curl -X GET "https://$ZK_JIRA_URL/rest/api/2/issue/$ZK_TICKET_ID" -H "Cookie: $ZK_JIRA_COOKIE")
+
+TITLE=$(echo "$JIRA_OUTPUT" | jq -r '.fields.summary')
+TESTING=$(echo "$JIRA_OUTPUT" | jq -r '.fields.customfield_10111')
+STORY_POINTS=$(echo "$JIRA_OUTPUT" | jq -r '.fields.customfield_10014')
+DESCRIPTION=$(echo "$JIRA_OUTPUT" | jq -r '.fields.description')
+
+
+export ZK_TITLE="$TITLE"
+export ZK_TESTING="$TESTING"
+export ZK_POINTS="$STORY_POINTS"
+export ZK_DESCRIPTION="$DESCRIPTION"
+export ZK_DIR="issues"
+export ZK_BRANCH="$ZK_TICKET_ID"_$(slugify "$ZK_TITLE")
+export ZK_DAYS=$(days "$ZK_POINTS")
+# >&2 echo "DEBUGPRINT[4]: zk-fetch-issue-note:44: ZK_DAYS=${ZK_DAYS}"
+
+zk new --title "$ZK_BRANCH" "$ZK_DIR"

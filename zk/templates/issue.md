@@ -1,6 +1,6 @@
 ---
 id: { { id } }
-slug: { { title } }
+slug: { { env.ZK_BRANCH } }
 keywords: []
 abstract: |
 subtitle:
@@ -13,57 +13,62 @@ pandoc_:
 header-includes:
   - |
     \usepackage[margins=raggedright]{floatrow}
-title: { { title } }
 created: { { format-date now 'timestamp' } }
 course: { { dir } }
+title: { { env.ZK_TITLE } }
 aliases:
-  - { { title } }
+  - { { env.ZK_TITLE } }
   - { { format-date now 'timestamp' } }
-author: { { extra.author } }
+author: { { env.ZK_NAME } }
 tags:
-  - { { title } }
   - { { dir } }
   - { { format-date now 'CW_%V/%y' } }
   - { { format-date now '%B/%y' } }
 ---
 
-# {{extra.ticket_id}} {{extra.summary}}
+# {{env.ZK_TICKET_ID}} {{env.ZK_TITLE}} - {{env.ZK_POINTS}}
 
-{{extra.desc}}
+- [Ticket](https://{{env.ZK_JIRA_URL}}/browse/{{env.ZK_TICKET_ID}})
+- [Pull Request](https://{{env.ZK_AZURE_URL}}/{{env.ZK_AZURE_PROJECT}}/_git/{{env.ZK_AZURE_REPO}}/pullrequest/)
 
-## Links
+{{env.ZK_DESCRIPTION}}
 
-- [Ticket](https://myurl.atlassian.net/browse/{{extra.ticket_id}})
-- [Pull Request](https://myurl.visualstudio.com/Project/_git/Project/pullrequest/)
+## Testing
 
-## Procedure
+{{env.ZK_TESTING}}
+
+## Protocol
 
 ### [] Assign Ticket
 
 ```bash
-jira issue assign {{extra.ticket_id}} "my@email.com"
+jira issue assign {{env.ZK_TICKET_ID}} "{{env.ZK_EMAIL}}"
 ```
 
 ### [] Create Branch
 
 ```bash
-git checkout -b feature/{{extra.ticket_id}}_{{slug extra.summary}}
+git checkout -b feature/{{env.ZK_BRANCH}}
 ```
 
 ### [] Start Progress
 
 ```bash
-jira issue move  {{extra.ticket_id}} "In Progress"
+jira issue move  {{env.ZK_TICKET_ID}} "In Progress"
 ```
 
 ### [] Find Problem
 
+-
+
 ### [] Find Solution
+
+-
 
 ### [] Commit & Push
 
 ```bash
-git push --set-upstream origin feature/{{extra.ticket_id}}_{{slug extra.summary}}
+git push --set-upstream origin feature/{{env.ZK_BRANCH}}
 ```
 
 ### [] Run tests locally
@@ -72,25 +77,24 @@ git push --set-upstream origin feature/{{extra.ticket_id}}_{{slug extra.summary}
 
 ```bash
 az repos pr create \
-  --project Everest \
+  --project {{env.ZK_AZURE_PROJECT}} \
   --auto-complete true \
-  --source-branch feature/{{extra.ticket_id}}_{{slug extra.summary}} \
+  --source-branch feature/{{env.ZK_BRANCH}} \
   --target-branch develop \
-  --title "{{extra.ticket_id}} {{extra.summary}}" \
+  --title "{{env.ZK_TICKET_ID}} {{env.ZK_TITLE}}" \
   --sqash true
 ```
 
 ### [] wait for PR, set to 'Test'
 
 ```bash
-jira issue move  {{extra.ticket_id}} "In Test"
+jira issue move  {{env.ZK_TICKET_ID}} "In Test"
 ```
 
-## Notes and Observation
+## Resources
 
-## Scripts
+-
 
-```sh
-:r !git status --short
-:r !git diff
-```
+## Daily Notes
+
+{{ env.ZK_DAYS }}

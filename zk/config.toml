@@ -40,7 +40,7 @@ filename = "{{date now '%F'}}"
 
 [group.issues]
 paths = ['issues']
-filename = "{{ slug title }}"
+filename = "{{ title }}"
 [group.issues.note]
 template = "issue.md"
 
@@ -49,6 +49,12 @@ paths = ['tasks']
 filename = "{{ slug title }}"
 [group.tasks.note]
 template = "task.md"
+
+[group.wiki]
+paths = ['wiki']
+filename = "{{ slug title }}"
+[group.wiki.note]
+template = "wiki.md"
 
 # MARKDOWN SETTINGS
 [format.markdown]
@@ -122,6 +128,9 @@ unlinked-mentions = "zk list --mentioned-by $1 --no-linked-by $1"
 
 # Show a random note.
 lucky = "zk list --quiet --format full --sort random --limit 1"
+
+# new-issue = "zk new --title \"$ZK_TITLE\" --extra 'description=\"$ZK_DESCRIPTION\",ticket_id=\"$ZK_TICKET_ID\",testing=\"$ZK_TESTING\"' \"$ZK_DIR\""
+
 
 # LSP (EDITOR INTEGRATION)
 [lsp]
