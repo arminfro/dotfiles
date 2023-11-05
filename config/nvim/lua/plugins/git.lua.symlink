@@ -2,150 +2,124 @@
 
 return {
 
-  -- git signs
-  {
-    "lewis6991/gitsigns.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      signs = {
-        add = { text = "▎" },
-        change = { text = "▎" },
-        delete = { text = "" },
-        topdelete = { text = "" },
-        changedelete = { text = "▎" },
-        untracked = { text = "▎" },
-      },
-      on_attach = function(buffer)
-        local gs = package.loaded.gitsigns
+	-- visualise and resolve git conflicts
+	{
+		"akinsho/git-conflict.nvim",
+		cmd = {
 
-        local function map(mode, l, r, desc)
-          vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
-        end
+			"GitConflictChooseOurs",
+			"GitConflictChooseTheirs",
+			"GitConflictChooseBoth",
+			"GitConflictChooseNone",
+			"GitConflictNextConflict",
+			"GitConflictPrevConflict",
+			"GitConflictListQf",
+		},
+		version = "*",
+		config = function()
+			require("git-conflict").setup()
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "GitConflictDetected",
+				callback = function()
+					vim.notify("Conflict detected in " .. vim.fn.expand("<afile>"))
+				end,
+			})
+		end,
+	},
 
-        -- stylua: ignore start
-        map("n", "]h", gs.next_hunk, "Next Hunk")
-        map("n", "[h", gs.prev_hunk, "Prev Hunk")
-        map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-        map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
-        map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
-        map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
-        map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
-        map("n", "<leader>ghp", gs.preview_hunk, "Preview Hunk")
-        map("n", "<leader>ghb", gs.blame_line, "Blame Line")
-        map("n", "<leader>ghd", gs.diffthis, "Diff This")
-        map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
-        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
-      end,
-    },
-  },
+	{
+		"sindrets/diffview.nvim",
+		lazy = true,
+		keys = {
+			{
+				"<leader>gD",
+				":DiffviewOpen -uno<CR>",
+				desc = "Git diff workspace",
+				mode = "n",
+			},
+			{
+				"<leader>gd",
+				":DiffviewOpen<CR>",
+				desc = "Git diff file",
+				mode = { "n", "v" },
+			},
+		},
+		config = function()
+			vim.api.nvim_create_autocmd(
+				"FileType",
+				{ pattern = "DiffviewFiles", command = [[nnoremap <buffer><silent> q :DiffviewClose<CR>]] }
+			)
 
-  -- visualise and resolve git conflicts
-  {
-    "akinsho/git-conflict.nvim",
-    cmd = {
+			vim.api.nvim_create_autocmd(
+				"FileType",
+				{ pattern = "DiffviewFileHistory", command = [[nnoremap <buffer><silent> q :DiffviewClose<CR>]] }
+			)
+		end,
+	},
 
-      "GitConflictChooseOurs",
-      "GitConflictChooseTheirs",
-      "GitConflictChooseBoth",
-      "GitConflictChooseNone",
-      "GitConflictNextConflict",
-      "GitConflictPrevConflict",
-      "GitConflictListQf",
-    },
-    version = "*",
-    config = function()
-      require("git-conflict").setup()
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "GitConflictDetected",
-        callback = function()
-          vim.notify("Conflict detected in " .. vim.fn.expand("<afile>"))
-        end,
-      })
-    end,
-  },
+	{
+		"tpope/vim-fugitive",
+		cmd = { "Git", "Gdiffsplit", "Gread", "Gwrite", "Ggrep", "GMove", "GRename", "GDelete", "GRemove", "GBrowse" },
+		keys = {
+			{
+				"<leader>gs",
+				":Git<CR>",
+				desc = "Git Status in fugitive",
+			},
+			{
+				"<leader>gr",
+				":Gread<CR>",
+				desc = "Git Read file",
+			},
+			{
+				"<leader>gw",
+				":Gwrite<CR>",
+				desc = "Git Stage file",
+			},
+			{
+				"<leader>gc",
+				":Git commit<CR>",
+				desc = "Git Commit",
+			},
+		},
+	},
 
-  {
-    "sindrets/diffview.nvim",
-    lazy = true,
-    keys = {
-      {
-        "<leader>gD",
-        ":DiffviewOpen -uno<CR>",
-        desc = "Git diff workspace",
-        mode = "n",
-      },
-      {
-        "<leader>gd",
-        ":DiffviewOpen<CR>",
-        desc = "Git diff file",
-        mode = { "n", "v" },
-      },
-    },
-  },
+	{
+		"ruifm/gitlinker.nvim",
+		lazy = true,
+		keys = {
+			{
+				"<leader>gy",
+				":lua require'gitlinker'.get_repo_url()<CR>",
+				desc = "Git yank git url",
+			},
+		},
+		opts = {},
+	},
 
-  {
-    "tpope/vim-fugitive",
-    cmd = { "Git", "Gdiffsplit", "Gread", "Gwrite", "Ggrep", "GMove", "GRename", "GDelete", "GRemove", "GBrowse" },
-    keys = {
-      {
-        "<leader>gs",
-        ":Git<CR>",
-        desc = "Git Status in fugitive",
-      },
-      {
-        "<leader>gr",
-        ":Gread<CR>",
-        desc = "Git Read file",
-      },
-      {
-        "<leader>gw",
-        ":Gwrite<CR>",
-        desc = "Git Stage file",
-      },
-      {
-        "<leader>gc",
-        ":Git commit<CR>",
-        desc = "Git Commit",
-      },
-    },
-  },
-
-  {
-    "ruifm/gitlinker.nvim",
-    lazy = true,
-    keys = {
-      {
-        "<leader>gy",
-        ":lua require'gitlinker'.get_repo_url()<CR>",
-        desc = "Git yank git url",
-      },
-    },
-    opts = {},
-  },
-
-  {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "sindrets/diffview.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-    cmd = "Neogit",
-    keys = {
-      { "<leader>gn", "<cmd>Neogit<CR>", desc = "Neogit" },
-    },
-    -- See: https://github.com/TimUntersberger/neogit#configuration
-    opts = {
-      disable_signs = false,
-      disable_context_highlighting = false,
-      disable_commit_confirmation = false,
-      signs = {
-        section = { ">", "v" },
-        item = { ">", "v" },
-        hunk = { "", "" },
-      },
-      integrations = {
-        diffview = true,
-      },
-    },
-  },
+	{
+		"NeogitOrg/neogit",
+		dependencies = {
+			"sindrets/diffview.nvim",
+			"nvim-telescope/telescope.nvim",
+		},
+		cmd = "Neogit",
+		keys = {
+			{ "<leader>gn", "<cmd>Neogit<CR>", desc = "Neogit" },
+		},
+		-- See: https://github.com/TimUntersberger/neogit#configuration
+		opts = {
+			disable_signs = false,
+			disable_context_highlighting = false,
+			disable_commit_confirmation = false,
+			signs = {
+				section = { ">", "v" },
+				item = { ">", "v" },
+				hunk = { "", "" },
+			},
+			integrations = {
+				diffview = true,
+			},
+		},
+	},
 }

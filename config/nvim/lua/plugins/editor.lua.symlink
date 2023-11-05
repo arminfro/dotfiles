@@ -2,477 +2,339 @@
 
 return {
 
-  -- search/replace in multiple files
-  {
-    "nvim-pack/nvim-spectre",
-    -- stylua: ignore
-    keys = {
-      { "<leader>sR", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
-    },
-  },
+	-- which-key
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {
+			plugins = { spelling = true },
+			defaults = {
+				mode = { "n", "v" },
+				["g"] = { name = "+goto" },
+				["gs"] = { name = "+surround" },
+				["]"] = { name = "+next" },
+				["["] = { name = "+prev" },
+				["<leader><tab>"] = { name = "+tabs" },
+				["<leader>a"] = { name = "+ai" },
+				["<leader>b"] = { name = "+buffer" },
+				["<leader>c"] = { name = "+code" },
+				["<leader>f"] = { name = "+file/find" },
+				["<leader>ct"] = { name = "+test" },
+				["<leader>g"] = { name = "+git" },
+				["<leader>gh"] = { name = "+hunks" },
+				["<leader>q"] = { name = "+quit/session" },
+				["<leader>s"] = { name = "+search" },
+				["<leader>n"] = { name = "+notes" },
+				["<leader>t"] = { name = "+tools" },
+				["<leader>tt"] = { name = "+terminal" },
+				["<leader>td"] = { name = "+docker" },
+				["<leader>u"] = { name = "+ui" },
+				["<leader>r"] = { name = "+run" },
+				["<leader>w"] = { name = "+windows" },
+				["<leader>x"] = { name = "+diagnostics/quickfix" },
+				["<leader>xn"] = { name = "+noice" },
+				["<leader>z"] = { name = "+spelling" },
+			},
+		},
+		config = function(_, opts)
+			local wk = require("which-key")
+			wk.setup(opts)
+			wk.register(opts.defaults)
+		end,
+	},
 
-  -- Add Flash
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      {
-        "nvim-telescope/telescope.nvim",
-        optional = true,
-        opts = function(_, opts)
-          if not require("lazyvim.util").has("flash.nvim") then
-            return
-          end
-          local function flash(prompt_bufnr)
-            require("flash").jump({
-              pattern = "^",
-              label = { after = { 0, 0 } },
-              search = {
-                mode = "search",
-                exclude = {
-                  function(win)
-                    return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "TelescopeResults"
-                  end,
-                },
-              },
-              action = function(match)
-                local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
-                picker:set_selection(match.pos[1] - 1)
-              end,
-            })
-          end
-          opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
-            mappings = { n = { s = flash }, i = { ["<c-s>"] = flash } },
-          })
-        end,
-      },
-    },
-    opts = {
-      modes = {
-        -- options used when flash is activated through
-        -- `f`, `F`, `t`, `T`, `;` and `,` motions
-        char = {
-          -- by default all keymaps are enabled, but you can disable some of them,
-          -- by removing them from the list.
-          -- If you rather use another key, you can map them
-          -- to something else, e.g., { [";"] = "L", [","] = H }
-          keys = { "t", "T" },
-          -- keys = { "f", "F", "t", "T" },
-        },
-      },
-    },
-    -- stylua: ignore
-    keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-    },
-  },
+	{
+		"NvChad/nvim-colorizer.lua",
+		config = true,
+	},
 
-  -- which-key
-  {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    opts = {
-      plugins = { spelling = true },
-      defaults = {
-        mode = { "n", "v" },
-        ["g"] = { name = "+goto" },
-        ["gs"] = { name = "+surround" },
-        ["]"] = { name = "+next" },
-        ["["] = { name = "+prev" },
-        ["<leader><tab>"] = { name = "+tabs" },
-        ["<leader>a"] = { name = "+ai" },
-        ["<leader>b"] = { name = "+buffer" },
-        ["<leader>c"] = { name = "+code" },
-        ["<leader>f"] = { name = "+file/find" },
-        ["<leader>ct"] = { name = "+test" },
-        ["<leader>g"] = { name = "+git" },
-        ["<leader>gh"] = { name = "+hunks" },
-        ["<leader>q"] = { name = "+quit/session" },
-        ["<leader>s"] = { name = "+search" },
-        ["<leader>n"] = { name = "+notes" },
-        ["<leader>t"] = { name = "+tools" },
-        ["<leader>tt"] = { name = "+terminal" },
-        ["<leader>td"] = { name = "+docker" },
-        ["<leader>u"] = { name = "+ui" },
-        ["<leader>r"] = { name = "+run" },
-        ["<leader>w"] = { name = "+windows" },
-        ["<leader>x"] = { name = "+diagnostics/quickfix" },
-        ["<leader>xn"] = { name = "+noice" },
-        ["<leader>z"] = { name = "+spelling" },
-      },
-    },
-    config = function(_, opts)
-      local wk = require("which-key")
-      wk.setup(opts)
-      wk.register(opts.defaults)
-    end,
-  },
+	{
+		"mbbill/undotree",
+		cmd = "UndotreeToggle",
+		keys = {
+			{ "<leader>tu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" },
+			{ "<F10>", ":UndotreeToggle<CR>", desc = "Toggle undo tree" },
+		},
+	},
 
-  -- automatically highlighting other uses of the word under the cursor using either LSP, Tree-sitter, or regex matching
-  {
-    "RRethy/vim-illuminate",
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
-      delay = 200,
-      large_file_cutoff = 2000,
-      large_file_overrides = {
-        providers = { "lsp" },
-      },
-    },
-    config = function(_, opts)
-      require("illuminate").configure(opts)
+	{
+		"kevinhwang91/nvim-fundo",
+		dependencies = "kevinhwang91/promise-async",
+		build = function()
+			require("fundo").install()
+		end,
+		opts = {},
+	},
 
-      local function map(key, dir, buffer)
-        vim.keymap.set("n", key, function()
-          require("illuminate")["goto_" .. dir .. "_reference"](false)
-        end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
-      end
+	{ "nelstrom/vim-visual-star-search", event = "BufEnter" },
 
-      map("]r", "next")
-      map("[r", "prev")
+	-- set OPEN_AI_KEY env variable
+	{
+		"jackMort/ChatGPT.nvim",
+		event = "VeryLazy",
+		config = function()
+			require("chatgpt").setup({
+				yank_register = "c",
+				-- optional configuration
+			})
+		end,
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+		},
+		keys = {
+			{ "<leader>ac", "<cmd>ChatGPT<CR>", desc = "Chat" },
+			{
+				"<leader>ae",
+				"<cmd>ChatGPTEditWithInstruction<CR>",
+				desc = "Edit with instructions",
+				mode = { "x", "n" },
+			},
+			{
+				"<leader>ag",
+				"<cmd>ChatGPTRun grammar_correction<CR>",
+				desc = "Grammer correction",
+				mode = { "x", "n" },
+			},
+			{ "<leader>at", "<cmd>ChatGPTRun translate<CR>", desc = "Translate", mode = { "x", "n" } },
+			{ "<leader>ak", "<cmd>ChatGPTRun keywords<CR>", desc = "Keywords", mode = { "x", "n" } },
+			{ "<leader>ad", "<cmd>ChatGPTRun docstring<CR>", desc = "Docstring", mode = { "x", "n" } },
+			{ "<leader>at", "<cmd>ChatGPTRun add_tests<CR>", desc = "Tests", mode = { "x", "n" } },
+			{ "<leader>ao", "<cmd>ChatGPTRun optimize_code<CR>", desc = "Optimize code", mode = { "x", "n" } },
+			{ "<leader>as", "<cmd>ChatGPTRun summarize<CR>", desc = "Summarize", mode = { "x", "n" } },
+			{ "<leader>ab", "<cmd>ChatGPTRun fix_bugs<CR>", desc = "Fix Bugs", mode = { "x", "n" } },
+			{ "<leader>ax", "<cmd>ChatGPTRun explain_code<CR>", desc = "Explain", mode = { "x", "n" } },
+			{ "<leader>aR", "<cmd>ChatGPTRun roxygen_edit<CR>", desc = "Roxygen Edit", mode = { "x", "n" } },
+			{
+				"<leader>ar",
+				"<cmd>ChatGPTRun code_readability_analysis<CR>",
+				desc = "Readability Analysis",
+				mode = { "x", "n" },
+			},
+			{ "<leader>ar", "<cmd>ChatGPTCompleteCode<CR>", desc = "Complete Code" },
+			{ "<leader>aa", "<cmd>ChatGPTActAs<CR>", desc = "Act As" },
+		},
+	},
 
-      -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
-      vim.api.nvim_create_autocmd("FileType", {
-        callback = function()
-          local buffer = vim.api.nvim_get_current_buf()
-          map("]]", "next", buffer)
-          map("[[", "prev", buffer)
-        end,
-      })
-    end,
-    keys = {
-      { "]]", desc = "Next Reference" },
-      { "[[", desc = "Prev Reference" },
-    },
-  },
+	{
+		url = "https://gitlab.com/yorickpeterse/nvim-window.git",
+		config = function()
+			require("nvim-window").setup({
+				chars = {
+					"h",
+					"j",
+					"k",
+					"l",
+					"a",
+					"s",
+					"d",
+					"f",
+				},
+			})
+		end,
+		keys = {
+			{
+				"<leader>ww",
+				function()
+					require("nvim-window").pick()
+				end,
+				desc = "Pick window to focus",
+			},
+		},
+		event = "BufRead",
+	},
 
-  -- buffer remove
-  {
-    "echasnovski/mini.bufremove",
-    -- stylua: ignore
-    keys = {
-      {
-        "<leader>bd",
-        function()
-          local bd = require("mini.bufremove").delete
-          if vim.bo.modified then
-            local choice = vim.fn.confirm(("Save changes to %q?"):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
-            if choice == 1 then -- Yes
-              vim.cmd.write()
-              bd(0)
-            elseif choice == 2 then -- No
-              bd(0, true)
-            end
-          else
-            bd(0)
-          end
-        end,
-        desc = "Delete Buffer",
-      },
+	{
+		"ckolkey/ts-node-action",
+		lazy = true,
+		dependencies = { "nvim-treesitter", "nvim-lua/plenary.nvim", "nvimtools/none-ls.nvim" },
+		keys = {
+			{
+				"<leader>ci",
+				function()
+					require("ts-node-action").node_action()
+				end,
+				desc = "TS-node action",
+			},
+		},
+		config = function()
+			require("ts-node-action").setup({})
+			require("null-ls").register({
+				name = "ts-node-actions",
+				method = { require("null-ls").methods.CODE_ACTION },
+				filetypes = { "_all" },
+				generator = {
+					fn = require("ts-node-action").available_actions,
+				},
+			})
+		end,
+	},
 
-      { "<leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
-    },
-  },
+	{
+		"hoschi/yode-nvim",
+		lazy = true,
+		keys = {
+			{
+				"<leader>up",
+				":YodeCreateSeditorFloating<CR>",
+				desc = "Pick a range and make it sticky",
+				mode = "v",
+			},
+		},
+	},
 
-  {
-    "NvChad/nvim-colorizer.lua",
-    config = true,
-  },
+	-- more than a dozen new text objects
+	{
+		"chrisgrieser/nvim-various-textobjs",
+		config = function()
+			require("various-textobjs").setup({ useDefaultKeymaps = true })
+			-- overwrite conflicts with default keymap
+			vim.keymap.set({ "n", "v" }, "L", "g_", { noremap = true, silent = true, desc = "Jump to end of line" })
+		end,
+	},
 
-  {
-    "mbbill/undotree",
-    cmd = "UndotreeToggle",
-    keys = {
-      { "<leader>tu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" },
-      { "<F10>", ":UndotreeToggle<CR>", desc = "Toggle undo tree" },
-    },
-  },
+	-- bionic reading
+	{
+		cmd = "FSToggle",
+		lazy = true,
+		"nullchilly/fsread.nvim",
+	},
 
-  {
-    "kevinhwang91/nvim-fundo",
-    dependencies = "kevinhwang91/promise-async",
-    build = function()
-      require("fundo").install()
-    end,
-    opts = {},
-  },
+	{
+		"tzachar/local-highlight.nvim",
+		lazy = true,
+	},
 
-  { "nelstrom/vim-visual-star-search", event = "BufEnter" },
+	{
+		"tzachar/highlight-undo.nvim",
+		config = function()
+			require("highlight-undo").setup({})
+		end,
+	},
 
-  -- set OPEN_AI_KEY env variable
-  {
-    "jackMort/ChatGPT.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("chatgpt").setup({
-        yank_register = "c",
-        -- optional configuration
-      })
-    end,
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-    keys = {
-      { "<leader>ac", "<cmd>ChatGPT<CR>", desc = "Chat" },
-      { "<leader>ae", "<cmd>ChatGPTEditWithInstruction<CR>", desc = "Edit with instructions", mode = { "x", "n" } },
-      { "<leader>ag", "<cmd>ChatGPTRun grammar_correction<CR>", desc = "Grammer correction", mode = { "x", "n" } },
-      { "<leader>at", "<cmd>ChatGPTRun translate<CR>", desc = "Translate", mode = { "x", "n" } },
-      { "<leader>ak", "<cmd>ChatGPTRun keywords<CR>", desc = "Keywords", mode = { "x", "n" } },
-      { "<leader>ad", "<cmd>ChatGPTRun docstring<CR>", desc = "Docstring", mode = { "x", "n" } },
-      { "<leader>at", "<cmd>ChatGPTRun add_tests<CR>", desc = "Tests", mode = { "x", "n" } },
-      { "<leader>ao", "<cmd>ChatGPTRun optimize_code<CR>", desc = "Optimize code", mode = { "x", "n" } },
-      { "<leader>as", "<cmd>ChatGPTRun summarize<CR>", desc = "Summarize", mode = { "x", "n" } },
-      { "<leader>ab", "<cmd>ChatGPTRun fix_bugs<CR>", desc = "Fix Bugs", mode = { "x", "n" } },
-      { "<leader>ax", "<cmd>ChatGPTRun explain_code<CR>", desc = "Explain", mode = { "x", "n" } },
-      { "<leader>aR", "<cmd>ChatGPTRun roxygen_edit<CR>", desc = "Roxygen Edit", mode = { "x", "n" } },
-      {
-        "<leader>ar",
-        "<cmd>ChatGPTRun code_readability_analysis<CR>",
-        desc = "Readability Analysis",
-        mode = { "x", "n" },
-      },
-      { "<leader>ar", "<cmd>ChatGPTCompleteCode<CR>", desc = "Complete Code" },
-      { "<leader>aa", "<cmd>ChatGPTActAs<CR>", desc = "Act As" },
-    },
-  },
+	{
+		"Zeioth/compiler.nvim",
+		cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+		dependencies = { "stevearc/overseer.nvim" },
+		keys = {
+			{ "<F6>", "<cmd>CompilerOpen<cr>", desc = "Open Compiler" },
+			{ "<F18>", "<cmd>CompilerToggleResults<cr>", desc = "Toggle compiler results" },
+		},
+		opts = {},
+	},
 
-  {
-    url = "https://gitlab.com/yorickpeterse/nvim-window.git",
-    config = function()
-      require("nvim-window").setup({
-        chars = {
-          "h",
-          "j",
-          "k",
-          "l",
-          "a",
-          "s",
-          "d",
-          "f",
-        },
-      })
-    end,
-    keys = {
-      {
-        "<leader>ww",
-        function()
-          require("nvim-window").pick()
-        end,
-        desc = "Pick window to focus",
-      },
-    },
-    event = "BufRead",
-  },
+	{
+		"stevearc/overseer.nvim",
+		keys = {
+			{
+				"<leader>rr",
+				"<CMD>OverseerRun<CR>",
+				desc = "Run Overseer",
+			},
+		},
+		config = function()
+			require("overseer").setup({
+				strategy = "toggleterm",
+			})
+		end,
+	},
 
-  -- {
-  --   "declancm/maximize.nvim",
-  --   lazy = true,
-  --   keys = {
-  --     {
-  --       "<leader>Z",
-  --       function()
-  --         require("maximize").toggle()
-  --       end,
-  --       desc = "Zoom in/out",
-  --     },
-  --   },
-  --   config = function()
-  --     require("maximize").setup({ default_keymaps = false })
-  --   end,
-  -- },
+	{
+		"pbrisbin/vim-mkdir",
+	},
 
-  {
-    "ckolkey/ts-node-action",
-    lazy = true,
-    dependencies = { "nvim-treesitter", "nvim-lua/plenary.nvim", "nvimtools/none-ls.nvim" },
-    keys = {
-      {
-        "<leader>ci",
-        function()
-          require("ts-node-action").node_action()
-        end,
-        desc = "TS-node action",
-      },
-    },
-    config = function()
-      require("ts-node-action").setup({})
-      require("null-ls").register({
-        name = "ts-node-actions",
-        method = { require("null-ls").methods.CODE_ACTION },
-        filetypes = { "_all" },
-        generator = {
-          fn = require("ts-node-action").available_actions,
-        },
-      })
-    end,
-  },
+	{
+		-- winbar plugin
+		"Bekaboo/dropbar.nvim",
+	},
 
-  {
-    "hoschi/yode-nvim",
-    lazy = true,
-    keys = {
-      {
-        "<leader>up",
-        ":YodeCreateSeditorFloating<CR>",
-        desc = "Pick a range and make it sticky",
-        mode = "v",
-      },
-    },
-  },
+	{
+		-- provides lsp features and a code completion source for code embedded in other documents
+		"jmbuhr/otter.nvim",
+		keys = {
+			{
+				"<leader>cy",
+				":lua require'otter'.activate({''})",
+				desc = "Add embedded filetype LSP",
+			},
+		},
+		dependencies = {
+			"hrsh7th/nvim-cmp",
+			"neovim/nvim-lspconfig",
+			"nvim-treesitter/nvim-treesitter",
+		},
+	},
 
-  -- more than a dozen new text objects
-  {
-    "chrisgrieser/nvim-various-textobjs",
-    config = function()
-      require("various-textobjs").setup({ useDefaultKeymaps = true })
-      -- overwrite conflicts with default keymap
-      vim.keymap.set({ "n", "v" }, "L", "g_", { noremap = true, silent = true, desc = "Jump to end of line" })
-    end,
-  },
+	-- sometimes triggers issues with autocmd's, try later again
+	-- {
+	-- 	-- plugin to maintain lines max length
+	-- 	"fmbarina/multicolumn.nvim",
+	-- 	opts = {
+	-- 		sets = {
+	-- 			lua = {
+	-- 				scope = "file",
+	-- 				rulers = { 121 },
+	-- 				full_column = true,
+	-- 			},
+	-- 			NeogitCommitMessage = {
+	-- 				scope = "window",
+	-- 				rulers = { 51 },
+	-- 				to_line_end = true,
+	-- 				always_on = true,
+	-- 			},
+	-- 			gitcommit = {
+	-- 				scope = "window",
+	-- 				rulers = { 51 },
+	-- 				to_line_end = true,
+	-- 				always_on = true,
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 
-  -- bionic reading
-  {
-    cmd = "FSToggle",
-    lazy = true,
-    "nullchilly/fsread.nvim",
-  },
+	{
+		-- display lsp hover documentation in a side panel.
+		"amrbashir/nvim-docs-view",
+		opts = {
+			position = "bottom",
+		},
+		cmd = { "DocsViewToggle" },
+		keys = {
+			{ "<leader>uD", "<cmd>DocsViewToggle<CR>", desc = "LSP hover doc side panel" },
+		},
+	},
 
-  {
-    "tzachar/local-highlight.nvim",
-    lazy = true,
-  },
+	{
+		"folke/zen-mode.nvim",
+		opts = {
+			plugins = {
+				-- twilight = { enabled = false },
+			},
+		},
+		keys = {
+			{ "<leader>uz", "<cmd>ZenMode<CR>", desc = "ZenMode" },
+		},
+	},
 
-  {
-    "tzachar/highlight-undo.nvim",
-    config = function()
-      require("highlight-undo").setup({})
-    end,
-  },
+	{
+		"folke/twilight.nvim",
+		opts = {
+			dimming = {
+				-- alpha = 0.75,
+			},
+			-- context = 0,
+		},
+		keys = {
+			{ "<leader>ut", "<cmd>Twilight<CR>", desc = "Twilight" },
+		},
+	},
 
-  {
-    "Zeioth/compiler.nvim",
-    cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
-    dependencies = { "stevearc/overseer.nvim" },
-    keys = {
-      { "<F6>", "<cmd>CompilerOpen<cr>", desc = "Open Compiler" },
-      { "<F18>", "<cmd>CompilerToggleResults<cr>", desc = "Toggle compiler results" },
-    },
-    opts = {},
-  },
+	{
+		"klen/nvim-config-local",
+		opts = {},
+	},
 
-  {
-    "stevearc/overseer.nvim",
-    keys = {
-      {
-        "<leader>rr",
-        "<CMD>OverseerRun<CR>",
-        desc = "Run Overseer",
-      },
-    },
-    config = function()
-      require("overseer").setup({
-        strategy = "toggleterm",
-      })
-    end,
-  },
-
-  {
-    "pbrisbin/vim-mkdir",
-  },
-
-  {
-    -- winbar plugin
-    "Bekaboo/dropbar.nvim",
-  },
-
-  {
-    -- provides lsp features and a code completion source for code embedded in other documents
-    "jmbuhr/otter.nvim",
-    keys = {
-      {
-        "<leader>cy",
-        ":lua require'otter'.activate({''})",
-        desc = "Add embedded filetype LSP",
-      },
-    },
-    dependencies = {
-      "hrsh7th/nvim-cmp",
-      "neovim/nvim-lspconfig",
-      "nvim-treesitter/nvim-treesitter",
-    },
-  },
-
-  {
-    -- plugin to maintain lines max length
-    "fmbarina/multicolumn.nvim",
-    opts = {
-      sets = {
-        lua = {
-          scope = "file",
-          rulers = { 121 },
-          full_column = true,
-        },
-        NeogitCommitMessage = {
-          scope = "window",
-          rulers = { 51 },
-          to_line_end = true,
-          always_on = true,
-        },
-        gitcommit = {
-          scope = "window",
-          rulers = { 51 },
-          to_line_end = true,
-          always_on = true,
-        },
-      },
-    },
-  },
-
-  {
-    -- display lsp hover documentation in a side panel.
-    "amrbashir/nvim-docs-view",
-    opts = {
-      position = "bottom",
-    },
-    cmd = { "DocsViewToggle" },
-    keys = {
-      { "<leader>uD", "<cmd>DocsViewToggle<CR>", desc = "LSP hover doc side panel" },
-    },
-  },
-
-  {
-    "folke/zen-mode.nvim",
-    opts = {
-      plugins = {
-        -- twilight = { enabled = false },
-      },
-    },
-    keys = {
-      { "<leader>uz", "<cmd>ZenMode<CR>", desc = "ZenMode" },
-    },
-  },
-
-  {
-    "folke/twilight.nvim",
-    opts = {
-      dimming = {
-        -- alpha = 0.75,
-      },
-      -- context = 0,
-    },
-    keys = {
-      { "<leader>ut", "<cmd>Twilight<CR>", desc = "Twilight" },
-    },
-  },
-
-  {
-    "klen/nvim-config-local",
-    opts = {},
-  },
+	-- makes some plugins dot-repeatable like leap
+	{ "tpope/vim-repeat", event = "VeryLazy" },
 }

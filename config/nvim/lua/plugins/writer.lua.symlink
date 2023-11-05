@@ -61,15 +61,6 @@ return {
   },
 
   -- markdown in browser rendering
-  {
-    "iamcco/markdown-preview.nvim",
-    ft = { "markdown", "txt" },
-    event = "BufRead",
-    build = "cd app && yarn install",
-    keys = {
-      { "<leader>rp", "<Plug>MarkdownPreviewToggle", desc = "Compile Markdown Preview" },
-    },
-  },
 
   {
     "richardbizik/nvim-toc",

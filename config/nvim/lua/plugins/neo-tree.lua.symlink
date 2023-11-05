@@ -1,132 +1,132 @@
 -- vi: ft=lua
 
 return {
-  "nvim-neo-tree/neo-tree.nvim",
-  branch = "v3.x",
-  cmd = "Neotree",
-  dependencies = {
-    "ThePrimeagen/harpoon",
-    {
-      "mrbjarksen/neo-tree-diagnostics.nvim",
-      opts = {},
-    },
-  },
-  keys = {
-    {
-      "<leader>fe",
-      function()
-        require("neo-tree.command").execute({ toggle = true, dir = require("lazyvim.util").get_root() })
-      end,
-      desc = "Explorer NeoTree (root dir)",
-    },
-    {
-      "<leader>fE",
-      function()
-        require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
-      end,
-      desc = "Explorer NeoTree (cwd)",
-    },
-    { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (root dir)", remap = true },
-    { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
-    { "<leader>xx", "<CMD>Neotree diagnostics reveal bottom<CR>", desc = "Workspace Diagnostics (Neotree)" },
-  },
-  deactivate = function()
-    vim.cmd([[Neotree close]])
-  end,
-  init = function()
-    if vim.fn.argc() == 1 then
-      local stat = vim.loop.fs_stat(vim.fn.argv(0))
-      if stat and stat.type == "directory" then
-        require("neo-tree")
-      end
-    end
-  end,
-  opts = {
-    sources = { "filesystem", "buffers", "git_status", "document_symbols", "diagnostics" },
-    open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
-    filesystem = {
-      bind_to_cwd = false,
-      follow_current_file = {
-        enabled = true,
-        leave_dirs_open = true,
-      },
-      use_libuv_file_watcher = true,
-      components = {
-
-        harpoon_index = function(config, node)
-          local Marked = require("harpoon.mark")
-          local path = node:get_id()
-          local succuss, index = pcall(Marked.get_index_of, path)
-          if succuss and index and index > 0 then
-            return {
-              text = string.format(" ⥤ %d", index), -- <-- Add your favorite harpoon like arrow here
-              highlight = config.highlight or "NeoTreeDirectoryIcon",
-            }
-          else
-            return {}
-          end
-        end,
-      },
-      renderers = {
-        file = {
-          { "icon" },
-          { "name", use_git_status_colors = true },
-          { "harpoon_index" },
-          { "diagnostics" },
-          { "git_status", highlight = "NeoTreeDimText" },
-        },
-      },
-    },
-    buffers = {
-      follow_current_file = {
-        enabled = true,
-        leave_dirs_open = true,
-      },
-    },
-    window = {
-      mappings = {
-        ["<space>"] = "none",
-        ["o"] = "system_open",
-      },
-    },
-    default_component_configs = {
-      indent = {
-        with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
-        expander_collapsed = "",
-        expander_expanded = "",
-        expander_highlight = "NeoTreeExpander",
-      },
-    },
-    commands = {
-      system_open = function(state)
-        local node = state.tree:get_node()
-        local path = node:get_id()
-        path = vim.fn.shellescape(path, 1)
-        vim.api.nvim_command("silent !xdg-open " .. path)
-      end,
-    },
-  },
-  config = function(_, opts)
-    local function on_move(data)
-      require("lazyvim.util").on_rename(data.source, data.destination)
-    end
-
-    local events = require("neo-tree.events")
-    opts.event_handlers = opts.event_handlers or {}
-    vim.list_extend(opts.event_handlers, {
-      { event = events.FILE_MOVED, handler = on_move },
-      { event = events.FILE_RENAMED, handler = on_move },
-    })
-
-    require("neo-tree").setup(opts)
-
-    vim.api.nvim_create_autocmd("TermClose", {
-      pattern = "*lazygit",
-      callback = function()
-        if package.loaded["neo-tree.sources.git_status"] then
-          require("neo-tree.sources.git_status").refresh()
-        end
-      end,
-    })
-  end,
+--   "nvim-neo-tree/neo-tree.nvim",
+--   branch = "v3.x",
+--   cmd = "Neotree",
+--   dependencies = {
+--     "ThePrimeagen/harpoon",
+--     {
+--       "mrbjarksen/neo-tree-diagnostics.nvim",
+--       opts = {},
+--     },
+--   },
+--   keys = {
+--     {
+--       "<leader>fe",
+--       function()
+--         require("neo-tree.command").execute({ toggle = true, dir = require("lazyvim.util").get_root() })
+--       end,
+--       desc = "Explorer NeoTree (root dir)",
+--     },
+--     {
+--       "<leader>fE",
+--       function()
+--         require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
+--       end,
+--       desc = "Explorer NeoTree (cwd)",
+--     },
+--     { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (root dir)", remap = true },
+--     { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
+--     { "<leader>xx", "<CMD>Neotree diagnostics reveal bottom<CR>", desc = "Workspace Diagnostics (Neotree)" },
+--   },
+--   deactivate = function()
+--     vim.cmd([[Neotree close]])
+--   end,
+--   init = function()
+--     if vim.fn.argc() == 1 then
+--       local stat = vim.loop.fs_stat(vim.fn.argv(0))
+--       if stat and stat.type == "directory" then
+--         require("neo-tree")
+--       end
+--     end
+--   end,
+--   opts = {
+--     sources = { "filesystem", "buffers", "git_status", "document_symbols", "diagnostics" },
+--     open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
+--     filesystem = {
+--       bind_to_cwd = false,
+--       follow_current_file = {
+--         enabled = true,
+--         leave_dirs_open = true,
+--       },
+--       use_libuv_file_watcher = true,
+--       components = {
+-- 
+--         harpoon_index = function(config, node)
+--           local Marked = require("harpoon.mark")
+--           local path = node:get_id()
+--           local succuss, index = pcall(Marked.get_index_of, path)
+--           if succuss and index and index > 0 then
+--             return {
+--               text = string.format(" ⥤ %d", index), -- <-- Add your favorite harpoon like arrow here
+--               highlight = config.highlight or "NeoTreeDirectoryIcon",
+--             }
+--           else
+--             return {}
+--           end
+--         end,
+--       },
+--       renderers = {
+--         file = {
+--           { "icon" },
+--           { "name", use_git_status_colors = true },
+--           { "harpoon_index" },
+--           { "diagnostics" },
+--           { "git_status", highlight = "NeoTreeDimText" },
+--         },
+--       },
+--     },
+--     buffers = {
+--       follow_current_file = {
+--         enabled = true,
+--         leave_dirs_open = true,
+--       },
+--     },
+--     window = {
+--       mappings = {
+--         ["<space>"] = "none",
+--         ["o"] = "system_open",
+--       },
+--     },
+--     default_component_configs = {
+--       indent = {
+--         with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+--         expander_collapsed = "",
+--         expander_expanded = "",
+--         expander_highlight = "NeoTreeExpander",
+--       },
+--     },
+--     commands = {
+--       system_open = function(state)
+--         local node = state.tree:get_node()
+--         local path = node:get_id()
+--         path = vim.fn.shellescape(path, 1)
+--         vim.api.nvim_command("silent !xdg-open " .. path)
+--       end,
+--     },
+--   },
+--   config = function(_, opts)
+--     local function on_move(data)
+--       require("lazyvim.util").on_rename(data.source, data.destination)
+--     end
+-- 
+--     local events = require("neo-tree.events")
+--     opts.event_handlers = opts.event_handlers or {}
+--     vim.list_extend(opts.event_handlers, {
+--       { event = events.FILE_MOVED, handler = on_move },
+--       { event = events.FILE_RENAMED, handler = on_move },
+--     })
+-- 
+--     require("neo-tree").setup(opts)
+-- 
+--     vim.api.nvim_create_autocmd("TermClose", {
+--       pattern = "*lazygit",
+--       callback = function()
+--         if package.loaded["neo-tree.sources.git_status"] then
+--           require("neo-tree.sources.git_status").refresh()
+--         end
+--       end,
+--     })
+--   end,
 }

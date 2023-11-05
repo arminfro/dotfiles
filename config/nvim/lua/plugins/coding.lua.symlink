@@ -2,444 +2,190 @@
 
 return {
 
-  {
-    -- documentation generator
-    "danymat/neogen",
-    cmd = "Neogen",
-    opts = {
-      snippet_engine = "luasnip",
-      enabled = true,
-      jump_map = "<tab>",
-    },
-    keys = {
-      {
-        "<leader>cg",
-        ":Neogen",
-        desc = "Generate Documentation",
-        mode = "n",
-      },
-    },
-  },
+	{
+		-- documentation generator
+		"danymat/neogen",
+		cmd = "Neogen",
+		opts = {
+			snippet_engine = "luasnip",
+			enabled = true,
+			jump_map = "<tab>",
+		},
+		keys = {
+			{
+				"<leader>cg",
+				":Neogen",
+				desc = "Generate Documentation",
+				mode = "n",
+			},
+		},
+	},
 
-  {
-    "gennaro-tedesco/nvim-jqx",
-    cmd = { "JqxList", "JqxQuery" },
-    ft = { "json", "yaml" },
-  },
+	{
+		"gennaro-tedesco/nvim-jqx",
+		cmd = { "JqxList", "JqxQuery" },
+		ft = { "json", "yaml" },
+	},
 
-  {
-    "andrewferrier/debugprint.nvim",
-    cmd = "DeleteDebugPrints",
-    event = "BufRead",
-    config = true,
-  },
+	{
+		"andrewferrier/debugprint.nvim",
+		cmd = "DeleteDebugPrints",
+		event = "BufRead",
+		config = true,
+	},
 
-  {
-    "bennypowers/nvim-regexplainer",
-    config = function()
-      require("regexplainer").setup({ auto = true })
-    end,
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "MunifTanjim/nui.nvim",
-    },
-  },
+	{
+		"bennypowers/nvim-regexplainer",
+		opts = { auto = true },
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"MunifTanjim/nui.nvim",
+		},
+	},
 
-  {
-    "axelvc/template-string.nvim",
-    config = function()
-      require("template-string").setup({
-        filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
-        jsx_brackets = true, -- must add brackets to jsx attributes
-        remove_template_string = false, -- remove backticks when there are no template string
-      })
-    end,
-    dependencies = "nvim-treesitter/nvim-treesitter",
-  },
+	{
+		"axelvc/template-string.nvim",
+		config = function()
+			require("template-string").setup({
+				filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
+				jsx_brackets = true, -- must add brackets to jsx attributes
+				remove_template_string = false, -- remove backticks when there are no template string
+			})
+		end,
+		dependencies = "nvim-treesitter/nvim-treesitter",
+	},
 
-  {
-    "nvim-treesitter/nvim-treesitter-context",
-    config = function()
-      vim.api.nvim_command("hi TreesitterContext guisp=Grey")
-      vim.api.nvim_command("hi TreesitterContextBottom gui=underline guisp=Grey")
-    end,
-  },
+	-- {
+	-- 	"HiPhish/rainbow-delimiters.nvim",
+	-- 	dependencies = { "nvim-treesitter/nvim-treesitter" },
+	-- 	config = function()
+	-- 		local rainbow_delimiters = require("rainbow-delimiters")
+	--
+	-- 		vim.g.rainbow_delimiters = {
+	-- 			strategy = {
+	-- 				[""] = rainbow_delimiters.strategy["global"],
+	-- 				vim = rainbow_delimiters.strategy["local"],
+	-- 			},
+	-- 			query = {
+	-- 				[""] = "rainbow-delimiters",
+	-- 				lua = "rainbow-blocks",
+	-- 			},
+	-- 			highlight = {
+	-- 				"RainbowDelimiterRed",
+	-- 				"RainbowDelimiterYellow",
+	-- 				"RainbowDelimiterBlue",
+	-- 				"RainbowDelimiterOrange",
+	-- 				"RainbowDelimiterGreen",
+	-- 				"RainbowDelimiterViolet",
+	-- 				"RainbowDelimiterCyan",
+	-- 			},
+	-- 		}
+	-- 	end,
+	-- },
+	{
+		"m-demare/hlargs.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "rebelot/kanagawa.nvim" },
+		config = function()
+			require("hlargs").setup({
+				color = require("kanagawa.colors").setup({ theme = "wave" }).palette.surimiOrange,
+			})
+		end,
+	},
 
-  -- better diagnostics list and others
-  {
-    "folke/trouble.nvim",
-    cmd = { "TroubleToggle", "Trouble" },
-    opts = { use_diagnostic_signs = true },
-    keys = {
-      { "<leader>xX", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
-      -- { "<leader>xx", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" }, -- set by Neotree diagnostics reveal bottom
-      { "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
-      { "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
-      {
-        "[q",
-        function()
-          if require("trouble").is_open() then
-            require("trouble").previous({ skip_groups = true, jump = true })
-          else
-            local ok, err = pcall(vim.cmd.cprev)
-            if not ok then
-              vim.notify(err, vim.log.levels.ERROR)
-            end
-          end
-        end,
-        desc = "Previous trouble/quickfix item",
-      },
-      {
-        "]q",
-        function()
-          if require("trouble").is_open() then
-            require("trouble").next({ skip_groups = true, jump = true })
-          else
-            local ok, err = pcall(vim.cmd.cnext)
-            if not ok then
-              vim.notify(err, vim.log.levels.ERROR)
-            end
-          end
-        end,
-        desc = "Next trouble/quickfix item",
-      },
-    },
-  },
+	{
+		"rareitems/hl_match_area.nvim",
+		dependencies = "rebelot/kanagawa.nvim",
+		opts = {},
+		init = function()
+			vim.api.nvim_set_hl(
+				0,
+				"MatchArea",
+				{ bg = require("kanagawa.colors").setup({ theme = "wave" }).palette.waveBlue1 }
+			)
+		end,
+	},
 
-  -- todo comments
-  {
-    "folke/todo-comments.nvim",
-    cmd = { "TodoTrouble", "TodoTelescope" },
-    event = { "BufReadPost", "BufNewFile" },
-    config = true,
-    -- stylua: ignore
-    keys = {
-      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
-      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
-      { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
-      { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
-      { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
-    },
-  },
+	{
+		-- http client
+		"NTBBloodbath/rest.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		lazy = true,
+		keys = {
+			{
+				"<leader>tr",
+				"<Plug>RestNvim",
+				desc = "Run http request under cursor",
+			},
+			{
+				"<leader>tp",
+				"<Plug>RestNvimPreview",
+				desc = "Preview http request curl command",
+			},
+			{
+				"<leader>tl",
+				"<Plug>RestNvimLast",
+				desc = "Re-Run last http request ",
+			},
+		},
+		opts = {
+			-- Open request results in a horizontal split
+			result_split_horizontal = false,
+			-- Skip SSL verification, useful for unknown certificates
+			skip_ssl_verification = false,
+			-- Highlight request on run
+			highlight = {
+				enabled = true,
+				timeout = 150,
+			},
+			result = {
+				-- toggle showing URL, HTTP info, headers at top the of result window
+				show_url = true,
+				show_http_info = true,
+				show_headers = true,
+			},
+			-- Jump to request line on run
+			jump_to_request = false,
+			env_file = ".env",
+			custom_dynamic_variables = {},
+			yank_dry_run = true,
+		},
+	},
+	{
+		-- Index, Fetch and Search devdocs.io
+		"luckasRanarison/nvim-devdocs",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = {},
+		keys = {
+			{ "<leader>sD", "<cmd>DevdocsOpen<CR>", desc = "Devdocs" },
+		},
+	},
 
-  -- auto pairs
-  {
-    "windwp/nvim-autopairs",
-    event = "VeryLazy",
-    dependencies = { "hrsh7th/nvim-cmp" },
-    config = function()
-      local npairs = require("nvim-autopairs")
+	{
+		-- Shows virtual text of the current context after functions, methods, statements
+		"haringsrob/nvim_context_vt",
+	},
 
-      npairs.setup({
-        disable_filetype = {
-          "TelescopePrompt",
-          "guihua",
-          "guihua_rust",
-          "clap_input",
-          "dashboard",
-          "lazy",
-          "alpha",
-          "undotree",
-        },
-        check_ts = true,
-      })
-
-      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-      local cmp = require("cmp")
-
-      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
-    end,
-  },
-
-  -- surround
-  {
-    "echasnovski/mini.surround",
-    keys = function(_, keys)
-      -- Populate the keys based on the user's options
-      local plugin = require("lazy.core.config").spec.plugins["mini.surround"]
-      local opts = require("lazy.core.plugin").values(plugin, "opts", false)
-      local mappings = {
-        { opts.mappings.add, desc = "Add surrounding", mode = { "n", "v" } },
-        { opts.mappings.delete, desc = "Delete surrounding" },
-        { opts.mappings.find, desc = "Find right surrounding" },
-        { opts.mappings.find_left, desc = "Find left surrounding" },
-        { opts.mappings.highlight, desc = "Highlight surrounding" },
-        { opts.mappings.replace, desc = "Replace surrounding" },
-        { opts.mappings.update_n_lines, desc = "Update `MiniSurround.config.n_lines`" },
-      }
-      mappings = vim.tbl_filter(function(m)
-        return m[1] and #m[1] > 0
-      end, mappings)
-      return vim.list_extend(mappings, keys)
-    end,
-    opts = {
-      mappings = {
-        add = "gsa", -- Add surrounding in Normal and Visual modes
-        delete = "gsd", -- Delete surrounding
-        find = "gsf", -- Find surrounding (to the right)
-        find_left = "gsF", -- Find surrounding (to the left)
-        highlight = "gsh", -- Highlight surrounding
-        replace = "gsr", -- Replace surrounding
-        update_n_lines = "gsn", -- Update `n_lines`
-      },
-    },
-    config = function(_, opts)
-      -- use gs mappings instead of s to prevent conflict with flash
-      require("mini.surround").setup(opts)
-    end,
-  },
-
-  -- comments
-  {
-    "echasnovski/mini.comment",
-    -- lazy = true,
-    dependencies = {
-      {
-        "JoosepAlviste/nvim-ts-context-commentstring",
-        lazy = true,
-        opts = {
-          enable_autocmd = false,
-        },
-      },
-    },
-    opts = {
-      enable_autocmd = false,
-      hooks = {
-        pre = function()
-          return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
-        end,
-      },
-    },
-    config = function(_, opts)
-      require("mini.comment").setup(opts)
-    end,
-  },
-
-  -- better text-objects
-  {
-    "echasnovski/mini.ai",
-    -- keys = {
-    --   { "a", mode = { "x", "o" } },
-    --   { "i", mode = { "x", "o" } },
-    -- },
-    event = "VeryLazy",
-    dependencies = { "nvim-treesitter-textobjects" },
-    opts = function()
-      local ai = require("mini.ai")
-      return {
-        n_lines = 500,
-        custom_textobjects = {
-          o = ai.gen_spec.treesitter({
-            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
-            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
-          }, {}),
-          f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }, {}),
-          c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
-        },
-      }
-    end,
-    config = function(_, opts)
-      require("mini.ai").setup(opts)
-      -- register all text objects with which-key
-      if require("lazyvim.util").has("which-key.nvim") then
-        ---@type table<string, string|table>
-        local i = {
-          [" "] = "Whitespace",
-          ["\""] = "Balanced \"",
-          ["'"] = "Balanced '",
-          ["`"] = "Balanced `",
-          ["("] = "Balanced (",
-          [")"] = "Balanced ) including white-space",
-          [">"] = "Balanced > including white-space",
-          ["<lt>"] = "Balanced <",
-          ["]"] = "Balanced ] including white-space",
-          ["["] = "Balanced [",
-          ["}"] = "Balanced } including white-space",
-          ["{"] = "Balanced {",
-          ["?"] = "User Prompt",
-          _ = "Underscore",
-          a = "Argument",
-          b = "Balanced ), ], }",
-          c = "Class",
-          f = "Function",
-          o = "Block, conditional, loop",
-          q = "Quote `, \", '",
-          t = "Tag",
-        }
-        local a = vim.deepcopy(i)
-        for k, v in pairs(a) do
-          a[k] = v:gsub(" including.*", "")
-        end
-
-        local ic = vim.deepcopy(i)
-        local ac = vim.deepcopy(a)
-        for key, name in pairs({ n = "Next", l = "Last" }) do
-          i[key] = vim.tbl_extend("force", { name = "Inside " .. name .. " textobject" }, ic)
-          a[key] = vim.tbl_extend("force", { name = "Around " .. name .. " textobject" }, ac)
-        end
-        require("which-key").register({
-          mode = { "o", "x" },
-          i = i,
-          a = a,
-        })
-      end
-    end,
-  },
-
-  {
-    "HiPhish/rainbow-delimiters.nvim",
-    branch = "use-children", -- temp, until fix gets merged
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = function()
-      local rainbow_delimiters = require("rainbow-delimiters")
-
-      vim.g.rainbow_delimiters = {
-        strategy = {
-          [""] = rainbow_delimiters.strategy["global"],
-          vim = rainbow_delimiters.strategy["local"],
-        },
-        query = {
-          [""] = "rainbow-delimiters",
-          lua = "rainbow-blocks",
-        },
-        highlight = {
-          "RainbowDelimiterRed",
-          "RainbowDelimiterYellow",
-          "RainbowDelimiterBlue",
-          "RainbowDelimiterOrange",
-          "RainbowDelimiterGreen",
-          "RainbowDelimiterViolet",
-          "RainbowDelimiterCyan",
-        },
-      }
-    end,
-  },
-
-  {
-    "m-demare/hlargs.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter", "rebelot/kanagawa.nvim" },
-    config = function()
-      require("hlargs").setup({ color = require("kanagawa.colors").setup({ theme = "wave" }).palette.surimiOrange })
-    end,
-  },
-
-  {
-    "rareitems/hl_match_area.nvim",
-    dependencies = "rebelot/kanagawa.nvim",
-    opts = {},
-    init = function()
-      vim.api.nvim_set_hl(
-        0,
-        "MatchArea",
-        { bg = require("kanagawa.colors").setup({ theme = "wave" }).palette.winterBlue }
-      )
-    end,
-  },
-
-  {
-    -- http client
-    "NTBBloodbath/rest.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    lazy = true,
-    keys = {
-      {
-        "<leader>tr",
-        "<Plug>RestNvim",
-        desc = "Run http request under cursor",
-      },
-      {
-        "<leader>tp",
-        "<Plug>RestNvimPreview",
-        desc = "Preview http request curl command",
-      },
-      {
-        "<leader>tl",
-        "<Plug>RestNvimLast",
-        desc = "Re-Run last http request ",
-      },
-    },
-    opts = {
-      -- Open request results in a horizontal split
-      result_split_horizontal = false,
-      -- Skip SSL verification, useful for unknown certificates
-      skip_ssl_verification = false,
-      -- Highlight request on run
-      highlight = {
-        enabled = true,
-        timeout = 150,
-      },
-      result = {
-        -- toggle showing URL, HTTP info, headers at top the of result window
-        show_url = true,
-        show_http_info = true,
-        show_headers = true,
-      },
-      -- Jump to request line on run
-      jump_to_request = false,
-      env_file = ".env",
-      custom_dynamic_variables = {},
-      yank_dry_run = true,
-    },
-  },
-  {
-    "simrat39/symbols-outline.nvim",
-    cmd = "SymbolsOutline",
-    keys = {
-      {
-        "<F9>",
-        "<cmd>SymbolsOutline<cr>",
-        desc = "Symbols Outline",
-      },
-      { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" },
-    },
-    config = true,
-  },
-
-  {
-    -- Use treesitter to autoclose and autorename html tag
-    "windwp/nvim-ts-autotag",
-    init = function()
-      require("nvim-ts-autotag").setup()
-    end,
-  },
-
-  {
-    -- Index, Fetch and Search devdocs.io
-    "luckasRanarison/nvim-devdocs",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = {},
-    keys = {
-      { "<leader>sD", "<cmd>DevdocsOpen<CR>", desc = "Devdocs" },
-    },
-  },
-
-  {
-    -- Shows virtual text of the current context after functions, methods, statements
-    "haringsrob/nvim_context_vt",
-  },
-
-  {
-    "kndndrj/nvim-dbee",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-    },
-    build = function()
-      -- Install tries to automatically detect the install method.
-      -- if it fails, try calling it with one of these parameters:
-      --    "curl", "wget", "bitsadmin", "go"
-      require("dbee").install()
-    end,
-    config = function()
-      require("dbee").setup({
-        sources = {
-          require("dbee.sources").EnvSource:new("DBEE_CONNECTIONS"),
-        },
-      })
-    end,
-  },
+	{
+		"kndndrj/nvim-dbee",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+		},
+		build = function()
+			-- Install tries to automatically detect the install method.
+			-- if it fails, try calling it with one of these parameters:
+			--    "curl", "wget", "bitsadmin", "go"
+			require("dbee").install()
+		end,
+		config = function()
+			require("dbee").setup({
+				sources = {
+					require("dbee.sources").EnvSource:new("DBEE_CONNECTIONS"),
+				},
+			})
+		end,
+	},
 }

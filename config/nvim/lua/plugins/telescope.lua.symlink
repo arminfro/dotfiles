@@ -145,46 +145,46 @@ return {
     },
   },
   keys = {
-    { "<leader>,", false },
-    { "<leader>tb", "<cmd>Telescope builtin<cr>", desc = "Telescope Built-ins" },
-    -- find
-    { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-    { "<leader>ff", Util.telescope("files"), desc = "Find Files (root dir)" },
-    { "<leader>fd", Util.telescope("files", { cwd = "~/.dotfiles" }), desc = "Find Dotfile" },
-    { "<leader>fF", Util.telescope("files", { cwd = false }), desc = "Find Files (cwd)" },
-    { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
-    { "<leader>/", Util.telescope("live_grep"), desc = "Find in Files (Grep)" },
-    { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-    { "<leader><localleader>", Util.telescope("files"), desc = "Find Files (root dir)" },
-    -- git
-    { "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Git branches" },
-    { "<leader>gC", "<cmd>Telescope git_commits<CR>", desc = "commits" },
-    { "<leader>gf", "<cmd>Telescope git_files<cr>", desc = "Git Files" },
-    { "<leader>gm", "<cmd>Telescope git_status<CR>", desc = "Git modified Files" },
-    -- spelling
-    { "<leader>zs", "<cmd>Telescope spell_suggest<cr>", desc = "Search spell suggesting" },
-    -- search
-    { "<leader>s\"", "<cmd>Telescope registers<cr>", desc = "Registers" },
-    { "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
-    { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
-    { "<leader>sC", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-    { "<leader>sc", "<cmd>Telescope commands<cr>", desc = "Commands" },
-    { "<leader>cd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
-    { "<leader>sg", Util.telescope("live_grep"), desc = "Grep (root dir)" },
-    { "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
-    { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
-    { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
-    { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
-    { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
-    { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
-    { "<leader>sO", "<cmd>Telescope vim_options<cr>", desc = "Options" },
-    { "<leader>sr", "<cmd>Telescope resume<cr>", desc = "Resume" },
-    { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
-    { "<leader>sW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
-    { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
-    { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
-    { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
-    { "<leader>sj", "<cmd>Telescope jumplist<cr>", desc = "Jumplist" },
+    -- { "<leader>,", false },
+    -- { "<leader>tb", "<cmd>Telescope builtin<cr>", desc = "Telescope Built-ins" },
+    -- -- find
+    -- { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+    -- { "<leader>ff", Util.telescope("files"), desc = "Find Files (root dir)" },
+    -- { "<leader>fd", Util.telescope("files", { cwd = "~/.dotfiles" }), desc = "Find Dotfile" },
+    -- { "<leader>fF", Util.telescope("files", { cwd = false }), desc = "Find Files (cwd)" },
+    -- { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
+    -- { "<leader>/", Util.telescope("live_grep"), desc = "Find in Files (Grep)" },
+    -- { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+    -- { "<leader><localleader>", Util.telescope("files"), desc = "Find Files (root dir)" },
+    -- -- git
+    -- { "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Git branches" },
+    -- { "<leader>gC", "<cmd>Telescope git_commits<CR>", desc = "commits" },
+    -- { "<leader>gf", "<cmd>Telescope git_files<cr>", desc = "Git Files" },
+    -- { "<leader>gm", "<cmd>Telescope git_status<CR>", desc = "Git modified Files" },
+    -- -- spelling
+    -- { "<leader>zs", "<cmd>Telescope spell_suggest<cr>", desc = "Search spell suggesting" },
+    -- -- search
+    -- { "<leader>s\"", "<cmd>Telescope registers<cr>", desc = "Registers" },
+    -- { "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
+    -- { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
+    -- { "<leader>sC", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+    -- { "<leader>sc", "<cmd>Telescope commands<cr>", desc = "Commands" },
+    -- { "<leader>cd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
+    -- { "<leader>sg", Util.telescope("live_grep"), desc = "Grep (root dir)" },
+    -- { "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
+    -- { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
+    -- { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
+    -- { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
+    -- { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
+    -- { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
+    -- { "<leader>sO", "<cmd>Telescope vim_options<cr>", desc = "Options" },
+    -- { "<leader>sr", "<cmd>Telescope resume<cr>", desc = "Resume" },
+    -- { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
+    -- { "<leader>sW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
+    -- { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
+    -- { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
+    -- { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
+    -- { "<leader>sj", "<cmd>Telescope jumplist<cr>", desc = "Jumplist" },
     {
       "<leader>sf",
       function()
@@ -198,46 +198,11 @@ return {
       desc = "Fuzzy Grep ",
     },
     {
-      "<leader>sj",
-      function()
-        require("telescope.builtin").grep_string({
-          search = vim.fn.expand("<cword>"),
-        })
-      end,
-      desc = "Grep cword",
-      mode = { "n", "v" },
-    },
-    {
       "<leader>so",
       function()
         require("telescope.builtin").live_grep({ grep_open_files = true })
       end,
       desc = "Grep open buffers",
-    },
-    {
-      "<leader>sS",
-      Util.telescope("lsp_document_symbols", {
-        symbols = {
-          "Class",
-          "Function",
-          "Method",
-          "Constructor",
-          "Interface",
-          "Module",
-          "Struct",
-          "Trait",
-          "Field",
-          "Property",
-          "Enum",
-          "Constant",
-        },
-      }),
-      desc = "Goto Symbol",
-    },
-    {
-      "<leader>ss",
-      require("telescope.builtin").lsp_dynamic_workspace_symbols,
-      desc = "Goto Symbol (Workspace)",
     },
   },
   dependencies = {
@@ -274,35 +239,35 @@ return {
       end,
     },
 
-    {
-      "gbprod/yanky.nvim",
-      dependencies = { { "kkharji/sqlite.lua", enabled = not jit.os:find("Windows") } },
-      opts = {
-        highlight = { timer = 250 },
-        ring = { storage = jit.os:find("Windows") and "shada" or "sqlite" },
-      },
-      keys = {
-        -- stylua: ignore
-        { "<leader>p", function() require("telescope").extensions.yank_history.yank_history({ }) end, desc = "Open Yank History" },
-        { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
-        { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after cursor" },
-        { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before cursor" },
-        { "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after selection" },
-        { "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before selection" },
-        { "[y", "<Plug>(YankyCycleForward)", desc = "Cycle forward through yank history" },
-        { "]y", "<Plug>(YankyCycleBackward)", desc = "Cycle backward through yank history" },
-        { "]p", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
-        { "[p", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put indented before cursor (linewise)" },
-        { "]P", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
-        { "[P", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put indented before cursor (linewise)" },
-        { ">p", "<Plug>(YankyPutIndentAfterShiftRight)", desc = "Put and indent right" },
-        { "<p", "<Plug>(YankyPutIndentAfterShiftLeft)", desc = "Put and indent left" },
-        { ">P", "<Plug>(YankyPutIndentBeforeShiftRight)", desc = "Put before and indent right" },
-        { "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)", desc = "Put before and indent left" },
-        { "=p", "<Plug>(YankyPutAfterFilter)", desc = "Put after applying a filter" },
-        { "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put before applying a filter" },
-      },
-    },
+    -- {
+    --   "gbprod/yanky.nvim",
+    --   dependencies = { { "kkharji/sqlite.lua", enabled = not jit.os:find("Windows") } },
+    --   opts = {
+    --     highlight = { timer = 250 },
+    --     ring = { storage = jit.os:find("Windows") and "shada" or "sqlite" },
+    --   },
+    --   keys = {
+    --     -- stylua: ignore
+    --     { "<leader>p", function() require("telescope").extensions.yank_history.yank_history({ }) end, desc = "Open Yank History" },
+    --     { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
+    --     { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after cursor" },
+    --     { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before cursor" },
+    --     { "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after selection" },
+    --     { "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before selection" },
+    --     { "[y", "<Plug>(YankyCycleForward)", desc = "Cycle forward through yank history" },
+    --     { "]y", "<Plug>(YankyCycleBackward)", desc = "Cycle backward through yank history" },
+    --     { "]p", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
+    --     { "[p", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put indented before cursor (linewise)" },
+    --     { "]P", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
+    --     { "[P", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put indented before cursor (linewise)" },
+    --     { ">p", "<Plug>(YankyPutIndentAfterShiftRight)", desc = "Put and indent right" },
+    --     { "<p", "<Plug>(YankyPutIndentAfterShiftLeft)", desc = "Put and indent left" },
+    --     { ">P", "<Plug>(YankyPutIndentBeforeShiftRight)", desc = "Put before and indent right" },
+    --     { "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)", desc = "Put before and indent left" },
+    --     { "=p", "<Plug>(YankyPutAfterFilter)", desc = "Put after applying a filter" },
+    --     { "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put before applying a filter" },
+    --   },
+    -- },
 
     {
       "nvim-telescope/telescope-node-modules.nvim",
@@ -384,22 +349,22 @@ return {
       end,
     },
 
-    {
-      "stevearc/aerial.nvim",
-      keys = {
-        {
-          "<leader>sW",
-          function()
-            require("telescope").extensions.aerial.aerial()
-          end,
-          desc = "Symbols buffer with Aerial",
-        },
-      },
-      config = function()
-        require("telescope").load_extension("aerial")
-        require("aerial").setup({})
-      end,
-    },
+    -- {
+    --   "stevearc/aerial.nvim",
+    --   keys = {
+    --     {
+    --       "<leader>sW",
+    --       function()
+    --         require("telescope").extensions.aerial.aerial()
+    --       end,
+    --       desc = "Symbols buffer with Aerial",
+    --     },
+    --   },
+    --   config = function()
+    --     require("telescope").load_extension("aerial")
+    --     require("aerial").setup({})
+    --   end,
+    -- },
 
     {
       "nvim-telescope/telescope-fzf-native.nvim",
