@@ -1,7 +1,7 @@
 ---
-id: { { id } }
-slug: { { slug title } }
-title: { { title } }
+id: {{ id }}
+slug: {{ slug title }}
+title: {{ title }}
 keywords: []
 abstract: |
 subtitle:
@@ -14,17 +14,17 @@ pandoc_:
 header-includes:
   - |
     \usepackage[margins=raggedright]{floatrow}
-created: { { format-date now 'timestamp' } }
-course: { { dir } }
+created: {{ format-date now 'timestamp' }}
+course: {{ dir }}
+title: {{ title }}
 aliases:
-  - { { title } }
-  - { { format-date now 'timestamp' } }
-author: { { extra.author } }
+  - {{ title }}
+  - {{ format-date now 'timestamp' }}
+author: {{ env.ZK_NAME }}
 tags:
-  - { { extra.tags } }
-  - { { dir } }
-  - { { format-date now 'CW_%V/%y' } }
-  - { { format-date now '%B/%y' } }
+  - {{ dir }}
+  - {{ format-date now 'CW_%V/%y' }}
+  - {{ format-date now '%B/%y' }}
 ---
 
 # Task: {{title}}

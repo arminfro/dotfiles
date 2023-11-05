@@ -1,6 +1,6 @@
 ---
-id: { { id } }
-slug: { { env.ZK_BRANCH } }
+id: {{ id }}
+slug: {{ env.ZK_BRANCH }}
 keywords: []
 abstract: |
 subtitle:
@@ -13,17 +13,17 @@ pandoc_:
 header-includes:
   - |
     \usepackage[margins=raggedright]{floatrow}
-created: { { format-date now 'timestamp' } }
-course: { { dir } }
-title: { { env.ZK_TITLE } }
+created: {{ format-date now 'timestamp' }}
+course: {{ dir }}
+title: {{ env.ZK_TITLE }}
 aliases:
-  - { { env.ZK_TITLE } }
-  - { { format-date now 'timestamp' } }
-author: { { env.ZK_NAME } }
+  - {{ env.ZK_TITLE }}
+  - {{ format-date now 'timestamp' }}
+author: {{ env.ZK_NAME }}
 tags:
-  - { { dir } }
-  - { { format-date now 'CW_%V/%y' } }
-  - { { format-date now '%B/%y' } }
+  - {{ dir }}
+  - {{ format-date now 'CW_%V/%y' }}
+  - {{ format-date now '%B/%y' }}
 ---
 
 # {{env.ZK_TICKET_ID}} {{env.ZK_TITLE}} - {{env.ZK_POINTS}}

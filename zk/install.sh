@@ -14,10 +14,12 @@ if [[ -v $ZK_NOTEBOOK_DIR ]]; then
 	if [[ ! -d $ZK_NOTEBOOK_DIR/.zk/templates ]]; then
 		mkdir "$ZK_NOTEBOOK_DIR/.zk/templates"
 	fi
-	ln -s $DOTFILES/zk/templates/templates/task.md "$ZK_NOTEBOOK_DIR/.zk/templates"
-	ln -s $DOTFILES/templates/daily.md "$ZK_NOTEBOOK_DIR/.zk/templates"
-	ln -s $DOTFILES/templates/issue.md "$ZK_NOTEBOOK_DIR/.zk/templates"
-	ln -s $DOTFILES/templates/default.md "$ZK_NOTEBOOK_DIR/.zk/templates"
+	ln -s $DOTFILES/zk/templates/task.md "$ZK_NOTEBOOK_DIR/.zk/templates"
+	ln -s $DOTFILES/zk/templates/daily.md "$ZK_NOTEBOOK_DIR/.zk/templates"
+	ln -s $DOTFILES/zk/templates/issue.md "$ZK_NOTEBOOK_DIR/.zk/templates"
+	ln -s $DOTFILES/zk/templates/default.md "$ZK_NOTEBOOK_DIR/.zk/templates"
+	ln -s $DOTFILES/zk/templates/wiki.md "$ZK_NOTEBOOK_DIR/.zk/templates"
+
 
 	if [[ ! -d $ZK_NOTEBOOK_DIR/media ]]; then
 		mkdir "$ZK_NOTEBOOK_DIR/media"
