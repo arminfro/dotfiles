@@ -49,24 +49,24 @@ return {
 	{
 		"nvimdev/dashboard-nvim",
 		config = function(_, opts)
-			table.insert(opts.config.center, 5, {
-				action = "Frecent Dirs",
-				desc = "Frecent Dirs",
-				icon = " ",
-				key = "d",
-			})
+			-- table.insert(opts.config.center, 5, {
+			-- 	action = "Frecent Dirs",
+			-- 	desc = "Frecent Dirs",
+			-- 	icon = " ",
+			-- 	key = "d",
+			-- })
 			table.insert(opts.config.center, 6, {
 				action = "Mason",
 				desc = "Mason",
 				icon = " ",
 				key = "m",
 			})
-			table.insert(opts.config.center, 7, {
-				action = "ZkNewDefault",
-				desc = "New Note",
-				icon = " ",
-				key = "n",
-			})
+			-- table.insert(opts.config.center, 7, {
+			-- 	action = "ZkNewDefault",
+			-- 	desc = "New Note",
+			-- 	icon = " ",
+			-- 	key = "n",
+			-- })
 			table.insert(opts.config.center, 8, {
 				action = "checkhealth",
 				desc = "Check Health",

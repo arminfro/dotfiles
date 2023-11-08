@@ -97,11 +97,7 @@ return {
 		dependencies = "rebelot/kanagawa.nvim",
 		opts = {},
 		init = function()
-			vim.api.nvim_set_hl(
-				0,
-				"MatchArea",
-				{ bg = require("kanagawa.colors").setup({ theme = "wave" }).palette.waveBlue1 }
-			)
+			vim.api.nvim_set_hl(0, "MatchArea", { bg = "#292c3d" })
 		end,
 	},
 

@@ -122,4 +122,14 @@ return {
 			},
 		},
 	},
+
+	{
+		"niuiic/git-log.nvim",
+		dependencies = {
+			"niuiic/core.nvim",
+		},
+		keys = {
+			{ "<leader>gl", ":lua require('git-log').check_log()<CR>", desc = "Check log", mode = { "x", "n" } },
+		},
+	},
 }
