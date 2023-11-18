@@ -6,7 +6,6 @@ return {
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			"mickael-menu/zk-nvim",
 			"williamboman/mason-lspconfig.nvim",
 			{
 				"ray-x/lsp_signature.nvim",

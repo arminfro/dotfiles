@@ -1,134 +1,155 @@
 -- vi: ft=lua
 
 return {
-  "mickael-menu/zk-nvim",
-  keys = {
-    { "<leader>nl", ":ZkNotes<CR>", desc = "List notes" },
-    { "<leader>nt", ":ZkTags<CR>", desc = "List note tags" },
-    {
-      "<leader>ni",
-      function()
-        require("zk.commands").get("ZkNewFromTitleSelection")({
-          extra = { branch = vim.fn.input("Branch: ") },
-          group = "issues",
-          dir = "issues",
-        })
-      end,
-      desc = "New issue note",
-      mode = { "v" },
-    },
-    {
-      "<leader>ni",
-      function()
-        require("zk")
-        require("zk.commands").get("ZkNewIssue")({
-          -- extra = { branch = vim.fn.input("Branch: ") },
-          group = "issues",
-          dir = "issues",
-        })
-      end,
-      desc = "New issue note",
-      mode = { "n" },
-    },
-    {
-      "<leader>nl",
-      ":ZkLastIssue<CR>",
-      desc = "Open last modified issue note",
-    },
-    {
-      "<leader>nI",
-      ":ZkIssuesToday<CR>",
-      desc = "List issue notes modified today",
-      mode = { "n" },
-    },
-    {
-      "<leader>nn",
-      ":ZkNewDefault<CR>",
-      desc = "New note",
-      mode = { "n" },
-    },
-    {
-      "<leader>nd",
-      ":ZkNewDaily<CR>",
-      desc = "Create or edit daily note",
-      mode = { "n" },
-    },
-  },
-  config = function()
-    local zk = require("zk")
-    local commands = require("zk.commands")
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = {
+			"mickael-menu/zk-nvim",
+		},
+	},
 
-    -- local function make_new_fn(defaults, picker_options)
-    --   return function(options)
-    --     options = vim.tbl_extend("force", defaults, options or {})
-    --     zk.new(options, picker_options)
-    --   end
-    -- end
-    -- commands.add("ZkDaily", make_new_fn({ orphan = true }, { dir = "dailies" }))
+	{
+		"williamboman/mason.nvim",
+		optional = true,
+		opts = function(_, opts)
+			if type(opts.ensure_installed) == "table" then
+				vim.list_extend(opts.ensure_installed, { "zk" })
+			end
+		end,
+	},
 
-    commands.add("ZkNewDaily", function(options)
-      options = options or {}
-      options = vim.tbl_extend("force", options, { dir = "dailies" })
-      zk.new(options)
-    end)
+	{
+		"mickael-menu/zk-nvim",
+		keys = {
+			{ "<leader>nl", ":ZkNotes<CR>", desc = "List notes" },
+			{ "<leader>nt", ":ZkTags<CR>", desc = "List note tags" },
+			{
+				"<leader>ni",
+				function()
+					require("zk.commands").get("ZkNewFromTitleSelection")({
+						extra = { branch = vim.fn.input("Branch: ") },
+						group = "issues",
+						dir = "issues",
+					})
+				end,
+				desc = "New issue note",
+				mode = { "v" },
+			},
+			{
+				"<leader>ni",
+				function()
+					require("zk")
+					require("zk.commands").get("ZkNewIssue")({
+						-- extra = { branch = vim.fn.input("Branch: ") },
+						group = "issues",
+						dir = "issues",
+					})
+				end,
+				desc = "New issue note",
+				mode = { "n" },
+			},
+			{
+				"<leader>nl",
+				":ZkLastIssue<CR>",
+				desc = "Open last modified issue note",
+			},
+			{
+				"<leader>nI",
+				":ZkIssuesToday<CR>",
+				desc = "List issue notes modified today",
+				mode = { "n" },
+			},
+			{
+				"<leader>nn",
+				":ZkNewDefault<CR>",
+				desc = "New note",
+				mode = { "n" },
+			},
+			{
+				"<leader>nd",
+				":ZkNewDaily<CR>",
+				desc = "Create or edit daily note",
+				mode = { "n" },
+			},
+		},
+		config = function()
+			local zk = require("zk")
+			local commands = require("zk.commands")
 
-    commands.add("ZkNewTask", function(options)
-      options = options or {}
-      options = vim.tbl_extend(
-        "force",
-        options,
-        { dir = "tasks", extra = { author = "My name", tags = "task" }, title = vim.fn.input({ prompt = "Title: " }) }
-      )
-      if #options.title > 0 then
-        zk.new(options)
-      end
-    end)
+			-- local function make_new_fn(defaults, picker_options)
+			--   return function(options)
+			--     options = vim.tbl_extend("force", defaults, options or {})
+			--     zk.new(options, picker_options)
+			--   end
+			-- end
+			-- commands.add("ZkDaily", make_new_fn({ orphan = true }, { dir = "dailies" }))
 
-    commands.add("ZkNewIssue", function(options)
-      options = options or {}
-      options = vim.tbl_extend("force", options, {
-        group = "issues",
-        dir = "issues",
-        title = vim.fn.input({ prompt = "Ticket: PRO-" }),
-      })
+			commands.add("ZkNewDaily", function(options)
+				options = options or {}
+				options = vim.tbl_extend("force", options, { dir = "dailies" })
+				zk.new(options)
+			end)
 
-      if #options.title > 0 then
-        local ticket_id = "PRO-" .. options.title
-        options.title = ticket_id
+			commands.add("ZkNewTask", function(options)
+				options = options or {}
+				options = vim.tbl_extend("force", options, {
+					dir = "tasks",
+					extra = { author = "My name", tags = "task" },
+					title = vim.fn.input({ prompt = "Title: " }),
+				})
+				if #options.title > 0 then
+					zk.new(options)
+				end
+			end)
 
-        local jira_api_output = os.capture(
-          "curl -X GET \"https://$ATLASSIAN_URL/rest/api/2/issue/" .. ticket_id .. "\" -H \"Cookie: $JIRA_COOKIE\""
-        ):gsub("'", "'\\''")
+			commands.add("ZkNewIssue", function(options)
+				options = options or {}
+				options = vim.tbl_extend("force", options, {
+					group = "issues",
+					dir = "issues",
+					title = vim.fn.input({ prompt = "Ticket: PRO-" }),
+				})
 
-        options.extra = {
-          ticket_id = ticket_id,
-          summary = os.capture("echo '" .. jira_api_output .. "' | jq '.fields.summary'"),
-          desc = test_desc,
-        }
-        zk.new(options)
-        -- end
-      end
-    end)
+				if #options.title > 0 then
+					local ticket_id = "PRO-" .. options.title
+					options.title = ticket_id
 
-    commands.add("ZkNewDefault", function(options)
-      options = options or {}
-      options = vim.tbl_extend("force", options, { title = vim.fn.input({ prompt = "Title: " }) })
-      if #options.title > 0 then
-        zk.new(options)
-      end
-    end)
+					local jira_api_output = os.capture(
+						'curl -X GET "https://$ATLASSIAN_URL/rest/api/2/issue/'
+							.. ticket_id
+							.. '" -H "Cookie: $JIRA_COOKIE"'
+					):gsub("'", "'\\''")
 
-    commands.add("ZkIssuesToday", function(options)
-      options = options or {}
-      options = vim.tbl_extend("force", options, { dir = "issues", modified = "today" })
-      zk.pick_notes(options)
-    end)
+					options.extra = {
+						ticket_id = ticket_id,
+						summary = os.capture("echo '" .. jira_api_output .. "' | jq '.fields.summary'"),
+						desc = test_desc,
+					}
+					zk.new(options)
+					-- end
+				end
+			end)
 
-    vim.api.nvim_create_user_command("ZkLastIssue", function()
-      local last_issue = os.capture("find $ZK_NOTEBOOK_DIR/issues -mtime 0 -type f | tail -1")
-      vim.cmd("edit " .. last_issue)
-    end, { desc = "Open last modified issue note" })
+			commands.add("ZkNewDefault", function(options)
+				options = options or {}
+				options = vim.tbl_extend("force", options, { title = vim.fn.input({ prompt = "Title: " }) })
+				if #options.title > 0 then
+					zk.new(options)
+				end
+			end)
 
-    zk.setup({})
-  end,
+			commands.add("ZkIssuesToday", function(options)
+				options = options or {}
+				options = vim.tbl_extend("force", options, { dir = "issues", modified = "today" })
+				zk.pick_notes(options)
+			end)
+
+			vim.api.nvim_create_user_command("ZkLastIssue", function()
+				local last_issue = os.capture("find $ZK_NOTEBOOK_DIR/issues -mtime 0 -type f | tail -1")
+				vim.cmd("edit " .. last_issue)
+			end, { desc = "Open last modified issue note" })
+
+			zk.setup({})
+		end,
+	},
 }
