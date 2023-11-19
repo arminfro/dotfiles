@@ -377,14 +377,12 @@ return {
 				{
 					"<leader>sl",
 					function()
+						require("telescope").load_extension("luasnip")
 						require("telescope").extensions.luasnip.luasnip()
 					end,
 					desc = "Snippets",
 				},
 			},
-			config = function()
-				require("telescope").load_extension("luasnip")
-			end,
 		},
 
 		{

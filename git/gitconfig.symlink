@@ -49,3 +49,5 @@
 
 [credential]
 	helper = /usr/libexec/git-core/git-credential-libsecret
+[blame]
+	ignoreRevsFile = .git-blame-ignore-revs

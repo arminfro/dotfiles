@@ -2,6 +2,14 @@
 
 return {
 
+	{
+		"rcarriga/nvim-notify",
+		opts = {
+			render = "compact",
+			top_down = false,
+		},
+	},
+
 	-- noicer ui
 	{
 		"folke/noice.nvim",
@@ -44,6 +52,15 @@ return {
         --   desc = "Search Noice Histroy",
         -- },
     },
+	},
+
+	{
+		"echasnovski/mini.indentscope",
+		opts = {
+			draw = {
+				animation = require("mini.indentscope").gen_animation.none(),
+			},
+		},
 	},
 
 	{
