@@ -24,28 +24,44 @@ days() {
 	done
 }
 
-export ZK_TICKET_ID="PRO-$1"
+export TICKET_ID="PRO-$1"
 
-JIRA_OUTPUT=$(curl -s -X GET "https://$ZK_JIRA_URL/rest/api/2/issue/$ZK_TICKET_ID" -H "Cookie: $ZK_JIRA_COOKIE")
+JIRA_OUTPUT=$(curl -s -X GET "https://$ZK_JIRA_URL/rest/api/2/issue/$TICKET_ID" -H "Cookie: $ZK_JIRA_COOKIE")
 
 TITLE=$(echo "$JIRA_OUTPUT" | jq -r '.fields.summary')
-TESTING=$(echo "$JIRA_OUTPUT" | jq -r '.fields.customfield_10111')
+TESTING=$(echo "$JIRA_OUTPUT" | jq -r '.fields.customfield_10111' | pandoc -f jira -t markdown)
 DESCRIPTION=$(echo "$JIRA_OUTPUT" | jq -r '.fields.description' | pandoc -f jira -t markdown)
 STORY_POINTS=$(echo "$JIRA_OUTPUT" | jq -r '.fields.customfield_10014')
 SPRINT=$(echo "$JIRA_OUTPUT" | jq -r '.fields.customfield_10010[0].name')
 FIX_VERSION=$(echo "$JIRA_OUTPUT" | jq -r '.fields.fixVersions[0].name')
 CATEGORY=$(echo "$JIRA_OUTPUT" | jq -r '.fields.components[0].name')
+BRANCH="$TICKET_ID"_$(slugify "$TITLE")
+DAYS=$(days "$STORY_POINTS")
 
-export ZK_TITLE="$TITLE"
-export ZK_TESTING="$TESTING"
-export ZK_DESCRIPTION="$DESCRIPTION"
-export ZK_POINTS="$STORY_POINTS"
-export ZK_SPRINT="$SPRINT"
-export ZK_FIX_VERSION="$FIX_VERSION"
-export ZK_CATEGORY="$CATEGORY"
+JSON_OUTPUT=$(jq -n \
+	--arg title "$TITLE" \
+	--arg ticket_id "$TICKET_ID" \
+	--arg testing "$TESTING" \
+	--arg description "$DESCRIPTION" \
+	--arg story_points "$STORY_POINTS" \
+	--arg sprint "$SPRINT" \
+	--arg fix_version "$FIX_VERSION" \
+	--arg category "$CATEGORY" \
+	--arg branch "$BRANCH" \
+	--arg days "$DAYS" \
+	'{ 
+    title: $title, 
+    ticket_id: $ticket_id, 
+    testing: $testing, 
+    description: $description, 
+    story_points: $story_points, 
+    sprint: $sprint, 
+    fix_version: $fix_version, 
+    category: $category,
+    branch: $branch,
+    days: $days 
+  }')
 
-export ZK_DIR="issues"
-export ZK_BRANCH="$ZK_TICKET_ID"_$(slugify "$ZK_TITLE")
-export ZK_DAYS=$(days "$ZK_POINTS")
+echo "$JSON_OUTPUT" >~/.jira-tickets/$TICKET_ID.json
 
-zk new --title "$ZK_BRANCH" "$ZK_DIR"
+echo "$HOME/.jira-tickets/$TICKET_ID.json"

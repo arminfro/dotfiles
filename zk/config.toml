@@ -36,13 +36,13 @@ author = ""
 paths = ["dailies"]
 [group.dailies.note]
 template = "daily.md"
-filename = "{{date now '%F'}}"
+filename = "{{format-date now '%F'}}"
 
-[group.issues]
-paths = ['issues']
+[group.tickets]
+paths = ['tickets']
 filename = "{{ title }}"
-[group.issues.note]
-template = "issue.md"
+[group.tickets.note]
+template = "ticket.md"
 
 [group.tasks]
 paths = ['tasks']
@@ -87,8 +87,8 @@ recents = "--sort created- --created-after 'last two weeks'"
 daily = 'zk new --no-input "$ZK_NOTEBOOK_DIR/dailies" $@'
 daily-create = 'zk daily --print-path'
 
-issue = 'zk new --no-input "$ZK_NOTEBOOK_DIR/issues" $@'
-issues-today = 'zk list --modified today "$ZK_NOTEBOOK_DIR/issues"'
+ticket = 'zk new --no-input "$ZK_NOTEBOOK_DIR/tickets" $@'
+tickets-today = 'zk list --modified today "$ZK_NOTEBOOK_DIR/tickets"'
 
 task = 'zk new --no-input "$ZK_NOTEBOOK_DIR/tasks" $@'
 
@@ -129,7 +129,7 @@ unlinked-mentions = "zk list --mentioned-by $1 --no-linked-by $1"
 # Show a random note.
 lucky = "zk list --quiet --format full --sort random --limit 1"
 
-# new-issue = "zk new --title \"$ZK_TITLE\" --extra 'description=\"$ZK_DESCRIPTION\",ticket_id=\"$ZK_TICKET_ID\",testing=\"$ZK_TESTING\"' \"$ZK_DIR\""
+# new-ticket = "zk new --title \"$ZK_TITLE\" --extra 'description=\"$ZK_DESCRIPTION\",ticket_id=\"$ZK_TICKET_ID\",testing=\"$ZK_TESTING\"' \"$ZK_DIR\""
 
 
 # LSP (EDITOR INTEGRATION)

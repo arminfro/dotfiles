@@ -24,7 +24,6 @@ return {
 				["<leader>gh"] = { name = "+hunks" },
 				["<leader>q"] = { name = "+quit/session" },
 				["<leader>s"] = { name = "+search" },
-				["<leader>n"] = { name = "+notes" },
 				["<leader>t"] = { name = "+tools" },
 				["<leader>tt"] = { name = "+terminal" },
 				["<leader>td"] = { name = "+docker" },
