@@ -10,6 +10,7 @@ pandoc_:
   - output: .pdf
   - toc: true
   - toc-depth: 6
+  - lua-filter: diagram-generator.lua
 header-includes:
   - |
     \usepackage[margins=raggedright]{floatrow}
@@ -80,12 +81,12 @@ git push --set-upstream origin feature/{{extra.branch}}
 
 ```bash
 az repos pr create \
+  --repository {{env.ZK_AZURE_PROJECT}} \
   --project {{env.ZK_AZURE_PROJECT}} \
   --auto-complete true \
   --source-branch feature/{{extra.branch}} \
   --target-branch develop \
-  --title "{{extra.ticket_id}} {{extra.title}}" \
-  --sqash true
+  --title "{{extra.ticket_id}} {{extra.title}}"
 ```
 
 ### [] wait for PR, set to 'Test'

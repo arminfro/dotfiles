@@ -1,0 +1,55 @@
+-- vi: ft=lua
+
+return {
+	{
+		"nvim-neotest/neotest",
+		optional = true,
+		dependencies = {
+			{
+				"nvim-neotest/neotest-jest",
+			},
+		},
+		opts = {
+			discovery = {
+				enabled = false,
+			},
+			adapters = {
+				["neotest-jest"] = {},
+			},
+		},
+	},
+
+	-- {
+	-- 	"mfussenegger/nvim-dap",
+	-- 	optional = true,
+	-- 	config = function()
+	-- 		local dap = require("dap")
+	-- 		dap.adapters.chrome = {
+	-- 			type = "executable",
+	-- 			command = "node",
+	-- 			args = {
+	-- 				os.getenv("HOME")
+	-- 					.. "/.local/share/nvim/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js",
+	-- 			},
+	-- 		}
+	--
+	-- 		local config = { -- change this to javascript if needed
+	-- 			{
+	-- 				type = "chrome",
+	-- 				request = "attach",
+	-- 				program = "${file}",
+	-- 				cwd = vim.fn.getcwd(),
+	-- 				sourceMaps = true,
+	-- 				protocol = "inspector",
+	-- 				port = 9222,
+	-- 				webRoot = "${workspaceFolder}",
+	-- 			},
+	-- 		}
+	--
+	-- 		dap.configurations.javascriptreact = config
+	-- 		dap.configurations.typescriptreact = config
+	-- 		dap.configurations.javascript = config
+	-- 		dap.configurations.typescript = config
+	-- 	end,
+	-- },
+}

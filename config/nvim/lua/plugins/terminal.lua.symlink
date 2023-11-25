@@ -1,81 +1,88 @@
 -- vi: ft=lua
 
 return {
-  "akinsho/nvim-toggleterm.lua",
-  config = function()
-    require("toggleterm").setup({
-      size = 10,
-      open_mapping = [[<c-\>]],
-      hide_numbers = true,
-      shade_filetypes = {},
-      shade_terminals = true,
-      shading_factor = 2,
-      start_in_insert = true,
-      insert_mappings = true,
-      persist_size = true,
-      direction = "float",
-      close_on_exit = true,
-      shell = vim.o.shell,
-      float_opts = {
-        border = "single",
-        winblend = 3,
-        highlights = {
-          border = "Normal",
-          background = "Normal",
-        },
-      },
-    })
-    local Terminal = require("toggleterm.terminal").Terminal
+	"akinsho/nvim-toggleterm.lua",
+	config = function()
+		require("toggleterm").setup({
+			size = 10,
+			open_mapping = [[<c-\>]],
+			hide_numbers = true,
+			shade_filetypes = {},
+			shade_terminals = true,
+			shading_factor = 2,
+			start_in_insert = true,
+			insert_mappings = true,
+			persist_size = true,
+			direction = "float",
+			close_on_exit = true,
+			shell = vim.o.shell,
+			float_opts = {
+				border = "single",
+				winblend = 3,
+				highlights = {
+					border = "Normal",
+					background = "Normal",
+				},
+			},
+		})
+		local Terminal = require("toggleterm.terminal").Terminal
 
-    local node = Terminal:new({ cmd = "node", hidden = true })
-    local htop = Terminal:new({ cmd = "htop", hidden = true })
-    local bottom = Terminal:new({ cmd = "btm", hidden = true })
-    local ts_node = Terminal:new({ cmd = "ts-node", hidden = true })
-    local ruby = Terminal:new({ cmd = "irb", hidden = true })
-    local lua = Terminal:new({ cmd = "rep.lua", hidden = true })
-    local python = Terminal:new({ cmd = "python", hidden = true })
+		local csharp = Terminal:new({
+			cmd = "csharprepl --framework Microsoft.AspNetCore.App -r /home/armin/Workspace/Everest/Build/Everest/Debug/Everest.dll",
+			hidden = true,
+		})
+		local node = Terminal:new({ cmd = "node", hidden = true })
+		local htop = Terminal:new({ cmd = "htop", hidden = true })
+		local bottom = Terminal:new({ cmd = "btm", hidden = true })
+		local ts_node = Terminal:new({ cmd = "ts-node", hidden = true })
+		local ruby = Terminal:new({ cmd = "irb", hidden = true })
+		local lua = Terminal:new({ cmd = "rep.lua", hidden = true })
+		local python = Terminal:new({ cmd = "python", hidden = true })
 
-    vim.keymap.set("n", "<leader>tth", function(...)
-      htop:toggle(...)
-    end, { desc = "Htop" })
-    vim.keymap.set("n", "<leader>ttb", function(...)
-      bottom:toggle(...)
-    end, { desc = "Bottom" })
-    vim.keymap.set("n", "<leader>ttt", function(...)
-      ts_node:toggle(...)
-    end, { desc = "TS node repl" })
-    vim.keymap.set("n", "<leader>ttr", function(...)
-      ruby:toggle(...)
-    end, { desc = "Ruby repl" })
-    vim.keymap.set("n", "<leader>ttl", function(...)
-      lua:toggle(...)
-    end, { desc = "Lua repl" })
-    vim.keymap.set("n", "<leader>ttn", function(...)
-      node:toggle(...)
-    end, { desc = "Node repl" })
-    vim.keymap.set("n", "<leader>ttp", function(...)
-      python:toggle(...)
-    end, { desc = "Python repl" })
+		vim.keymap.set("n", "<leader>tth", function(...)
+			htop:toggle(...)
+		end, { desc = "Htop" })
+		vim.keymap.set("n", "<leader>ttb", function(...)
+			bottom:toggle(...)
+		end, { desc = "Bottom" })
+		vim.keymap.set("n", "<leader>ttt", function(...)
+			ts_node:toggle(...)
+		end, { desc = "TS node repl" })
+		vim.keymap.set("n", "<leader>ttr", function(...)
+			ruby:toggle(...)
+		end, { desc = "Ruby repl" })
+		vim.keymap.set("n", "<leader>ttl", function(...)
+			lua:toggle(...)
+		end, { desc = "Lua repl" })
+		vim.keymap.set("n", "<leader>ttn", function(...)
+			node:toggle(...)
+		end, { desc = "Node repl" })
+		vim.keymap.set("n", "<leader>ttc", function(...)
+			csharp:toggle(...)
+		end, { desc = "C# repl" })
+		vim.keymap.set("n", "<leader>ttp", function(...)
+			python:toggle(...)
+		end, { desc = "Python repl" })
 
-    return {
-      node = function(...)
-        node:toggle(...)
-      end,
-      ts_node = function(...)
-        ts_node:toggle(...)
-      end,
-      htop = function(...)
-        htop:toggle(...)
-      end,
-      ruby = function(...)
-        ruby:toggle(...)
-      end,
-      lua = function(...)
-        lua:toggle(...)
-      end,
-      python = function(...)
-        python:toggle(...)
-      end,
-    }
-  end,
+		return {
+			node = function(...)
+				node:toggle(...)
+			end,
+			ts_node = function(...)
+				ts_node:toggle(...)
+			end,
+			htop = function(...)
+				htop:toggle(...)
+			end,
+			ruby = function(...)
+				ruby:toggle(...)
+			end,
+			lua = function(...)
+				lua:toggle(...)
+			end,
+			python = function(...)
+				python:toggle(...)
+			end,
+		}
+	end,
 }

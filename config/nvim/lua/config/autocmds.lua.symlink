@@ -22,6 +22,7 @@ vim.api.nvim_create_autocmd({ "FocusLost" }, {
 vim.api.nvim_create_autocmd("FileType", {
 	group = augroup("quit_with_q"),
 	pattern = {
+		"dap-float",
 		"man",
 		"git",
 	},

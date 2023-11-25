@@ -11,6 +11,7 @@ pandoc_:
   - output: .pdf
   - toc: true
   - toc-depth: 6
+  - lua-filter: diagram-generator.lua
 header-includes:
   - |
     \usepackage[margins=raggedright]{floatrow}

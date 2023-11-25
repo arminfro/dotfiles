@@ -85,6 +85,12 @@ return {
 			-- 	key = "n",
 			-- })
 			table.insert(opts.config.center, 8, {
+				action = "Telescope git_status",
+				desc = "Git Modified",
+				icon = " ",
+				key = "k",
+			})
+			table.insert(opts.config.center, 9, {
 				action = "checkhealth",
 				desc = "Check Health",
 				icon = "✔ ",
@@ -118,6 +124,14 @@ return {
 				"<leader>su",
 				":UrlView buffer<CR>",
 				desc = "Urls in buffer",
+			},
+		},
+	},
+	{
+		"folke/edgy.nvim",
+		opts = {
+			animate = {
+				enabled = false,
 			},
 		},
 	},
