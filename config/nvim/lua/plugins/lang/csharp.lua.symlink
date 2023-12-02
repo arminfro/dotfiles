@@ -2,6 +2,11 @@
 
 local home_dir = vim.env["HOME"]
 
+local default_path = {}
+default_path.project = home_dir .. "/Workspace/Everest/"
+default_path.proj_file_path = default_path.project .. "api/src/Everest/"
+default_path.dll_file_path = default_path.project .. "Build/Everest/Debug/Everest.dll"
+
 return {
 
 	-- add c_sharp and dot to treesitter
@@ -45,7 +50,7 @@ return {
 			)
 
 			vim.g.dotnet_build_project = function()
-				local default_path = "/home/" .. home_dir .. "/Workspace/Everest/api/src/Everest/"
+				local default_path = default_path.proj_file_path
 				if vim.g["dotnet_last_proj_path"] ~= nil then
 					default_path = vim.g["dotnet_last_proj_path"]
 				end
@@ -64,11 +69,7 @@ return {
 
 			vim.g.dotnet_get_dll_path = function()
 				local request = function()
-					return vim.fn.input(
-						"Path to dll",
-						"/home/" .. home_dir .. "/Workspace/Everest/Build/Everest/Debug/Everest.dll",
-						"file"
-					)
+					return vim.fn.input("Path to dll", default_path.dll_file_path, "file")
 				end
 
 				if vim.g["dotnet_last_dll_path"] == nil then
@@ -103,8 +104,7 @@ return {
 						ASPNETCORE_ENVIRONMENT = "Development",
 						ASPNETCORE_URLS = "http://localhost:5001",
 					},
-					cwd = "/home/" .. home_dir .. "/Workspace/Everest/api/src/Everest/",
-					-- cwd = "/home/" .. home_dir .. "/Workspace/Everest/api/test/Everest.IntegrationTests/",
+					cwd = default_path.proj_file_path,
 				},
 			}
 
@@ -113,7 +113,7 @@ return {
 			dap.configurations.fsharp = config
 			local netcoredbg_config = {
 				type = "executable",
-				command = "/home/" .. home_dir .. "/.local/share/nvim/mason/bin/netcoredbg",
+				command = home_dir .. "/.local/share/nvim/mason/bin/netcoredbg",
 				args = { "--interpreter=vscode" },
 			}
 			dap.adapters.coreclr = netcoredbg_config
@@ -185,19 +185,10 @@ return {
 				},
 			},
 			setup = {
-				csharp_ls = function(_, opts)
-					-- require("lazyvim.util").lsp.on_attach(function(client, buffer)
-					--   if client.name == "csharp_ls" then
-					--     vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = buffer, desc = "Goto definition" })
-					--   end
-					-- end)
-				end,
+				csharp_ls = function(_, opts) end,
 				-- ["*"] = function(server, opts)
 				--   require("lazyvim.util").lsp.on_attach(function(client, buffer)
 				--     if client.name ~= "csharp_ls" then
-				--       vim.keymap.set("n", "gd", function()
-				--         require("telescope.builtin").lsp_definitions({ reuse_win = true })
-				--       end, { buffer = buffer, desc = "Goto definition" })
 				--     end
 				--   end)
 				-- end,

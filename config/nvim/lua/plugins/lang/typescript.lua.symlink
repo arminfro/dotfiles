@@ -19,6 +19,19 @@ return {
 		},
 	},
 
+	{
+		"dmmulroy/tsc.nvim",
+		opts = {},
+		cmd = { "TSC" },
+		keys = {
+			{
+				"<leader>cp",
+				":TSC<CR>",
+				desc = "TS Project check",
+			},
+		},
+	},
+
 	-- {
 	-- 	"mfussenegger/nvim-dap",
 	-- 	optional = true,

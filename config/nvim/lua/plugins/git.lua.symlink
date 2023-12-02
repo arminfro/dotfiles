@@ -80,7 +80,11 @@ return {
 				"<leader>gc",
 				":Git commit<CR>",
 				desc = "Git Commit",
-			},
+			},{
+				"<leader>gB",
+				":Git blame<CR>",
+				desc = "Git Blame",
+			}
 		},
 	},
 

@@ -117,6 +117,7 @@ if ! zgenom saved; then
   zgenom load Tarrasch/zsh-autoenv; AUTOENV_FILE_ENTER=.env
 
   # commands
+  zgenom load chrisgrieser/zsh-magic-dashboard
   zgenom load knu/zsh-manydots-magic
   zgenom load skywind3000/z.lua
   zgenom load arzzen/calc.plugin.zsh
