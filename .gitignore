@@ -2,3 +2,5 @@ git/gitconfig.local.symlink
 Session.vim
 .luarc.json
 tags*
+
+bin/temp/*
