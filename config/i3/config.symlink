@@ -228,7 +228,7 @@ bindsym $mod+m exec --no-startup-id gnome-boxes
 
 bindsym $con+$alt+$mod+s exec --no-startup-id systemctl poweroff
 bindsym $con+$alt+$mod+r exec --no-startup-id systemctl reboot
-bindsym $con+$alt+$mod+l exec --no-startup-id i3lock -i $WALLPAPER
+bindsym $con+$alt+$mod+l exec --no-startup-id dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock
 
 bindsym $con+$alt+y exec --no-startup-id $scripts_dir/keyboard-layout --de=true
 bindsym $con+$alt+u exec --no-startup-id $scripts_dir/keyboard-layout --us=true
