@@ -204,11 +204,14 @@ applications:
     #     mode: rewrite
     #     hook: ""
     #     files:
-    # kitty:
-    #     enabled: false
-    #     mode: rewrite
-    #     hook: ""
-    #     files:
+    kitty:
+        enabled: false
+        mode: rewrite
+        hook: ""
+        files:
+            default:
+                path: ~/.dotfiles/config/kitty/current-theme.conf.symlink
+                mode: rewrite
     # konsole:
     #     enabled: false
     #     mode: rewrite

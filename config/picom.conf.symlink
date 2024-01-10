@@ -47,7 +47,7 @@ blur-background-exclude = [
 # #  "class_g = 'URxvt'",
 # #  "class_g = 'XTerm'",
 # #  "class_g = 'kitty'",
-# #  "class_g = 'Alacritty'",
+# #  "class_g = 'kitty'",
 #   "class_g = 'Polybar'",
 #   "class_g = 'i3'",
 #   "class_g = 'i3bar'",
@@ -135,7 +135,7 @@ inactive-opacity-override = false;
 # inactive windows show
 inactive-dim = 0.03;
 opacity-rule = [
-    # "85:class_g = 'Alacritty'",
+    # "85:class_g = 'kitty'",
     # "85:class_g = 'kitty'",
     "100:class_g = 'thunderbird'",
     "90:class_g = 'jetbrains-webstorm'",

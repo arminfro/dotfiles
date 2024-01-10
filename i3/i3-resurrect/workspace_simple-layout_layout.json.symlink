@@ -41,8 +41,8 @@
       "workspace_layout": "default",
       "swallows": [
         {
-          "class": "^Alacritty$",
-          "instance": "^Alacritty$"
+          "class": "^kitty$",
+          "instance": "^kitty$"
         }
       ]
     },
@@ -68,8 +68,8 @@
       "workspace_layout": "default",
       "swallows": [
         {
-          "class": "^Alacritty$",
-          "instance": "^Alacritty$"
+          "class": "^kitty$",
+          "instance": "^kitty$"
         }
       ]
     }

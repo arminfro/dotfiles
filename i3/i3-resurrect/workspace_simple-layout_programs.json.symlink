@@ -1,13 +1,13 @@
 [
   {
     "command": [
-      "/usr/bin/alacritty"
+      "/usr/bin/kitty"
     ],
     "working_directory": "/home/user/Workspace"
   },
   {
     "command": [
-      "/usr/bin/alacritty"
+      "/usr/bin/kitty"
     ],
     "working_directory": "/home/user/Workspace"
   }

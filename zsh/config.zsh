@@ -138,3 +138,11 @@ function zvm_after_lazy_keybindings() {
         eval "zvm_bindkey visual '^g${o[1]}' fzf-git-$o-widget"
     done
 }
+
+# Integration of Kitty's `shell_integration` config option
+if test -n "$KITTY_INSTALLATION_DIR"; then
+    export KITTY_SHELL_INTEGRATION="enabled"
+    autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+    kitty-integration
+    unfunction kitty-integration
+fi
