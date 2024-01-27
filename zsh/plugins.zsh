@@ -53,7 +53,6 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/isodate
   zgenom load zpm-zsh/ls
   if_exist systemctl && zgenom ohmyzsh plugins/systemd
-  if_exist bundler && zgenom ohmyzsh plugins/bundler
   if_exist deno && zgenom ohmyzsh zplug plugins/deno
   if_exist firewall-cmd && zgenom ohmyzsh plugins/firewalld
   if_exist fd && zgenom ohmyzsh plugins/fd

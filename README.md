@@ -4,7 +4,7 @@ It adds support for a `config` folder.
 This is a 'magic' folder name (you can add more to `folder_corresponding_structure`) to preserve deeper file structures.
 For example, you could just add a `xdg` folder into `config`.
 
-It also adds support to install packages as well, by adding files called `system_packages`, `node_packages`, `python_packages` or `ruby_packages`.
+It also adds support to install packages as well, by adding files called `system_packages`, `node_packages` or `python_packages`.
 
 Each corresponding installer will get called with a reduced list of packages.
 For now the call for system packages is hardcoded to `sudo dnf install -y ...` for usage on fedora systems.

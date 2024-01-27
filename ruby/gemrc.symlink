@@ -1,8 +1,0 @@
----
-:benchmark: false
-:update_sources: true
-:verbose: true
-backtrace: true
-gem: --no-document
-install: --user-install
-update: --user-install
