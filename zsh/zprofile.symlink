@@ -33,12 +33,3 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 # configure pip to always use the --user flag
 export PIP_USER=1
-
-if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
-  exec startx
-fi
-
-echo "SSH_AGENT_PID=$SSH_AGENT_PID; export SSH_AGENT_PID;" >~/.agent_ssh
-echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK; export SSH_AUTH_SOCK;" >>~/.agent_ssh
-
-[[ -f ~/.zshrc ]] && . ~/.zshrc

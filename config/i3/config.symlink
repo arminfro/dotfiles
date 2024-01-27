@@ -247,4 +247,14 @@ bindsym Print exec --no-startup-id flameshot gui
 
 # exec --no-startup-id sleep 1 && xrandr --output $mon2 --primary --right-of $mon1 --mode 2560x1440
 
-exec --no-startup-id $scripts_dir/autostart
+exec --no-startup-id gnome-panel
+exec --no-startup-id unclutter -idle 2
+exec --no-startup-id gpaste-client start
+exec --no-startup-id sh -c 'echo "$HOME" >"$HOME"/.last_cd'
+exec --no-startup-id ~/.local/bin/i3-resurrect restore -w 1 && sleep 1 && ~/.local/bin/i3-resurrect restore -w 2
+exec --no-startup-id nm-applet
+exec --no-startup-id picom -b --transparent-clipping
+exec --no-startup-id $scripts_dir/set-wallpaper
+exec --no-startup-id sh -c 'mkdir -p /tmp/zsh-1000/completions' 
+
+exec --no-startup-id sleep 1 && xrandr --output $mon2 --primary --right-of $mon1 --mode 2560x1440

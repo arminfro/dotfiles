@@ -99,6 +99,8 @@ return {
 		"petertriho/cmp-git",
 		{
 			"uga-rosa/cmp-dictionary",
+			-- todo, migrate to v3
+			tag = "v2.2.0",
 			config = function()
 				local dict = require("cmp_dictionary")
 				dict.setup({

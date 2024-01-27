@@ -38,7 +38,7 @@ return {
 		"nvim-tree/nvim-web-devicons",
 		"meuter/lualine-so-fancy.nvim",
 		"sherlock5512/lualine-spell-status",
-		-- "chrisgrieser/nvim-dr-lsp",
+		"chrisgrieser/nvim-dr-lsp",
 	},
 	opts = function()
 		local icons = require("lazyvim.config").icons

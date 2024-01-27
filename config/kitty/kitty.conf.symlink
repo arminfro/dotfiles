@@ -2350,4 +2350,4 @@ include current-theme.conf
 # END_KITTY_THEME
 
 map Alt+Insert kitten $DOTFILES/config/kitty/kitty-grab/grab.py
-map Ctrl+f      launch --allow-remote-control kitty +kitten $DOTFILES/config/kitty/kitty-search/search.py @active-kitty-window-id
+map Ctrl+Shift+f      launch --allow-remote-control kitty +kitten $DOTFILES/config/kitty/kitty-search/search.py @active-kitty-window-id
