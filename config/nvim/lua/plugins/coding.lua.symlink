@@ -184,4 +184,43 @@ return {
 			})
 		end,
 	},
+
+	{
+    -- see `:h vim-arsync-configuration` for usage
+		"kenn7/vim-arsync",
+		dependencies = {
+			{
+				"prabirshrestha/async.vim",
+				{
+					"folke/which-key.nvim",
+					optional = true,
+					opts = {
+						defaults = {
+							["<leader>ta"] = { name = "+async rsync" },
+						},
+					},
+				},
+			},
+		},
+		keys = {
+			{
+				"<leader>tas",
+				":ARshowConf<CR>",
+				desc = "Show Configuration",
+				mode = "n",
+			},
+			{
+				"<leader>tau",
+				":ARsyncUp<CR>",
+				desc = "upload local to remote",
+				mode = "n",
+			},
+			{
+				"<leader>tad",
+				":ARsyncDown<CR>",
+				desc = "download remote to local",
+				mode = "n",
+			},
+		},
+	},
 }
