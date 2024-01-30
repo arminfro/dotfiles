@@ -613,6 +613,32 @@ return {
 			},
 		},
 
+		{
+			"princejoogie/dir-telescope.nvim",
+			-- telescope.nvim is a required dependency
+			config = function()
+				require("dir-telescope").setup({
+					-- these are the default options set
+					hidden = true,
+					no_ignore = false,
+					show_preview = true,
+				})
+				require("telescope").load_extension("dir")
+			end,
+			keys = {
+				{
+					"<leader>fz",
+					"<cmd>Telescope dir live_grep<CR>",
+					desc = "zoom for grep",
+				},
+				{
+					"<leader>fZ",
+					"<cmd>Telescope dir find_files<CR>",
+					desc = "zoom for file",
+				},
+			},
+		},
+
 		-- "olacin/telescope-cc.nvim", -- conventional_commits
 		"folke/trouble.nvim",
 	},
