@@ -1,96 +1,94 @@
 -- vi: ft=lua
 
 return {
-  {
-    -- markdown helper
-    -- <C-k> add link to visually selected text
-    -- <C-b> toggle visually selected text bold
-    -- <C-i> toggle visually selected text italic
-    -- <C-c> toggle visually selected text inline code
-    "antonk52/markdowny.nvim",
-    config = function()
-      require("markdowny").setup({ filetypes = { "markdown", "txt" } })
-    end,
-  },
+	{
+		-- markdown helper
+		-- <C-k> add link to visually selected text
+		-- <C-b> toggle visually selected text bold
+		-- <C-i> toggle visually selected text italic
+		-- <C-c> toggle visually selected text inline code
+		"antonk52/markdowny.nvim",
+		config = function()
+			require("markdowny").setup({ filetypes = { "markdown", "txt" } })
+		end,
+	},
 
-  -- convert markdown using pandoc
-  {
-    "jghauser/auto-pandoc.nvim",
-    dependencies = "nvim-lua/plenary.nvim",
-    keys = {
-      {
-        "<leader>rm",
-        function()
-          require("auto-pandoc").run_pandoc()
-        end,
-        desc = "Compile Markdown with Pandoc",
-      },
-    },
-    event = "BufRead",
-    config = function()
-      require("auto-pandoc")
-    end,
-  },
+	-- convert markdown using pandoc
+	{
+		"jghauser/auto-pandoc.nvim",
+		dependencies = "nvim-lua/plenary.nvim",
+		keys = {
+			{
+				"<leader>Rm",
+				function()
+					require("auto-pandoc").run_pandoc()
+				end,
+				desc = "Compile Markdown with Pandoc",
+			},
+		},
+		event = "BufRead",
+		config = function()
+			require("auto-pandoc")
+		end,
+	},
 
-  -- paste image from clipboard in markdown
-  {
-    -- "ekickx/clipboard-image.nvim",
-    "postfen/clipboard-image.nvim", -- use fork till PR is merged
-    event = "BufRead",
-    opts = {
-      default = {
-        img_dir = os.getenv("ZK_NOTEBOOK_DIR") .. "/media/imgs",
-        img_dir_txt = os.getenv("ZK_NOTEBOOK_DIR") .. "/media/imgs",
-        img_name = function()
-          return os.date("%Y-%m-%d-%H-%M-%S")
-        end,
-      },
-    },
-  },
+	-- paste image from clipboard in markdown
+	{
+		-- "ekickx/clipboard-image.nvim",
+		"postfen/clipboard-image.nvim", -- use fork till PR is merged
+		event = "BufRead",
+		opts = {
+			default = {
+				-- img_dir = os.getenv("ZK_NOTEBOOK_DIR") .. "/media/imgs",
+				-- img_dir_txt = os.getenv("ZK_NOTEBOOK_DIR") .. "/media/imgs",
+				-- img_name = function()
+				-- 	return os.date("%Y-%m-%d-%H-%M-%S")
+				-- end,
+			},
+		},
+	},
 
-  -- markdown in vim float window rendering
-  {
-    "ellisonleao/glow.nvim",
-    ft = { "markdown", "txt" },
-    cmd = "Glow",
-    event = "BufRead",
-    config = true,
-    keys = {
-      { "<leader>ttg", "<cmd>Glow<CR>", desc = "Glow Markdown render" },
-    },
-  },
+	-- markdown in vim float window rendering
+	{
+		"ellisonleao/glow.nvim",
+		ft = { "markdown", "txt" },
+		cmd = "Glow",
+		event = "BufRead",
+		config = true,
+		keys = {
+			{ "<leader>ttg", "<cmd>Glow<CR>", desc = "Glow Markdown render" },
+		},
+	},
 
-  -- markdown in browser rendering
+	{
+		"richardbizik/nvim-toc",
+		ft = { "markdown", "txt" },
+		event = "VeryLazy",
+		opts = {},
+		keys = {
+			{
+				"<leader>Rt",
+				":TOC<CR>",
+				desc = "Generate TOC",
+			},
+		},
+	},
 
-  {
-    "richardbizik/nvim-toc",
-    ft = { "markdown", "txt" },
-    event = "VeryLazy",
-    opts = {},
-    keys = {
-      {
-        "<leader>rt",
-        ":TOC<CR>",
-        desc = "Generate TOC",
-      },
-    },
-  },
-
-  {
-    "jubnzv/mdeval.nvim",
-    ft = { "markdown" },
-    config = function()
-      vim.g.markdown_fenced_languages = { "bash", "sh" }
-      require("mdeval").setup({
-        eval_options = {}, -- temp, errors if not passed
-      })
-    end,
-    keys = {
-      {
-        "<leader>re",
-        "<cmd>lua require 'mdeval'.eval_code_block()<CR>",
-        desc = "Evaluate Codeblock in md",
-      },
-    },
-  },
+	{
+		"jubnzv/mdeval.nvim",
+		ft = { "markdown" },
+		config = function()
+			vim.g.markdown_fenced_languages = { "bash", "sh" }
+			require("mdeval").setup({
+				eval_options = {}, -- temp, errors if not passed
+			})
+		end,
+		keys = {
+			{
+				"<leader>Re",
+				"<cmd>lua require 'mdeval'.eval_code_block()<CR>",
+				desc = "Evaluate Codeblock in md",
+			},
+		},
+	},
 }

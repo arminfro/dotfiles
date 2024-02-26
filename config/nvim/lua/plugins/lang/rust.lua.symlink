@@ -111,8 +111,8 @@ return {
 					keys = {
 						{ "<localleader>h", "<cmd>RustHoverActions<cr>", desc = "Hover Actions (Rust)" },
 						{ "<localleader>a", "<cmd>RustCodeAction<cr>", desc = "Code Action (Rust)" },
-						{ "<leader>rR", "<cmd>RustRunnables<cr>", desc = "Run Runnables (Rust)" },
-						{ "<leader>rD", "<cmd>RustDebuggables<cr>", desc = "Run Debuggables (Rust)" },
+						{ "<leader>RR", "<cmd>RustRunnables<cr>", desc = "Run Runnables (Rust)" },
+						{ "<leader>RD", "<cmd>RustDebuggables<cr>", desc = "Run Debuggables (Rust)" },
 					},
 					settings = {
 						["rust-analyzer"] = {

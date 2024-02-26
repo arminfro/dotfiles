@@ -28,7 +28,8 @@ return {
 				["<leader>tt"] = { name = "+terminal" },
 				["<leader>td"] = { name = "+docker" },
 				["<leader>u"] = { name = "+ui" },
-				["<leader>r"] = { name = "+run" },
+				["<leader>r"] = { name = "+refactor" },
+				["<leader>R"] = { name = "+run" },
 				["<leader>w"] = { name = "+windows" },
 				["<leader>x"] = { name = "+diagnostics/quickfix" },
 				["<leader>xn"] = { name = "+noice" },
@@ -227,7 +228,7 @@ return {
 		"stevearc/overseer.nvim",
 		keys = {
 			{
-				"<leader>rr",
+				"<leader>Rr",
 				"<CMD>OverseerRun<CR>",
 				desc = "Run Overseer",
 			},
@@ -336,4 +337,31 @@ return {
 
 	-- makes some plugins dot-repeatable like leap
 	{ "tpope/vim-repeat", event = "VeryLazy" },
+
+	{
+		"ThePrimeagen/refactoring.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = function()
+			require("refactoring").setup()
+		end,
+		keys = {
+			{ "<leader>re", "<cmd>Refactor extract<CR>", desc = "Extract", mode = { "n", "v" } },
+			{ "<leader>rf", "<cmd>Refactor extract_to_file<CR>", desc = "extract to file", mode = { "n", "v" } },
+			{ "<leader>rv", "<cmd>Refactor extract_var<CR>", desc = "extract var", mode = { "n", "v" } },
+			{ "<leader>rb", "<cmd>Refactor extract_block<CR>", desc = "extract block", mode = { "n", "v" } },
+			{ "<leader>r", "<cmd>Refactor refactor_names<CR>", desc = "refactor names", mode = { "n", "v" } },
+			{ "<leader>ri", "<cmd>Refactor inline_var<CR>", desc = "inline var", mode = { "n", "v" } },
+			{ "<leader>ru", "<cmd>Refactor inline_func<CR>", desc = "inline func", mode = { "n", "v" } },
+			{
+				"<leader>rr",
+				function()
+					require("refactoring").select_refactor()
+				end,
+				desc = "Select refactor", mode = { "n", "v" }
+			},
+		},
+	},
 }

@@ -2,27 +2,26 @@
 
 return {
 
-  {
-    "lervag/vimtex",
-    lazy = false, -- lazy-loading will disable inverse search
-    keys = {
-      { "<leader>rl", "<cmd>VimtexCompile<CR>", desc = "compile Latex" },
-    },
-    config = function()
-      vim.g.vimtex_compiler_latexmk = {
-        build_dir = ".out",
-        options = {
-          "-shell-escape",
-          "-verbose",
-          "-file-line-error",
-          "-interaction=nonstopmode",
-          "-synctex=1",
-        },
-      }
-      vim.g.vimtex_view_method = "zathura"
-      -- vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
-      -- vim.g.vimtex_quickfix_method = vim.fn.executable("pplatex") == 1 and "pplatex" or "latexlog"
-    end,
-  },
-
+	{
+		"lervag/vimtex",
+		lazy = false, -- lazy-loading will disable inverse search
+		keys = {
+			{ "<leader>Rl", "<cmd>VimtexCompile<CR>", desc = "compile Latex" },
+		},
+		config = function()
+			vim.g.vimtex_compiler_latexmk = {
+				build_dir = ".out",
+				options = {
+					"-shell-escape",
+					"-verbose",
+					"-file-line-error",
+					"-interaction=nonstopmode",
+					"-synctex=1",
+				},
+			}
+			vim.g.vimtex_view_method = "zathura"
+			-- vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
+			-- vim.g.vimtex_quickfix_method = vim.fn.executable("pplatex") == 1 and "pplatex" or "latexlog"
+		end,
+	},
 }
