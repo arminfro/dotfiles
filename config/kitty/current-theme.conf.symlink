@@ -2,7 +2,7 @@
 
 # Base16 Google Dark - kitty color config
 # Scheme by Seth Wright (http://sethawright.com)
-background #1d1f21
+background #282a36
 foreground #c5c8c6
 selection_background #c5c8c6
 selection_foreground #1d1f21

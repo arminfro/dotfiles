@@ -284,7 +284,7 @@ cursor_blink_interval 0
 
 #: Scrollback {{{
 
-# scrollback_lines 2000
+scrollback_lines 12000
 
 #: Number of lines of history to keep in memory for scrolling back.
 #: Memory is allocated on demand. Negative numbers are (effectively)
@@ -2350,4 +2350,4 @@ include current-theme.conf
 # END_KITTY_THEME
 
 map Alt+Insert kitten $DOTFILES/config/kitty/kitty-grab/grab.py
-map Ctrl+Shift+f      launch --allow-remote-control kitty +kitten $DOTFILES/config/kitty/kitty-search/search.py @active-kitty-window-id
+map Ctrl+Alt+f      launch --allow-remote-control kitty +kitten $DOTFILES/config/kitty/kitty-search/search.py @active-kitty-window-id

@@ -25,6 +25,8 @@ vim.api.nvim_create_autocmd("FileType", {
 		"dap-float",
 		"man",
 		"git",
+		"fugitiveblame",
+		"dapui_console",
 	},
 	callback = function(event)
 		vim.bo[event.buf].buflisted = false

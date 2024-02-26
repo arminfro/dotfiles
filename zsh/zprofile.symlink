@@ -4,7 +4,6 @@ export TERMINAL=kitty
 export EDITOR="nvim"
 export SUDO_EDITOR=nvim
 export VISUAL=nvim
-# export PAGER=nvimpager # && alias less=$PAGER
 
 export FILE_MANAGER=nemo
 export PASSWORD_MANAGER=keepassxc
