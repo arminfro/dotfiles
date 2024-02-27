@@ -11,7 +11,12 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 require("lazy").setup({
 	spec = {
 		-- add LazyVim and import its plugins
-		{ "LazyVim", import = "lazyvim.plugins", url = "https://github.com/arminfro/LazyVim" },
+		{
+			"LazyVim",
+			import = "lazyvim.plugins",
+			url = "https://github.com/arminfro/LazyVim",
+			commit = "2d2aea7f7124022e4932ef56a98127b3df19cac4",
+		},
 		-- { "LazyVim", import = "lazyvim.plugins", dir = "/home/armin/Workspace/lua/LazyVim" },
 		{ import = "lazyvim.plugins.extras.coding.yanky" },
 		{ import = "lazyvim.plugins.extras.dap.core" },
