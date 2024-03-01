@@ -30,5 +30,8 @@ export WALLPAPER=~/Pictures/.wallpaper.png
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# for pandoc diagram lua filters
+export PLANTUML=/usr/share/java/plantuml.jar
+
 # configure pip to always use the --user flag
 export PIP_USER=1

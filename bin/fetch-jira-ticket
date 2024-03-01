@@ -1,9 +1,7 @@
 #!/bin/bash
 #
 slugify() {
-	local string="${1// /_}"            # Replace spaces with underscores
-	string="${string//[^[:alnum:]_-]/}" # Remove non-alphanumeric characters except dash and underscore
-	echo "$string"
+	echo "$1" | sed -E 's/ä/ae/g; s/ö/oe/g; s/ü/ue/g; s/[^a-zA-Z0-9]+/-/g' | tr A-Z a-z
 }
 
 days() {

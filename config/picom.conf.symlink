@@ -127,7 +127,7 @@ shadow-exclude = [
 shadow-ignore-shaped = true;
 
 # Opacity
-active-opacity = 0.93;
+active-opacity = 0.95;
 inactive-opacity = 0.75;
 frame-opacity = 1;
 inactive-opacity-override = false;

@@ -27,16 +27,13 @@ return {
 		end,
 	},
 
-  {
-    "arkaragian/Solution.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = function()
-      require("solution").setup()
-    end,
-  },
+	{
+		"arkaragian/Solution.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+	},
 
 	{
 		"mfussenegger/nvim-dap",
