@@ -22,7 +22,7 @@
   ui = true
 
 [core]
-  excludesfile = /home/armin/.gitignore
+  excludesfile = /home/user/.gitignore
   editor = nvim
 
 [apply]

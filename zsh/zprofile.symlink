@@ -33,5 +33,5 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # for pandoc diagram lua filters
 export PLANTUML=/usr/share/java/plantuml.jar
 
-# configure pip to always use the --user flag
-export PIP_USER=1
+# configure pip to always use the --user flag. Disabled since it causes troubles with mason.nvim package installation
+# export PIP_USER=1

@@ -28,9 +28,20 @@ return {
 	},
 
 	{
+		"williamboman/mason.nvim",
+		optional = true,
+		opts = function(_, opts)
+			if type(opts.ensure_installed) == "table" then
+				vim.list_extend(opts.ensure_installed, { "chrome-debug-adapter", "node-debug2-adapter" })
+			end
+		end,
+	},
+
+	{
 		-- "MunifTanjim/nui.nvim",
 		"mfussenegger/nvim-dap",
 		dependencies = {
+			"hrsh7th/nvim-cmp",
 			"rcarriga/cmp-dap",
 			{
 				"jay-babu/mason-nvim-dap.nvim",

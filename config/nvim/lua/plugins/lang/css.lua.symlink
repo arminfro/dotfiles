@@ -1,0 +1,21 @@
+-- vi: ft=lua
+
+return {
+	{
+		"nvimtools/none-ls.nvim",
+		opts = function(_, opts)
+			table.insert(opts.sources, require("null-ls").builtins.diagnostics.stylint)
+			table.insert(opts.sources, require("null-ls").builtins.formatting.stylelint)
+		end,
+	},
+    {
+    "williamboman/mason.nvim",
+    optional = true,
+    opts = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        vim.list_extend(opts.ensure_installed, { "css-lsp", "cssmodules-language-server" })
+      end
+    end,
+  },
+
+}

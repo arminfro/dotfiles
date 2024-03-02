@@ -55,6 +55,16 @@ block = "focused_window"
 # interval = 2
 # format = "{running}/{total}"
 
+# get api key and city_id
+# [[block]]
+# block = "weather"
+# format = " $icon $weather in $location $temp "
+# [block.service]
+# name = "openweathermap"
+# api_key = ""
+# city_id = ""
+# units = "metric"
+
 # [[block]]
 # block = "xrandr"
 # format = " $icon $brightness $resolution "

@@ -1,19 +1,19 @@
 [
   {
     "command": ["/usr/lib64/firefox/firefox"],
-    "working_directory": "/home/armin"
+    "working_directory": "/home/user"
   },
   {
     "command": ["/usr/lib64/thunderbird/thunderbird"],
-    "working_directory": "/home/armin"
+    "working_directory": "/home/user"
   },
   {
     "command": ["/usr/bin/gnome-control-center"],
-    "working_directory": "/home/armin"
+    "working_directory": "/home/user"
   },
   {
     "command": ["keepassxc"],
-    "working_directory": "/home/armin"
+    "working_directory": "/home/user"
   },
   {
     "command": [
@@ -21,6 +21,6 @@
       "--mode=updates", 
       "--autoupdate"
     ],
-    "working_directory": "/home/armin"
+    "working_directory": "/home/user"
   }
 ]

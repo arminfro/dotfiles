@@ -1,6 +1,45 @@
 -- vi: ft=lua
 
 return {
+
+	{
+		"nvimtools/none-ls.nvim",
+		dependencies = {
+			{
+				"williamboman/mason.nvim",
+				opts = function(_, opts)
+					vim.list_extend(
+						opts.ensure_installed,
+						{ "typescript-language-server", "semgrep", "eslint-lsp", "prettier", "eslint_d" }
+					)
+				end,
+			},
+		},
+		opts = function(_, opts)
+			table.insert(opts.sources, require("null-ls").builtins.diagnostics.semgrep)
+		end,
+	},
+
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = {
+			-- TypeScript more descriptive Error Translations
+			"dmmulroy/ts-error-translator.nvim",
+		},
+		opts = {
+			servers = {
+				tsserver = {
+					handlers = {
+						["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+							require("ts-error-translator").translate_diagnostics(err, result, ctx, config)
+							vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
+						end,
+					},
+				},
+			},
+		},
+	},
+
 	{
 		"nvim-neotest/neotest",
 		optional = true,

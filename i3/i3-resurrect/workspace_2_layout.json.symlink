@@ -13,11 +13,11 @@
   "marks": [],
   "name": "2",
   "orientation": "vertical",
-  "percent": null,
+  "percent": 0.3333333333333333,
   "scratchpad_state": "none",
   "sticky": false,
   "type": "workspace",
-  "workspace_layout": "default",
+  "workspace_layout": "tabbed",
   "nodes": [
     {
       "border": "pixel",
@@ -34,7 +34,7 @@
       "marks": [],
       "name": null,
       "orientation": "horizontal",
-      "percent": 0.7,
+      "percent": 0.8999999999999999,
       "scratchpad_state": "none",
       "sticky": false,
       "type": "con",
@@ -53,7 +53,7 @@
           },
           "layout": "splith",
           "marks": [],
-          "name": "~ - i3-resurrect",
+          "name": null,
           "orientation": "none",
           "percent": 0.5,
           "scratchpad_state": "none",
@@ -78,7 +78,7 @@
             "width": 0,
             "height": 0
           },
-          "layout": "stacked",
+          "layout": "splitv",
           "marks": [],
           "name": null,
           "orientation": "vertical",
@@ -90,55 +90,128 @@
           "nodes": [
             {
               "border": "pixel",
-              "current_border_width": 0,
+              "current_border_width": -1,
               "floating": "auto_off",
               "fullscreen_mode": 0,
               "geometry": {
                 "x": 0,
                 "y": 0,
-                "width": 846,
-                "height": 409
+                "width": 0,
+                "height": 0
               },
-              "layout": "splith",
+              "layout": "splitv",
               "marks": [],
-              "name": "Home",
-              "orientation": "none",
-              "percent": 0.5,
+              "name": null,
+              "orientation": "vertical",
+              "percent": 1.0,
               "scratchpad_state": "none",
               "sticky": false,
               "type": "con",
               "workspace_layout": "default",
-              "swallows": [
+              "nodes": [
                 {
-                  "class": "^Nemo$",
-                  "instance": "^nemo$"
-                }
-              ]
-            },
-            {
-              "border": "pixel",
-              "current_border_width": 0,
-              "floating": "auto_off",
-              "fullscreen_mode": 0,
-              "geometry": {
-                "x": 0,
-                "y": 0,
-                "width": 800,
-                "height": 600
-              },
-              "layout": "splith",
-              "marks": [],
-              "name": "~",
-              "orientation": "none",
-              "percent": 0.5,
-              "scratchpad_state": "none",
-              "sticky": false,
-              "type": "con",
-              "workspace_layout": "default",
-              "swallows": [
-                {
-                  "class": "^kitty$",
-                  "instance": "^kitty$"
+                  "border": "pixel",
+                  "current_border_width": -1,
+                  "floating": "auto_off",
+                  "fullscreen_mode": 0,
+                  "geometry": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 0,
+                    "height": 0
+                  },
+                  "layout": "stacked",
+                  "marks": [],
+                  "name": null,
+                  "orientation": "vertical",
+                  "percent": 1.0,
+                  "scratchpad_state": "none",
+                  "sticky": false,
+                  "type": "con",
+                  "workspace_layout": "default",
+                  "nodes": [
+                    {
+                      "border": "pixel",
+                      "current_border_width": 0,
+                      "floating": "auto_off",
+                      "fullscreen_mode": 0,
+                      "geometry": {
+                        "x": 0,
+                        "y": 0,
+                        "width": 846,
+                        "height": 409
+                      },
+                      "layout": "splith",
+                      "marks": [],
+                      "name": "i3-resurrect",
+                      "orientation": "none",
+                      "percent": 0.3333333333333333,
+                      "scratchpad_state": "none",
+                      "sticky": false,
+                      "type": "con",
+                      "workspace_layout": "default",
+                      "swallows": [
+                        {
+                          "class": "^Nemo$",
+                          "instance": "^nemo$"
+                        }
+                      ]
+                    },
+                    {
+                      "border": "pixel",
+                      "current_border_width": 0,
+                      "floating": "auto_off",
+                      "fullscreen_mode": 0,
+                      "geometry": {
+                        "x": 3843,
+                        "y": 114,
+                        "width": 800,
+                        "height": 600
+                      },
+                      "layout": "splith",
+                      "marks": [],
+                      "name": "Neovide",
+                      "orientation": "none",
+                      "percent": 0.3333333333333333,
+                      "scratchpad_state": "none",
+                      "sticky": false,
+                      "type": "con",
+                      "workspace_layout": "default",
+                      "swallows": [
+                        {
+                          "class": "^neovide$",
+                          "instance": "^neovide$"
+                        }
+                      ]
+                    },
+                    {
+                      "border": "pixel",
+                      "current_border_width": 0,
+                      "floating": "auto_off",
+                      "fullscreen_mode": 0,
+                      "geometry": {
+                        "x": 0,
+                        "y": 0,
+                        "width": 800,
+                        "height": 600
+                      },
+                      "layout": "splith",
+                      "marks": [],
+                      "name": "~/.dotfiles",
+                      "orientation": "none",
+                      "percent": 0.3333333333333333,
+                      "scratchpad_state": "none",
+                      "sticky": false,
+                      "type": "con",
+                      "workspace_layout": "default",
+                      "swallows": [
+                        {
+                          "class": "^kitty$",
+                          "instance": "^kitty$"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }
@@ -161,7 +234,7 @@
       "marks": [],
       "name": null,
       "orientation": "horizontal",
-      "percent": 0.30000000000000004,
+      "percent": 0.10000000000000003,
       "scratchpad_state": "none",
       "sticky": false,
       "type": "con",
@@ -169,347 +242,55 @@
       "nodes": [
         {
           "border": "pixel",
-          "current_border_width": -1,
+          "current_border_width": 0,
           "floating": "auto_off",
           "fullscreen_mode": 0,
           "geometry": {
             "x": 0,
             "y": 0,
-            "width": 0,
-            "height": 0
+            "width": 1271,
+            "height": 1384
           },
           "layout": "splith",
           "marks": [],
-          "name": null,
-          "orientation": "horizontal",
-          "percent": 1.0,
+          "name": "~",
+          "orientation": "none",
+          "percent": 0.5,
           "scratchpad_state": "none",
           "sticky": false,
           "type": "con",
           "workspace_layout": "default",
-          "nodes": [
+          "swallows": [
             {
-              "border": "pixel",
-              "current_border_width": 0,
-              "floating": "auto_off",
-              "fullscreen_mode": 0,
-              "geometry": {
-                "x": 0,
-                "y": 0,
-                "width": 800,
-                "height": 600
-              },
-              "layout": "splith",
-              "marks": [],
-              "name": "~",
-              "orientation": "none",
-              "percent": 0.5,
-              "scratchpad_state": "none",
-              "sticky": false,
-              "type": "con",
-              "workspace_layout": "default",
-              "swallows": [
-                {
-                  "border": "pixel",
-                  "current_border_width": -1,
-                  "floating": "auto_off",
-                  "fullscreen_mode": 0,
-                  "geometry": {
-                    "x": 0,
-                    "y": 0,
-                    "width": 0,
-                    "height": 0
-                  },
-                  "layout": "splith",
-                  "marks": [],
-                  "name": null,
-                  "orientation": "horizontal",
-                  "percent": 0.87,
-                  "scratchpad_state": "none",
-                  "sticky": false,
-                  "type": "con",
-                  "workspace_layout": "default",
-                  "nodes": [
-                    {
-                      "border": "pixel",
-                      "current_border_width": -1,
-                      "floating": "auto_off",
-                      "fullscreen_mode": 0,
-                      "geometry": {
-                        "x": 0,
-                        "y": 0,
-                        "width": 0,
-                        "height": 0
-                      },
-                      "layout": "tabbed",
-                      "marks": [],
-                      "name": null,
-                      "orientation": "horizontal",
-                      "percent": 0.69,
-                      "scratchpad_state": "none",
-                      "sticky": false,
-                      "type": "con",
-                      "workspace_layout": "default",
-                      "nodes": [
-                        {
-                          "border": "pixel",
-                          "current_border_width": 0,
-                          "floating": "auto_off",
-                          "fullscreen_mode": 0,
-                          "geometry": {
-                            "x": 0,
-                            "y": 0,
-                            "width": 800,
-                            "height": 600
-                          },
-                          "layout": "splith",
-                          "marks": [],
-                          "name": "Workspace/Everest - i3-resurrect",
-                          "orientation": "none",
-                          "percent": 1.0,
-                          "scratchpad_state": "none",
-                          "sticky": false,
-                          "type": "con",
-                          "workspace_layout": "default",
-                          "swallows": [
-                            {
-                              "class": "^kitty$",
-                              "instance": "^kitty$"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "border": "pixel",
-                      "current_border_width": -1,
-                      "floating": "auto_off",
-                      "fullscreen_mode": 0,
-                      "geometry": {
-                        "x": 0,
-                        "y": 0,
-                        "width": 0,
-                        "height": 0
-                      },
-                      "layout": "splitv",
-                      "marks": [],
-                      "name": null,
-                      "orientation": "vertical",
-                      "percent": 0.31000000000000005,
-                      "scratchpad_state": "none",
-                      "sticky": false,
-                      "type": "con",
-                      "workspace_layout": "default",
-                      "nodes": [
-                        {
-                          "border": "pixel",
-                          "current_border_width": -1,
-                          "floating": "auto_off",
-                          "fullscreen_mode": 0,
-                          "geometry": {
-                            "x": 0,
-                            "y": 0,
-                            "width": 0,
-                            "height": 0
-                          },
-                          "layout": "stacked",
-                          "marks": [],
-                          "name": null,
-                          "orientation": "vertical",
-                          "percent": 1.0,
-                          "scratchpad_state": "none",
-                          "sticky": false,
-                          "type": "con",
-                          "workspace_layout": "default",
-                          "nodes": [
-                            {
-                              "border": "pixel",
-                              "current_border_width": 0,
-                              "floating": "auto_off",
-                              "fullscreen_mode": 0,
-                              "geometry": {
-                                "x": 0,
-                                "y": 0,
-                                "width": 785,
-                                "height": 233
-                              },
-                              "layout": "splith",
-                              "marks": [],
-                              "name": "Home",
-                              "orientation": "none",
-                              "percent": 0.3333333333333333,
-                              "scratchpad_state": "none",
-                              "sticky": false,
-                              "type": "con",
-                              "workspace_layout": "default",
-                              "swallows": [
-                                {
-                                  "class": "^Nemo$",
-                                  "instance": "^nemo$"
-                                }
-                              ]
-                            },
-                            {
-                              "border": "pixel",
-                              "current_border_width": 0,
-                              "floating": "auto_off",
-                              "fullscreen_mode": 0,
-                              "geometry": {
-                                "x": 0,
-                                "y": 0,
-                                "width": 800,
-                                "height": 600
-                              },
-                              "layout": "splith",
-                              "marks": [],
-                              "name": "Workspace/Everest",
-                              "orientation": "none",
-                              "percent": 0.3333333333333333,
-                              "scratchpad_state": "none",
-                              "sticky": false,
-                              "type": "con",
-                              "workspace_layout": "default",
-                              "swallows": [
-                                {
-                                  "class": "^kitty$",
-                                  "instance": "^kitty$"
-                                }
-                              ]
-                            },
-                            {
-                              "border": "pixel",
-                              "current_border_width": 0,
-                              "floating": "auto_off",
-                              "fullscreen_mode": 0,
-                              "geometry": {
-                                "x": 0,
-                                "y": 0,
-                                "width": 800,
-                                "height": 600
-                              },
-                              "layout": "splith",
-                              "marks": [],
-                              "name": "Workspace/Everest",
-                              "orientation": "none",
-                              "percent": 0.3333333333333333,
-                              "scratchpad_state": "none",
-                              "sticky": false,
-                              "type": "con",
-                              "workspace_layout": "default",
-                              "swallows": [
-                                {
-                                  "class": "^kitty$",
-                                  "instance": "^kitty$"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "border": "pixel",
-                  "current_border_width": -1,
-                  "floating": "auto_off",
-                  "fullscreen_mode": 0,
-                  "geometry": {
-                    "x": 0,
-                    "y": 0,
-                    "width": 0,
-                    "height": 0
-                  },
-                  "layout": "splith",
-                  "marks": [],
-                  "name": null,
-                  "orientation": "horizontal",
-                  "percent": 0.13000000000000006,
-                  "scratchpad_state": "none",
-                  "sticky": false,
-                  "type": "con",
-                  "workspace_layout": "default",
-                  "nodes": [
-                    {
-                      "border": "pixel",
-                      "current_border_width": -1,
-                      "floating": "auto_off",
-                      "fullscreen_mode": 0,
-                      "geometry": {
-                        "x": 0,
-                        "y": 0,
-                        "width": 0,
-                        "height": 0
-                      },
-                      "layout": "splith",
-                      "marks": [],
-                      "name": null,
-                      "orientation": "horizontal",
-                      "percent": 1.0,
-                      "scratchpad_state": "none",
-                      "sticky": false,
-                      "type": "con",
-                      "workspace_layout": "default",
-                      "nodes": [
-                        {
-                          "border": "pixel",
-                          "current_border_width": 0,
-                          "floating": "auto_off",
-                          "fullscreen_mode": 0,
-                          "geometry": {
-                            "x": 0,
-                            "y": 0,
-                            "width": 800,
-                            "height": 600
-                          },
-                          "layout": "splith",
-                          "marks": [],
-                          "name": "Workspace/Everest - i3-resurrect",
-                          "orientation": "none",
-                          "percent": 0.5,
-                          "scratchpad_state": "none",
-                          "sticky": false,
-                          "type": "con",
-                          "workspace_layout": "default",
-                          "swallows": [
-                            {
-                              "class": "^kitty$",
-                              "instance": "^kitty$"
-                            }
-                          ]
-                        },
-                        {
-                          "border": "pixel",
-                          "current_border_width": 0,
-                          "floating": "auto_off",
-                          "fullscreen_mode": 0,
-                          "geometry": {
-                            "x": 0,
-                            "y": 0,
-                            "width": 800,
-                            "height": 600
-                          },
-                          "layout": "splith",
-                          "marks": [],
-                          "name": "Workspace/Everest",
-                          "orientation": "none",
-                          "percent": 0.5,
-                          "scratchpad_state": "none",
-                          "sticky": false,
-                          "type": "con",
-                          "workspace_layout": "default",
-                          "swallows": [
-                            {
-                              "class": "^kitty$",
-                              "instance": "^kitty$"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+              "class": "^kitty$",
+              "instance": "^kitty$"
+            }
+          ]
+        },
+        {
+          "border": "pixel",
+          "current_border_width": 0,
+          "floating": "auto_off",
+          "fullscreen_mode": 0,
+          "geometry": {
+            "x": 0,
+            "y": 0,
+            "width": 1271,
+            "height": 1384
+          },
+          "layout": "splith",
+          "marks": [],
+          "name": "~/.dotfiles",
+          "orientation": "none",
+          "percent": 0.5,
+          "scratchpad_state": "none",
+          "sticky": false,
+          "type": "con",
+          "workspace_layout": "default",
+          "swallows": [
+            {
+              "class": "^kitty$",
+              "instance": "^kitty$"
             }
           ]
         }

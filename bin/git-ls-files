@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# Get all filenames which are either modified,
-# or if passed, has been modified in the range of the passed commit and HEAD
-if [ $# -eq 0 ]; then
-	git status --short | awk '$1 ~ /^M|A|U/ {print $2}'
-else
-	git diff --name-only $1 HEAD
-fi

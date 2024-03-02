@@ -5,7 +5,7 @@ return {
 	{
 		"nvimtools/none-ls.nvim",
 		opts = function(_, opts)
-			table.insert(opts.sources, require("null-ls").builtins.diagnostics.editorconfig_checker)
+			table.insert(opts.sources, require("null-ls").builtins.completion.spell)
 		end,
 	},
 }

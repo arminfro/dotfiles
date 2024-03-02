@@ -24,6 +24,7 @@ return {
 				["<leader>gh"] = { name = "+hunks" },
 				["<leader>q"] = { name = "+quit/session" },
 				["<leader>s"] = { name = "+search" },
+				["<leader>n"] = { name = "+notes" },
 				["<leader>t"] = { name = "+tools" },
 				["<leader>tt"] = { name = "+terminal" },
 				["<leader>td"] = { name = "+docker" },
@@ -343,6 +344,12 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
+			{
+				"nvimtools/none-ls.nvim",
+				opts = function(_, opts)
+					table.insert(opts.sources, require("null-ls").builtins.code_actions.refactoring)
+				end,
+			},
 		},
 		config = function()
 			require("refactoring").setup()
@@ -360,8 +367,27 @@ return {
 				function()
 					require("refactoring").select_refactor()
 				end,
-				desc = "Select refactor", mode = { "n", "v" }
+				desc = "Select refactor",
+				mode = { "n", "v" },
 			},
 		},
+	},
+
+	-- {
+	-- 	"chrisgrieser/nvim-scissors",
+	-- 	dependencies = "nvim-telescope/telescope.nvim", -- optional
+	-- 	opts = {
+	-- 		snippetDir = "~/.config/nvim/snippets",
+	-- 	},
+	-- },
+
+	{
+		"ahmedkhalf/project.nvim",
+		dependencies = "nvim-telescope/telescope.nvim", -- optional
+		event = "BufWinEnter",
+		config = function()
+			require("project_nvim").setup({ manual_mode = false })
+			require("telescope").load_extension("projects")
+		end,
 	},
 }

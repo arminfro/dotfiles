@@ -1,6 +1,6 @@
 ---
-id: {{ id }}
-slug: {{ extra.branch }}
+id: { { id } }
+slug: { { extra.branch } }
 keywords: []
 abstract: |
 subtitle:
@@ -14,20 +14,20 @@ pandoc_:
 header-includes:
   - |
     \usepackage[margins=raggedright]{floatrow}
-created: {{ format-date now 'timestamp' }}
-course: {{ dir }}
-title: {{ extra.title }}
+created: { { format-date now 'timestamp' } }
+course: { { dir } }
+title: { { extra.title } }
 aliases:
-  - {{ extra.title }}
-  - {{ format-date now 'timestamp' }}
-author: {{ extra.name }}
+  - { { extra.title } }
+  - { { format-date now 'timestamp' } }
+author: { { extra.name } }
 tags:
-  - {{ dir }}
-  - {{ extra.category }}
+  - { { dir } }
+  - { { extra.category } }
   - Version {{ extra.fix_version }}
-  - {{ extra.sprint }}
-  - {{ format-date now 'CW_%V/%y' }}
-  - {{ format-date now '%B/%y' }}
+  - { { extra.sprint } }
+  - { { format-date now 'CW_%V/%y' } }
+  - { { format-date now '%B/%y' } }
 ---
 
 # {{extra.ticket_id}} {{extra.title}} - {{extra.story_points}}
@@ -87,6 +87,7 @@ az repos pr create \
   --source-branch feature/{{extra.branch}} \
   --target-branch develop \
   --title "{{extra.ticket_id}} {{extra.title}}"
+  --sqash true
 ```
 
 ### [] wait for PR, set to 'Test'

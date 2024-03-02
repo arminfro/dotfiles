@@ -1,25 +1,38 @@
 [
   {
-    "command": ["/usr/bin/kitty", "-e", "/usr/bin/btm"],
-    "working_directory": "/home/armin"
-  },
-  {
-    "command": ["/usr/bin/nemo"],
+    "command": [
+      "/usr/bin/kitty"
+    ],
     "working_directory": "/home/user"
   },
   {
-    "command": ["/usr/bin/kitty"],
-    "working_directory": "/home/armin"
-  },
-  {
-    "command": ["/usr/bin/kitty"],
-    "working_directory": "/home/armin"
+    "command": [
+      "/usr/bin/nemo"
+    ],
+    "working_directory": "/home/user"
   },
   {
     "command": [
-      "/usr/bin/kitty",
-      "-e",
-      "/home/user/.dotfiles/bin/follow-journal"
+      "/home/user/.cargo/bin/neovide",
+      "--nofork"
+    ],
+    "working_directory": "/home/user"
+  },
+  {
+    "command": [
+      "/usr/bin/kitty"
+    ],
+    "working_directory": "/home/user"
+  },
+  {
+    "command": [
+      "/usr/bin/kitty"
+    ],
+    "working_directory": "/home/user"
+  },
+  {
+    "command": [
+      "/usr/bin/kitty"
     ],
     "working_directory": "/home/user"
   }

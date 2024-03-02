@@ -123,6 +123,10 @@ return {
 				--   end
 				-- },
 				lualine_x = {
+					{
+						require("gitblame").get_current_blame_text,
+						color = fg("Statement"),
+					},
 					{ "aerial" },
 					{ "fugitive" },
 					{ "lazy" },

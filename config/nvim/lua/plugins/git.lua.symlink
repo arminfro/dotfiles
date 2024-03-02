@@ -2,6 +2,23 @@
 
 return {
 
+	{
+		"nvimtools/none-ls.nvim",
+		opts = function(_, opts)
+			table.insert(opts.sources, require("null-ls").builtins.diagnostics.gitlint)
+		end,
+		dependencies = {
+			{
+				"williamboman/mason.nvim",
+				opts = function(_, opts)
+					if type(opts.ensure_installed) == "table" then
+						vim.list_extend(opts.ensure_installed, { "gitlint" })
+					end
+				end,
+			},
+		},
+	},
+
 	-- visualise and resolve git conflicts
 	{
 		"akinsho/git-conflict.nvim",

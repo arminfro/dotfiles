@@ -1,0 +1,18 @@
+[
+  {
+    "command": [
+      "/usr/bin/kitty",
+      "-e",
+      "/usr/bin/btm"
+    ],
+    "working_directory": "/home/user"
+  },
+  {
+    "command": [
+      "/usr/bin/kitty",
+      "-e",
+      "follow-journal"
+    ],
+    "working_directory": "/home/user"
+  }
+]

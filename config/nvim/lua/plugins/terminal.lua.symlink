@@ -28,7 +28,7 @@ return {
 		local Terminal = require("toggleterm.terminal").Terminal
 
 		local csharp = Terminal:new({
-			cmd = "csharprepl --framework Microsoft.AspNetCore.App -r /home/armin/Workspace/Everest/Build/Everest/Debug/Everest.dll",
+			cmd = "csharprepl --framework Microsoft.AspNetCore.App -r ./some-dll.dll",
 			hidden = true,
 		})
 		local node = Terminal:new({ cmd = "node", hidden = true })

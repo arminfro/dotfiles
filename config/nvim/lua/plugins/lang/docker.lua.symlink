@@ -1,0 +1,15 @@
+-- vi: ft=lua
+
+return {
+
+    {
+    "williamboman/mason.nvim",
+    optional = true,
+    opts = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        vim.list_extend(opts.ensure_installed, { "docker-compose-language-service", "dockerfile-language-server", "hadolint" })
+      end
+    end,
+  },
+
+}

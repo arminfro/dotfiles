@@ -2,6 +2,13 @@
 
 return {
 
+	-- try later again
+	-- {
+	-- 	"nvim-zh/colorful-winsep.nvim",
+	-- 	config = true,
+	-- 	event = { "WinNew" },
+	-- },
+
 	{
 		"rcarriga/nvim-notify",
 		opts = {
@@ -66,33 +73,39 @@ return {
 	{
 		"nvimdev/dashboard-nvim",
 		config = function(_, opts)
-			-- table.insert(opts.config.center, 5, {
+			-- table.insert(opts.config.center, 4, {
 			-- 	action = "Frecent Dirs",
 			-- 	desc = "Frecent Dirs",
 			-- 	icon = " ",
 			-- 	key = "d",
 			-- })
+			table.insert(opts.config.center, 5, {
+				action = "Telescope projects",
+				desc = " Projects",
+				icon = "  ",
+				key = "p",
+			})
 			table.insert(opts.config.center, 6, {
 				action = "Mason",
-				desc = "Mason",
+				desc = " Mason",
 				icon = " ",
 				key = "m",
 			})
 			-- table.insert(opts.config.center, 7, {
 			-- 	action = "ZkNewDefault",
-			-- 	desc = "New Note",
+			-- 	desc = " New Note",
 			-- 	icon = " ",
 			-- 	key = "n",
 			-- })
 			table.insert(opts.config.center, 8, {
 				action = "Telescope git_status",
-				desc = "Git Modified",
+				desc = " Git Modified",
 				icon = " ",
 				key = "k",
 			})
 			table.insert(opts.config.center, 9, {
 				action = "checkhealth",
-				desc = "Check Health",
+				desc = " Check Health",
 				icon = "✔ ",
 				key = "h",
 			})
@@ -127,12 +140,4 @@ return {
 			},
 		},
 	},
-	-- {
-	-- 	"folke/edgy.nvim",
-	-- 	opts = {
-	-- 		animate = {
-	-- 			enabled = false,
-	-- 		},
-	-- 	},
-	-- },
 }
