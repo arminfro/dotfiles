@@ -389,5 +389,8 @@ return {
 			require("project_nvim").setup({ manual_mode = false })
 			require("telescope").load_extension("projects")
 		end,
+		keys = {
+			{ "<leader>o", ":Telescope projects<CR>", desc = "Open project" },
+		},
 	},
 }
