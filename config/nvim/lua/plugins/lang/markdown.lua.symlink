@@ -1,7 +1,6 @@
 -- vi: ft=lua
 
 return {
-
 	{
 		"nvimtools/none-ls.nvim",
 		opts = function(_, opts)

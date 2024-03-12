@@ -4,7 +4,7 @@ return {
 	"hrsh7th/nvim-cmp",
 	event = "InsertEnter",
 	---@param opts cmp.ConfigSchema
-	opts = function(opts)
+	opts = function(_, opts)
 		local cmp = require("cmp")
 		local bufferCmpConfig = {
 			name = "buffer",
@@ -32,13 +32,13 @@ return {
 			{ name = "luasnip" },
 			bufferCmpConfig,
 			{ name = "path" },
-			{
-				option = {
-					get_bufnrs = function()
-						return vim.api.nvim_list_bufs()
-					end,
-				},
-			},
+			-- {
+			-- 	option = {
+			-- 		get_bufnrs = function()
+			-- 			return vim.api.nvim_list_bufs()
+			-- 		end,
+			-- 	},
+			-- },
 			{ name = "nvim_lua" },
 			{ name = "emoji" },
 			{ name = "calc" },
@@ -95,31 +95,30 @@ return {
 		-- completion for neovim lua api
 		"hrsh7th/cmp-nvim-lua",
 		-- better sort completion items that start with one or more underlines
-		"lukas-reineke/cmp-rg",
 		"petertriho/cmp-git",
-		{
-			"uga-rosa/cmp-dictionary",
-			-- todo, migrate to v3
-			tag = "v2.2.0",
-			config = function()
-				local dict = require("cmp_dictionary")
-				dict.setup({
-					first_case_insensitive = true,
-				})
-				dict.switcher({
-					filetype = {
-						lua = "~/.config/nvim/spell/lua.dict",
-						typescript = { "~/.config/nvim/spell/typescript.dict", "~/.config/nvim/spell/javascript.dict" },
-						javascript = "~/.config/nvim/spell/javascript.dict",
-						ruby = "~/.config/nvim/spell/ruby.dict",
-					},
-					spelllang = {
-						en = "~/.config/nvim/spell/english.dict",
-						de = "~/.config/nvim/spell/german.dict",
-					},
-				})
-			end,
-		},
+		-- {
+		-- 	"uga-rosa/cmp-dictionary",
+		-- 	-- todo, migrate to v3
+		-- 	tag = "v2.2.0",
+		-- 	config = function()
+		-- 		local dict = require("cmp_dictionary")
+		-- 		dict.setup({
+		-- 			first_case_insensitive = true,
+		-- 		})
+		-- 		dict.switcher({
+		-- 			filetype = {
+		-- 				lua = "~/.config/nvim/spell/lua.dict",
+		-- 				typescript = { "~/.config/nvim/spell/typescript.dict", "~/.config/nvim/spell/javascript.dict" },
+		-- 				javascript = "~/.config/nvim/spell/javascript.dict",
+		-- 				ruby = "~/.config/nvim/spell/ruby.dict",
+		-- 			},
+		-- 			spelllang = {
+		-- 				en = "~/.config/nvim/spell/english.dict",
+		-- 				de = "~/.config/nvim/spell/german.dict",
+		-- 			},
+		-- 		})
+		-- 	end,
+		-- },
 		{
 			"saadparwaiz1/cmp_luasnip",
 			dependencies = {
@@ -143,6 +142,45 @@ return {
 					},
 				},
 			},
+		},
+	},
+
+	{
+		"L3MON4D3/LuaSnip",
+		build = (not jit.os:find("Windows"))
+				and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
+			or nil,
+		dependencies = {
+			{
+				"rafamadriz/friendly-snippets",
+				config = function()
+					require("luasnip.loaders.from_vscode").lazy_load({
+						-- todo, check if paths exist
+						paths = {
+							"~/.config/nvim/snippets",
+							"~/.local/share/nvim/lazy/friendly-snippets",
+						},
+					})
+				end,
+			},
+			{
+				"nvim-cmp",
+				dependencies = {
+					"saadparwaiz1/cmp_luasnip",
+				},
+				opts = function(_, opts)
+					opts.snippet = {
+						expand = function(args)
+							require("luasnip").lsp_expand(args.body)
+						end,
+					}
+					table.insert(opts.sources, { name = "luasnip" })
+				end,
+			},
+		},
+		opts = {
+			history = true,
+			delete_check_events = "TextChanged",
 		},
 	},
 }

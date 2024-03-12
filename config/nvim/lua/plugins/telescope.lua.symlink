@@ -525,40 +525,6 @@ return {
 			"nvim-telescope/telescope-z.nvim",
 			config = function()
 				require("telescope").load_extension("z")
-
-				-- nvim-telescope/telescope-z.nvim/issues/13#issuecomment-1195046274
-				local function show_z_reversely_and_with_tree()
-					local telescope = require("telescope")
-					local previewers = require("telescope.previewers.term_previewer")
-					local from_entry = require("telescope.from_entry")
-					telescope.extensions.z.list({
-						cmd = { vim.o.shell, "-c", "z -l | tac" },
-						previewer = previewers.new_termopen_previewer({
-							get_command = function(entry)
-								return { "tree", "-L", "3", from_entry.path(entry) }
-							end,
-							scroll_fn = function(self, direction)
-								if not self.state then
-									return
-								end
-								local bufnr = self.state.termopen_bufnr
-								-- 0x05 -> <C-f>
-								-- 0x19 -> <C-b>
-								local input = direction > 0 and string.char(0x05) or string.char(0x19)
-								local count = math.abs(direction)
-								vim.api.nvim_win_call(vim.fn.bufwinid(bufnr), function()
-									vim.cmd([[normal! ]] .. count .. input)
-								end)
-							end,
-						}),
-					})
-				end
-
-				vim.api.nvim_create_user_command(
-					"FrecentDirs",
-					show_z_reversely_and_with_tree,
-					{ desc = "Frecent Dirs" }
-				)
 				vim.keymap.set("n", "<Leader>tz", "<cmd>FrecentDirs<CR>", { desc = "Frecent Dirs" })
 			end,
 			opts = {
