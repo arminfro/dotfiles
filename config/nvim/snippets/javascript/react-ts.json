@@ -1,0 +1,7 @@
+{
+  "debugger": {
+    "body": ["debugger;"],
+    "prefix": "bug",
+    "description": "Calls debugger"
+  }
+}

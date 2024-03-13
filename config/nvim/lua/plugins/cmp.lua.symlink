@@ -13,7 +13,7 @@ return {
 					local bufs = {}
 					for _, buf in ipairs(vim.api.nvim_list_bufs()) do
 						local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
-						if byte_size > 1024 * 1024 then -- 1 Megabyte max
+						if byte_size > 524288 then -- 1/2 Megabyte max
 							bufs[buf] = false
 						else
 							bufs[buf] = true
@@ -22,16 +22,18 @@ return {
 					return vim.tbl_keys(bufs)
 				end,
 			},
-			priority = 100,
-			keyword_length = 5,
+			keyword_length = 4,
 		}
 
 		local sources = {
 			{ name = "nvim_lsp", priority = 100 },
 			{ name = "nvim_lsp_signature_help", priority = 90 },
-			{ name = "luasnip" },
 			bufferCmpConfig,
 			{ name = "path" },
+			{ name = "nvim_lua" },
+			{ name = "emoji" },
+			{ name = "calc" },
+			{ name = "git" },
 			-- {
 			-- 	option = {
 			-- 		get_bufnrs = function()
@@ -39,10 +41,6 @@ return {
 			-- 		end,
 			-- 	},
 			-- },
-			{ name = "nvim_lua" },
-			{ name = "emoji" },
-			{ name = "calc" },
-			{ name = "git" },
 		}
 
 		local writing_sources = {
@@ -87,14 +85,10 @@ return {
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
 		-- "hrsh7th/cmp-nvim-lsp-signature-help",
-		-- Completions for command mode
-		"hrsh7th/cmp-cmdline",
+		"hrsh7th/cmp-cmdline", -- Completions for command mode
 		"hrsh7th/cmp-emoji",
-		-- completion for calculations
-		"hrsh7th/cmp-calc",
-		-- completion for neovim lua api
-		"hrsh7th/cmp-nvim-lua",
-		-- better sort completion items that start with one or more underlines
+		"hrsh7th/cmp-calc", -- completion for calculations
+		"hrsh7th/cmp-nvim-lua", -- completion for neovim lua api
 		"petertriho/cmp-git",
 		-- {
 		-- 	"uga-rosa/cmp-dictionary",
@@ -119,30 +113,6 @@ return {
 		-- 		})
 		-- 	end,
 		-- },
-		{
-			"saadparwaiz1/cmp_luasnip",
-			dependencies = {
-				-- Snippet engine
-				{
-					"L3MON4D3/LuaSnip",
-					config = function(_, opts)
-						require("luasnip").config.set_config(opts)
-
-						require("luasnip/loaders/from_vscode").lazy_load({
-							-- todo, check if paths exist
-							paths = {
-								"~/.config/nvim/snippets",
-								"~/.local/share/nvim/lazy/friendly-snippets",
-							},
-						})
-					end,
-					dependencies = {
-						-- Snippet collections
-						"rafamadriz/friendly-snippets",
-					},
-				},
-			},
-		},
 	},
 
 	{
@@ -154,27 +124,14 @@ return {
 			{
 				"rafamadriz/friendly-snippets",
 				config = function()
-					require("luasnip.loaders.from_vscode").lazy_load({
-						-- todo, check if paths exist
-						paths = {
-							"~/.config/nvim/snippets",
-							"~/.local/share/nvim/lazy/friendly-snippets",
-						},
-					})
-				end,
-			},
-			{
-				"nvim-cmp",
-				dependencies = {
-					"saadparwaiz1/cmp_luasnip",
-				},
-				opts = function(_, opts)
-					opts.snippet = {
-						expand = function(args)
-							require("luasnip").lsp_expand(args.body)
-						end,
-					}
-					table.insert(opts.sources, { name = "luasnip" })
+					local paths = { "~/.local/share/nvim/lazy/friendly-snippets" }
+					local custom_snippets_dir = "~/.dotfiles/config/nvim/snippets"
+
+					if vim.fn.isdirectory(custom_snippets_dir) == 0 then
+						table.insert(paths, custom_snippets_dir)
+					end
+
+					require("luasnip.loaders.from_vscode").lazy_load({ paths = paths })
 				end,
 			},
 		},

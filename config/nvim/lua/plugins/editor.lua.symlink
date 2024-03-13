@@ -373,13 +373,21 @@ return {
 		},
 	},
 
-	-- {
-	-- 	"chrisgrieser/nvim-scissors",
-	-- 	dependencies = "nvim-telescope/telescope.nvim", -- optional
-	-- 	opts = {
-	-- 		snippetDir = "~/.config/nvim/snippets",
-	-- 	},
-	-- },
+	{
+		"chrisgrieser/nvim-scissors",
+		cond = function()
+			return vim.fn.isdirectory("~/.dotfiles/config/nvim/snippets") == 0
+		end,
+		dependencies = "nvim-telescope/telescope.nvim",
+		opts = {
+			snippetDir = "~/.dotfiles/config/nvim/snippets",
+		},
+		cmd = { "ScissorsEditSnippet", "ScissorsAddNewSnippet" },
+		keys = {
+			{ "<leader>ts", ":ScissorsAddNewSnippet<CR>", desc = "Add new snippet", mode = { "v" } },
+			{ "<leader>te", ":ScissorsEditSnippet<CR>", desc = "Edit snippet", mode = { "n" } },
+		},
+	},
 
 	{
 		"ahmedkhalf/project.nvim",

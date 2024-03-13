@@ -1,0 +1,1 @@
+{"engines":{"vscode":"^1.11.0"},"name":"custom-snippets","contributes":{"snippets":[{"language":["typescript","typescriptreact"],"path":".\/javascript\/react-ts.json"},{"language":["cs"],"path":".\/cs.json"},{"language":["lua"],"path":".\/lua.json"}]}}

@@ -2,20 +2,21 @@
 
 return {
 	{
-		"nvimtools/none-ls.nvim",
+		"williamboman/mason.nvim",
+		optional = true,
 		opts = function(_, opts)
-			table.insert(opts.sources, require("null-ls").builtins.diagnostics.stylint)
-			table.insert(opts.sources, require("null-ls").builtins.formatting.stylelint)
+			if type(opts.ensure_installed) == "table" then
+				vim.list_extend(opts.ensure_installed, { "css-lsp", "cssmodules-language-server", "stylelint" })
+			end
 		end,
 	},
-    {
-    "williamboman/mason.nvim",
-    optional = true,
-    opts = function(_, opts)
-      if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "css-lsp", "cssmodules-language-server" })
-      end
-    end,
-  },
 
+	{
+		"nvim-treesitter/nvim-treesitter",
+		opts = function(_, opts)
+			if type(opts.ensure_installed) == "table" then
+				vim.list_extend(opts.ensure_installed, { "css", "scss" })
+			end
+		end,
+	},
 }

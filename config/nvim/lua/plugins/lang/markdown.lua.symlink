@@ -1,10 +1,10 @@
 -- vi: ft=lua
 
 return {
-	{
-		"nvimtools/none-ls.nvim",
-		opts = function(_, opts)
-			table.insert(opts.sources, require("null-ls").builtins.completion.spell)
-		end,
-	},
+	-- {
+	-- 	"nvimtools/none-ls.nvim",
+	-- 	opts = function(_, opts)
+	--  table.insert(opts.sources, require("null-ls").builtins.completion.spell)
+	-- 	end,
+	-- },
 }
