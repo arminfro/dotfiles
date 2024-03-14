@@ -181,7 +181,9 @@ return {
 		dependencies = {
 			"mickael-menu/zk-nvim",
 			config = function()
-				require("telescope").load_extension("zk")
+				require("lazyvim.util").on_load("telescope.nvim", function()
+					require("telescope").load_extension("zk")
+				end)
 			end,
 		},
 	},

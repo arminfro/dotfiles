@@ -395,7 +395,9 @@ return {
 		event = "BufWinEnter",
 		config = function()
 			require("project_nvim").setup({ manual_mode = false })
-			require("telescope").load_extension("projects")
+			require("lazyvim.util").on_load("telescope.nvim", function()
+				require("telescope").load_extension("projects")
+			end)
 		end,
 		keys = {
 			{ "<leader>o", ":Telescope projects<CR>", desc = "Open project" },

@@ -186,7 +186,7 @@ return {
 	},
 
 	{
-    -- see `:h vim-arsync-configuration` for usage
+		-- see `:h vim-arsync-configuration` for usage
 		"kenn7/vim-arsync",
 		dependencies = {
 			{

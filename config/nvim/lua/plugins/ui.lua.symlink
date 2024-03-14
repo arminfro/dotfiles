@@ -1,20 +1,6 @@
 -- vi: ft=lua
 
 return {
-
-  {
-    "jkj/kj",
-    cond = function()
-      return true
-    end,
-    dependencies = {},
-    opts = {},
-    cmd = {  },
-    keys = {
-      { "<leader>__", ":<CR>", desc = "", mode = { "n", "v" } },
-    },
-  },
-
 	-- try later again
 	-- {
 	-- 	"nvim-zh/colorful-winsep.nvim",

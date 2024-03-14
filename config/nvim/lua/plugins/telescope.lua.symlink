@@ -521,23 +521,23 @@ return {
 
 		-- note, needs `ln -s ~/.zshrc ~/.zshenv`
 		-- see, nvim-telescope/telescope-z.nvim/issues/14
-		{
-			"nvim-telescope/telescope-z.nvim",
-			config = function()
-				require("telescope").load_extension("z")
-				vim.keymap.set("n", "<Leader>tz", "<cmd>FrecentDirs<CR>", { desc = "Frecent Dirs" })
-			end,
-			opts = {
-				cmd = { "/usr/bin/lua", vim.env["HOME"] .. "/.zgenom/sources/skywind3000/z.lua/___/z.lua -l" },
-			},
-			keys = {
-				{
-					"<leader>tz",
-					"<cmd>Telescope z<CR>",
-					desc = "Z - change CWD with C-x",
-				},
-			},
-		},
+		-- {
+		-- 	"nvim-telescope/telescope-z.nvim",
+		-- 	config = function()
+		-- 		require("telescope").load_extension("z")
+		-- 		vim.keymap.set("n", "<Leader>tz", "<cmd>FrecentDirs<CR>", { desc = "Frecent Dirs" })
+		-- 	end,
+		-- 	opts = {
+		-- 		cmd = { "/usr/bin/lua", vim.env["HOME"] .. "/.zgenom/sources/skywind3000/z.lua/___/z.lua -l" },
+		-- 	},
+		-- 	-- keys = {
+		-- 	-- 	{
+		-- 	-- 		"<leader>tz",
+		-- 	-- 		":FrecentDirs<CR>",
+		-- 	-- 		desc = "Z - change CWD with C-x",
+		-- 	-- 	},
+		-- 	-- },
+		-- },
 
 		{
 			"princejoogie/dir-telescope.nvim",
