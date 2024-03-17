@@ -1,0 +1,27 @@
+{
+  "transition": {
+    "body": [
+      "<Transition fallback=move || {",
+      "    view! { <p>\"Loading...\"</p> }",
+      "}>",
+      "</Transition>"
+    ],
+    "prefix": "transition"
+  },
+  "comp": {
+    "body": [
+      "use leptonic::prelude::*;",
+      "use leptos::*;",
+      "",
+      "#[component]",
+      "pub fn ${1:ComponentName}(${2:id}: ${3:usize}) -> impl IntoView {",
+      "    view! {",
+      "        <Box class=\"w-72\">",
+      "            ${0}",
+      "        </Box>",
+      "    }",
+      "}"
+    ],
+    "prefix": "comp"
+  }
+}

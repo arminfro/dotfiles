@@ -1,18 +1,24 @@
 -- vi: ft=lua
 
 local g = vim.g
--- local o = vim.opt
 
 if g.neovide then
-  -- o.guifont = "JetBrainsMono Nerd Font:h9"
+	-- o.guifont = "JetBrainsMono Nerd Font:h9"
 
-  -- todo, fix pasting issues
-  vim.opt.clipboard = "unnamedplus"
+	-- todo, fix pasting issues
+	vim.opt.clipboard = "unnamedplus"
 
-  g.neovide_cursor_animation_length = 0.13
-  g.neovide_background_color = "#242631"
-  g.transparency = 0.8
-  g.neovide_transparency = 0.8
-  g.neovide_remember_window_size = true
-  g.neovide_fullscreen = false
+	g.neovide_cursor_animation_length = 0.13
+	g.neovide_background_color = "#242631"
+	g.transparency = 0.8
+	g.neovide_transparency = 0.8
+	g.neovide_remember_window_size = true
+	g.neovide_fullscreen = false
+
+	-- Allow clipboard copy paste in neovim
+	g.neovide_input_use_logo = 1
+	vim.api.nvim_set_keymap("", "<C-v>", "+p<CR>", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("!", "<C-v>", "<C-R>+", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("t", "<C-v>", "<C-R>+", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("v", "<C-v>", "<C-R>+", { noremap = true, silent = true })
 end

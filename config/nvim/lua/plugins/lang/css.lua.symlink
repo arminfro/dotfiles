@@ -19,4 +19,39 @@ return {
 			end
 		end,
 	},
+
+	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			{
+				"jcha0713/cmp-tw2css",
+				event = { "BufRead" },
+			},
+		},
+		---@param opts cmp.ConfigSchema
+		opts = function(_, opts)
+			opts.sources = opts.sources or {}
+			table.insert(opts.sources, { name = "cmp-tw2css" })
+		end,
+	},
+
+	-- {
+	-- 	"hrsh7th/nvim-cmp",
+	-- 	dependencies = {
+	-- 		{
+	-- 			"mmolhoek/cmp-scss",
+	-- 			event = { "BufRead" },
+	-- 		},
+	-- 	},
+	-- 	---@param opts cmp.ConfigSchema
+	-- 	opts = function(_, opts)
+	-- 		opts.sources = opts.sources or {}
+	-- 		table.insert(opts.sources,  {
+	--        name = 'scss',
+	--        option = {
+	--            folders = { "node_modules/@dnr-ui/tokens/scss" }
+	--        }
+	--    })
+	-- 	end,
+	-- },
 }

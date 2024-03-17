@@ -1,0 +1,21 @@
+{
+  "lazyspec": {
+    "prefix": "lazyspec",
+    "body": [
+      "{",
+      "\t\"${1:plugin url}\",",
+      "\tcond = function()",
+      "\t\treturn true",
+      "\tend,",
+      "\tdependencies = {},",
+      "\topts = {",
+      "    ${0}",
+      "  },",
+      "\tcmd = {},",
+      "\tkeys = {",
+      "\t\t{ \"<leader>__\", \":<CR>\", desc = \"\", mode = { \"n\", \"v\" } },",
+      "\t},",
+      "},"
+    ]
+  }
+}

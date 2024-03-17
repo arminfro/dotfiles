@@ -1,6 +1,23 @@
 -- vi: ft=lua
 
 return {
+	-- {
+	-- 	"hrsh7th/nvim-cmp",
+	-- 	dependencies = {
+	-- 		{
+	-- 			"David-Kunz/cmp-npm",
+	-- 			event = { "BufRead" },
+	-- 			dependencies = {
+	-- 				"nvim-lua/plenary.nvim",
+	-- 			},
+	-- 		},
+	-- 	},
+	-- 	---@param opts cmp.ConfigSchema
+	-- 	opts = function(_, opts)
+	-- 		opts.sources = opts.sources or {}
+	-- 		table.insert(opts.sources, { name = "npm", keyword_length = 3 })
+	-- 	end,
+	-- },
 
 	{
 		"williamboman/mason.nvim",

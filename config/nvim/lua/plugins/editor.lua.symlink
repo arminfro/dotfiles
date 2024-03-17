@@ -2,6 +2,17 @@
 
 return {
 
+	{
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		vscode = true,
+		---@type Flash.Config
+		opts = {
+			continue = false,
+		},
+		-- stylua: ignore
+	},
+
 	-- which-key
 	{
 		"folke/which-key.nvim",
@@ -393,12 +404,17 @@ return {
 		"ahmedkhalf/project.nvim",
 		dependencies = "nvim-telescope/telescope.nvim", -- optional
 		event = "BufWinEnter",
-		config = function()
-			require("project_nvim").setup({ manual_mode = false })
+		config = function(_, opts)
+			require("project_nvim").setup(opts)
 			require("lazyvim.util").on_load("telescope.nvim", function()
 				require("telescope").load_extension("projects")
 			end)
 		end,
+		opts = {
+			manual_mode = false,
+			patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile" },
+			-- detection_methods = { "pattern" },
+		},
 		keys = {
 			{ "<leader>o", ":Telescope projects<CR>", desc = "Open project" },
 		},

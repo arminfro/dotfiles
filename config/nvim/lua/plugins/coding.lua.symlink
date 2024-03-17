@@ -146,6 +146,7 @@ return {
 			yank_dry_run = true,
 		},
 	},
+
 	{
 		-- Index, Fetch and Search devdocs.io
 		"luckasRanarison/nvim-devdocs",
