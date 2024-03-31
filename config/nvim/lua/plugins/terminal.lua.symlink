@@ -35,7 +35,6 @@ return {
 		local htop = Terminal:new({ cmd = "htop", hidden = true })
 		local bottom = Terminal:new({ cmd = "btm", hidden = true })
 		local ts_node = Terminal:new({ cmd = "ts-node", hidden = true })
-		local ruby = Terminal:new({ cmd = "irb", hidden = true })
 		local lua = Terminal:new({ cmd = "rep.lua", hidden = true })
 		local python = Terminal:new({ cmd = "python", hidden = true })
 
@@ -48,9 +47,6 @@ return {
 		vim.keymap.set("n", "<leader>ttt", function(...)
 			ts_node:toggle(...)
 		end, { desc = "TS node repl" })
-		vim.keymap.set("n", "<leader>ttr", function(...)
-			ruby:toggle(...)
-		end, { desc = "Ruby repl" })
 		vim.keymap.set("n", "<leader>ttl", function(...)
 			lua:toggle(...)
 		end, { desc = "Lua repl" })
@@ -73,9 +69,6 @@ return {
 			end,
 			htop = function(...)
 				htop:toggle(...)
-			end,
-			ruby = function(...)
-				ruby:toggle(...)
 			end,
 			lua = function(...)
 				lua:toggle(...)

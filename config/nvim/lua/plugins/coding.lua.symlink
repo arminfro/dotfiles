@@ -102,9 +102,15 @@ return {
 	},
 
 	{
+		-- neded for "NTBBloodbath/rest.nvim"
+		"vhyrro/luarocks.nvim",
+		priority = 1000,
+		config = true,
+	},
+	{
 		-- http client
 		"NTBBloodbath/rest.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
+		dependencies = { "nvim-lua/plenary.nvim", "vhyrro/luarocks.nvim" },
 		lazy = true,
 		keys = {
 			{

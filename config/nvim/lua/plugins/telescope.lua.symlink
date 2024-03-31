@@ -541,6 +541,21 @@ return {
 			},
 		},
 
+		{
+			"catgoose/telescope-helpgrep.nvim",
+			-- telescope.nvim is a required dependency
+			config = function()
+				require("telescope").load_extension("helpgrep")
+			end,
+			keys = {
+				{
+					"<leader>sx",
+					"<cmd>Telescope helpgrep<CR>",
+					desc = "Helpgrep",
+				},
+			},
+		},
+
 		-- "olacin/telescope-cc.nvim", -- conventional_commits
 		"folke/trouble.nvim",
 	},

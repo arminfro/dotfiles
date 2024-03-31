@@ -153,7 +153,7 @@ _ZL_MATCH_MODE=1
 
 eval "$(starship init zsh)"
 
-# spaceship remove hg package node bun deno ruby python elm elixir xcode swift golang perl php rust haskell scala kotlin java lua dart julia crystal docker docker_compose aws gcloud azure venv conda dotnet ocaml vlang zig purescript erlang kubectl ansible terraform pulumi ibmcloud battery
+# spaceship remove hg package node bun deno python elm elixir xcode swift golang perl php rust haskell scala kotlin java lua dart julia crystal docker docker_compose aws gcloud azure venv conda dotnet ocaml vlang zig purescript erlang kubectl ansible terraform pulumi ibmcloud battery
 
 # # load aliases
 # typeset -U config_files

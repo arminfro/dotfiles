@@ -10,7 +10,7 @@ Each corresponding installer will get called with a reduced list of packages.
 For now the call for system packages is hardcoded to `sudo dnf install -y ...` for usage on fedora systems.
 You'll likely want to replace all lines containing it, if you don't use `dnf`.
 
-It generally installs: i3, zsh, neovim nightly, alacritty, python, ruby, git
+It generally installs: i3, zsh, neovim nightly, alacritty, python, git
 
 You can delete stuff you don't need, it's mostly independent from each other.
 
@@ -23,7 +23,7 @@ Your dotfiles are how you personalize your system. These are mine.
 I was a little tired of having long alias files and everything strewn about
 (which is extremely common on other dotfiles projects, too). That led to this
 project being much more topic-centric. I realized I could split a lot of things
-up into the main areas I used (Ruby, git, system libraries, and so on), so I
+up into the main areas I used (git, system libraries, and so on), so I
 structured the project accordingly.
 
 If you're interested in the philosophy behind why projects like these are
@@ -62,7 +62,7 @@ There's a few special files in the hierarchy.
   your `$HOME`. This is so you can keep all of those versioned in your dotfiles
   but still keep those autoloaded files in your home directory. These get
   symlinked in when you run `script/bootstrap`.
-- **topic/{system,node,python,ruby}\_packages**: Will get installed when you run `script/install`.
+- **topic/{system,node,python}\_packages**: Will get installed when you run `script/install`.
 
 ## install
 

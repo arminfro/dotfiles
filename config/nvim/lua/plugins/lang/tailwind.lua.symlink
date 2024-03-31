@@ -5,10 +5,14 @@ return {
 		"MaximilianLloyd/tw-values.nvim",
 		event = "VeryLazy",
 		keys = {
-			{ "<leader>uT", "<cmd>TWValues<cr>", desc = "Show tailwind CSS values" },
+			{ "<leader>ug", "<cmd>TWValues<cr>", desc = "Show tailwind CSS values" },
 		},
 		opts = {
 			show_unknown_classes = true, -- Shows the unknown classes popup
 		},
+	},
+
+	{
+		"luckasRanarison/tailwind-tools.nvim",
 	},
 }
