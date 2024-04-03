@@ -35,23 +35,24 @@ return {
 		end,
 	},
 
-	-- {
-	-- 	"hrsh7th/nvim-cmp",
-	-- 	dependencies = {
-	-- 		{
-	-- 			"mmolhoek/cmp-scss",
-	-- 			event = { "BufRead" },
-	-- 		},
-	-- 	},
-	-- 	---@param opts cmp.ConfigSchema
-	-- 	opts = function(_, opts)
-	-- 		opts.sources = opts.sources or {}
-	-- 		table.insert(opts.sources,  {
-	--        name = 'scss',
-	--        option = {
-	--            folders = { "node_modules/@dnr-ui/tokens/scss" }
-	--        }
-	--    })
-	-- 	end,
-	-- },
+	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			{
+				-- scans specified node_modules for scss variable files
+				"mmolhoek/cmp-scss",
+				event = { "BufRead" },
+			},
+		},
+		---@param opts cmp.ConfigSchema
+		opts = function(_, opts)
+			opts.sources = opts.sources or {}
+			table.insert(opts.sources, {
+				name = "scss",
+				-- option = {
+				--     folders = { "node_modules/@dnr-ui/tokens/scss" }
+				-- }
+			})
+		end,
+	},
 }

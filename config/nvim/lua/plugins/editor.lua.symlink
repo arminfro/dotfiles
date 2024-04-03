@@ -422,6 +422,7 @@ return {
 
 	{
 		"arminfro/hand-side-fix.nvim",
+		dir = "/home/armin/Workspace/lua/hand-side-fix.nvim",
 		event = "BufEnter",
 		opts = {
 			layout = "us",

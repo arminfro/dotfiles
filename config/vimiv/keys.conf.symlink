@@ -9,8 +9,6 @@ tt : toggle thumbnail
 tm : toggle manipulate
 yy : copy-name
 ya : copy-name --abspath
-yY : copy-name --primary
-yA : copy-name --abspath --primary
 o : command --text='open '
 q : quit
 N : search-next
@@ -42,15 +40,9 @@ l : scroll right
 j : scroll down
 k : scroll up
 M : center
-H : scroll-edge left
-L : scroll-edge right
-J : scroll-edge down
-K : scroll-edge up
 + : zoom in
 - : zoom out
-E : scale --level=fit-height
 e : scale --level=fit-width
-W : scale --level=1
 w : scale --level=fit
 <space> : play-or-pause
 sh : set slideshow.delay -0.5
@@ -66,8 +58,6 @@ p : scroll up --open-selected
 G : goto -1
 gg : goto 1
 go : goto 1 --open-selected
-L : set library.width +0.05
-H : set library.width -0.05
 
 [THUMBNAIL]
 l : scroll right

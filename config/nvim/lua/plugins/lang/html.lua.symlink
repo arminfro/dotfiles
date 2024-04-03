@@ -1,13 +1,13 @@
 -- vi: ft=lua
 
 return {
-
 	{
 		"nvimtools/none-ls.nvim",
 		opts = function(_, opts)
 			table.insert(opts.sources, require("null-ls").builtins.diagnostics.djlint)
 		end,
 	},
+
 	{
 		"williamboman/mason.nvim",
 		optional = true,
@@ -17,4 +17,24 @@ return {
 			end
 		end,
 	},
+
+	-- {
+	-- 	"hrsh7th/nvim-cmp",
+	-- 	dependencies = {
+	-- 		{
+	-- 			"Jezda1337/nvim-html-css",
+	-- 			event = { "BufRead" },
+	-- 		},
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 		"nvim-lua/plenary.nvim",
+	-- 	},
+	-- 	---@param opts cmp.ConfigSchema
+	-- 	opts = function(_, opts)
+	-- 		opts.sources = opts.sources or {}
+	-- 		table.insert(opts.sources, {
+	-- 			name = "html-css",
+	-- 			option = {},
+	-- 		})
+	-- 	end,
+	-- },
 }

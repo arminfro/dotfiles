@@ -253,7 +253,6 @@ exec --no-startup-id gpaste-client start
 exec --no-startup-id sh -c 'echo "$HOME" >"$HOME"/.last_cd'
 exec --no-startup-id ~/.local/bin/i3-resurrect restore -w 1 && sleep 1 && ~/.local/bin/i3-resurrect restore -w 2 && sleep 1 && ~/.local/bin/i3-resurrect restore -w 3
 exec --no-startup-id nm-applet
-exec --no-startup-id picom -b
 exec --no-startup-id $scripts_dir/set-wallpaper
 exec --no-startup-id sleep 2 && $scripts_dir/keyboard-layout us=true
 exec --no-startup-id sh -c 'mkdir -p /tmp/zsh-1000/completions' 

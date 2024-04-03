@@ -24,4 +24,24 @@ return {
 			-- vim.g.vimtex_quickfix_method = vim.fn.executable("pplatex") == 1 and "pplatex" or "latexlog"
 		end,
 	},
+
+	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			{
+				"kdheepak/cmp-latex-symbols",
+				event = { "BufRead" },
+			},
+		},
+		---@param opts cmp.ConfigSchema
+		opts = function(_, opts)
+			opts.sources = opts.sources or {}
+			table.insert(opts.sources, {
+				name = "latex_symbols",
+				option = {
+					strategy = 0, -- mixed
+				},
+			})
+		end,
+	},
 }

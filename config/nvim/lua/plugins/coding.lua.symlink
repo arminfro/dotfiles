@@ -187,6 +187,12 @@ return {
 			require("dbee").setup({
 				sources = {
 					require("dbee.sources").EnvSource:new("DBEE_CONNECTIONS"),
+					{
+						id = "zsh-history",
+						name = "Shell History",
+						type = "sqlite",
+						url = "~/.histdb/zsh-history.db",
+					},
 				},
 			})
 		end,
