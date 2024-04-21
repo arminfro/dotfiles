@@ -55,3 +55,7 @@ end, { desc = "Copy's current file name to clipboard" })
 vim.api.nvim_create_user_command("CopyFilePath", function()
 	copyOp("filepath")
 end, { desc = "Copy's current file path to clipboard" })
+
+vim.api.nvim_create_user_command("PrintCWD", function()
+	print(vim.fn.getcwd())
+end, { desc = "Print current working directory" })

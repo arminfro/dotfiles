@@ -16,3 +16,6 @@ keepassxc
 lua5.1-lpeg-patterns
 libsq3-devel
 fd-find
+libcurl-devel
+tidy
+jq
