@@ -400,29 +400,28 @@ return {
 		},
 	},
 
-	{
-		"ahmedkhalf/project.nvim",
-		dependencies = "nvim-telescope/telescope.nvim", -- optional
-		event = "BufWinEnter",
-		config = function(_, opts)
-			require("project_nvim").setup(opts)
-			require("lazyvim.util").on_load("telescope.nvim", function()
-				require("telescope").load_extension("projects")
-			end)
-		end,
-		opts = {
-			manual_mode = false,
-			patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile" },
-			-- detection_methods = { "pattern" },
-		},
-		keys = {
-			{ "<leader>o", ":Telescope projects<CR>", desc = "Open project" },
-		},
-	},
+	-- {
+	-- 	"ahmedkhalf/project.nvim",
+	-- 	dependencies = "nvim-telescope/telescope.nvim", -- optional
+	-- 	event = "BufWinEnter",
+	-- 	config = function(_, opts)
+	-- 		require("project_nvim").setup(opts)
+	-- 		require("lazyvim.util").on_load("telescope.nvim", function()
+	-- 			require("telescope").load_extension("projects")
+	-- 		end)
+	-- 	end,
+	-- 	opts = {
+	-- 		manual_mode = false,
+	-- 		patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile" },
+	-- 		-- detection_methods = { "pattern" },
+	-- 	},
+	-- 	keys = {
+	-- 		{ "<leader>o", ":Telescope projects<CR>", desc = "Open project" },
+	-- 	},
+	-- },
 
 	{
 		"arminfro/hand-side-fix.nvim",
-		dir = "/home/armin/Workspace/lua/hand-side-fix.nvim",
 		event = "BufEnter",
 		opts = {
 			layout = "us",
