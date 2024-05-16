@@ -45,8 +45,9 @@ bindsym $alt+h focus left
 bindsym $alt+j focus down
 bindsym $alt+k focus up
 bindsym $alt+l focus right
-bindsym $alt+Tab focus left
-bindsym $alt+Shift+Tab focus right
+
+# toggle last focused workspace
+bindsym $alt+Tab workspace back_and_forth
 
 # move window
 bindsym $mod+Left move left
