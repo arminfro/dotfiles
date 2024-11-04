@@ -15,7 +15,7 @@ require("lazy").setup({
 			"LazyVim",
 			import = "lazyvim.plugins",
 			url = "https://github.com/arminfro/LazyVim",
-			commit = "2d2aea7f7124022e4932ef56a98127b3df19cac4",
+			commit = "68f43f17e166a36f646fd403c0dff4e88f09507a",
 		},
 		-- { import = "lazyvim.plugins.extras.coding.native_snippets" },
 		{ import = "lazyvim.plugins.extras.coding.yanky" },

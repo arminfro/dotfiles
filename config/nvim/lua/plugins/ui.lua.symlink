@@ -66,15 +66,6 @@ return {
 	},
 
 	{
-		"echasnovski/mini.indentscope",
-		opts = {
-			draw = {
-				animation = require("mini.indentscope").gen_animation.none(),
-			},
-		},
-	},
-
-	{
 		"nvimdev/dashboard-nvim",
 		config = function(_, opts)
 			-- table.insert(opts.config.center, 4, {
