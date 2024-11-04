@@ -10,7 +10,7 @@ export PASSWORD_MANAGER=keepassxc
 export ALTERNATIVE_BROWSER="chromium-browser"
 export EMAIL_CLIENT=thunderbird
 export BROWSER=firefox
-export CLIPBOARD_MANAGER="gpaste-client ui"
+export CLIPBOARD_MANAGER="clipcat-menu"
 export MUSIC_PLAYER=rhythmbox
 export VIDEO_PLAYER=vlc
 

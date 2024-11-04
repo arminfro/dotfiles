@@ -92,11 +92,20 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-# set $mon1 HDMI-A-0
-# set $mon2 HDMI-A-1
-#
-# workspace $ws1 output $mon1
-# workspace $ws2 output $mon2
+set $mon1 HDMI-1
+set $mon2 DP-1
+
+workspace $ws1 output $mon1
+workspace $ws2 output $mon2
+workspace $ws3 output $mon2
+
+workspace $ws4 output $mon1
+workspace $ws5 output $mon2
+workspace $ws6 output $mon2
+
+workspace $ws7 output $mon1
+workspace $ws8 output $mon2
+workspace $ws9 output $mon2
 
 bindsym $alt+z exec --no-startup-id $scripts_dir/i3-switch-workspace 1
 bindsym $alt+x exec --no-startup-id $scripts_dir/i3-switch-workspace 2
@@ -188,7 +197,7 @@ bar {
     status_command /usr/bin/i3status-rs ~/.config/i3/status.toml
 }
 
-focus_follows_mouse no
+focus_follows_mouse yes
 
 mode "resize" {
   bindsym h resize shrink width 10 px or 10 ppt
@@ -258,3 +267,5 @@ exec --no-startup-id sleep 2 && $scripts_dir/keyboard-layout us=true
 exec --no-startup-id sh -c 'mkdir -p /tmp/zsh-1000/completions' 
 
 exec --no-startup-id sleep 1 && xrandr --output $mon2 --primary --right-of $mon1 --mode 2560x1440
+
+exec_always --no-startup-id clipcatd    # start clipcatd at startup
