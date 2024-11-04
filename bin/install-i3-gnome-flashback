@@ -1,9 +1,18 @@
 #!/bin/bash
 
+# see i3-gnome-flashback/issues/13
+rm_builtin_flag() {
+	file_path="files/i3-gnome-flashback-session"
+	line_number=7
+	# Remove the --builtin flag from the specified line in the file
+	sed -i "${line_number}s/--builtin //" "$file_path"
+}
+
 if ! [[ -d /tmp/i3-gnome-flashback ]]; then
 	cd /tmp || exit
 	git clone https://github.com/deuill/i3-gnome-flashback.git
 	cd i3-gnome-flashback || exit
+	rm_builtin_flag
 	sudo make install
 	gsettings set org.gnome.desktop.background show-desktop-icons false
 fi
